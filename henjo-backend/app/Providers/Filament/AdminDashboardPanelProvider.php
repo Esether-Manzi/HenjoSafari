@@ -25,12 +25,18 @@ class AdminDashboardPanelProvider extends PanelProvider
     {
         return $panel
             ->default()
-            ->id('admin_dashboard')
-            ->path('admin_dashboard')
+            ->id('admin')
+            ->path('admin')
             ->login()
+            ->brandName('Henjo Safaris')
+            
             ->colors([
-                'primary' => Color::Amber,
+                'secondary' => Color::Amber,
+                'primary' => Color::Emerald,
             ])
+            ->databaseNotifications()
+            ->sidebarCollapsibleOnDesktop()
+            ->unsavedChangesAlerts()
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
@@ -39,7 +45,7 @@ class AdminDashboardPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
-                FilamentInfoWidget::class,
+                // FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
