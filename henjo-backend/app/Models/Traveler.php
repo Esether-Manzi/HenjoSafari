@@ -8,20 +8,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Payment extends Model
+class Traveler extends Model
 {
     protected $fillable = [
         'booking_id',
-        'amount',
-        'currency',
-        'payment_method',
-        'transaction_reference',
-        'status',
-        'paid_at'
+        'first_name',
+        'last_name',
+        'date_of_birth',
+        'passport_number',
+        'nationality'
     ];
 
     protected $casts = [
-        'paid_at' => 'datetime'
+        'date_of_birth' => 'date'
     ];
 
     public function booking()
