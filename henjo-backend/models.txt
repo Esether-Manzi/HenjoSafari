@@ -1,0 +1,24 @@
+app/Models
+├── Accommodation.php
+├── Activity.php
+├── Booking.php
+├── Country.php
+├── Customer.php
+├── Destination.php
+├── Faq.php
+├── Inquiry.php
+├── ItineraryDay.php
+├── PackageExclusion.php
+├── PackageInclusion.php
+├── Page.php
+├── Payment.php
+├── Post.php
+├── SafariCategory.php
+├── SafariPackage.php
+├── Tag.php
+├── TeamMember.php
+├── Testimonial.php
+├── Traveler.php
+└── User.php
+
+1 directory, 21 files

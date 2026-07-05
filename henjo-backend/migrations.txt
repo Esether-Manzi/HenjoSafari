@@ -1,0 +1,34 @@
+database/migrations
+├── 0001_01_01_000000_create_users_table.php
+├── 0001_01_01_000001_create_cache_table.php
+├── 0001_01_01_000002_create_jobs_table.php
+├── 2026_06_09_111322_create_personal_access_tokens_table.php
+├── 2026_06_09_122715_create_permission_tables.php
+├── 2026_06_09_123203_create_media_table.php
+├── 2026_06_22_212917_create_countries_table.php
+├── 2026_06_22_213024_create_safari_categories_table.php
+├── 2026_06_22_213025_create_accommodations_table.php
+├── 2026_06_22_213025_create_activities_table.php
+├── 2026_06_22_214623_create_destinations_table.php
+├── 2026_06_22_214638_create_safari_packages_table.php
+├── 2026_06_22_220442_create_package_accommodation_table.php
+├── 2026_06_22_220442_create_package_activity_table.php
+├── 2026_06_22_220442_create_package_category_table.php
+├── 2026_06_22_220443_create_itinerary_days_table.php
+├── 2026_06_22_220443_create_package_inclusions_table.php
+├── 2026_06_22_220444_create_package_exclusions_table.php
+├── 2026_06_22_221532_create_customers_table.php
+├── 2026_06_22_221553_create_bookings_table.php
+├── 2026_06_22_221638_create_inquiries_table.php
+├── 2026_06_22_221638_create_payments_table.php
+├── 2026_06_22_221638_create_travelers_table.php
+├── 2026_06_22_222536_create_posts_table.php
+├── 2026_06_22_222537_create_faqs_table.php
+├── 2026_06_22_222537_create_pages_table.php
+├── 2026_06_22_222537_create_tags_table.php
+├── 2026_06_22_222538_create_team_members_table.php
+├── 2026_06_22_222538_create_testimonials_table.php
+├── 2026_06_22_222558_create_post_tag_table.php
+└── 2026_06_25_164854_add_icon_to_activities_table.php
+
+1 directory, 31 files
