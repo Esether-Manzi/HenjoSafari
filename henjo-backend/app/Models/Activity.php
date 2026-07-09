@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Activity extends Model
+class Activity extends Model implements HasMedia
 {
-    use SoftDeletes, Sluggable;
+    use SoftDeletes, Sluggable, InteractsWithMedia;
 
     protected $table = 'activities';
 
@@ -18,7 +18,6 @@ class Activity extends Model
         'name',
         'slug',
         'description',
-        'icon'
     ];
 
     public function sluggable(): array
@@ -39,4 +38,11 @@ class Activity extends Model
             'package_id'
         );
     }
+    public function registerMediaCollections(): void
+    {
+        $this
+            ->addMediaCollection('image')
+            ->singleFile();
+    }
+
 }

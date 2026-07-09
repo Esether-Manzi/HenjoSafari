@@ -22,7 +22,17 @@ class BookingResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'Bookings';
+    protected static ?string $navigationLabel = 'Bookings';
+
+    protected static ?string $modelLabel = 'Booking';
+
+    protected static ?string $pluralModelLabel = 'Bookings';
+
+    protected static string|\UnitEnum|null $navigationGroup = 'Bookings';
+
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $recordTitleAttribute = 'booking_number';
 
     public static function form(Schema $schema): Schema
     {
