@@ -8,14 +8,14 @@
 export function getImageUrl(media: any, type: 'cover' | 'gallery' = 'cover', index: number = 0): string {
     // If no media, return placeholder
     if (!media || media.length === 0) {
-        return '/images/placeholder.jpg';
+        return '/images/placeholder.png';
     }
 
     // Find the right collection
     const mediaItems = media.filter((m: any) => m.collection_name === type);
     
     if (mediaItems.length === 0) {
-        return '/images/placeholder.jpg';
+        return '/images/placeholder.png';
     }
 
     // Get the specific item
@@ -27,7 +27,7 @@ export function getImageUrl(media: any, type: 'cover' | 'gallery' = 'cover', ind
               item?.thumb_url || 
               item?.preview_url || 
               `/storage/${item?.file_name}` ||
-              '/images/placeholder.jpg';
+              '/images/placeholder.png';
     
     // Fix the URL for local development
     if (url) {

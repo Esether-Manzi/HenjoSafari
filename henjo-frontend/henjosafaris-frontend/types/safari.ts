@@ -66,6 +66,7 @@ export interface Activity {
     slug: string;
     icon?: string;
     description?: string;
+    media?: Media[];
 }
 
 export interface Accommodation {

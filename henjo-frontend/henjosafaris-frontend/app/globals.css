@@ -1,8 +1,136 @@
 @import "tailwindcss";
 
 /* =====================================================
-   THEME
-===================================================== */
+   HENJO AFRICAN SAFARIS — BRAND THEME SYSTEM
+   =====================================================
+   Brand colors extracted from the company logo:
+   - Safari Gold:   #D4A017  (Africa continent, sunset)
+   - Sunset Amber:  #E5A100  (lighter gold highlights)
+   - Forest Green:  #2E7D32  (acacia tree canopy)
+   - Brand Maroon:  #7B1818  (HENJO text, accent line)
+   - Charcoal:      #2D2D2D  (circle, animal silhouettes)
+   ===================================================== */
+
+/* =====================================================
+   CSS CUSTOM PROPERTIES — LIGHT THEME (default)
+   ===================================================== */
+
+:root {
+  /* Brand primaries */
+  --brand-gold: #D4A017;
+  --brand-gold-light: #E5B83A;
+  --brand-gold-hover: #C08F10;
+  --brand-gold-subtle: #FDF6E3;
+  --brand-green: #2E7D32;
+  --brand-green-light: #4CAF50;
+  --brand-green-hover: #236B27;
+  --brand-green-subtle: #E8F5E9;
+  --brand-maroon: #7B1818;
+  --brand-maroon-light: #A62626;
+  --brand-charcoal: #2D2D2D;
+
+  /* Surfaces */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #FAFAF5;
+  --bg-tertiary: #F3F1EB;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #FAFAF5;
+  --bg-nav: #FFFFFF;
+  --bg-footer: #1A1A1A;
+  --bg-input: #FFFFFF;
+
+  /* Text */
+  --text-primary: #1A1A1A;
+  --text-secondary: #4A4A4A;
+  --text-tertiary: #6B6B6B;
+  --text-muted: #9A9A9A;
+  --text-inverse: #FFFFFF;
+  --text-on-gold: #1A1A1A;
+
+  /* Borders */
+  --border-primary: #E5E2D9;
+  --border-secondary: #D4D0C6;
+  --border-subtle: #F0EDE5;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+
+  /* Scrollbar */
+  --scrollbar-track: #F3F1EB;
+  --scrollbar-thumb: var(--brand-gold);
+  --scrollbar-thumb-hover: var(--brand-gold-hover);
+
+  /* Focus ring */
+  --focus-ring: var(--brand-gold);
+
+  /* Selection */
+  --selection-bg: var(--brand-gold);
+  --selection-text: #000000;
+}
+
+/* =====================================================
+   CSS CUSTOM PROPERTIES — DARK THEME
+   ===================================================== */
+
+.dark {
+  --brand-gold: #E5B83A;
+  --brand-gold-light: #F0CC5B;
+  --brand-gold-hover: #D4A017;
+  --brand-gold-subtle: rgba(229, 184, 58, 0.1);
+  --brand-green: #4CAF50;
+  --brand-green-light: #66BB6A;
+  --brand-green-hover: #388E3C;
+  --brand-green-subtle: rgba(76, 175, 80, 0.1);
+  --brand-maroon: #D4453A;
+  --brand-maroon-light: #EF5350;
+  --brand-charcoal: #E0E0E0;
+
+  /* Surfaces — forest-tinted dark */
+  --bg-primary: #0F1A12;
+  --bg-secondary: #152018;
+  --bg-tertiary: #1A2A1E;
+  --bg-card: #1A2A1E;
+  --bg-card-hover: #213526;
+  --bg-nav: #0F1A12;
+  --bg-footer: #0A120C;
+  --bg-input: #1A2A1E;
+
+  /* Text */
+  --text-primary: #F0EDE5;
+  --text-secondary: #C8C4BA;
+  --text-tertiary: #9A968E;
+  --text-muted: #6B685F;
+  --text-inverse: #1A1A1A;
+  --text-on-gold: #1A1A1A;
+
+  /* Borders */
+  --border-primary: #2A3E2E;
+  --border-secondary: #344838;
+  --border-subtle: #1F3023;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+
+  /* Scrollbar */
+  --scrollbar-track: #152018;
+  --scrollbar-thumb: var(--brand-gold);
+  --scrollbar-thumb-hover: var(--brand-gold-light);
+
+  /* Focus ring */
+  --focus-ring: var(--brand-gold);
+
+  /* Selection */
+  --selection-bg: var(--brand-green);
+  --selection-text: #FFFFFF;
+}
+
+/* =====================================================
+   THEME — Tailwind v4 @theme tokens
+   ===================================================== */
 
 @theme {
   --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
@@ -11,118 +139,109 @@
 
 /* =====================================================
    BASE
-===================================================== */
+   ===================================================== */
 
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background: white;
-  color: #111827;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-family: var(--font-sans);
   transition:
     background-color 300ms ease,
     color 300ms ease;
 }
 
-.dark body {
-  background: #111827;
-  color: #f3f4f6;
-}
-
 ::selection {
-  background: #eab308;
-  color: black;
-}
-
-.dark ::selection {
-  background: #16a34a;
-  color: white;
+  background: var(--selection-bg);
+  color: var(--selection-text);
 }
 
 *:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px #eab308;
+  box-shadow: 0 0 0 2px var(--focus-ring);
 }
 
 /* =====================================================
-   COMPONENTS
-===================================================== */
+   COMPONENTS — Utility Classes
+   ===================================================== */
 
 @utility card {
-  @apply rounded-2xl border border-gray-200 bg-white shadow-lg transition-colors duration-300;
-
-  .dark & {
-    @apply border-gray-700 bg-gray-800;
-  }
+  @apply rounded-2xl shadow-lg transition-colors duration-300;
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
 }
 
 @utility btn-primary {
-  @apply rounded-full bg-yellow-500 px-6 py-3 font-bold text-black transition duration-300 hover:scale-105 hover:bg-yellow-400;
+  @apply rounded-full px-6 py-3 font-bold transition duration-300 hover:scale-105;
+  background: var(--brand-gold);
+  color: var(--text-on-gold);
+
+  &:hover {
+    background: var(--brand-gold-hover);
+  }
 }
 
 @utility btn-secondary {
-  @apply rounded-full bg-gray-200 px-6 py-3 font-semibold text-gray-800 transition hover:bg-gray-300;
+  @apply rounded-full px-6 py-3 font-semibold transition;
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
 
-  .dark & {
-    @apply bg-gray-700 text-gray-200 hover:bg-gray-600;
+  &:hover {
+    background: var(--border-secondary);
   }
 }
 
 @utility btn-outline {
-  @apply rounded-full border-2 border-yellow-500 px-6 py-3 font-bold text-yellow-500 transition hover:bg-yellow-500 hover:text-black;
+  @apply rounded-full px-6 py-3 font-bold transition;
+  border: 2px solid var(--brand-gold);
+  color: var(--brand-gold);
 
-  .dark & {
-    @apply border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-black;
+  &:hover {
+    background: var(--brand-gold);
+    color: var(--text-on-gold);
   }
 }
 
 @utility section-title {
-  @apply text-3xl font-bold text-gray-900 md:text-4xl;
-
-  .dark & {
-    @apply text-gray-100;
-  }
+  @apply text-3xl font-bold md:text-4xl;
+  color: var(--text-primary);
 }
 
 @utility section-subtitle {
-  @apply mx-auto max-w-2xl text-gray-600;
-
-  .dark & {
-    @apply text-gray-400;
-  }
+  @apply mx-auto max-w-2xl;
+  color: var(--text-secondary);
 }
 
 @utility brand-highlight {
-  @apply text-yellow-500;
-}
-
-.dark .brand-highlight {
-  @apply text-yellow-400;
+  color: var(--brand-gold);
 }
 
 @utility nav-link {
-  @apply font-medium text-gray-700 transition hover:text-yellow-500;
+  @apply font-medium transition;
+  color: var(--text-secondary);
 
-  .dark & {
-    @apply text-gray-300 hover:text-yellow-400;
+  &:hover {
+    color: var(--brand-gold);
   }
 }
 
 @utility dropdown-menu {
-  @apply absolute left-0 top-full z-50 mt-2 min-w-[200px] rounded-lg border border-gray-200 bg-white py-2 shadow-lg;
-
-  .dark & {
-    @apply border-gray-700 bg-gray-800;
-  }
+  @apply absolute left-0 top-full z-50 mt-2 min-w-[200px] rounded-lg py-2;
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  box-shadow: var(--shadow-lg);
 }
 
 @utility dropdown-item {
-  @apply block px-4 py-2 text-gray-700 transition hover:bg-yellow-50 hover:text-yellow-500;
+  @apply block px-4 py-2 transition;
+  color: var(--text-secondary);
 
-  .dark & {
-    @apply text-gray-300 hover:bg-gray-700 hover:text-yellow-400;
+  &:hover {
+    background: var(--brand-gold-subtle);
+    color: var(--brand-gold);
   }
 }
 
@@ -131,11 +250,21 @@ body {
 }
 
 @utility theme-toggle-light {
-  @apply bg-gray-200 text-gray-700 hover:bg-gray-300;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+
+  &:hover {
+    background: var(--border-secondary);
+  }
 }
 
 @utility theme-toggle-dark {
-  @apply bg-gray-700 text-yellow-400 hover:bg-gray-600;
+  background: var(--bg-tertiary);
+  color: var(--brand-gold);
+
+  &:hover {
+    background: var(--border-primary);
+  }
 }
 
 @utility theme-transition {
@@ -144,7 +273,7 @@ body {
 
 /* =====================================================
    SCROLLBAR
-===================================================== */
+   ===================================================== */
 
 ::-webkit-scrollbar {
   width: 10px;
@@ -152,33 +281,21 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f3f4f6;
-}
-
-.dark ::-webkit-scrollbar-track {
-  background: #1f2937;
+  background: var(--scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #eab308;
+  background: var(--scrollbar-thumb);
   border-radius: 9999px;
 }
 
-.dark ::-webkit-scrollbar-thumb {
-  background: #facc15;
-}
-
 ::-webkit-scrollbar-thumb:hover {
-  background: #ca8a04;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #eab308;
+  background: var(--scrollbar-thumb-hover);
 }
 
 /* =====================================================
    SCROLLBAR HIDE
-===================================================== */
+   ===================================================== */
 
 .scrollbar-hide {
   -ms-overflow-style: none;
@@ -191,7 +308,7 @@ body {
 
 /* =====================================================
    ANIMATIONS
-===================================================== */
+   ===================================================== */
 
 @keyframes fadeIn {
   from {
@@ -221,4 +338,20 @@ body {
 
 .animate-slideUp {
   animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(80px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slideFromRight {
+  animation: slideFromRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }

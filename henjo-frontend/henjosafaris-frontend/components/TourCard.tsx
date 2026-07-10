@@ -16,7 +16,7 @@ const TourCard = ({ tour, featured = false }: TourCardProps) => {
             {/* Image Container */}
             <div className="relative h-64 overflow-hidden">
                 <Image
-                    src={tour.image_url || '/images/placeholder.jpg'}
+                    src={tour.image_url || '/images/placeholder.png'}
                     alt={tour.title}
                     fill
                     className="object-cover group-hover:scale-110 transition duration-500"

@@ -11,18 +11,18 @@ export default function Navbar() {
     // ============================================
     // STATE MANAGEMENT
     // ============================================
-    
+
     const [isOpen, setIsOpen] = useState(false);
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
     // ============================================
     // NAVIGATION DATA
     // ============================================
-    
+
     const menuItems = [
         { name: 'Home', href: '/' },
-        { 
-            name: 'Safaris', 
+        {
+            name: 'Safaris',
             href: '/safaris',
             dropdown: [
                 { name: 'Wildlife Adventure', href: '/safaris?category=wildlife' },
@@ -35,8 +35,8 @@ export default function Navbar() {
             ]
         },
         { name: 'Women Only Tours', href: '/women-only-tours' },
-        { 
-            name: 'Destinations', 
+        {
+            name: 'Destinations',
             href: '/destinations',
             dropdown: [
                 { name: 'Kenya', href: '/destinations/kenya' },
@@ -45,14 +45,13 @@ export default function Navbar() {
                 { name: 'Rwanda', href: '/destinations/rwanda' },
             ]
         },
-        { name: 'Travel Information', href: '/travel-information' },
-        { 
-            name: 'About Us', 
+        { name: 'Blog', href: '/blog' },
+        {
+            name: 'About Us',
             href: '/about',
             dropdown: [
                 { name: 'About Our Charity', href: '/about-our-charity' },
                 { name: 'Our Team', href: '/our-team' },
-                { name: 'Blog', href: '/blog' },
                 { name: 'Booking Policy', href: '/booking-policy' },
             ]
         },
@@ -64,10 +63,16 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="bg-white dark:bg-gray-900 shadow-lg dark:shadow-gray-800 fixed w-full z-50 transition-colors duration-300">
+        <nav
+            className="fixed w-full z-50 transition-colors duration-300 shadow-lg"
+            style={{
+                background: 'var(--bg-nav)',
+                boxShadow: 'var(--shadow-md)',
+            }}
+        >
             <div className="container mx-auto px-4">
                 <div className="flex justify-between items-center h-20">
-                    
+
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3 group">
                         <div className="relative w-12 h-12">
@@ -80,53 +85,95 @@ export default function Navbar() {
                             />
                         </div>
                         <div className="hidden sm:block">
-                            <span className="text-xl font-bold text-green-700 dark:text-green-400 group-hover:text-green-800 dark:group-hover:text-green-300 transition">
+                            <span
+                                className="text-xl font-bold transition"
+                                style={{ color: 'var(--brand-green)' }}
+                            >
                                 Henjo African Safaris
                             </span>
-                            <span className="block text-[10px] text-yellow-600 dark:text-yellow-400 font-semibold tracking-wider">
+                            <span
+                                className="block text-[10px] font-semibold tracking-wider"
+                                style={{ color: 'var(--brand-gold)' }}
+                            >
                                 Every step, with us is an adventure
                             </span>
                         </div>
                     </Link>
 
                     {/* Desktop Menu */}
-                    <div className="hidden lg:flex items-center space-x-6">
+                    <div className="hidden lg:flex items-center space-x-4">
                         {menuItems.map((item) => (
                             <div key={item.name} className="relative group">
                                 {item.dropdown ? (
                                     <div className="flex items-center">
                                         <Link
                                             href={item.href}
-                                            className="text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 transition font-medium"
+                                            className="font-medium transition"
+                                            style={{ color: 'var(--text-secondary)' }}
+                                            onMouseEnter={(e) => {
+                                                e.currentTarget.style.color = 'var(--brand-gold)';
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.currentTarget.style.color = 'var(--text-secondary)';
+                                            }}
                                         >
                                             {item.name}
                                         </Link>
                                         <button
-                                            className="ml-1 text-gray-500 dark:text-gray-400 hover:text-yellow-500 dark:hover:text-yellow-400 transition p-1"
+                                            className="ml-1 transition p-1"
+                                            style={{ color: 'var(--text-tertiary)' }}
                                             onClick={() => toggleDropdown(item.name)}
+                                            onMouseEnter={(e) => {
+                                                e.currentTarget.style.color = 'var(--brand-gold)';
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.currentTarget.style.color = 'var(--text-tertiary)';
+                                            }}
                                             aria-label={`Toggle ${item.name} dropdown`}
                                         >
-                                            <FaChevronDown className={`text-xs transition-transform duration-200 ${
-                                                openDropdown === item.name ? 'rotate-180' : ''
-                                            }`} />
+                                            <FaChevronDown className={`text-xs transition-transform duration-200 ${openDropdown === item.name ? 'rotate-180' : ''
+                                                }`} />
                                         </button>
                                     </div>
                                 ) : (
                                     <Link
                                         href={item.href}
-                                        className="text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 transition font-medium"
+                                        className="font-medium transition"
+                                        style={{ color: 'var(--text-secondary)' }}
+                                        onMouseEnter={(e) => {
+                                            e.currentTarget.style.color = 'var(--brand-gold)';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            e.currentTarget.style.color = 'var(--text-secondary)';
+                                        }}
                                     >
                                         {item.name}
                                     </Link>
                                 )}
-                                
+
                                 {item.dropdown && openDropdown === item.name && (
-                                    <div className="absolute top-full left-0 mt-2 bg-white dark:bg-gray-800 shadow-lg dark:shadow-gray-900 rounded-lg py-2 min-w-[200px] z-50 border border-gray-200 dark:border-gray-700">
+                                    <div
+                                        className="absolute top-full left-0 mt-2 rounded-lg py-2 min-w-[200px] z-50"
+                                        style={{
+                                            background: 'var(--bg-card)',
+                                            border: '1px solid var(--border-primary)',
+                                            boxShadow: 'var(--shadow-lg)',
+                                        }}
+                                    >
                                         {item.dropdown.map((sub) => (
                                             <Link
                                                 key={sub.name}
                                                 href={sub.href}
-                                                className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-yellow-50 dark:hover:bg-gray-700 hover:text-yellow-500 dark:hover:text-yellow-400 transition"
+                                                className="block px-4 py-2 transition"
+                                                style={{ color: 'var(--text-secondary)' }}
+                                                onMouseEnter={(e) => {
+                                                    e.currentTarget.style.background = 'var(--brand-gold-subtle)';
+                                                    e.currentTarget.style.color = 'var(--brand-gold)';
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    e.currentTarget.style.background = 'transparent';
+                                                    e.currentTarget.style.color = 'var(--text-secondary)';
+                                                }}
                                                 onClick={() => setOpenDropdown(null)}
                                             >
                                                 {sub.name}
@@ -136,14 +183,24 @@ export default function Navbar() {
                                 )}
                             </div>
                         ))}
-                        
+
                         {/* Theme Toggle */}
                         <ThemeToggle />
-                        
+
                         {/* CTA Button */}
                         <Link
                             href="/contact"
-                            className="bg-yellow-500 hover:bg-yellow-400 text-black font-semibold px-6 py-2 rounded-full transition"
+                            className="font-semibold px-6 py-2 rounded-full transition hover:scale-105"
+                            style={{
+                                background: 'var(--brand-gold)',
+                                color: 'var(--text-on-gold)',
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.background = 'var(--brand-gold-hover)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.background = 'var(--brand-gold)';
+                            }}
                         >
                             Book Now
                         </Link>
@@ -154,7 +211,8 @@ export default function Navbar() {
                         <ThemeToggle />
                         <button
                             onClick={() => setIsOpen(!isOpen)}
-                            className="text-2xl text-gray-700 dark:text-gray-300"
+                            className="text-2xl"
+                            style={{ color: 'var(--text-secondary)' }}
                             aria-label="Toggle navigation menu"
                         >
                             {isOpen ? <FaTimes /> : <FaBars />}
@@ -164,7 +222,9 @@ export default function Navbar() {
 
                 {/* Mobile Menu */}
                 {isOpen && (
-                    <div className="lg:hidden pb-6 space-y-2 max-h-[80vh] overflow-y-auto">
+                    <div
+                        className="lg:hidden pb-6 space-y-2 max-h-[80vh] overflow-y-auto"
+                    >
                         {menuItems.map((item) => (
                             <div key={item.name}>
                                 {item.dropdown ? (
@@ -172,27 +232,32 @@ export default function Navbar() {
                                         <div className="flex items-center justify-between">
                                             <Link
                                                 href={item.href}
-                                                className="py-2 text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 transition font-medium"
+                                                className="py-2 font-medium transition"
+                                                style={{ color: 'var(--text-secondary)' }}
                                                 onClick={() => setIsOpen(false)}
                                             >
                                                 {item.name}
                                             </Link>
                                             <button
-                                                className="p-2 text-gray-500 dark:text-gray-400 hover:text-yellow-500 dark:hover:text-yellow-400 transition"
+                                                className="p-2 transition"
+                                                style={{ color: 'var(--text-tertiary)' }}
                                                 onClick={() => toggleDropdown(item.name)}
                                             >
-                                                <FaChevronDown className={`text-xs transition-transform duration-200 ${
-                                                    openDropdown === item.name ? 'rotate-180' : ''
-                                                }`} />
+                                                <FaChevronDown className={`text-xs transition-transform duration-200 ${openDropdown === item.name ? 'rotate-180' : ''
+                                                    }`} />
                                             </button>
                                         </div>
                                         {openDropdown === item.name && (
-                                            <div className="pl-4 space-y-1 border-l-2 border-yellow-200 dark:border-yellow-600 ml-2">
+                                            <div
+                                                className="pl-4 space-y-1 ml-2"
+                                                style={{ borderLeft: '2px solid var(--brand-gold)' }}
+                                            >
                                                 {item.dropdown.map((sub) => (
                                                     <Link
                                                         key={sub.name}
                                                         href={sub.href}
-                                                        className="block py-2 text-gray-600 dark:text-gray-400 hover:text-yellow-500 dark:hover:text-yellow-400 transition"
+                                                        className="block py-2 transition"
+                                                        style={{ color: 'var(--text-tertiary)' }}
                                                         onClick={() => {
                                                             setIsOpen(false);
                                                             setOpenDropdown(null);
@@ -207,7 +272,8 @@ export default function Navbar() {
                                 ) : (
                                     <Link
                                         href={item.href}
-                                        className="block py-2 text-gray-700 dark:text-gray-300 hover:text-yellow-500 dark:hover:text-yellow-400 transition"
+                                        className="block py-2 font-medium transition"
+                                        style={{ color: 'var(--text-secondary)' }}
                                         onClick={() => setIsOpen(false)}
                                     >
                                         {item.name}
@@ -217,7 +283,11 @@ export default function Navbar() {
                         ))}
                         <Link
                             href="/contact"
-                            className="block mt-4 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold text-center px-6 py-2 rounded-full transition"
+                            className="block mt-2 font-semibold text-center px-4 py-2 rounded-full transition"
+                            style={{
+                                background: 'var(--brand-gold)',
+                                color: 'var(--text-on-gold)',
+                            }}
                             onClick={() => setIsOpen(false)}
                         >
                             Book Now

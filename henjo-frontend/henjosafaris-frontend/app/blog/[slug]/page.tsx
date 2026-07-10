@@ -8,6 +8,7 @@ import Head from 'next/head';
 import { FaClock, FaUser, FaTag, FaArrowLeft, FaShare, FaFacebook, FaTwitter, FaWhatsapp } from 'react-icons/fa';
 import { blogApi } from '@/lib/api/blogApi';
 import type { BlogPost } from '@/types/blog';
+import { MOCK_POSTS } from '@/components/blog/BlogCard';
 
 export default function BlogDetailPage() {
     const params = useParams();
@@ -22,13 +23,28 @@ export default function BlogDetailPage() {
         const fetchPost = async () => {
             try {
                 const response = await blogApi.getBySlug(slug);
-                if (response.success) {
+                if (response.success && response.data?.post) {
                     setPost(response.data.post);
                     setRelated(response.data.related || []);
+                } else {
+                    // Try to find in mock data
+                    const mockPost = MOCK_POSTS.find(p => p.slug === slug);
+                    if (mockPost) {
+                        setPost(mockPost);
+                        setRelated(MOCK_POSTS.filter(p => p.slug !== slug));
+                    } else {
+                        setError('Post not found');
+                    }
                 }
             } catch (err: any) {
-                console.error('Error fetching post:', err);
-                setError(err.message || 'Post not found');
+                console.warn('Error fetching post, checking mock data:', err);
+                const mockPost = MOCK_POSTS.find(p => p.slug === slug);
+                if (mockPost) {
+                    setPost(mockPost);
+                    setRelated(MOCK_POSTS.filter(p => p.slug !== slug));
+                } else {
+                    setError(err.message || 'Post not found');
+                }
             } finally {
                 setLoading(false);
             }
@@ -45,10 +61,13 @@ export default function BlogDetailPage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+            <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-secondary)' }}>
                 <div className="text-center">
-                    <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-yellow-500 border-t-transparent"></div>
-                    <p className="mt-4 text-gray-600">Loading post...</p>
+                    <div
+                        className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-t-transparent"
+                        style={{ borderColor: 'var(--brand-gold)', borderTopColor: 'transparent' }}
+                    ></div>
+                    <p className="mt-4" style={{ color: 'var(--text-secondary)' }}>Loading post...</p>
                 </div>
             </div>
         );
@@ -63,7 +82,7 @@ export default function BlogDetailPage() {
     const shareTitle = post.title;
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen transition-colors duration-300" style={{ background: 'var(--bg-secondary)' }}>
             <Head>
                 <title>{post.title} - Henjo Safaris Blog</title>
                 <meta name="description" content={post.excerpt || post.content.substring(0, 160)} />
@@ -87,7 +106,7 @@ export default function BlogDetailPage() {
                 </div>
                 <div className="relative h-full container mx-auto px-4 flex flex-col justify-end pb-12">
                     <div className="max-w-4xl">
-                        <Link href="/blog" className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 mb-4 transition">
+                        <Link href="/blog" className="inline-flex items-center gap-2 mb-4 transition hover:text-[var(--brand-gold-hover)]" style={{ color: 'var(--brand-gold)' }}>
                             <FaArrowLeft /> Back to Blog
                         </Link>
                         <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -95,11 +114,11 @@ export default function BlogDetailPage() {
                         </h1>
                         <div className="flex flex-wrap items-center gap-6 text-white/80 text-sm">
                             <span className="flex items-center gap-2">
-                                <FaUser className="text-yellow-400" />
+                                <FaUser style={{ color: 'var(--brand-gold)' }} />
                                 {post.author?.name || 'Admin'}
                             </span>
                             <span className="flex items-center gap-2">
-                                <FaClock className="text-yellow-400" />
+                                <FaClock style={{ color: 'var(--brand-gold)' }} />
                                 {new Date(post.published_at).toLocaleDateString('en-US', {
                                     month: 'long',
                                     day: 'numeric',
@@ -108,7 +127,7 @@ export default function BlogDetailPage() {
                             </span>
                             {post.tags && post.tags.length > 0 && (
                                 <span className="flex items-center gap-2">
-                                    <FaTag className="text-yellow-400" />
+                                    <FaTag style={{ color: 'var(--brand-gold)' }} />
                                     {post.tags.map(t => t.name).join(', ')}
                                 </span>
                             )}
@@ -119,15 +138,33 @@ export default function BlogDetailPage() {
 
             {/* Content */}
             <div className="container mx-auto px-4 py-12 max-w-4xl">
-                <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
-                    <div className="prose prose-lg max-w-none prose-headings:text-gray-800 prose-p:text-gray-600 prose-a:text-yellow-600">
+                <div
+                    className="rounded-2xl p-8 md:p-12 transition-colors duration-300"
+                    style={{
+                        background: 'var(--bg-card)',
+                        boxShadow: 'var(--shadow-lg)',
+                    }}
+                >
+                    <div className="prose prose-lg max-w-none leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                         {post.content.split('\n').map((paragraph, i) => {
                             if (paragraph.startsWith('## ')) {
-                                return <h2 key={i} className="text-2xl font-bold mt-8 mb-4">{paragraph.replace('## ', '')}</h2>;
+                                return (
+                                    <h2 key={i} className="text-2xl font-bold mt-8 mb-4" style={{ color: 'var(--text-primary)' }}>
+                                        {paragraph.replace('## ', '')}
+                                    </h2>
+                                );
                             } else if (paragraph.startsWith('### ')) {
-                                return <h3 key={i} className="text-xl font-bold mt-6 mb-3">{paragraph.replace('### ', '')}</h3>;
+                                return (
+                                    <h3 key={i} className="text-xl font-bold mt-6 mb-3" style={{ color: 'var(--text-primary)' }}>
+                                        {paragraph.replace('### ', '')}
+                                    </h3>
+                                );
                             } else if (paragraph.startsWith('- ')) {
-                                return <li key={i} className="ml-4 text-gray-600">{paragraph.replace('- ', '')}</li>;
+                                return (
+                                    <li key={i} className="ml-4" style={{ color: 'var(--text-secondary)' }}>
+                                        {paragraph.replace('- ', '')}
+                                    </li>
+                                );
                             } else if (paragraph.trim()) {
                                 return <p key={i} className="mb-4">{paragraph}</p>;
                             }
@@ -136,8 +173,8 @@ export default function BlogDetailPage() {
                     </div>
 
                     {/* Share Section */}
-                    <div className="mt-12 pt-8 border-t border-gray-200">
-                        <h4 className="font-semibold text-gray-700 mb-4">Share this post</h4>
+                    <div className="mt-12 pt-8" style={{ borderTop: '1px solid var(--border-primary)' }}>
+                        <h4 className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Share this post</h4>
                         <div className="flex gap-3">
                             <a
                                 href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`}
@@ -168,7 +205,8 @@ export default function BlogDetailPage() {
                                     navigator.clipboard.writeText(shareUrl);
                                     alert('Link copied to clipboard!');
                                 }}
-                                className="bg-gray-200 hover:bg-gray-300 text-gray-700 p-3 rounded-full transition"
+                                className="p-3 rounded-full transition"
+                                style={{ background: 'var(--bg-secondary)', color: 'var(--text-secondary)' }}
                             >
                                 <FaShare size={20} />
                             </button>
@@ -179,16 +217,17 @@ export default function BlogDetailPage() {
                 {/* Related Posts */}
                 {related.length > 0 && (
                     <div className="mt-16">
-                        <h3 className="text-2xl font-bold text-gray-800 mb-6">You Might Also Like</h3>
+                        <h3 className="text-2xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>You Might Also Like</h3>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            {related.map((p) => {
+                            {related.slice(0, 3).map((p) => {
                                 const img = p.media?.find(m => m.collection_name === 'featured_image');
-                                const imgUrl = img?.medium_url || img?.original_url || '/images/placeholder.jpg';
+                                const imgUrl = img?.medium_url || img?.original_url || '/images/placeholder.png';
                                 return (
                                     <Link
                                         key={p.id}
                                         href={`/blog/${p.slug}`}
-                                        className="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition"
+                                        className="group rounded-xl overflow-hidden transition"
+                                        style={{ background: 'var(--bg-card)', boxShadow: 'var(--shadow-md)' }}
                                     >
                                         <div className="relative h-48">
                                             <Image
@@ -199,10 +238,13 @@ export default function BlogDetailPage() {
                                             />
                                         </div>
                                         <div className="p-4">
-                                            <h4 className="font-semibold text-gray-800 group-hover:text-yellow-600 transition line-clamp-2">
+                                            <h4
+                                                className="font-semibold transition line-clamp-2 group-hover:text-[var(--brand-gold)]"
+                                                style={{ color: 'var(--text-primary)' }}
+                                            >
                                                 {p.title}
                                             </h4>
-                                            <p className="text-sm text-gray-500 mt-1 line-clamp-2">
+                                            <p className="text-sm mt-1 line-clamp-2" style={{ color: 'var(--text-tertiary)' }}>
                                                 {p.excerpt || p.content.substring(0, 100) + '...'}
                                             </p>
                                         </div>
@@ -222,14 +264,15 @@ export default function BlogDetailPage() {
 // ============================================
 function NotFound() {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-secondary)' }}>
             <div className="text-center p-8">
-                <h1 className="text-6xl font-bold text-gray-300 mb-4">404</h1>
-                <h2 className="text-2xl font-bold text-gray-800 mb-2">Post Not Found</h2>
-                <p className="text-gray-500 mb-6">The blog post you're looking for doesn't exist.</p>
+                <h1 className="text-6xl font-bold mb-4" style={{ color: 'var(--text-muted)' }}>404</h1>
+                <h2 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>Post Not Found</h2>
+                <p className="mb-6" style={{ color: 'var(--text-muted)' }}>The blog post you&apos;re looking for doesn&apos;t exist.</p>
                 <Link
                     href="/blog"
-                    className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded-full inline-block transition"
+                    className="font-bold px-6 py-3 rounded-full inline-block transition"
+                    style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}
                 >
                     Back to Blog
                 </Link>

@@ -81,23 +81,11 @@ export default function ContactPage() {
     // FORM HANDLERS
     // ============================================
     
-    /**
-     * 📌 handleSubmit
-     * When the form is submitted:
-     * 1. Prevent default browser behavior (page reload)
-     * 2. Log the form data (in development)
-     * 3. Show success message
-     * 4. Reset form fields after 5 seconds
-     */
     const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault(); // ✅ IMPORTANT: Prevents page reload
-        
-        console.log('📧 Form submitted:', form); // Debug log
-        
-        setSubmitted(true); // Show success message
-        setForm({ name: '', email: '', phone: '', message: '' }); // Clear form
-        
-        // Hide success message after 5 seconds
+        e.preventDefault();
+        console.log('📧 Form submitted:', form);
+        setSubmitted(true);
+        setForm({ name: '', email: '', phone: '', message: '' });
         setTimeout(() => setSubmitted(false), 5000);
     };
 
@@ -107,12 +95,7 @@ export default function ContactPage() {
 
     return (
         <div className="min-h-screen">
-            {/* ============================================
-            HERO SECTION
-            ============================================
-            - size="small" → 40vh (compact hero for interior pages)
-            - No tagline shown (showTagline={false}) for cleaner look
-            ============================================ */}
+            {/* HERO SECTION */}
             <Hero 
                 size="medium"
                 title="Get In Touch"
@@ -124,210 +107,277 @@ export default function ContactPage() {
                 showTagline={false}
             />
 
-            {/* ============================================
-            MAIN CONTENT: 2-Column Grid
-            ============================================
-            Left column: Contact information
-            Right column: Contact form
-            ============================================ */}
-            <div className="container mx-auto px-4 max-w-4xl py-16">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    
-                    {/* ============================================
-                    COLUMN 1: Contact Information
-                    ============================================ */}
-                    <div className="bg-white rounded-2xl shadow-lg p-8">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                            Contact Information
-                        </h2>
+            {/* MAIN CONTENT: 2-Column Grid */}
+            <div
+                className="py-16 transition-colors duration-300"
+                style={{ background: 'var(--bg-secondary)' }}
+            >
+                <div className="container mx-auto px-4 max-w-4xl">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         
-                        <div className="space-y-6">
+                        {/* COLUMN 1: Contact Information */}
+                        <div
+                            className="rounded-2xl p-8"
+                            style={{
+                                background: 'var(--bg-card)',
+                                boxShadow: 'var(--shadow-lg)',
+                            }}
+                        >
+                            <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
+                                Contact Information
+                            </h2>
                             
-                            {/* Office Address */}
-                            {officeAddresses.map((office) => (
-                                <div key={office.country} className="space-y-3">
-                                    <h3 className="font-bold text-gray-800">{office.country}</h3>
-                                    
-                                    {/* Address */}
-                                    <div className="flex items-start gap-4">
-                                        <div className="bg-yellow-100 p-3 rounded-full flex-shrink-0">
-                                            <FaMapMarkerAlt className="text-yellow-600 text-xl" />
-                                        </div>
-                                        <div>
-                                            <p className="text-gray-600 text-sm">{office.address}</p>
-                                        </div>
-                                    </div>
-                                    
-                                    {/* Phone */}
-                                    <div className="flex items-start gap-4">
-                                        <div className="bg-yellow-100 p-3 rounded-full flex-shrink-0">
-                                            <FaPhone className="text-yellow-600 text-xl" />
-                                        </div>
-                                        <div>
-                                            <p className="text-gray-600">{office.phone}</p>
-                                        </div>
-                                    </div>
-                                    
-                                    {/* Email */}
-                                    <div className="flex items-start gap-4">
-                                        <div className="bg-yellow-100 p-3 rounded-full flex-shrink-0">
-                                            <FaEnvelope className="text-yellow-600 text-xl" />
-                                        </div>
-                                        <div>
-                                            <a 
-                                                href={`mailto:${office.email}`} 
-                                                className="text-gray-600 hover:text-yellow-500 transition"
+                            <div className="space-y-6">
+                                
+                                {/* Office Address */}
+                                {officeAddresses.map((office) => (
+                                    <div key={office.country} className="space-y-3">
+                                        <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>{office.country}</h3>
+                                        
+                                        {/* Address */}
+                                        <div className="flex items-start gap-4">
+                                            <div
+                                                className="p-3 rounded-full flex-shrink-0"
+                                                style={{ background: 'var(--brand-gold-subtle)' }}
                                             >
-                                                {office.email}
-                                            </a>
+                                                <FaMapMarkerAlt className="text-xl" style={{ color: 'var(--brand-gold)' }} />
+                                            </div>
+                                            <div>
+                                                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{office.address}</p>
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Phone */}
+                                        <div className="flex items-start gap-4">
+                                            <div
+                                                className="p-3 rounded-full flex-shrink-0"
+                                                style={{ background: 'var(--brand-gold-subtle)' }}
+                                            >
+                                                <FaPhone className="text-xl" style={{ color: 'var(--brand-gold)' }} />
+                                            </div>
+                                            <div>
+                                                <p style={{ color: 'var(--text-secondary)' }}>{office.phone}</p>
+                                            </div>
+                                        </div>
+                                        
+                                        {/* Email */}
+                                        <div className="flex items-start gap-4">
+                                            <div
+                                                className="p-3 rounded-full flex-shrink-0"
+                                                style={{ background: 'var(--brand-gold-subtle)' }}
+                                            >
+                                                <FaEnvelope className="text-xl" style={{ color: 'var(--brand-gold)' }} />
+                                            </div>
+                                            <div>
+                                                <a 
+                                                    href={`mailto:${office.email}`} 
+                                                    className="transition hover:text-[var(--brand-gold)]"
+                                                    style={{ color: 'var(--text-secondary)' }}
+                                                >
+                                                    {office.email}
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
 
-                            {/* International Contacts */}
-                            <div>
-                                <h3 className="font-bold text-gray-800 mb-3">
-                                    International Contacts
-                                </h3>
-                                <div className="grid grid-cols-2 gap-2 text-sm">
-                                    {internationalContacts.map((contact) => (
-                                        <div key={contact.country} className="bg-gray-50 p-2 rounded-lg">
-                                            <p className="font-semibold text-gray-700">{contact.country}</p>
-                                            <p className="text-gray-600">{contact.phone}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Working Hours */}
-                            <div className="flex items-start gap-4">
-                                <div className="bg-yellow-100 p-3 rounded-full flex-shrink-0">
-                                    <FaClock className="text-yellow-600 text-xl" />
-                                </div>
+                                {/* International Contacts */}
                                 <div>
-                                    <p className="font-semibold text-gray-800">Working Hours</p>
-                                    <p className="text-gray-600">Mon - Fri: 8:00 AM - 6:00 PM (EAT)</p>
-                                    <p className="text-gray-600">Sat: 9:00 AM - 4:00 PM (EAT)</p>
-                                </div>
-                            </div>
-
-                            {/* Social Media */}
-                            <div className="pt-4 border-t border-gray-200">
-                                <p className="font-semibold text-gray-800 mb-4">Follow Us</p>
-                                <div className="flex gap-4">
-                                    {socialLinks.map((social) => {
-                                        const Icon = social.icon;
-                                        return (
-                                            <a
-                                                key={social.name}
-                                                href={social.url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="bg-gray-100 hover:bg-yellow-500 p-3 rounded-full transition text-gray-600 hover:text-white"
-                                                aria-label={`Follow us on ${social.name}`}
+                                    <h3 className="font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
+                                        International Contacts
+                                    </h3>
+                                    <div className="grid grid-cols-2 gap-2 text-sm">
+                                        {internationalContacts.map((contact) => (
+                                            <div
+                                                key={contact.country}
+                                                className="p-2 rounded-lg"
+                                                style={{ background: 'var(--bg-secondary)' }}
                                             >
-                                                <Icon size={20} />
-                                            </a>
-                                        );
-                                    })}
+                                                <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>{contact.country}</p>
+                                                <p style={{ color: 'var(--text-secondary)' }}>{contact.phone}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Working Hours */}
+                                <div className="flex items-start gap-4">
+                                    <div
+                                        className="p-3 rounded-full flex-shrink-0"
+                                        style={{ background: 'var(--brand-gold-subtle)' }}
+                                    >
+                                        <FaClock className="text-xl" style={{ color: 'var(--brand-gold)' }} />
+                                    </div>
+                                    <div>
+                                        <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>Working Hours</p>
+                                        <p style={{ color: 'var(--text-secondary)' }}>Mon - Fri: 8:00 AM - 6:00 PM (EAT)</p>
+                                        <p style={{ color: 'var(--text-secondary)' }}>Sat: 9:00 AM - 4:00 PM (EAT)</p>
+                                    </div>
+                                </div>
+
+                                {/* Social Media */}
+                                <div className="pt-4" style={{ borderTop: '1px solid var(--border-primary)' }}>
+                                    <p className="font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Follow Us</p>
+                                    <div className="flex gap-4">
+                                        {socialLinks.map((social) => {
+                                            const Icon = social.icon;
+                                            return (
+                                                <a
+                                                    key={social.name}
+                                                    href={social.url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="p-3 rounded-full transition"
+                                                    style={{
+                                                        background: 'var(--bg-secondary)',
+                                                        color: 'var(--text-tertiary)',
+                                                    }}
+                                                    onMouseEnter={(e) => {
+                                                        e.currentTarget.style.background = 'var(--brand-gold)';
+                                                        e.currentTarget.style.color = '#FFFFFF';
+                                                    }}
+                                                    onMouseLeave={(e) => {
+                                                        e.currentTarget.style.background = 'var(--bg-secondary)';
+                                                        e.currentTarget.style.color = 'var(--text-tertiary)';
+                                                    }}
+                                                    aria-label={`Follow us on ${social.name}`}
+                                                >
+                                                    <Icon size={20} />
+                                                </a>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    {/* ============================================
-                    COLUMN 2: Contact Form
-                    ============================================ */}
-                    <div className="bg-white rounded-2xl shadow-lg p-8">
-                        <h2 className="text-2xl font-bold text-gray-800 mb-6">
-                            Send Us a Message
-                        </h2>
+                        {/* COLUMN 2: Contact Form */}
+                        <div
+                            className="rounded-2xl p-8"
+                            style={{
+                                background: 'var(--bg-card)',
+                                boxShadow: 'var(--shadow-lg)',
+                            }}
+                        >
+                            <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
+                                Send Us a Message
+                            </h2>
 
-                        {/* Show success message after submission */}
-                        {submitted ? (
-                            <div className="bg-green-50 border border-green-200 text-green-700 p-6 rounded-xl text-center">
-                                <div className="text-4xl mb-3">✅</div>
-                                <h3 className="font-bold text-lg">Message Sent!</h3>
-                                <p className="text-sm">We'll get back to you within 24 hours.</p>
-                            </div>
-                        ) : (
-                            // Form with validation
-                            <form onSubmit={handleSubmit} className="space-y-5">
-                                
-                                {/* Name Field */}
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        Your Name *
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition"
-                                        placeholder="John Doe"
-                                        value={form.name}
-                                        onChange={(e) => setForm({...form, name: e.target.value})}
-                                        required
-                                    />
-                                </div>
-
-                                {/* Email Field */}
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        Email Address *
-                                    </label>
-                                    <input
-                                        type="email"
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition"
-                                        placeholder="john@example.com"
-                                        value={form.email}
-                                        onChange={(e) => setForm({...form, email: e.target.value})}
-                                        required
-                                    />
-                                </div>
-
-                                {/* Phone Field (optional) */}
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        Phone Number
-                                    </label>
-                                    <input
-                                        type="tel"
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition"
-                                        placeholder="+256 779 557 514"
-                                        value={form.phone}
-                                        onChange={(e) => setForm({...form, phone: e.target.value})}
-                                    />
-                                </div>
-
-                                {/* Message Field */}
-                                <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                                        Message *
-                                    </label>
-                                    <textarea
-                                        rows={5}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition resize-none"
-                                        placeholder="Tell us about your dream safari..."
-                                        value={form.message}
-                                        onChange={(e) => setForm({...form, message: e.target.value})}
-                                        required
-                                    />
-                                </div>
-
-                                {/* Submit Button */}
-                                <button
-                                    type="submit"
-                                    className="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-4 rounded-xl transition transform hover:scale-[1.02]"
+                            {/* Show success message after submission */}
+                            {submitted ? (
+                                <div
+                                    className="p-6 rounded-xl text-center"
+                                    style={{
+                                        background: 'var(--brand-green-subtle)',
+                                        border: '1px solid var(--brand-green)',
+                                        color: 'var(--brand-green)',
+                                    }}
                                 >
-                                    Send Message
-                                </button>
+                                    <div className="text-4xl mb-3">✅</div>
+                                    <h3 className="font-bold text-lg">Message Sent!</h3>
+                                    <p className="text-sm opacity-80">We'll get back to you within 24 hours.</p>
+                                </div>
+                            ) : (
+                                <form onSubmit={handleSubmit} className="space-y-5">
+                                    
+                                    {/* Name Field */}
+                                    <div>
+                                        <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>
+                                            Your Name *
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="w-full px-4 py-3 rounded-xl outline-none transition"
+                                            style={{
+                                                background: 'var(--bg-input)',
+                                                border: '1px solid var(--border-primary)',
+                                                color: 'var(--text-primary)',
+                                            }}
+                                            placeholder="John Doe"
+                                            value={form.name}
+                                            onChange={(e) => setForm({...form, name: e.target.value})}
+                                            required
+                                        />
+                                    </div>
 
-                                {/* Trust Signal */}
-                                <p className="text-xs text-center text-gray-500 mt-2">
-                                    We'll respond within 24 hours. Your information is secure with us.
-                                </p>
-                            </form>
-                        )}
+                                    {/* Email Field */}
+                                    <div>
+                                        <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>
+                                            Email Address *
+                                        </label>
+                                        <input
+                                            type="email"
+                                            className="w-full px-4 py-3 rounded-xl outline-none transition"
+                                            style={{
+                                                background: 'var(--bg-input)',
+                                                border: '1px solid var(--border-primary)',
+                                                color: 'var(--text-primary)',
+                                            }}
+                                            placeholder="john@example.com"
+                                            value={form.email}
+                                            onChange={(e) => setForm({...form, email: e.target.value})}
+                                            required
+                                        />
+                                    </div>
+
+                                    {/* Phone Field */}
+                                    <div>
+                                        <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>
+                                            Phone Number
+                                        </label>
+                                        <input
+                                            type="tel"
+                                            className="w-full px-4 py-3 rounded-xl outline-none transition"
+                                            style={{
+                                                background: 'var(--bg-input)',
+                                                border: '1px solid var(--border-primary)',
+                                                color: 'var(--text-primary)',
+                                            }}
+                                            placeholder="+256 779 557 514"
+                                            value={form.phone}
+                                            onChange={(e) => setForm({...form, phone: e.target.value})}
+                                        />
+                                    </div>
+
+                                    {/* Message Field */}
+                                    <div>
+                                        <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>
+                                            Message *
+                                        </label>
+                                        <textarea
+                                            rows={5}
+                                            className="w-full px-4 py-3 rounded-xl outline-none transition resize-none"
+                                            style={{
+                                                background: 'var(--bg-input)',
+                                                border: '1px solid var(--border-primary)',
+                                                color: 'var(--text-primary)',
+                                            }}
+                                            placeholder="Tell us about your dream safari..."
+                                            value={form.message}
+                                            onChange={(e) => setForm({...form, message: e.target.value})}
+                                            required
+                                        />
+                                    </div>
+
+                                    {/* Submit Button */}
+                                    <button
+                                        type="submit"
+                                        className="w-full font-bold py-4 rounded-xl transition transform hover:scale-[1.02]"
+                                        style={{
+                                            background: 'var(--brand-gold)',
+                                            color: 'var(--text-on-gold)',
+                                        }}
+                                    >
+                                        Send Message
+                                    </button>
+
+                                    {/* Trust Signal */}
+                                    <p className="text-xs text-center mt-2" style={{ color: 'var(--text-muted)' }}>
+                                        We'll respond within 24 hours. Your information is secure with us.
+                                    </p>
+                                </form>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

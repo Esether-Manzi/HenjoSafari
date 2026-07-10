@@ -3,18 +3,43 @@
 // ============================================
 
 import { apiClient, ApiResponse, PaginatedResponse } from './client';
-import { SafariPackage } from '@/types/safari';
+import { SafariPackage, Activity } from '@/types/safari';
 
 export const safariApi = {
     /**
+     * Get all safari activities
+     */
+    getActivities: async (): Promise<ApiResponse<Activity[]>> => {
+        return apiClient.get('/activities');
+    },
+
+    /**
      * Get all safari packages with pagination and filters
      */
-    getAll: async (): Promise<ApiResponse<PaginatedResponse<SafariPackage>>> => {
+    getAll: async (filters?: any): Promise<ApiResponse<PaginatedResponse<SafariPackage>>> => {
         try {
-            const response = await apiClient.get<PaginatedResponse<SafariPackage>>('/safaris');
+            const response = await apiClient.get<PaginatedResponse<SafariPackage>>('/safaris', { params: filters });
             return response;
         } catch (error: any) {
             console.error('API Error:', error.response?.data || error.message);
+            throw error;
+        }
+    },
+
+    /**
+     * Get search and filter drop-down options from database
+     */
+    getFilterOptions: async (): Promise<ApiResponse<{
+        categories: any[];
+        destinations: any[];
+        activities: any[];
+        countries: any[];
+    }>> => {
+        try {
+            const response = await apiClient.get<any>('/safaris/filters');
+            return response;
+        } catch (error: any) {
+            console.error('API Error fetching filters:', error.response?.data || error.message);
             throw error;
         }
     },

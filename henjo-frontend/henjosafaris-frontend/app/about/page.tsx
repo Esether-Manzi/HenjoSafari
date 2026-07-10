@@ -1,24 +1,47 @@
-// ============================================
-// ABOUT US PAGE
-// ============================================
-// This page displays information about Henjo African Safaris.
-// Content is sourced from the content audit document.
-// 
-// Page sections:
-// 1. Hero section with page title and subtitle
-// 2. Who We Are - image on right, text on left
-// 3. Our Services - horizontal scrolling cards (3 visible at a time)
-// 4. Core Values, Commitment & Inclusive Tourism - 3 columns
-// 5. Stats section - experience, travelers, rating
-// ============================================
+'use client';
 
+import { useState, useEffect } from 'react';
 import Hero from '@/components/common/Hero';
 import Image from 'next/image';
-import { FaShieldAlt, FaLeaf, FaUsers, FaCompass, FaHeart, FaGlobeAfrica } from 'react-icons/fa';
+import Link from 'next/link';
+import { FaHeart, FaLeaf, FaUsers, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { MOCK_TEAM, getMemberPhoto } from '@/app/our-team/page';
+import { teamApi } from '@/lib/api/teamApi';
+import type { TeamMember } from '@/types/team';
 
 export default function AboutPage() {
+    const [team, setTeam] = useState<TeamMember[]>([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+        const fetchTeam = async () => {
+            try {
+                const response = await teamApi.getAll();
+                if (response.success && response.data?.length > 0) {
+                    setTeam(response.data);
+                } else {
+                    setTeam(MOCK_TEAM);
+                }
+            } catch (err) {
+                console.warn('Unable to fetch team in about page, using mock data:', err);
+                setTeam(MOCK_TEAM);
+            }
+        };
+        fetchTeam();
+    }, []);
+
+    const handleNext = () => {
+        if (team.length <= 3) return;
+        setCurrentIndex((prev) => (prev + 1) % (team.length - 2));
+    };
+
+    const handlePrev = () => {
+        if (team.length <= 3) return;
+        setCurrentIndex((prev) => (prev - 1 + (team.length - 2)) % (team.length - 2));
+    };
+
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen" style={{ background: 'var(--bg-secondary)' }}>
             {/* ============================================
             HERO SECTION
             ============================================ */}
@@ -36,32 +59,32 @@ export default function AboutPage() {
             {/* ============================================
             SECTION 1: Who We Are (Image Right, Text Left)
             ============================================ */}
-            <section className="py-20 bg-white">
+            <section className="py-20" style={{ background: 'var(--bg-primary)' }}>
                 <div className="container mx-auto px-4 max-w-7xl">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         {/* Left: Text Content */}
                         <div>
-                            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-                                Who <span className="text-yellow-500">We Are</span>
+                            <h2 className="text-3xl md:text-4xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
+                                Who <span style={{ color: 'var(--brand-gold)' }}>We Are</span>
                             </h2>
-                            <p className="text-gray-600 leading-relaxed text-lg">
+                            <p className="leading-relaxed text-lg" style={{ color: 'var(--text-secondary)' }}>
                                 Henjo African Safaris Ltd is a Ugandan Tour agency offering Bespoke Safaris, 
                                 Tailor Made Holidays, Authentic Luxury African Safaris, Fly-In Safaris, 
                                 Gorilla Tracking and Cultural Safaris.
                             </p>
-                            <p className="text-gray-600 leading-relaxed text-lg mt-4">
+                            <p className="leading-relaxed text-lg mt-4" style={{ color: 'var(--text-secondary)' }}>
                                 We take pride in having a team of professionals who have traveled in East Africa 
                                 and now work to ensure that clients both acquire a unique and educational 
                                 experience of African wildlife, landscape, and culture.
                             </p>
-                            <p className="text-gray-600 leading-relaxed text-lg mt-4">
+                            <p className="leading-relaxed text-lg mt-4" style={{ color: 'var(--text-secondary)' }}>
                                 The competence and knowledge of our safari tour guides highly contributes 
                                 to the overall experience.
                             </p>
                         </div>
 
                         {/* Right: Image */}
-                        <div className="relative h-[400px] rounded-2xl overflow-hidden shadow-card">
+                        <div className="relative h-[400px] rounded-2xl overflow-hidden" style={{ boxShadow: 'var(--shadow-lg)' }}>
                             <Image
                                 src="/images/about_us_2.png"
                                 alt="Henjo African Safaris - Who We Are"
@@ -76,117 +99,58 @@ export default function AboutPage() {
             {/* ============================================
             SECTION 2: Our Services (Horizontal Scrolling)
             ============================================ */}
-            <section className="py-20 bg-primary">
+            <section className="py-20" style={{ background: 'var(--bg-secondary)' }}>
                 <div className="container mx-auto px-4 max-w-7xl">
                     <div className="text-center mb-12">
-                        <h2 className="section-title">
-                            Our <span className="text-yellow-500">Services</span>
+                        <h2 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                            Our <span style={{ color: 'var(--brand-gold)' }}>Services</span>
                         </h2>
-                        <p className="section-subtitle">
+                        <p className="mx-auto max-w-2xl mt-2" style={{ color: 'var(--text-secondary)' }}>
                             We offer a wide range of safari experiences tailored to your preferences
                         </p>
                     </div>
 
-                    {/* <div className="overflow-x-auto pb-6 scrollbar-hide">
-                        <div className="flex gap-6 w-max px-2">
-                            {services.map((service, index) => (
-                                <div key={index} className="w-72 flex-shrink-0 card p-6 hover:shadow-lg transition duration-300 group">
-                                    <div className="w-16 h-16 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center mb-4 group-hover:bg-yellow-200 dark:group-hover:bg-yellow-800/50 transition">
-                                        <span className="text-3xl">{service.icon}</span>
-                                    </div>
-                                    <h3 className="text-xl font-bold text-primary mb-2">{service.title}</h3>
-                                    <p className="text-secondary text-sm">{service.description}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </div> */}
-                    {/* Horizontal Scrolling Cards */}
                     <div className="relative">
-                        {/* Scrolling container - hides scrollbar but allows scrolling */}
+                        {/* Scrolling container */}
                         <div className="overflow-x-auto pb-6 scrollbar-hide">
                             <div className="flex gap-6 w-max px-2">
-                                {/* Card 1 */}
-                                <div className="w-72 flex-shrink-0 bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition duration-300">
-                                    <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
-                                        <span className="text-3xl">🦁</span>
+                                {[
+                                    { icon: '🦁', title: 'Wildlife Safaris', desc: 'Experience the thrill of seeing the Big Five in their natural habitat across East Africa\'s national parks.' },
+                                    { icon: '🦍', title: 'Gorilla Trekking', desc: 'Trek through the lush forests of Uganda and Rwanda to encounter endangered mountain gorillas.' },
+                                    { icon: '✈️', title: 'Fly-In Safaris', desc: 'Skip the long drives and fly directly to your safari destination for more time exploring.' },
+                                    { icon: '🏔️', title: 'Mountaineering', desc: 'Conquer the highest peaks in Africa including Mount Kilimanjaro and the Rwenzori Mountains.' },
+                                    { icon: '🏛️', title: 'Cultural Tours', desc: 'Immerse yourself in the rich cultures and traditions of East Africa\'s diverse communities.' },
+                                    { icon: '👩‍🦰', title: 'Women Only Tours', desc: 'Specially designed tours for women travelers seeking safe and empowering African adventures.' },
+                                    { icon: '🏙️', title: 'City Tours', desc: 'Explore the vibrant cities of East Africa including Kampala, Nairobi, and Dar es Salaam.' },
+                                ].map((service, index) => (
+                                    <div
+                                        key={index}
+                                        className="w-72 flex-shrink-0 rounded-2xl p-6 transition duration-300"
+                                        style={{
+                                            background: 'var(--bg-card)',
+                                            boxShadow: 'var(--shadow-md)',
+                                        }}
+                                    >
+                                        <div
+                                            className="w-16 h-16 rounded-full flex items-center justify-center mb-4"
+                                            style={{ background: 'var(--brand-gold-subtle)' }}
+                                        >
+                                            <span className="text-3xl">{service.icon}</span>
+                                        </div>
+                                        <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
+                                            {service.title}
+                                        </h3>
+                                        <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
+                                            {service.desc}
+                                        </p>
                                     </div>
-                                    <h3 className="text-xl font-bold text-gray-800 mb-2">Wildlife Safaris</h3>
-                                    <p className="text-gray-600 text-sm">
-                                        Experience the thrill of seeing the Big Five in their natural habitat across East Africa's national parks.
-                                    </p>
-                                </div>
-
-                                {/* Card 2 */}
-                                <div className="w-72 flex-shrink-0 bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition duration-300">
-                                    <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
-                                        <span className="text-3xl">🦍</span>
-                                    </div>
-                                    <h3 className="text-xl font-bold text-gray-800 mb-2">Gorilla Trekking</h3>
-                                    <p className="text-gray-600 text-sm">
-                                        Trek through the lush forests of Uganda and Rwanda to encounter endangered mountain gorillas.
-                                    </p>
-                                </div>
-
-                                {/* Card 3 */}
-                                <div className="w-72 flex-shrink-0 bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition duration-300">
-                                    <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
-                                        <span className="text-3xl">✈️</span>
-                                    </div>
-                                    <h3 className="text-xl font-bold text-gray-800 mb-2">Fly-In Safaris</h3>
-                                    <p className="text-gray-600 text-sm">
-                                        Skip the long drives and fly directly to your safari destination for more time exploring.
-                                    </p>
-                                </div>
-
-                                {/* Card 4 */}
-                                <div className="w-72 flex-shrink-0 bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition duration-300">
-                                    <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
-                                        <span className="text-3xl">🏔️</span>
-                                    </div>
-                                    <h3 className="text-xl font-bold text-gray-800 mb-2">Mountaineering</h3>
-                                    <p className="text-gray-600 text-sm">
-                                        Conquer the highest peaks in Africa including Mount Kilimanjaro and the Rwenzori Mountains.
-                                    </p>
-                                </div>
-
-                                {/* Card 5 */}
-                                <div className="w-72 flex-shrink-0 bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition duration-300">
-                                    <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
-                                        <span className="text-3xl">🏛️</span>
-                                    </div>
-                                    <h3 className="text-xl font-bold text-gray-800 mb-2">Cultural Tours</h3>
-                                    <p className="text-gray-600 text-sm">
-                                        Immerse yourself in the rich cultures and traditions of East Africa's diverse communities.
-                                    </p>
-                                </div>
-
-                                {/* Card 6 */}
-                                <div className="w-72 flex-shrink-0 bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition duration-300">
-                                    <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
-                                        <span className="text-3xl">👩‍🦰</span>
-                                    </div>
-                                    <h3 className="text-xl font-bold text-gray-800 mb-2">Women Only Tours</h3>
-                                    <p className="text-gray-600 text-sm">
-                                        Specially designed tours for women travelers seeking safe and empowering African adventures.
-                                    </p>
-                                </div>
-
-                                {/* Card 7 */}
-                                <div className="w-72 flex-shrink-0 bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition duration-300">
-                                    <div className="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
-                                        <span className="text-3xl">🏙️</span>
-                                    </div>
-                                    <h3 className="text-xl font-bold text-gray-800 mb-2">City Tours</h3>
-                                    <p className="text-gray-600 text-sm">
-                                        Explore the vibrant cities of East Africa including Kampala, Nairobi, and Dar es Salaam.
-                                    </p>
-                                </div>
+                                ))}
                             </div>
                         </div>
 
                         {/* Scroll Hint */}
                         <div className="text-center mt-6">
-                            <p className="text-sm text-gray-400 animate-pulse">
+                            <p className="text-sm animate-pulse" style={{ color: 'var(--text-muted)' }}>
                                 ← Scroll to see more services →
                             </p>
                         </div>
@@ -195,75 +159,201 @@ export default function AboutPage() {
             </section>
 
             {/* ============================================
+            SECTION 2.5: Team Members Preview Carousel
+            ============================================ */}
+            <section className="py-20" style={{ background: 'var(--bg-primary)', borderBottom: '1px solid var(--border-subtle)' }}>
+                <div className="container mx-auto px-4 max-w-7xl">
+                    <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                        <div>
+                            <span className="inline-block bg-[var(--brand-gold-subtle)] text-[var(--brand-gold)] px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
+                                🤝 Meet the Experts
+                            </span>
+                            <h2 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                                Meet Our Team
+                            </h2>
+                            <p className="mt-2 text-lg max-w-2xl" style={{ color: 'var(--text-secondary)' }}>
+                                Discover the experienced guides, planners, and conservationists who bring your African adventures to life.
+                            </p>
+                        </div>
+                        {/* Navigation Buttons */}
+                        {team.length > 3 && (
+                            <div className="flex gap-3 mt-6 md:mt-0">
+                                <button
+                                    onClick={handlePrev}
+                                    className="p-3 rounded-full border transition duration-300 hover:scale-105 active:scale-95"
+                                    style={{
+                                        borderColor: 'var(--border-primary)',
+                                        background: 'var(--bg-card)',
+                                        color: 'var(--text-primary)'
+                                    }}
+                                    aria-label="Previous team members"
+                                >
+                                    <FaChevronLeft size={16} />
+                                </button>
+                                <button
+                                    onClick={handleNext}
+                                    className="p-3 rounded-full border transition duration-300 hover:scale-105 active:scale-95"
+                                    style={{
+                                        borderColor: 'var(--border-primary)',
+                                        background: 'var(--bg-card)',
+                                        color: 'var(--text-primary)'
+                                    }}
+                                    aria-label="Next team members"
+                                >
+                                    <FaChevronRight size={16} />
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Carousel Container */}
+                    <div className="relative overflow-hidden w-full py-4">
+                        <div
+                            className="flex transition-transform duration-500 ease-in-out"
+                            style={{
+                                transform: `translateX(-${currentIndex * (100 / (team.length || 1))}%)`,
+                                width: `${((team.length || 1) * 100) / Math.min(3, team.length || 1)}%`
+                            }}
+                        >
+                            {team.map((member) => {
+                                const photoUrl = getMemberPhoto(member);
+                                return (
+                                    <div
+                                        key={member.id}
+                                        className="px-3 transition-opacity duration-300"
+                                        style={{ width: `${100 / (team.length || 1)}%` }}
+                                    >
+                                        <div
+                                            className="rounded-2xl p-6 transition duration-300 hover:shadow-lg h-full flex flex-col justify-between"
+                                            style={{
+                                                background: 'var(--bg-card)',
+                                                border: '1px solid var(--border-subtle)',
+                                                boxShadow: 'var(--shadow-md)'
+                                            }}
+                                        >
+                                            <div>
+                                                <div className="relative w-28 h-28 mx-auto mb-4 rounded-full overflow-hidden border-2" style={{ borderColor: 'var(--brand-gold)' }}>
+                                                    <Image
+                                                        src={photoUrl}
+                                                        alt={member.name}
+                                                        fill
+                                                        className="object-cover"
+                                                    />
+                                                </div>
+                                                <h3 className="text-xl font-bold text-center" style={{ color: 'var(--text-primary)' }}>{member.name}</h3>
+                                                <p className="text-sm font-semibold text-center mt-1" style={{ color: 'var(--brand-gold)' }}>{member.position}</p>
+                                                <p className="text-xs text-center mt-3 line-clamp-3 leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>
+                                                    {member.bio}
+                                                </p>
+                                            </div>
+
+                                            <div className="mt-6 pt-4 border-t text-center" style={{ borderColor: 'var(--border-subtle)' }}>
+                                                <Link
+                                                    href="/our-team"
+                                                    className="text-xs font-bold transition hover:text-[var(--brand-gold-hover)]"
+                                                    style={{ color: 'var(--brand-gold)' }}
+                                                >
+                                                    View Bio & Profile →
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* ============================================
             SECTION 3: Core Values, Commitment & Inclusive Tourism
             ============================================ */}
-
-
-            <section className="py-20 bg-secondary">
+            <section className="py-20" style={{ background: 'var(--bg-primary)' }}>
                 <div className="container mx-auto px-4 max-w-7xl">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         
                         {/* Values - Green accent */}
-                        <div className="card p-8 hover:shadow-lg transition duration-300 border-t-4 border-green-600 dark:border-green-400">
-                            <div className="w-14 h-14 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mb-4">
-                                <FaHeart className="text-green-600 dark:text-green-400 text-2xl" />
+                        <div
+                            className="p-8 rounded-2xl transition duration-300"
+                            style={{
+                                background: 'var(--bg-card)',
+                                boxShadow: 'var(--shadow-md)',
+                                borderTop: '4px solid var(--brand-green)',
+                            }}
+                        >
+                            <div
+                                className="w-14 h-14 rounded-full flex items-center justify-center mb-4"
+                                style={{ background: 'var(--brand-green-subtle)' }}
+                            >
+                                <FaHeart className="text-2xl" style={{ color: 'var(--brand-green)' }} />
                             </div>
-                            <h3 className="text-xl font-bold text-gray-800 mb-4">Our Core Values</h3>
-                            {/* Content */}
+                            <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>Our Core Values</h3>
 
-                            <ul className="space-y-3 text-gray-600">
-                                <li className="flex items-start gap-3">
-                                    <span className="text-yellow-500 mt-1">✓</span>
-                                    <span>Integrity and transparency in all our dealings</span>
-                                </li>
-                                <li className="flex items-start gap-3">
-                                    <span className="text-yellow-500 mt-1">✓</span>
-                                    <span>Passion for wildlife and conservation</span>
-                                </li>
-                                <li className="flex items-start gap-3">
-                                    <span className="text-yellow-500 mt-1">✓</span>
-                                    <span>Excellence in customer service</span>
-                                </li>
-                                <li className="flex items-start gap-3">
-                                    <span className="text-yellow-500 mt-1">✓</span>
-                                    <span>Respect for local communities and cultures</span>
-                                </li>
+                            <ul className="space-y-3" style={{ color: 'var(--text-secondary)' }}>
+                                {[
+                                    'Integrity and transparency in all our dealings',
+                                    'Passion for wildlife and conservation',
+                                    'Excellence in customer service',
+                                    'Respect for local communities and cultures',
+                                ].map((value, i) => (
+                                    <li key={i} className="flex items-start gap-3">
+                                        <span className="mt-1" style={{ color: 'var(--brand-gold)' }}>✓</span>
+                                        <span>{value}</span>
+                                    </li>
+                                ))}
                             </ul>
-
                         </div>
 
-                        {/* Commitment - Yellow accent */}
-                        <div className="card p-8 hover:shadow-lg transition duration-300 border-t-4 border-yellow-500">
-                            <div className="w-14 h-14 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center mb-4">
-                                <FaLeaf className="text-yellow-600 dark:text-yellow-400 text-2xl" />
+                        {/* Commitment - Gold accent */}
+                        <div
+                            className="p-8 rounded-2xl transition duration-300"
+                            style={{
+                                background: 'var(--bg-card)',
+                                boxShadow: 'var(--shadow-md)',
+                                borderTop: '4px solid var(--brand-gold)',
+                            }}
+                        >
+                            <div
+                                className="w-14 h-14 rounded-full flex items-center justify-center mb-4"
+                                style={{ background: 'var(--brand-gold-subtle)' }}
+                            >
+                                <FaLeaf className="text-2xl" style={{ color: 'var(--brand-gold)' }} />
                             </div>
-                            <h3 className="text-xl font-bold text-gray-800 mb-4">Our Commitment</h3>
-                            {/* Content */}
-                            <p className="text-gray-600 leading-relaxed">
+                            <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>Our Commitment</h3>
+                            <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                                 Henjo African Safaris continues to endeavor to be sustainable in practice in the 
                                 tours offered, to protect African wildlife and ensure the tourism industry continues 
                                 to prosper.
                             </p>
-                            <p className="text-gray-600 leading-relaxed mt-4">
+                            <p className="leading-relaxed mt-4" style={{ color: 'var(--text-secondary)' }}>
                                 We are working towards leaving a minimal negative impact on the 
                                 environment and local communities, integrating environmental and social best 
                                 practices into every aspect of the business.
                             </p>
                         </div>
 
-                        {/* Inclusive - Red accent */}
-                        <div className="card p-8 hover:shadow-lg transition duration-300 border-t-4 border-red-600 dark:border-red-400">
-                            <div className="w-14 h-14 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mb-4">
-                                <FaUsers className="text-red-600 dark:text-red-400 text-2xl" />
+                        {/* Inclusive - Maroon accent */}
+                        <div
+                            className="p-8 rounded-2xl transition duration-300"
+                            style={{
+                                background: 'var(--bg-card)',
+                                boxShadow: 'var(--shadow-md)',
+                                borderTop: '4px solid var(--brand-maroon)',
+                            }}
+                        >
+                            <div
+                                className="w-14 h-14 rounded-full flex items-center justify-center mb-4"
+                                style={{ background: 'rgba(123, 24, 24, 0.08)' }}
+                            >
+                                <FaUsers className="text-2xl" style={{ color: 'var(--brand-maroon)' }} />
                             </div>
-                            <h3 className="text-xl font-bold text-gray-800 mb-4">Inclusive Tourism</h3>
-                            {/* Content */}
-                            <p className="text-gray-600 leading-relaxed">
+                            <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>Inclusive Tourism</h3>
+                            <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                                 Henjo African Safaris believes in Responsible and Inclusive Tourism, and offers 
                                 Disability Tours & Safaris — whether a traveler has a disability or not, they are 
                                 welcomed to experience their African holiday with Henjo.
                             </p>
-                            <p className="text-gray-600 leading-relaxed mt-4">
+                            <p className="leading-relaxed mt-4" style={{ color: 'var(--text-secondary)' }}>
                                 We are represented on SafariBookings.com and offer tours ranging from short stays 
                                 to longer durations, as well as fully tailor-made safaris on request.
                             </p>
@@ -276,27 +366,23 @@ export default function AboutPage() {
             {/* ============================================
             SECTION 4: Stats / Social Proof
             ============================================ */}
-
-            
-            <section className="py-16 bg-gradient-to-r from-yellow-500 to-yellow-600">
+            <section
+                className="py-16"
+                style={{ background: 'linear-gradient(135deg, var(--brand-gold), var(--brand-gold-hover))' }}
+            >
                 <div className="container mx-auto px-4 max-w-7xl">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                        <div className="text-center text-white">
-                            <div className="text-5xl font-bold">15+</div>
-                            <p className="text-yellow-100 text-sm mt-2">Years Experience</p>
-                        </div>
-                        <div className="text-center text-white">
-                            <div className="text-5xl font-bold">500+</div>
-                            <p className="text-yellow-100 text-sm mt-2">Happy Travelers</p>
-                        </div>
-                        <div className="text-center text-white">
-                            <div className="text-5xl font-bold">4.9★</div>
-                            <p className="text-yellow-100 text-sm mt-2">Average Rating</p>
-                        </div>
-                        <div className="text-center text-white">
-                            <div className="text-5xl font-bold">28</div>
-                            <p className="text-yellow-100 text-sm mt-2">Tour Packages</p>
-                        </div>
+                        {[
+                            { value: '15+', label: 'Years Experience' },
+                            { value: '500+', label: 'Happy Travelers' },
+                            { value: '4.9★', label: 'Average Rating' },
+                            { value: '28', label: 'Tour Packages' },
+                        ].map((stat) => (
+                            <div key={stat.label} className="text-center text-white">
+                                <div className="text-5xl font-bold">{stat.value}</div>
+                                <p className="text-sm mt-2 opacity-80">{stat.label}</p>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </section>

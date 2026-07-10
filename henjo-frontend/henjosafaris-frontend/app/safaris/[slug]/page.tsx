@@ -95,7 +95,7 @@ export default function SafariDetailPage() {
     const galleryImages = media?.filter((m: any) => m.collection_name === 'gallery') || [];
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen" style={{ background: 'var(--bg-secondary)' }}>
             <Head>
                 <title>{title} - Henjo African Safaris</title>
                 <meta name="description" content={summary || description?.slice(0, 160)} />
@@ -118,12 +118,12 @@ export default function SafariDetailPage() {
                     <div className="max-w-3xl">
                         <div className="flex flex-wrap gap-2 mb-4">
                             {featured && (
-                                <span className="bg-yellow-500 text-black px-3 py-1 rounded-full text-sm font-semibold">
+                                <span className="px-3 py-1 rounded-full text-sm font-semibold" style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}>
                                     ★ Featured
                                 </span>
                             )}
                             {popular && (
-                                <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                <span className="px-3 py-1 rounded-full text-sm font-semibold" style={{ background: 'var(--brand-maroon)', color: '#FFFFFF' }}>
                                     Popular
                                 </span>
                             )}
@@ -143,15 +143,15 @@ export default function SafariDetailPage() {
 
                         <div className="flex flex-wrap items-center gap-6 text-white">
                             <div className="flex items-center gap-2">
-                                <FaMapMarkerAlt className="text-yellow-400" />
+                                <FaMapMarkerAlt style={{ color: 'var(--brand-gold)' }} />
                                 <span>{destination?.name}</span>
                             </div>
                             <div className="flex items-center gap-2">
-                                <FaClock className="text-yellow-400" />
+                                <FaClock style={{ color: 'var(--brand-gold)' }} />
                                 <span>{duration_days} Days / {duration_nights} Nights</span>
                             </div>
                             <div className="flex items-center gap-2">
-                                <span className="text-2xl font-bold text-yellow-400">
+                                <span className="text-2xl font-bold" style={{ color: 'var(--brand-gold)' }}>
                                     {currency} {base_price?.toLocaleString()}
                                 </span>
                                 <span className="text-white/60">/ person</span>
@@ -161,7 +161,8 @@ export default function SafariDetailPage() {
                         <div className="flex flex-wrap gap-4 mt-6">
                             <button
                                 onClick={() => setShowBookingForm(true)}
-                                className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-8 py-3 rounded-full transition transform hover:scale-105"
+                                className="font-bold px-8 py-3 rounded-full transition transform hover:scale-105"
+                                style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}
                             >
                                 Book This Safari
                             </button>
@@ -185,27 +186,27 @@ export default function SafariDetailPage() {
                     {/* Left Column - Main Content */}
                     <div className="lg:col-span-2">
                         {/* Breadcrumb */}
-                        <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6">
-                            <Link href="/" className="hover:text-yellow-500">Home</Link>
+                        <nav className="flex items-center gap-2 text-sm mb-6" style={{ color: 'var(--text-muted)' }}>
+                            <Link href="/" className="transition hover:text-[var(--brand-gold)]">Home</Link>
                             <span>/</span>
-                            <Link href="/safaris" className="hover:text-yellow-500">Safaris</Link>
+                            <Link href="/safaris" className="transition hover:text-[var(--brand-gold)]">Safaris</Link>
                             <span>/</span>
-                            <span className="text-gray-700">{title}</span>
+                            <span style={{ color: 'var(--text-primary)' }}>{title}</span>
                         </nav>
 
                         {/* Tabs */}
-                        <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-8">
-                            <div className="border-b border-gray-200">
+                        <div className="rounded-xl overflow-hidden mb-8" style={{ background: 'var(--bg-card)', boxShadow: 'var(--shadow-md)' }}>
+                            <div style={{ borderBottom: '1px solid var(--border-primary)' }}>
                                 <div className="flex overflow-x-auto">
                                     {['overview', 'itinerary', 'inclusions'].map((tab) => (
                                         <button
                                             key={tab}
                                             onClick={() => setActiveTab(tab as any)}
-                                            className={`px-6 py-4 font-medium transition-colors whitespace-nowrap ${
-                                                activeTab === tab
-                                                    ? 'text-yellow-500 border-b-2 border-yellow-500'
-                                                    : 'text-gray-500 hover:text-gray-700'
-                                            }`}
+                                            className="px-6 py-4 font-medium transition-colors whitespace-nowrap"
+                                            style={{
+                                                color: activeTab === tab ? 'var(--brand-gold)' : 'var(--text-muted)',
+                                                borderBottom: activeTab === tab ? '2px solid var(--brand-gold)' : '2px solid transparent',
+                                            }}
                                         >
                                             {tab.charAt(0).toUpperCase() + tab.slice(1)}
                                         </button>
@@ -244,8 +245,8 @@ export default function SafariDetailPage() {
 
                         {/* Gallery */}
                         {galleryImages.length > 0 && (
-                            <div className="bg-white rounded-xl shadow-sm p-6">
-                                <h3 className="text-xl font-bold text-gray-800 mb-4">Gallery</h3>
+                            <div className="rounded-xl p-6" style={{ background: 'var(--bg-card)', boxShadow: 'var(--shadow-md)' }}>
+                                <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>Gallery</h3>
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                                     {galleryImages.slice(0, 8).map((image: any, index: number) => {
                                         const imgUrl = getImageUrl(media, 'gallery', index);
@@ -271,55 +272,56 @@ export default function SafariDetailPage() {
 
                     {/* Right Column - Sidebar */}
                     <div className="lg:col-span-1">
-                        <div className="bg-white rounded-xl shadow-lg p-6 sticky top-24">
-                            <div className="text-center border-b border-gray-200 pb-4">
-                                <p className="text-sm text-gray-500">Starting from</p>
-                                <p className="text-4xl font-bold text-green-700">
+                        <div className="rounded-xl p-6 sticky top-24" style={{ background: 'var(--bg-card)', boxShadow: 'var(--shadow-lg)' }}>
+                            <div className="text-center pb-4" style={{ borderBottom: '1px solid var(--border-primary)' }}>
+                                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Starting from</p>
+                                <p className="text-4xl font-bold" style={{ color: 'var(--brand-green)' }}>
                                     {currency} {base_price?.toLocaleString()}
                                 </p>
-                                <p className="text-sm text-gray-500">per person</p>
+                                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>per person</p>
                             </div>
 
                             <div className="py-4 space-y-3">
                                 <div className="flex justify-between">
-                                    <span className="text-gray-600">Duration</span>
-                                    <span className="font-semibold">{duration_days} Days / {duration_nights} Nights</span>
+                                    <span style={{ color: 'var(--text-secondary)' }}>Duration</span>
+                                    <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{duration_days} Days / {duration_nights} Nights</span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-gray-600">Destination</span>
-                                    <span className="font-semibold">{destination?.name}</span>
+                                    <span style={{ color: 'var(--text-secondary)' }}>Destination</span>
+                                    <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{destination?.name}</span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-gray-600">Group Size</span>
-                                    <span className="font-semibold">{packageData.min_people} - {packageData.max_people} people</span>
+                                    <span style={{ color: 'var(--text-secondary)' }}>Group Size</span>
+                                    <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{packageData.min_people} - {packageData.max_people} people</span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-gray-600">Guaranteed</span>
-                                    <span className="text-green-600 font-semibold">✓ Best Price</span>
+                                    <span style={{ color: 'var(--text-secondary)' }}>Guaranteed</span>
+                                    <span className="font-semibold" style={{ color: 'var(--brand-green)' }}>✓ Best Price</span>
                                 </div>
                             </div>
 
                             <div className="space-y-3">
                                 <button
                                     onClick={() => setShowBookingForm(true)}
-                                    className="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-3 rounded-full transition"
+                                    className="w-full font-bold py-3 rounded-full transition"
+                                    style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}
                                 >
                                     Book Now
                                 </button>
-                                <button className="w-full border-2 border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black font-bold py-3 rounded-full transition">
+                                <button className="w-full font-bold py-3 rounded-full transition" style={{ border: '2px solid var(--brand-gold)', color: 'var(--brand-gold)' }}>
                                     <FaWhatsapp className="inline mr-2" />
                                     WhatsApp Inquiry
                                 </button>
-                                <button className="w-full border border-gray-300 text-gray-600 hover:bg-gray-50 font-semibold py-3 rounded-full transition">
+                                <button className="w-full font-semibold py-3 rounded-full transition" style={{ border: '1px solid var(--border-primary)', color: 'var(--text-secondary)' }}>
                                     <FaEnvelope className="inline mr-2" />
                                     Email Inquiry
                                 </button>
                             </div>
 
-                            <div className="mt-4 p-4 bg-gray-50 rounded-lg text-center">
-                                <p className="text-sm text-gray-500">
+                            <div className="mt-4 p-4 rounded-lg text-center" style={{ background: 'var(--bg-secondary)' }}>
+                                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
                                     Need help? Call us at<br />
-                                    <span className="text-lg font-semibold text-gray-800">+255 123 456 789</span>
+                                    <span className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>+255 123 456 789</span>
                                 </p>
                             </div>
                         </div>
@@ -345,8 +347,8 @@ function OverviewTab({ description, activities, accommodations, destination }: a
     return (
         <div className="space-y-8">
             <div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Overview</h3>
-                <div className="prose prose-lg max-w-none text-gray-600 leading-relaxed">
+                <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>Overview</h3>
+                <div className="prose prose-lg max-w-none leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                     {description?.split('\n').map((paragraph: string, index: number) => (
                         <p key={index} className="mb-4">{paragraph}</p>
                     ))}
@@ -355,10 +357,10 @@ function OverviewTab({ description, activities, accommodations, destination }: a
 
             {activities && activities.length > 0 && (
                 <div>
-                    <h4 className="text-lg font-bold text-gray-800 mb-3">Activities</h4>
+                    <h4 className="text-lg font-bold mb-3" style={{ color: 'var(--text-primary)' }}>Activities</h4>
                     <div className="flex flex-wrap gap-2">
                         {activities.map((activity: any) => (
-                            <span key={activity.id} className="bg-gray-100 text-gray-700 px-4 py-2 rounded-full text-sm flex items-center gap-2">
+                            <span key={activity.id} className="px-4 py-2 rounded-full text-sm flex items-center gap-2" style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)' }}>
                                 {activity.icon && <span>{activity.icon}</span>}
                                 {activity.name}
                             </span>
@@ -369,22 +371,22 @@ function OverviewTab({ description, activities, accommodations, destination }: a
 
             {accommodations && accommodations.length > 0 && (
                 <div>
-                    <h4 className="text-lg font-bold text-gray-800 mb-3">Accommodations</h4>
+                    <h4 className="text-lg font-bold mb-3" style={{ color: 'var(--text-primary)' }}>Accommodations</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {accommodations.map((acc: any) => (
-                            <div key={acc.id} className="bg-gray-50 rounded-lg p-4 border border-gray-100">
+                            <div key={acc.id} className="rounded-lg p-4" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)' }}>
                                 <div className="flex justify-between items-start">
                                     <div>
                                         <h5 className="font-semibold">{acc.name}</h5>
-                                        <p className="text-sm text-gray-500 capitalize">{acc.type}</p>
+                                        <p className="text-sm capitalize" style={{ color: 'var(--text-muted)' }}>{acc.type}</p>
                                         {acc.pivot?.package_level && (
-                                            <span className="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full inline-block mt-1 capitalize">
+                                            <span className="text-xs px-2 py-1 rounded-full inline-block mt-1 capitalize" style={{ background: 'var(--brand-gold-subtle)', color: 'var(--brand-gold)' }}>
                                                 {acc.pivot.package_level}
                                             </span>
                                         )}
                                     </div>
                                     {acc.star_rating && (
-                                        <div className="flex text-yellow-400">
+                                        <div className="flex" style={{ color: 'var(--brand-gold)' }}>
                                             {[...Array(acc.star_rating)].map((_, i) => (
                                                 <FaStar key={i} size={16} />
                                             ))}
@@ -392,7 +394,7 @@ function OverviewTab({ description, activities, accommodations, destination }: a
                                     )}
                                 </div>
                                 {acc.description && (
-                                    <p className="text-sm text-gray-600 mt-2">{acc.description}</p>
+                                    <p className="text-sm mt-2" style={{ color: 'var(--text-tertiary)' }}>{acc.description}</p>
                                 )}
                             </div>
                         ))}
@@ -401,16 +403,16 @@ function OverviewTab({ description, activities, accommodations, destination }: a
             )}
 
             {destination && (
-                <div className="bg-yellow-50 rounded-lg p-6 border border-yellow-200">
-                    <h4 className="text-lg font-bold text-gray-800 mb-2">About {destination.name}</h4>
-                    <p className="text-gray-600">{destination.description}</p>
+                <div className="rounded-lg p-6" style={{ background: 'var(--brand-gold-subtle)', border: '1px solid var(--brand-gold)' }}>
+                    <h4 className="text-lg font-bold mb-2" style={{ color: 'var(--text-primary)' }}>About {destination.name}</h4>
+                    <p style={{ color: 'var(--text-secondary)' }}>{destination.description}</p>
                     {destination.best_time_to_visit && (
-                        <p className="text-sm text-gray-500 mt-2">
+                        <p className="text-sm mt-2" style={{ color: 'var(--text-muted)' }}>
                             <span className="font-semibold">Best time to visit:</span> {destination.best_time_to_visit}
                         </p>
                     )}
                     {destination.country && (
-                        <p className="text-sm text-gray-500 mt-1">
+                        <p className="text-sm mt-1" style={{ color: 'var(--text-muted)' }}>
                             <FaMapMarkerAlt className="inline mr-1" />
                             {destination.country.name}
                         </p>
@@ -427,26 +429,27 @@ function OverviewTab({ description, activities, accommodations, destination }: a
 function ItineraryTab({ itineraryDays, expandedDay, onToggleDay }: any) {
     return (
         <div>
-            <h3 className="text-xl font-bold text-gray-800 mb-6">Day-by-Day Itinerary</h3>
+            <h3 className="text-xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>Day-by-Day Itinerary</h3>
             <div className="space-y-4">
                 {itineraryDays?.map((day: any) => (
-                    <div key={day.id} className="border border-gray-200 rounded-lg overflow-hidden">
+                    <div key={day.id} className="rounded-lg overflow-hidden" style={{ border: '1px solid var(--border-primary)' }}>
                         <button
                             onClick={() => onToggleDay(day.day_number)}
-                            className="w-full flex items-center justify-between p-4 bg-gray-50 hover:bg-gray-100 transition"
+                            className="w-full flex items-center justify-between p-4 transition"
+                            style={{ background: 'var(--bg-secondary)' }}
                         >
                             <div className="flex items-center gap-4">
-                                <span className="bg-yellow-500 text-black font-bold w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span className="font-bold w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}>
                                     {day.day_number}
                                 </span>
-                                <span className="font-semibold text-gray-800">{day.title}</span>
+                                <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{day.title}</span>
                             </div>
                             {expandedDay === day.day_number ? <FaChevronUp /> : <FaChevronDown />}
                         </button>
                         {expandedDay === day.day_number && (
-                            <div className="p-4 bg-white">
-                                <p className="text-gray-600 leading-relaxed">{day.description}</p>
-                                <div className="flex gap-4 mt-3 text-sm text-gray-500">
+                            <div className="p-4" style={{ background: 'var(--bg-card)' }}>
+                                <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{day.description}</p>
+                                <div className="flex gap-4 mt-3 text-sm" style={{ color: 'var(--text-muted)' }}>
                                     {day.breakfast && <span>🍳 Breakfast</span>}
                                     {day.lunch && <span>🥪 Lunch</span>}
                                     {day.dinner && <span>🍽️ Dinner</span>}
@@ -467,13 +470,13 @@ function InclusionsTab({ inclusions, exclusions }: any) {
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div>
-                <h3 className="text-lg font-bold text-green-600 mb-4 flex items-center gap-2">
+                <h3 className="text-lg font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--brand-green)' }}>
                     <FaCheckCircle /> Included
                 </h3>
                 <ul className="space-y-2">
                     {inclusions?.map((item: any) => (
-                        <li key={item.id} className="flex items-start gap-2 text-gray-600">
-                            <FaCheckCircle className="text-green-500 mt-1 flex-shrink-0" />
+                        <li key={item.id} className="flex items-start gap-2" style={{ color: 'var(--text-secondary)' }}>
+                            <FaCheckCircle className="mt-1 flex-shrink-0" style={{ color: 'var(--brand-green)' }} />
                             <span>{item.item}</span>
                         </li>
                     ))}
@@ -481,13 +484,13 @@ function InclusionsTab({ inclusions, exclusions }: any) {
             </div>
 
             <div>
-                <h3 className="text-lg font-bold text-red-600 mb-4 flex items-center gap-2">
+                <h3 className="text-lg font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--brand-maroon)' }}>
                     <FaTimesCircle /> Excluded
                 </h3>
                 <ul className="space-y-2">
                     {exclusions?.map((item: any) => (
-                        <li key={item.id} className="flex items-start gap-2 text-gray-600">
-                            <FaTimesCircle className="text-red-500 mt-1 flex-shrink-0" />
+                        <li key={item.id} className="flex items-start gap-2" style={{ color: 'var(--text-secondary)' }}>
+                            <FaTimesCircle className="mt-1 flex-shrink-0" style={{ color: 'var(--brand-maroon)' }} />
                             <span>{item.item}</span>
                         </li>
                     ))}
@@ -537,21 +540,21 @@ function BookingModal({ packageData, onClose }: any) {
 
     return (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-between items-center">
-                    <h2 className="text-xl font-bold">Book Your Safari</h2>
-                    <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl">
+            <div className="rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" style={{ background: 'var(--bg-card)' }}>
+                <div className="sticky top-0 p-4 flex justify-between items-center" style={{ background: 'var(--bg-card)', borderBottom: '1px solid var(--border-primary)' }}>
+                    <h2 className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>Book Your Safari</h2>
+                    <button onClick={onClose} className="text-2xl" style={{ color: 'var(--text-muted)' }}>
                         ×
                     </button>
                 </div>
 
                 <div className="p-6">
-                    <div className="bg-yellow-50 rounded-lg p-4 mb-6 border border-yellow-200">
-                        <p className="font-semibold">{packageData.title}</p>
-                        <p className="text-sm text-gray-600">
+                    <div className="rounded-lg p-4 mb-6" style={{ background: 'var(--brand-gold-subtle)', border: '1px solid var(--brand-gold)' }}>
+                        <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>{packageData.title}</p>
+                        <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                             {packageData.duration_days} Days / {packageData.duration_nights} Nights
                         </p>
-                        <p className="text-lg font-bold text-green-700">
+                        <p className="text-lg font-bold" style={{ color: 'var(--brand-green)' }}>
                             {packageData.currency} {packageData.base_price.toLocaleString()} / person
                         </p>
                     </div>
@@ -559,12 +562,14 @@ function BookingModal({ packageData, onClose }: any) {
                     <div className="flex items-center gap-2 mb-6">
                         {[1, 2].map((num) => (
                             <div key={num} className="flex items-center">
-                                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                                    step >= num ? 'bg-yellow-500 text-black' : 'bg-gray-200 text-gray-500'
-                                }`}>
+                                <div className="w-8 h-8 rounded-full flex items-center justify-center"
+                                    style={{
+                                        background: step >= num ? 'var(--brand-gold)' : 'var(--bg-tertiary)',
+                                        color: step >= num ? 'var(--text-on-gold)' : 'var(--text-muted)'
+                                    }}>
                                     {num}
                                 </div>
-                                {num < 2 && <div className="w-12 h-0.5 bg-gray-200" />}
+                                {num < 2 && <div className="w-12 h-0.5" style={{ background: 'var(--border-primary)' }} />}
                             </div>
                         ))}
                     </div>
@@ -574,14 +579,15 @@ function BookingModal({ packageData, onClose }: any) {
                             <div className="space-y-4">
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">First Name *</label>
+                                        <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>First Name *</label>
                                         <input
                                             type="text"
                                             name="firstName"
                                             required
                                             value={formData.firstName}
                                             onChange={handleChange}
-                                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
+                                            className="w-full rounded-lg px-4 py-2 outline-none"
+                                            style={{ background: 'var(--bg-input)', border: '1px solid var(--border-primary)', color: 'var(--text-primary)' }}
                                         />
                                     </div>
                                     <div>
@@ -702,7 +708,7 @@ function BookingModal({ packageData, onClose }: any) {
                                     />
                                 </div>
 
-                                <div className="bg-gray-50 rounded-lg p-4">
+                                <div className="rounded-lg p-4" style={{ background: 'var(--bg-secondary)' }}>
                                     <h4 className="font-semibold mb-2">Price Summary</h4>
                                     <div className="space-y-1 text-sm">
                                         <div className="flex justify-between">
@@ -717,7 +723,7 @@ function BookingModal({ packageData, onClose }: any) {
                                         )}
                                         <div className="border-t border-gray-200 pt-2 mt-2 font-bold flex justify-between">
                                             <span>Total</span>
-                                            <span className="text-green-700">{packageData.currency} {totalPrice.toLocaleString()}</span>
+                                            <span style={{ color: 'var(--brand-green)' }}>{packageData.currency} {totalPrice.toLocaleString()}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -738,14 +744,16 @@ function BookingModal({ packageData, onClose }: any) {
                                 <button
                                     type="button"
                                     onClick={() => setStep(2)}
-                                    className="flex-1 bg-yellow-500 hover:bg-yellow-400 text-black font-bold py-3 rounded-lg transition"
+                                    className="flex-1 font-bold py-3 rounded-lg transition"
+                                    style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}
                                 >
                                     Continue
                                 </button>
                             ) : (
                                 <button
                                     type="submit"
-                                    className="flex-1 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition"
+                                    className="flex-1 font-bold py-3 rounded-lg transition"
+                                    style={{ background: 'var(--brand-green)', color: '#FFFFFF' }}
                                 >
                                     Book Safari
                                 </button>
@@ -763,18 +771,18 @@ function BookingModal({ packageData, onClose }: any) {
 // ============================================
 function PackageSkeleton() {
     return (
-        <div className="min-h-screen bg-gray-50">
-            <div className="h-[60vh] bg-gray-300 animate-pulse" />
+        <div className="min-h-screen" style={{ background: 'var(--bg-secondary)' }}>
+            <div className="h-[60vh] animate-pulse" style={{ background: 'var(--bg-tertiary)' }} />
             <div className="container mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div className="lg:col-span-2">
-                        <div className="bg-white rounded-xl shadow-sm p-6">
+                        <div className="rounded-xl p-6" style={{ background: 'var(--bg-card)', boxShadow: 'var(--shadow-sm)' }}>
                             <div className="h-8 bg-gray-200 rounded w-1/3 mb-4 animate-pulse" />
                             <div className="h-4 bg-gray-200 rounded w-full mb-2 animate-pulse" />
                             <div className="h-4 bg-gray-200 rounded w-5/6 animate-pulse" />
                             <div className="h-4 bg-gray-200 rounded w-3/4 animate-pulse mt-2" />
                         </div>
-                        <div className="mt-6 bg-white rounded-xl shadow-sm p-6">
+                        <div className="mt-6 rounded-xl p-6" style={{ background: 'var(--bg-card)', boxShadow: 'var(--shadow-sm)' }}>
                             <div className="h-6 bg-gray-200 rounded w-1/4 mb-4 animate-pulse" />
                             {[1, 2, 3, 4].map((i) => (
                                 <div key={i} className="h-12 bg-gray-200 rounded mb-2 animate-pulse" />
@@ -782,7 +790,7 @@ function PackageSkeleton() {
                         </div>
                     </div>
                     <div>
-                        <div className="bg-white rounded-xl shadow-lg p-6 sticky top-24">
+                        <div className="rounded-xl p-6 sticky top-24" style={{ background: 'var(--bg-card)', boxShadow: 'var(--shadow-lg)' }}>
                             <div className="h-24 bg-gray-200 rounded mb-4 animate-pulse" />
                             <div className="h-10 bg-gray-200 rounded mb-2 animate-pulse" />
                             <div className="h-10 bg-gray-200 rounded mb-2 animate-pulse" />
@@ -799,12 +807,12 @@ function PackageSkeleton() {
 // ============================================
 function NotFound() {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--bg-secondary)' }}>
             <div className="text-center">
-                <h1 className="text-6xl font-bold text-gray-300 mb-4">404</h1>
-                <h2 className="text-2xl font-bold text-gray-800 mb-2">Safari Not Found</h2>
-                <p className="text-gray-500 mb-6">The safari package you're looking for doesn't exist.</p>
-                <Link href="/safaris" className="bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded-full transition inline-block">
+                <h1 className="text-6xl font-bold mb-4" style={{ color: 'var(--text-muted)' }}>404</h1>
+                <h2 className="text-2xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>Safari Not Found</h2>
+                <p className="mb-6" style={{ color: 'var(--text-muted)' }}>The safari package you&apos;re looking for doesn&apos;t exist.</p>
+                <Link href="/safaris" className="font-bold px-6 py-3 rounded-full transition inline-block" style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}>
                     View All Safaris
                 </Link>
             </div>

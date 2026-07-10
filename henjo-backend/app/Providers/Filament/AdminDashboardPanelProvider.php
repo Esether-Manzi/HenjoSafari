@@ -30,10 +30,22 @@ class AdminDashboardPanelProvider extends PanelProvider
             ->login()
             ->brandName('Henjo Safaris')
             
+            // ==========================================
+            // HENJO BRAND COLORS
+            // ==========================================
+            // Primary:   Forest Green  #2E7D32 (main actions, navigation)
+            // Secondary: Safari Gold   #D4A017 (accents, highlights)
+            // Danger:    Brand Maroon  #7B1818 (destructive actions)
+            // ==========================================
             ->colors([
-                'secondary' => Color::Amber,
-                'primary' => Color::Emerald,
+                'primary' => Color::hex('#2E7D32'),
+                'gray' => Color::Zinc,
+                'info' => Color::hex('#D4A017'),
+                'success' => Color::hex('#4CAF50'),
+                'warning' => Color::hex('#E5A100'),
+                'danger' => Color::hex('#7B1818'),
             ])
+            ->darkMode()
             ->databaseNotifications()
             ->sidebarCollapsibleOnDesktop()
             ->unsavedChangesAlerts()

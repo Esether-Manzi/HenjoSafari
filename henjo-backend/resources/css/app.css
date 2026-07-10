@@ -4,6 +4,31 @@
 @source '../../storage/framework/views/*.php';
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Inter', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+/* =====================================================
+   HENJO BRAND COLORS — Backend Custom Properties
+   =====================================================
+   These mirror the frontend brand palette for any
+   custom Blade views or Filament page overrides.
+   ===================================================== */
+
+:root {
+    --brand-gold: #D4A017;
+    --brand-gold-light: #E5B83A;
+    --brand-green: #2E7D32;
+    --brand-green-light: #4CAF50;
+    --brand-maroon: #7B1818;
+    --brand-charcoal: #2D2D2D;
+}
+
+.dark {
+    --brand-gold: #E5B83A;
+    --brand-gold-light: #F0CC5B;
+    --brand-green: #4CAF50;
+    --brand-green-light: #66BB6A;
+    --brand-maroon: #D4453A;
+    --brand-charcoal: #E0E0E0;
 }

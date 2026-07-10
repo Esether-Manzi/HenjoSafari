@@ -30,7 +30,13 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body className={`${inter.className} min-h-screen`}>
                 <ThemeProvider>
-                    <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+                    <div
+                        className="flex flex-col min-h-screen transition-colors duration-300"
+                        style={{
+                            background: 'var(--bg-primary)',
+                            color: 'var(--text-primary)',
+                        }}
+                    >
                         <Navbar />
                         <main className="flex-grow pt-20">
                             {children}

@@ -99,9 +99,13 @@ class ApiClient {
                 }
 
                 // Log error for debugging
-                console.error('❌ API Error:', error.config?.url, error.message);
-                console.error('   Status:', error.response.status);
-                console.error('   Data:', error.response.data);
+                if (error.response.status === 404) {
+                    console.warn('ℹ️ API 404 (Not Found):', error.config?.url);
+                } else {
+                    console.error('❌ API Error:', error.config?.url, error.message);
+                    console.error('   Status:', error.response.status);
+                    console.error('   Data:', error.response.data);
+                }
 
                 // Handle 401 unauthorized
                 if (error.response.status === 401) {
