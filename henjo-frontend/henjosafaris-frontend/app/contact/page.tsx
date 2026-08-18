@@ -17,39 +17,40 @@
 // - Form submissions are client-side
 
 import { useState } from 'react';
+import { submitInquiry, InquiryFormData } from '@/lib/api/contactApi';
 import Hero from '@/components/common/Hero';
-import { 
-    FaPhone, 
-    FaEnvelope, 
-    FaMapMarkerAlt, 
-    FaClock, 
-    FaFacebook, 
-    FaTwitter, 
-    FaInstagram, 
-    FaLinkedin, 
-    FaTiktok 
+import {
+    FaPhone,
+    FaEnvelope,
+    FaMapMarkerAlt,
+    FaClock,
+    FaFacebook,
+    FaTwitter,
+    FaInstagram,
+    FaLinkedin,
+    FaTiktok
 } from 'react-icons/fa';
 
 export default function ContactPage() {
     // ============================================
     // STATE MANAGEMENT
     // ============================================
-    
+
     // 📌 form: Stores form field values
-    const [form, setForm] = useState({ 
-        name: '', 
-        email: '', 
-        phone: '', 
-        message: '' 
+    const [form, setForm] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        message: ''
     });
-    
+
     // 📌 submitted: Tracks if form was successfully submitted
     const [submitted, setSubmitted] = useState(false);
 
     // ============================================
     // CONTACT DATA (from audit document)
     // ============================================
-    
+
     // 📌 officeAddresses: Main office location
     const officeAddresses = [
         {
@@ -80,7 +81,7 @@ export default function ContactPage() {
     // ============================================
     // FORM HANDLERS
     // ============================================
-    
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         console.log('📧 Form submitted:', form);
@@ -89,6 +90,8 @@ export default function ContactPage() {
         setTimeout(() => setSubmitted(false), 5000);
     };
 
+
+
     // ============================================
     // RENDER: PAGE HTML
     // ============================================
@@ -96,7 +99,7 @@ export default function ContactPage() {
     return (
         <div className="min-h-screen">
             {/* HERO SECTION */}
-            <Hero 
+            <Hero
                 size="medium"
                 title="Get In Touch"
                 subtitle="Have questions about our safaris? We'd love to hear from you."
@@ -114,7 +117,7 @@ export default function ContactPage() {
             >
                 <div className="container mx-auto px-4 max-w-4xl">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        
+
                         {/* COLUMN 1: Contact Information */}
                         <div
                             className="rounded-2xl p-8"
@@ -126,14 +129,14 @@ export default function ContactPage() {
                             <h2 className="text-2xl font-bold mb-6" style={{ color: 'var(--text-primary)' }}>
                                 Contact Information
                             </h2>
-                            
+
                             <div className="space-y-6">
-                                
+
                                 {/* Office Address */}
                                 {officeAddresses.map((office) => (
                                     <div key={office.country} className="space-y-3">
                                         <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>{office.country}</h3>
-                                        
+
                                         {/* Address */}
                                         <div className="flex items-start gap-4">
                                             <div
@@ -146,7 +149,7 @@ export default function ContactPage() {
                                                 <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{office.address}</p>
                                             </div>
                                         </div>
-                                        
+
                                         {/* Phone */}
                                         <div className="flex items-start gap-4">
                                             <div
@@ -159,7 +162,7 @@ export default function ContactPage() {
                                                 <p style={{ color: 'var(--text-secondary)' }}>{office.phone}</p>
                                             </div>
                                         </div>
-                                        
+
                                         {/* Email */}
                                         <div className="flex items-start gap-4">
                                             <div
@@ -169,8 +172,8 @@ export default function ContactPage() {
                                                 <FaEnvelope className="text-xl" style={{ color: 'var(--brand-gold)' }} />
                                             </div>
                                             <div>
-                                                <a 
-                                                    href={`mailto:${office.email}`} 
+                                                <a
+                                                    href={`mailto:${office.email}`}
                                                     className="transition hover:text-[var(--brand-gold)]"
                                                     style={{ color: 'var(--text-secondary)' }}
                                                 >
@@ -279,7 +282,7 @@ export default function ContactPage() {
                                 </div>
                             ) : (
                                 <form onSubmit={handleSubmit} className="space-y-5">
-                                    
+
                                     {/* Name Field */}
                                     <div>
                                         <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>
@@ -295,7 +298,7 @@ export default function ContactPage() {
                                             }}
                                             placeholder="John Doe"
                                             value={form.name}
-                                            onChange={(e) => setForm({...form, name: e.target.value})}
+                                            onChange={(e) => setForm({ ...form, name: e.target.value })}
                                             required
                                         />
                                     </div>
@@ -315,7 +318,7 @@ export default function ContactPage() {
                                             }}
                                             placeholder="john@example.com"
                                             value={form.email}
-                                            onChange={(e) => setForm({...form, email: e.target.value})}
+                                            onChange={(e) => setForm({ ...form, email: e.target.value })}
                                             required
                                         />
                                     </div>
@@ -335,7 +338,7 @@ export default function ContactPage() {
                                             }}
                                             placeholder="+256 779 557 514"
                                             value={form.phone}
-                                            onChange={(e) => setForm({...form, phone: e.target.value})}
+                                            onChange={(e) => setForm({ ...form, phone: e.target.value })}
                                         />
                                     </div>
 
@@ -354,7 +357,7 @@ export default function ContactPage() {
                                             }}
                                             placeholder="Tell us about your dream safari..."
                                             value={form.message}
-                                            onChange={(e) => setForm({...form, message: e.target.value})}
+                                            onChange={(e) => setForm({ ...form, message: e.target.value })}
                                             required
                                         />
                                     </div>

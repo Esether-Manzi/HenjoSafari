@@ -31,6 +31,8 @@ class SafariPackage extends Model implements HasMedia
         'status'
     ];
 
+    protected $appends = ['cover_image_url'];
+
     protected $casts = [
         'featured' => 'boolean',
         'popular' => 'boolean',
@@ -40,6 +42,20 @@ class SafariPackage extends Model implements HasMedia
         'min_people' => 'integer',
         'max_people' => 'integer',
     ];
+
+    public function getCoverImageUrlAttribute(): ?string
+    {
+        if ($this->hasMedia('cover')) {
+            return $this->getFirstMediaUrl('cover');
+        }
+        foreach (['.jpg', '.png', '.jpeg', '.webp'] as $ext) {
+            $relPath = 'images/safaris/' . $this->slug . $ext;
+            if (file_exists(public_path($relPath))) {
+                return asset($relPath);
+            }
+        }
+        return asset('images/safaris/default.jpg');
+    }
 
     public function sluggable(): array
     {

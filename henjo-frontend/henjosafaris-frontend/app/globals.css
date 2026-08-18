@@ -15,6 +15,19 @@
    CSS CUSTOM PROPERTIES — LIGHT THEME (default)
    ===================================================== */
 
+/* =====================================================
+   HENJO AFRICAN SAFARIS — BRAND THEME SYSTEM
+   =====================================================
+   Brand colors extracted from the company logo:
+   - Safari Gold:   #D4A017  (Africa continent, sunset)
+   - Sunset Amber:  #E5A100  (lighter gold highlights)
+   - Forest Green:  #2E7D32  (acacia tree canopy)
+   - Brand Maroon:  #7B1818  (HENJO text, accent line)
+   - Charcoal:      #2D2D2D  (circle, animal silhouettes)
+   ===================================================== */
+/* =====================================================
+   CSS CUSTOM PROPERTIES — LIGHT THEME (default)
+   ===================================================== */
 :root {
   /* Brand primaries */
   --brand-gold: #D4A017;
@@ -28,7 +41,6 @@
   --brand-maroon: #7B1818;
   --brand-maroon-light: #A62626;
   --brand-charcoal: #2D2D2D;
-
   /* Surfaces */
   --bg-primary: #FFFFFF;
   --bg-secondary: #FAFAF5;
@@ -38,7 +50,6 @@
   --bg-nav: #FFFFFF;
   --bg-footer: #1A1A1A;
   --bg-input: #FFFFFF;
-
   /* Text */
   --text-primary: #1A1A1A;
   --text-secondary: #4A4A4A;
@@ -46,25 +57,20 @@
   --text-muted: #9A9A9A;
   --text-inverse: #FFFFFF;
   --text-on-gold: #1A1A1A;
-
   /* Borders */
   --border-primary: #E5E2D9;
   --border-secondary: #D4D0C6;
   --border-subtle: #F0EDE5;
-
   /* Shadows */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
-
   /* Scrollbar */
   --scrollbar-track: #F3F1EB;
   --scrollbar-thumb: var(--brand-gold);
   --scrollbar-thumb-hover: var(--brand-gold-hover);
-
   /* Focus ring */
   --focus-ring: var(--brand-gold);
-
   /* Selection */
   --selection-bg: var(--brand-gold);
   --selection-text: #000000;
@@ -73,7 +79,6 @@
 /* =====================================================
    CSS CUSTOM PROPERTIES — DARK THEME
    ===================================================== */
-
 .dark {
   --brand-gold: #E5B83A;
   --brand-gold-light: #F0CC5B;
@@ -86,7 +91,6 @@
   --brand-maroon: #D4453A;
   --brand-maroon-light: #EF5350;
   --brand-charcoal: #E0E0E0;
-
   /* Surfaces — forest-tinted dark */
   --bg-primary: #0F1A12;
   --bg-secondary: #152018;
@@ -96,7 +100,6 @@
   --bg-nav: #0F1A12;
   --bg-footer: #0A120C;
   --bg-input: #1A2A1E;
-
   /* Text */
   --text-primary: #F0EDE5;
   --text-secondary: #C8C4BA;
@@ -104,25 +107,20 @@
   --text-muted: #6B685F;
   --text-inverse: #1A1A1A;
   --text-on-gold: #1A1A1A;
-
   /* Borders */
   --border-primary: #2A3E2E;
   --border-secondary: #344838;
   --border-subtle: #1F3023;
-
   /* Shadows */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
-
   /* Scrollbar */
   --scrollbar-track: #152018;
   --scrollbar-thumb: var(--brand-gold);
   --scrollbar-thumb-hover: var(--brand-gold-light);
-
   /* Focus ring */
   --focus-ring: var(--brand-gold);
-
   /* Selection */
   --selection-bg: var(--brand-green);
   --selection-text: #FFFFFF;
@@ -131,11 +129,75 @@
 /* =====================================================
    THEME — Tailwind v4 @theme tokens
    ===================================================== */
-
 @theme {
+  /* Fonts */
   --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
+  /* Brand Colors */
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-gold-light: var(--brand-gold-light);
+  --color-brand-gold-hover: var(--brand-gold-hover);
+  --color-brand-gold-subtle: var(--brand-gold-subtle);
+  --color-brand-green: var(--brand-green);
+  --color-brand-green-light: var(--brand-green-light);
+  --color-brand-green-hover: var(--brand-green-hover);
+  --color-brand-green-subtle: var(--brand-green-subtle);
+  --color-brand-maroon: var(--brand-maroon);
+  --color-brand-maroon-light: var(--brand-maroon-light);
+  --color-brand-charcoal: var(--brand-charcoal);
+  /* Surface Colors */
+  --color-surface-primary: var(--bg-primary);
+  --color-surface-secondary: var(--bg-secondary);
+  --color-surface-tertiary: var(--bg-tertiary);
+  --color-surface-card: var(--bg-card);
+  --color-surface-card-hover: var(--bg-card-hover);
+  --color-surface-nav: var(--bg-nav);
+  --color-surface-footer: var(--bg-footer);
+  --color-surface-input: var(--bg-input);
+  /* Text Colors */
+  --color-content-primary: var(--text-primary);
+  --color-content-secondary: var(--text-secondary);
+  --color-content-tertiary: var(--text-tertiary);
+  --color-content-muted: var(--text-muted);
+  --color-content-inverse: var(--text-inverse);
+  /* Border Colors */
+  --color-edge-primary: var(--border-primary);
+  --color-edge-secondary: var(--border-secondary);
+  --color-edge-subtle: var(--border-subtle);
+  /* Legacy Yellow Palette (for hardcoded classes) */
+  --color-yellow-50: #FFF8E1;
+  --color-yellow-100: #FFECB3;
+  --color-yellow-200: #FFE082;
+  --color-yellow-300: #FFD54F;
+  --color-yellow-400: #FFCA28;
+  --color-yellow-500: var(--brand-gold);
+  --color-yellow-600: #C08F10;
+  --color-yellow-700: #A67C0A;
+  --color-yellow-800: #8B6508;
+  --color-yellow-900: #6B4E06;
+  /* Legacy Green Palette (for hardcoded classes) */
+  --color-green-50: #E8F5E9;
+  --color-green-100: #C8E6C9;
+  --color-green-200: #A5D6A7;
+  --color-green-300: #81C784;
+  --color-green-400: #66BB6A;
+  --color-green-500: #4CAF50;
+  --color-green-600: #388E3C;
+  --color-green-700: var(--brand-green);
+  --color-green-800: #1B5E20;
+  --color-green-900: #0D4715;
+  /* Legacy Gray/Red Palettes (for hardcoded classes) */
+  --color-gray-50: #F9FAFB;
 }
+
+/* =====================================================
+   THEME — Tailwind v4 @theme tokens
+   ===================================================== */
+
+/* @theme {
+  --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+} */
 
 /* =====================================================
    BASE

@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             ActivitySeeder::class,
             AccommodationSeeder::class,
             SafariPackageSeeder::class,
-            BlogSeeder::class,  // 👈 ADD THIS
+            BlogSeeder::class,
+            HenjoContentSeeder::class,
         ]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

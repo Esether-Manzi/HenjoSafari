@@ -189,7 +189,7 @@ export default function Navbar() {
 
                         {/* CTA Button */}
                         <Link
-                            href="/contact"
+                            href="/booking"
                             className="font-semibold px-6 py-2 rounded-full transition hover:scale-105"
                             style={{
                                 background: 'var(--brand-gold)',
@@ -282,7 +282,7 @@ export default function Navbar() {
                             </div>
                         ))}
                         <Link
-                            href="/contact"
+                            href="/booking"
                             className="block mt-2 font-semibold text-center px-4 py-2 rounded-full transition"
                             style={{
                                 background: 'var(--brand-gold)',

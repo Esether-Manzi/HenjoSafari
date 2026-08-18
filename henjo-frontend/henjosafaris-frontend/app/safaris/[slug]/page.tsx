@@ -151,10 +151,18 @@ export default function SafariDetailPage() {
                                 <span>{duration_days} Days / {duration_nights} Nights</span>
                             </div>
                             <div className="flex items-center gap-2">
-                                <span className="text-2xl font-bold" style={{ color: 'var(--brand-gold)' }}>
-                                    {currency} {base_price?.toLocaleString()}
-                                </span>
-                                <span className="text-white/60">/ person</span>
+                                {Number(base_price) > 0 ? (
+                                    <>
+                                        <span className="text-2xl font-bold" style={{ color: 'var(--brand-gold)' }}>
+                                            {currency} {base_price?.toLocaleString()}
+                                        </span>
+                                        <span className="text-white/60">/ person</span>
+                                    </>
+                                ) : (
+                                    <span className="text-2xl font-bold" style={{ color: 'var(--brand-gold)' }}>
+                                        Contact for Price
+                                    </span>
+                                )}
                             </div>
                         </div>
 
@@ -555,7 +563,7 @@ function BookingModal({ packageData, onClose }: any) {
                             {packageData.duration_days} Days / {packageData.duration_nights} Nights
                         </p>
                         <p className="text-lg font-bold" style={{ color: 'var(--brand-green)' }}>
-                            {packageData.currency} {packageData.base_price.toLocaleString()} / person
+                            {Number(packageData.base_price) > 0 ? `${packageData.currency} ${packageData.base_price.toLocaleString()} / person` : 'Contact for Price'}
                         </p>
                     </div>
 

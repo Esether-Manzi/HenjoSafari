@@ -43,4 +43,10 @@ Route::prefix('v1')->group(function () {
 
     // Activities
     Route::get('/activities', [ActivityController::class, 'index']);
+
+    // Inquiries
+    Route::post('/inquiries', [\App\Http\Controllers\Api\InquiryController::class, 'store']);
+
+    // Bookings
+    Route::post('/bookings', [\App\Http\Controllers\Api\BookingController::class, 'store']);
 });

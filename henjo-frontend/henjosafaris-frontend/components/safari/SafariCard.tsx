@@ -88,10 +88,18 @@ export default function SafariCard({ tour, featured = false }: SafariCardProps) 
                     style={{ borderTop: '1px solid var(--border-subtle)' }}
                 >
                     <div>
-                        <span className="text-2xl font-bold" style={{ color: 'var(--brand-green)' }}>
-                            {tour.currency} {tour.base_price?.toLocaleString()}
-                        </span>
-                        <span className="text-sm ml-1" style={{ color: 'var(--text-muted)' }}>/ person</span>
+                        {Number(tour.base_price) > 0 ? (
+                            <>
+                                <span className="text-2xl font-bold" style={{ color: 'var(--brand-green)' }}>
+                                    {tour.currency} {tour.base_price?.toLocaleString()}
+                                </span>
+                                <span className="text-sm ml-1" style={{ color: 'var(--text-muted)' }}>/ person</span>
+                            </>
+                        ) : (
+                            <span className="text-lg font-bold" style={{ color: 'var(--brand-green)' }}>
+                                Contact for Price
+                            </span>
+                        )}
                     </div>
                     <span
                         className="font-semibold px-4 py-2 rounded-full text-sm transition"

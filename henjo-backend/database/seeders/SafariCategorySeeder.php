@@ -10,12 +10,15 @@ class SafariCategorySeeder extends Seeder
     public function run()
     {
         $categories = [
-            ['name' => 'Wildlife Safari', 'slug' => 'wildlife-safari'],
-            ['name' => 'Adventure', 'slug' => 'adventure'],
-            ['name' => 'Luxury', 'slug' => 'luxury'],
-            ['name' => 'Budget', 'slug' => 'budget'],
-            ['name' => 'Family', 'slug' => 'family'],
-            ['name' => 'Honeymoon', 'slug' => 'honeymoon'],
+            ['name' => 'Wildlife Adventure', 'slug' => 'wildlife-adventure'],
+            ['name' => 'Gorilla Trekking', 'slug' => 'gorilla-safaris'],
+            ['name' => 'Fly-In Safaris', 'slug' => 'flying'],
+            ['name' => 'Mountaineering', 'slug' => 'mountaineering'],
+            ['name' => 'Cultural Tour', 'slug' => 'cultural-tour'],
+            ['name' => 'Women Only Tours', 'slug' => 'women-only-tours'],
+            ['name' => 'City Tours', 'slug' => 'city-tours'],
+            ['name' => 'Birding Safari', 'slug' => 'birding'],
+            ['name' => 'Cycling Safari', 'slug' => 'cycling']
         ];
 
         foreach ($categories as $category) {
