@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Activities\Schemas;
 
 use App\Models\Activity;
+use App\Support\SafariIcons;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
@@ -18,7 +19,11 @@ class ActivityInfolist
                     ->state(fn (Activity $record): ?string => $record->getFirstMediaUrl('image')),
                 TextEntry::make('name'),
                 TextEntry::make('icon')
-                    ->placeholder('-'),
+                    ->label('Icon')
+                    ->html()
+                    ->state(fn (Activity $record): string => ($record->icon
+                        ? SafariIcons::preview($record->icon).' '.e(SafariIcons::label($record->icon))
+                        : null) ?? '-'),
                 TextEntry::make('slug'),
                 TextEntry::make('description')
                     ->placeholder('-')

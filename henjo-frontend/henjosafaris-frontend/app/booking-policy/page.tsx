@@ -47,7 +47,7 @@ export default function BookingPolicyPage() {
                             Before cancellation, henjo African Safaris and the client will discuss the possibility of rescheduling. In case of cancellations, They should be made in writing and will only deem effective upon acknowledged receipt by Henjo African Safaris. <br />
                             Cancellation will be subject to the following penalties: <br />
                             30 days or more before the remaining 70% of the total package is paid: 5% forfeit of the 30% deposit.<br />
-                            60 days or more before commencement: Forfeit 50%<br />
+                            60 days or more before commencement: Forfeit 20%<br />
                             Less than 60 days before commencement: Forfeit 50% of the package price<br />
                             Less than 30 days before commencement: Forfeit 100 % of the package price<br />
                         </p>

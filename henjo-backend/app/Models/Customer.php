@@ -24,4 +24,9 @@ class Customer extends Model
     {
         return $this->hasMany(Booking::class);
     }
+
+    public function getNameAttribute(): string
+    {
+        return trim("{$this->first_name} {$this->last_name}");
+    }
 }

@@ -2,14 +2,13 @@
 
 namespace App\Filament\Resources\Destinations\Schemas;
 
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Schema;
-use App\Models\Country;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
-
+use Filament\Schemas\Schema;
 
 class DestinationForm
 {
@@ -46,7 +45,12 @@ class DestinationForm
                             ->required()
                             ->default(true)
                             ->inline(false),
-                    ])->columns(2)
+                        SpatieMediaLibraryFileUpload::make('hero')
+                            ->collection('hero')
+                            ->image()
+                            ->imageEditor()
+                            ->columnSpanFull(),
+                    ])->columns(2),
 
             ]);
     }

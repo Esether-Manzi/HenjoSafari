@@ -1,0 +1,195 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+
+/* =====================================================
+   HENJO SAFARIS — ADMIN PANEL BRAND THEME
+   Mirrors the public site's palette (see
+   henjo-frontend/.../app/globals.css) so the admin panel
+   and the public site read as the same product.
+   ===================================================== */
+
+:root {
+    --henjo-gold: #D4A017;
+    --henjo-gold-hover: #C08F10;
+    --henjo-gold-subtle: #FDF6E3;
+    --henjo-green: #2E7D32;
+    --henjo-green-dark: #1F5723;
+    --henjo-maroon: #7B1818;
+    --henjo-bg-page: #FAFAF5;
+    --henjo-bg-card: #FFFFFF;
+    --henjo-border: #E5E2D9;
+    --henjo-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --henjo-shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+
+    /* Dashboard stat / quick-action badge accents */
+    --henjo-badge-gold-bg: #FDF6E3;
+    --henjo-badge-gold-fg: #C08F10;
+    --henjo-badge-green-bg: #E8F5E9;
+    --henjo-badge-green-fg: #2E7D32;
+    --henjo-badge-blue-bg: #E3F2FD;
+    --henjo-badge-blue-fg: #1565C0;
+    --henjo-badge-maroon-bg: #FBEAEA;
+    --henjo-badge-maroon-fg: #7B1818;
+}
+
+.dark {
+    --henjo-gold: #E5B83A;
+    --henjo-gold-hover: #F0CC5B;
+    --henjo-gold-subtle: rgba(229, 184, 58, 0.12);
+    --henjo-green: #4CAF50;
+    --henjo-green-dark: #0F1A12;
+    --henjo-maroon: #D4453A;
+    --henjo-bg-page: #0F1A12;
+    --henjo-bg-card: #1A2A1E;
+    --henjo-border: #2A3E2E;
+    --henjo-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+    --henjo-shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+
+    --henjo-badge-gold-bg: rgba(229, 184, 58, 0.15);
+    --henjo-badge-gold-fg: #E5B83A;
+    --henjo-badge-green-bg: rgba(76, 175, 80, 0.15);
+    --henjo-badge-green-fg: #4CAF50;
+    --henjo-badge-blue-bg: rgba(66, 165, 245, 0.15);
+    --henjo-badge-blue-fg: #64B5F6;
+    --henjo-badge-maroon-bg: rgba(212, 69, 58, 0.15);
+    --henjo-badge-maroon-fg: #D4453A;
+}
+
+/* =====================================================
+   PAGE BACKGROUND
+   ===================================================== */
+
+.fi-body {
+    background: var(--henjo-bg-page);
+}
+
+/* =====================================================
+   SIDEBAR — brand forest surface, gold active state
+   ===================================================== */
+
+.fi-sidebar {
+    background: linear-gradient(180deg, var(--henjo-green) 0%, var(--henjo-green-dark) 100%);
+    border-inline-end: none;
+}
+
+.fi-sidebar-header,
+.fi-body-has-topbar .fi-sidebar-header {
+    background: transparent;
+    box-shadow: none;
+    border-color: rgb(255 255 255 / 0.1);
+}
+
+.fi-sidebar .fi-logo {
+    color: var(--henjo-gold);
+}
+
+.fi-sidebar .fi-icon {
+    color: rgb(255 255 255 / 0.65);
+}
+
+.fi-sidebar-group-label,
+.fi-sidebar-item-label,
+.fi-sidebar-database-notifications-btn-label {
+    color: rgb(255 255 255 / 0.85);
+}
+
+.fi-sidebar-item-btn:hover,
+.fi-sidebar-group-dropdown-trigger-btn:hover,
+.fi-sidebar-database-notifications-btn:hover,
+.fi-sidebar-group-btn:hover {
+    background: rgb(255 255 255 / 0.08);
+}
+
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn {
+    background: var(--henjo-gold);
+}
+
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-icon,
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-sidebar-item-label {
+    color: #1A1A1A;
+}
+
+.fi-sidebar-item-grouped-border-part-not-first,
+.fi-sidebar-item-grouped-border-part-not-last {
+    background: rgb(255 255 255 / 0.2);
+}
+
+/* =====================================================
+   TOPBAR — brand gradient accent line
+   ===================================================== */
+
+.fi-topbar {
+    background: var(--henjo-bg-card);
+    box-shadow: none;
+    border-bottom: 1px solid var(--henjo-border);
+    position: relative;
+}
+
+.fi-topbar::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: -1px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--henjo-gold), var(--henjo-green));
+}
+
+/* =====================================================
+   CARDS — form sections, tables, dashboard widgets
+   ===================================================== */
+
+.fi-section:not(.fi-aside),
+.fi-ta-ctn,
+.fi-simple-main {
+    border-radius: 1.25rem;
+    background: var(--henjo-bg-card);
+    border: 1px solid var(--henjo-border);
+    box-shadow: var(--henjo-shadow-md);
+}
+
+.fi-section:not(.fi-aside) {
+    border-top: 3px solid var(--henjo-green);
+}
+
+.fi-wi-stats-overview-stat {
+    border-radius: 1.25rem;
+    background: var(--henjo-bg-card);
+    border: 1px solid var(--henjo-border);
+    box-shadow: var(--henjo-shadow-md);
+    border-top: 3px solid var(--henjo-gold);
+}
+
+/* =====================================================
+   BUTTONS — pill shape with a soft hover lift
+   ===================================================== */
+
+.fi-btn {
+    border-radius: 9999px;
+    transition:
+        transform 150ms ease,
+        box-shadow 150ms ease,
+        background-color 75ms ease;
+}
+
+.fi-btn:not(.fi-disabled):not([disabled]):hover {
+    transform: translateY(-1px);
+    box-shadow: var(--henjo-shadow-md);
+}
+
+/* =====================================================
+   LOGIN PAGE
+   ===================================================== */
+
+.fi-simple-layout {
+    background: linear-gradient(135deg, var(--henjo-green) 0%, var(--henjo-green-dark) 55%, var(--henjo-maroon) 130%);
+}
+
+.fi-simple-main {
+    border-radius: 1.5rem;
+}
+
+.fi-simple-layout .fi-logo {
+    color: var(--henjo-gold);
+}

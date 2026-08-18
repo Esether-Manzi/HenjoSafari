@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Hero from '@/components/common/Hero';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaHeart, FaLeaf, FaUsers, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaHeart, FaLeaf, FaUsers, FaChevronLeft, FaChevronRight, FaPaw, FaHiking, FaPlaneDeparture, FaMountain, FaLandmark, FaFemale, FaCity, FaHandshake, FaCheck, FaStar } from 'react-icons/fa';
 import { MOCK_TEAM, getMemberPhoto } from '@/app/our-team/page';
 import { teamApi } from '@/lib/api/teamApi';
 import type { TeamMember } from '@/types/team';
@@ -115,13 +115,13 @@ export default function AboutPage() {
                         <div className="overflow-x-auto pb-6 scrollbar-hide">
                             <div className="flex gap-6 w-max px-2">
                                 {[
-                                    { icon: '🦁', title: 'Wildlife Safaris', desc: 'Experience the thrill of seeing the Big Five in their natural habitat across East Africa\'s national parks.' },
-                                    { icon: '🦍', title: 'Gorilla Trekking', desc: 'Trek through the lush forests of Uganda and Rwanda to encounter endangered mountain gorillas.' },
-                                    { icon: '✈️', title: 'Fly-In Safaris', desc: 'Skip the long drives and fly directly to your safari destination for more time exploring.' },
-                                    { icon: '🏔️', title: 'Mountaineering', desc: 'Conquer the highest peaks in Africa including Mount Kilimanjaro and the Rwenzori Mountains.' },
-                                    { icon: '🏛️', title: 'Cultural Tours', desc: 'Immerse yourself in the rich cultures and traditions of East Africa\'s diverse communities.' },
-                                    { icon: '👩‍🦰', title: 'Women Only Tours', desc: 'Specially designed tours for women travelers seeking safe and empowering African adventures.' },
-                                    { icon: '🏙️', title: 'City Tours', desc: 'Explore the vibrant cities of East Africa including Kampala, Nairobi, and Dar es Salaam.' },
+                                    { Icon: FaPaw, title: 'Wildlife Safaris', desc: 'Experience the thrill of seeing the Big Five in their natural habitat across East Africa\'s national parks.' },
+                                    { Icon: FaHiking, title: 'Gorilla Trekking', desc: 'Trek through the lush forests of Uganda and Rwanda to encounter endangered mountain gorillas.' },
+                                    { Icon: FaPlaneDeparture, title: 'Fly-In Safaris', desc: 'Skip the long drives and fly directly to your safari destination for more time exploring.' },
+                                    { Icon: FaMountain, title: 'Mountaineering', desc: 'Conquer the highest peaks in Africa including Mount Kilimanjaro and the Rwenzori Mountains.' },
+                                    { Icon: FaLandmark, title: 'Cultural Tours', desc: 'Immerse yourself in the rich cultures and traditions of East Africa\'s diverse communities.' },
+                                    { Icon: FaFemale, title: 'Women Only Tours', desc: 'Specially designed tours for women travelers seeking safe and empowering African adventures.' },
+                                    { Icon: FaCity, title: 'City Tours', desc: 'Explore the vibrant cities of East Africa including Kampala, Nairobi, and Dar es Salaam.' },
                                 ].map((service, index) => (
                                     <div
                                         key={index}
@@ -135,7 +135,7 @@ export default function AboutPage() {
                                             className="w-16 h-16 rounded-full flex items-center justify-center mb-4"
                                             style={{ background: 'var(--brand-gold-subtle)' }}
                                         >
-                                            <span className="text-3xl">{service.icon}</span>
+                                            <service.Icon className="text-3xl" style={{ color: 'var(--brand-gold)' }} />
                                         </div>
                                         <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
                                             {service.title}
@@ -165,8 +165,8 @@ export default function AboutPage() {
                 <div className="container mx-auto px-4 max-w-7xl">
                     <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
                         <div>
-                            <span className="inline-block bg-[var(--brand-gold-subtle)] text-[var(--brand-gold)] px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
-                                🤝 Meet the Experts
+                            <span className="inline-flex items-center gap-2 bg-[var(--brand-gold-subtle)] text-[var(--brand-gold)] px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
+                                <FaHandshake /> Meet the Experts
                             </span>
                             <h2 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
                                 Meet Our Team
@@ -297,7 +297,7 @@ export default function AboutPage() {
                                     'Respect for local communities and cultures',
                                 ].map((value, i) => (
                                     <li key={i} className="flex items-start gap-3">
-                                        <span className="mt-1" style={{ color: 'var(--brand-gold)' }}>✓</span>
+                                        <span className="mt-1" style={{ color: 'var(--brand-gold)' }}><FaCheck /></span>
                                         <span>{value}</span>
                                     </li>
                                 ))}
@@ -375,11 +375,14 @@ export default function AboutPage() {
                         {[
                             { value: '15+', label: 'Years Experience' },
                             { value: '500+', label: 'Happy Travelers' },
-                            { value: '4.9★', label: 'Average Rating' },
+                            { value: '4.9', label: 'Average Rating', Icon: FaStar },
                             { value: '28', label: 'Tour Packages' },
                         ].map((stat) => (
                             <div key={stat.label} className="text-center text-white">
-                                <div className="text-5xl font-bold">{stat.value}</div>
+                                <div className="text-5xl font-bold flex items-center justify-center gap-2">
+                                    {stat.value}
+                                    {stat.Icon && <stat.Icon className="text-4xl" />}
+                                </div>
                                 <p className="text-sm mt-2 opacity-80">{stat.label}</p>
                             </div>
                         ))}

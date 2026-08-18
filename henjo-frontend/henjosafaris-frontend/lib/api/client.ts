@@ -45,7 +45,7 @@ let API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api/v1';
 // Normalize: remove trailing slash if present to avoid double-slash when joining paths
 API_URL = API_URL.replace(/\/+$/, '');
 
-console.log('🔗 API URL:', API_URL);
+console.log('API URL:', API_URL);
 
 // ============================================
 // API CLIENT CLASS
@@ -57,7 +57,7 @@ class ApiClient {
 
     private constructor() {
         this.client = axios.create({
-            baseURL: API_URL, // ✅ Use the constant, not process.env directly
+            baseURL: API_URL,
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
@@ -65,11 +65,11 @@ class ApiClient {
             timeout: 30000,
         });
 
-        // ✅ Request interceptor
+        // Request interceptor
         this.client.interceptors.request.use(
             (config) => {
                 // Log request for debugging
-                console.log(`📡 ${config.method?.toUpperCase()} ${config.url}`);
+                console.log(`${config.method?.toUpperCase()} ${config.url}`);
                 
                 // Add auth token if available
                 const token = this.getToken();
@@ -79,30 +79,30 @@ class ApiClient {
                 return config;
             },
             (error) => {
-                console.error('❌ Request Error:', error);
+                console.error('Request error:', error);
                 return Promise.reject(error);
             }
         );
 
-        // ✅ Response interceptor
+        // Response interceptor
         this.client.interceptors.response.use(
             (response) => {
-                console.log(`✅ ${response.config.url} - Status: ${response.status}`);
+                console.log(`${response.config.url} - Status: ${response.status}`);
                 return response;
             },
             (error: AxiosError) => {
                 // Network-level errors (no response) are often CORS or server down
                 if (!error.response) {
-                    console.error('❌ Network/CORS Error: Could not reach API at', API_URL);
+                    console.error('Network/CORS error: could not reach API at', API_URL);
                     console.error('   Message:', error.message);
                     return Promise.reject(new Error(`Network Error: Could not reach API at ${API_URL}. ${error.message}`));
                 }
 
                 // Log error for debugging
                 if (error.response.status === 404) {
-                    console.warn('ℹ️ API 404 (Not Found):', error.config?.url);
+                    console.warn('API 404 (Not Found):', error.config?.url);
                 } else {
-                    console.error('❌ API Error:', error.config?.url, error.message);
+                    console.error('API error:', error.config?.url, error.message);
                     console.error('   Status:', error.response.status);
                     console.error('   Data:', error.response.data);
                 }

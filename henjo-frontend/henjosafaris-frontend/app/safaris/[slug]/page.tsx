@@ -18,11 +18,16 @@ import {
     FaEnvelope,
     FaShare,
     FaHeart,
-    FaRegHeart
+    FaRegHeart,
+    FaCoffee,
+    FaHamburger,
+    FaUtensils
 } from 'react-icons/fa';
 import Hero from '@/components/common/Hero';
 import { safariApi } from '@/lib/api/safariApi';
+import { submitBooking } from '@/lib/api/bookingApi';
 import { getImageUrl } from '@/lib/utils/imageHelper';
+import SafariIcon from '@/lib/config/icons';
 import type { SafariPackage } from '@/types/safari';
 
 export default function SafariDetailPage() {
@@ -40,17 +45,15 @@ export default function SafariDetailPage() {
     useEffect(() => {
         const fetchPackage = async () => {
             try {
-                console.log(`📡 Fetching package: ${slug}`);
                 const response = await safariApi.getBySlug(slug);
-                console.log('✅ Response:', response);
-                
+
                 if (response.success) {
                     setPackageData(response.data);
                 } else {
                     setError('Package not found');
                 }
             } catch (err: any) {
-                console.error('❌ Error:', err);
+                console.error('Error fetching package:', err);
                 setError(err?.message || 'Failed to load package');
             } finally {
                 setLoading(false);
@@ -118,8 +121,8 @@ export default function SafariDetailPage() {
                     <div className="max-w-3xl">
                         <div className="flex flex-wrap gap-2 mb-4">
                             {featured && (
-                                <span className="px-3 py-1 rounded-full text-sm font-semibold" style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}>
-                                    ★ Featured
+                                <span className="px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1" style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}>
+                                    <FaStar /> Featured
                                 </span>
                             )}
                             {popular && (
@@ -128,8 +131,8 @@ export default function SafariDetailPage() {
                                 </span>
                             )}
                             {categories?.map((cat: any) => (
-                                <span key={cat.id} className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">
-                                    {cat.icon} {cat.name}
+                                <span key={cat.id} className="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm flex items-center gap-1.5">
+                                    {cat.icon && <SafariIcon iconKey={cat.icon} />} {cat.name}
                                 </span>
                             ))}
                         </div>
@@ -304,7 +307,7 @@ export default function SafariDetailPage() {
                                 </div>
                                 <div className="flex justify-between">
                                     <span style={{ color: 'var(--text-secondary)' }}>Guaranteed</span>
-                                    <span className="font-semibold" style={{ color: 'var(--brand-green)' }}>✓ Best Price</span>
+                                    <span className="font-semibold flex items-center gap-1" style={{ color: 'var(--brand-green)' }}><FaCheckCircle /> Best Price</span>
                                 </div>
                             </div>
 
@@ -329,7 +332,7 @@ export default function SafariDetailPage() {
                             <div className="mt-4 p-4 rounded-lg text-center" style={{ background: 'var(--bg-secondary)' }}>
                                 <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
                                     Need help? Call us at<br />
-                                    <span className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>+255 123 456 789</span>
+                                    <span className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>+256 779 557 514</span>
                                 </p>
                             </div>
                         </div>
@@ -369,7 +372,7 @@ function OverviewTab({ description, activities, accommodations, destination }: a
                     <div className="flex flex-wrap gap-2">
                         {activities.map((activity: any) => (
                             <span key={activity.id} className="px-4 py-2 rounded-full text-sm flex items-center gap-2" style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)' }}>
-                                {activity.icon && <span>{activity.icon}</span>}
+                                {activity.icon && <SafariIcon iconKey={activity.icon} />}
                                 {activity.name}
                             </span>
                         ))}
@@ -458,9 +461,9 @@ function ItineraryTab({ itineraryDays, expandedDay, onToggleDay }: any) {
                             <div className="p-4" style={{ background: 'var(--bg-card)' }}>
                                 <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{day.description}</p>
                                 <div className="flex gap-4 mt-3 text-sm" style={{ color: 'var(--text-muted)' }}>
-                                    {day.breakfast && <span>🍳 Breakfast</span>}
-                                    {day.lunch && <span>🥪 Lunch</span>}
-                                    {day.dinner && <span>🍽️ Dinner</span>}
+                                    {day.breakfast && <span className="flex items-center gap-1"><FaCoffee /> Breakfast</span>}
+                                    {day.lunch && <span className="flex items-center gap-1"><FaHamburger /> Lunch</span>}
+                                    {day.dinner && <span className="flex items-center gap-1"><FaUtensils /> Dinner</span>}
                                 </div>
                             </div>
                         )}
@@ -524,27 +527,70 @@ function BookingModal({ packageData, onClose }: any) {
         children: 0,
         specialRequests: ''
     });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [bookingRef, setBookingRef] = useState<string | null>(null);
 
     const totalPrice = packageData.base_price * (formData.adults + formData.children * 0.5);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value
-        });
+        const { name, value, type } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: type === 'number' ? (value === '' ? '' : Number(value)) : value,
+        }));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError(null);
+        setIsSubmitting(true);
         try {
-            console.log('Booking submitted:', { ...formData, package_id: packageData.id });
-            alert('Booking submitted successfully! We will contact you shortly.');
-            onClose();
-        } catch (error) {
-            console.error('Booking error:', error);
-            alert('There was an error submitting your booking. Please try again.');
+            const res = await submitBooking({
+                first_name: formData.firstName,
+                last_name: formData.lastName,
+                email: formData.email,
+                phone: formData.phone,
+                country: formData.country,
+                package_id: packageData.id,
+                package_name: packageData.title,
+                travel_date: formData.travelDate,
+                adults: Number(formData.adults) || 1,
+                children: Number(formData.children) || 0,
+                special_requests: formData.specialRequests || undefined,
+            });
+            setBookingRef(res.booking_number);
+        } catch (err: any) {
+            setError(err.message || 'There was an error submitting your booking. Please try again.');
+        } finally {
+            setIsSubmitting(false);
         }
     };
+
+    if (bookingRef) {
+        return (
+            <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                <div className="rounded-2xl max-w-md w-full p-8 text-center" style={{ background: 'var(--bg-card)' }}>
+                    <FaCheckCircle style={{ color: 'var(--brand-green)', fontSize: '3rem' }} className="mx-auto mb-4" />
+                    <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>Request Received!</h2>
+                    <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
+                        We&apos;ll send a personalised quote to <strong>{formData.email}</strong> within 24 hours.
+                    </p>
+                    <div className="rounded-xl p-4 mb-6" style={{ background: 'var(--brand-gold-subtle)' }}>
+                        <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--brand-gold-hover)' }}>Booking Reference</p>
+                        <p className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>{bookingRef}</p>
+                    </div>
+                    <button
+                        onClick={onClose}
+                        className="w-full font-bold py-3 rounded-full transition"
+                        style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}
+                    >
+                        Close
+                    </button>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
@@ -557,6 +603,14 @@ function BookingModal({ packageData, onClose }: any) {
                 </div>
 
                 <div className="p-6">
+                    {error && (
+                        <div
+                            className="p-3 rounded-lg mb-4 text-sm font-medium"
+                            style={{ background: '#fff1f0', border: '1px solid #ffa39e', color: '#cf1322' }}
+                        >
+                            {error}
+                        </div>
+                    )}
                     <div className="rounded-lg p-4 mb-6" style={{ background: 'var(--brand-gold-subtle)', border: '1px solid var(--brand-gold)' }}>
                         <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>{packageData.title}</p>
                         <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
@@ -645,17 +699,16 @@ function BookingModal({ packageData, onClose }: any) {
                                         className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
                                     >
                                         <option value="">Select your country</option>
-                                        <option value="US">United States</option>
-                                        <option value="UK">United Kingdom</option>
-                                        <option value="DE">Germany</option>
-                                        <option value="FR">France</option>
-                                        <option value="IT">Italy</option>
-                                        <option value="ZA">South Africa</option>
-                                        <option value="KE">Kenya</option>
-                                        <option value="TZ">Tanzania</option>
-                                        <option value="UG">Uganda</option>
-                                        <option value="RW">Rwanda</option>
-                                        <option value="Other">Other</option>
+                                        {[
+                                            'Uganda', 'Kenya', 'Tanzania', 'Rwanda', 'South Africa',
+                                            'United States', 'United Kingdom', 'Canada', 'Australia',
+                                            'Germany', 'France', 'Netherlands', 'Belgium', 'Sweden',
+                                            'Norway', 'Denmark', 'Switzerland', 'Italy', 'Spain',
+                                            'Japan', 'China', 'India', 'Brazil', 'Argentina',
+                                            'Other',
+                                        ].map((c) => (
+                                            <option key={c} value={c}>{c}</option>
+                                        ))}
                                     </select>
                                 </div>
                             </div>
@@ -760,10 +813,11 @@ function BookingModal({ packageData, onClose }: any) {
                             ) : (
                                 <button
                                     type="submit"
-                                    className="flex-1 font-bold py-3 rounded-lg transition"
+                                    disabled={isSubmitting}
+                                    className="flex-1 font-bold py-3 rounded-lg transition disabled:opacity-60 disabled:cursor-not-allowed"
                                     style={{ background: 'var(--brand-green)', color: '#FFFFFF' }}
                                 >
-                                    Book Safari
+                                    {isSubmitting ? 'Submitting…' : 'Book Safari'}
                                 </button>
                             )}
                         </div>

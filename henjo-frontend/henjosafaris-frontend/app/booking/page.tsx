@@ -30,11 +30,23 @@ import {
     FaStickyNote,
     FaCompass,
     FaSpinner,
+    FaExclamationTriangle,
+    FaComments,
+    FaPaw,
+    FaLock,
+    FaBolt,
+    FaPlaneDeparture,
 } from 'react-icons/fa';
 
 // ──────────────────────────────────────────────────────────
 // TYPES
 // ──────────────────────────────────────────────────────────
+
+interface DestinationCountryOption {
+    id: number;
+    name: string;
+    code: string;
+}
 
 interface SafariPackageOption {
     id: number;
@@ -43,6 +55,15 @@ interface SafariPackageOption {
     duration_days: number;
     base_price: number;
     currency: string;
+    destination?: {
+        id: number;
+        name: string;
+        country?: {
+            id: number;
+            name: string;
+            code: string;
+        };
+    };
 }
 
 interface FormData {
@@ -65,7 +86,7 @@ const STEPS = [
     { id: 3, label: 'Review', icon: FaCheckCircle },
 ];
 
-const COUNTRIES = [
+const NATIONALITIES = [
     'Uganda', 'Kenya', 'Tanzania', 'Rwanda', 'South Africa',
     'United States', 'United Kingdom', 'Canada', 'Australia',
     'Germany', 'France', 'Netherlands', 'Belgium', 'Sweden',
@@ -84,6 +105,8 @@ export default function BookingPage() {
     const [error, setError] = useState<string | null>(null);
     const [bookingRef, setBookingRef] = useState<string | null>(null);
     const [packages, setPackages] = useState<SafariPackageOption[]>([]);
+    const [destinationCountries, setDestinationCountries] = useState<DestinationCountryOption[]>([]);
+    const [selectedCountryId, setSelectedCountryId] = useState<string>('');
 
     const [form, setForm] = useState<FormData>({
         first_name: '',
@@ -99,25 +122,49 @@ export default function BookingPage() {
         special_requests: '',
     });
 
-    // ── Fetch available safari packages for the dropdown ──
+    // ── Fetch available safari packages (with destination/country) and country filter options ──
     useEffect(() => {
         const apiUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1').replace(/\/+$/, '');
-        fetch(`${apiUrl}/safaris`)
+
+        fetch(`${apiUrl}/safaris?per_page=100`)
             .then((r) => r.json())
             .then((data) => {
-                const list: SafariPackageOption[] = Array.isArray(data?.data)
-                    ? data.data
-                    : Array.isArray(data)
-                        ? data
-                        : [];
+                const list: SafariPackageOption[] = Array.isArray(data?.data?.data) ? data.data.data : [];
                 setPackages(list);
             })
             .catch(() => setPackages([]));
+
+        fetch(`${apiUrl}/safaris/filters`)
+            .then((r) => r.json())
+            .then((data) => {
+                const countries: DestinationCountryOption[] = Array.isArray(data?.data?.countries) ? data.data.countries : [];
+                setDestinationCountries(countries);
+            })
+            .catch(() => setDestinationCountries([]));
     }, []);
 
     // ── Helpers ──
     const update = (field: keyof FormData, value: string | number | null) =>
         setForm((prev) => ({ ...prev, [field]: value }));
+
+    // Packages narrowed down to the selected destination country (or all, if none chosen yet)
+    const filteredPackages = selectedCountryId
+        ? packages.filter((p) => String(p.destination?.country?.id ?? '') === selectedCountryId)
+        : packages;
+
+    const handleCountryChange = (countryId: string) => {
+        setSelectedCountryId(countryId);
+        // Clear a previously selected package if it no longer belongs to the new country
+        if (form.package_id) {
+            const stillValid = countryId
+                ? packages.some((p) => p.id === form.package_id && String(p.destination?.country?.id ?? '') === countryId)
+                : true;
+            if (!stillValid) {
+                update('package_id', null);
+                update('package_name', '');
+            }
+        }
+    };
 
     const handlePackageChange = (pkgId: string) => {
         if (!pkgId) {
@@ -268,7 +315,7 @@ export default function BookingPage() {
                         </div>
 
                         <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-                            Check your email at <strong>{form.email}</strong> — we'll be in touch soon. 🌍
+                            Check your email at <strong>{form.email}</strong> — we'll be in touch soon.
                         </p>
 
                         <a
@@ -367,10 +414,10 @@ export default function BookingPage() {
                         {/* Error Banner */}
                         {error && (
                             <div
-                                className="p-4 rounded-xl mb-6 text-sm font-medium"
+                                className="p-4 rounded-xl mb-6 text-sm font-medium flex items-center gap-2"
                                 style={{ background: '#fff1f0', border: '1px solid #ffa39e', color: '#cf1322' }}
                             >
-                                ⚠️ {error}
+                                <FaExclamationTriangle /> {error}
                             </div>
                         )}
 
@@ -468,7 +515,7 @@ export default function BookingPage() {
                                             id="country"
                                         >
                                             <option value="">Select your country…</option>
-                                            {COUNTRIES.map((c) => (
+                                            {NATIONALITIES.map((c) => (
                                                 <option key={c} value={c}>{c}</option>
                                             ))}
                                         </select>
@@ -514,25 +561,21 @@ export default function BookingPage() {
                                     {/* Destination Country */}
                                     <div>
                                         <label style={labelStyle}>
-                                            <FaCompass className="inline mr-1 mb-0.5" size={11} /> Destination Country *
+                                            <FaGlobe className="inline mr-1 mb-0.5" size={11} /> Destination Country
                                         </label>
                                         <select
                                             style={{ ...inputStyle, cursor: 'pointer' }}
-                                            value={form.package_id ?? ''}
-                                            onChange={(e) => handlePackageChange(e.target.value)}
-                                            id="package_id"
+                                            value={selectedCountryId}
+                                            onChange={(e) => handleCountryChange(e.target.value)}
+                                            id="destination_country"
                                         >
-                                            <option value="">— I'm open to suggestions / not sure yet —</option>
-                                            {packages.map((pkg) => (
-                                                <option key={pkg.id} value={pkg.id}>
-                                                    {pkg.title}
-                                                    {pkg.duration_days ? ` (${pkg.duration_days} days)` : ''}
-                                                    {pkg.base_price ? ` — from $${Number(pkg.base_price).toLocaleString()}` : ''}
-                                                </option>
+                                            <option value="">— Any / not decided yet —</option>
+                                            {destinationCountries.map((c) => (
+                                                <option key={c.id} value={c.id}>{c.name}</option>
                                             ))}
                                         </select>
                                         <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
-                                            Don't worry if you haven't decided — we'll help you choose.
+                                            Choose where you'd like to go and we'll narrow the packages below.
                                         </p>
                                     </div>
 
@@ -547,8 +590,8 @@ export default function BookingPage() {
                                             onChange={(e) => handlePackageChange(e.target.value)}
                                             id="package_id"
                                         >
-                                            <option value="">— I'm open to suggestions / not sure yet —</option>
-                                            {packages.map((pkg) => (
+                                            <option value="">— Not sure? Contact us for guidance —</option>
+                                            {filteredPackages.map((pkg) => (
                                                 <option key={pkg.id} value={pkg.id}>
                                                     {pkg.title}
                                                     {pkg.duration_days ? ` (${pkg.duration_days} days)` : ''}
@@ -557,7 +600,9 @@ export default function BookingPage() {
                                             ))}
                                         </select>
                                         <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
-                                            Don't worry if you haven't decided — we'll help you choose.
+                                            {selectedCountryId && filteredPackages.length === 0
+                                                ? "No packages listed for this country yet — pick \"Contact us for guidance\" and our team will help."
+                                                : "Don't worry if you haven't decided — we'll help you choose."}
                                         </p>
                                     </div>
 
@@ -712,10 +757,10 @@ export default function BookingPage() {
                                         style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)' }}
                                     >
                                         <h3
-                                            className="text-xs font-bold uppercase tracking-widest mb-4"
+                                            className="text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2"
                                             style={{ color: 'var(--brand-gold)' }}
                                         >
-                                            👤 Personal Information
+                                            <FaUser /> Personal Information
                                         </h3>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                                             {[
@@ -738,10 +783,10 @@ export default function BookingPage() {
                                         style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)' }}
                                     >
                                         <h3
-                                            className="text-xs font-bold uppercase tracking-widest mb-4"
+                                            className="text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2"
                                             style={{ color: 'var(--brand-gold)' }}
                                         >
-                                            🌍 Trip Details
+                                            <FaGlobe /> Trip Details
                                         </h3>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
                                             {[
@@ -776,10 +821,10 @@ export default function BookingPage() {
                                             What happens next?
                                         </h3>
                                         <ol className="space-y-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
-                                            <li>✅ Your request will be received and reviewed by our team</li>
-                                            <li>📧 We'll send a personalised quote to <strong>{form.email}</strong> within 24 hours</li>
-                                            <li>💬 A dedicated safari consultant will reach out to discuss details</li>
-                                            <li>🦁 Once confirmed, we'll begin tailoring your safari experience!</li>
+                                            <li className="flex items-start gap-2"><FaCheckCircle className="mt-1 flex-shrink-0" /> Your request will be received and reviewed by our team</li>
+                                            <li className="flex items-start gap-2"><FaEnvelope className="mt-1 flex-shrink-0" /> We'll send a personalised quote to <strong>{form.email}</strong> within 24 hours</li>
+                                            <li className="flex items-start gap-2"><FaComments className="mt-1 flex-shrink-0" /> A dedicated safari consultant will reach out to discuss details</li>
+                                            <li className="flex items-start gap-2"><FaPaw className="mt-1 flex-shrink-0" /> Once confirmed, we'll begin tailoring your safari experience!</li>
                                         </ol>
                                     </div>
                                 </div>
@@ -821,12 +866,14 @@ export default function BookingPage() {
                     {/* Trust Badges */}
                     <div className="flex flex-wrap justify-center gap-6 mt-10 text-sm" style={{ color: 'var(--text-muted)' }}>
                         {[
-                            '🔒 Secure & Private',
-                            '📞 No payment required now',
-                            '⚡ Response within 24 hours',
-                            '✈️ Fully customisable',
+                            { Icon: FaLock, label: 'Secure & Private' },
+                            { Icon: FaPhone, label: 'No payment required now' },
+                            { Icon: FaBolt, label: 'Response within 24 hours' },
+                            { Icon: FaPlaneDeparture, label: 'Fully customisable' },
                         ].map((badge) => (
-                            <span key={badge} className="flex items-center gap-1">{badge}</span>
+                            <span key={badge.label} className="flex items-center gap-1.5">
+                                <badge.Icon /> {badge.label}
+                            </span>
                         ))}
                     </div>
                 </div>

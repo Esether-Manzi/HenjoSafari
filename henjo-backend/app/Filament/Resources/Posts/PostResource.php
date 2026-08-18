@@ -8,9 +8,11 @@ use App\Filament\Resources\Posts\Pages\ListPosts;
 use App\Filament\Resources\Posts\Pages\ViewPost;
 use App\Models\Post;
 use BackedEnum;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
@@ -18,6 +20,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
@@ -51,6 +54,11 @@ class PostResource extends Resource
             Checkbox::make('featured'),
             TextInput::make('status')->default('draft')->maxLength(50),
             DateTimePicker::make('published_at'),
+            SpatieMediaLibraryFileUpload::make('featured_image')
+                ->collection('featured_image')
+                ->image()
+                ->imageEditor()
+                ->columnSpanFull(),
         ]);
     }
 
@@ -69,13 +77,16 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
+                SpatieMediaLibraryImageColumn::make('featured_image')
+                    ->collection('featured_image')
+                    ->label('Image'),
                 TextColumn::make('title')->searchable()->sortable(),
                 TextColumn::make('author.name')->label('Author')->sortable(),
                 TextColumn::make('status')->badge(),
                 IconColumn::make('featured')->boolean(),
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make(),
+                EditAction::make(),
             ]);
     }
 

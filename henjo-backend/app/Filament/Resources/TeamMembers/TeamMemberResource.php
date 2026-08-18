@@ -8,7 +8,9 @@ use App\Filament\Resources\TeamMembers\Pages\ListTeamMembers;
 use App\Filament\Resources\TeamMembers\Pages\ViewTeamMember;
 use App\Models\TeamMember;
 use BackedEnum;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
@@ -16,6 +18,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
@@ -47,6 +50,11 @@ class TeamMemberResource extends Resource
             TextInput::make('email')->email(),
             TextInput::make('phone')->maxLength(50),
             Checkbox::make('is_active')->default(true),
+            SpatieMediaLibraryFileUpload::make('photo')
+                ->collection('photo')
+                ->image()
+                ->imageEditor()
+                ->columnSpanFull(),
         ]);
     }
 
@@ -65,13 +73,17 @@ class TeamMemberResource extends Resource
     {
         return $table
             ->columns([
+                SpatieMediaLibraryImageColumn::make('photo')
+                    ->collection('photo')
+                    ->label('Photo')
+                    ->circular(),
                 TextColumn::make('name')->searchable()->sortable(),
                 TextColumn::make('position'),
                 TextColumn::make('email'),
                 IconColumn::make('is_active')->boolean(),
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make(),
+                EditAction::make(),
             ]);
     }
 

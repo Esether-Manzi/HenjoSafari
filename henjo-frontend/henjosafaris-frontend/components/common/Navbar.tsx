@@ -1,5 +1,5 @@
 'use client';
-// ✅ Client Component because it uses useState for mobile menu and dropdowns
+// Client Component because it uses useState for mobile menu and dropdowns
 
 import Link from 'next/link';
 import Image from 'next/image';
@@ -25,13 +25,14 @@ export default function Navbar() {
             name: 'Safaris',
             href: '/safaris',
             dropdown: [
-                { name: 'Wildlife Adventure', href: '/safaris?category=wildlife' },
-                { name: 'Gorilla Trekking', href: '/safaris?category=gorilla' },
+                { name: 'Wildlife Adventure', href: '/safaris?category=wildlife-adventure' },
+                { name: 'Gorilla Trekking', href: '/safaris?category=gorilla-safaris' },
                 { name: 'Fly In Safaris', href: '/safaris?category=flying' },
                 { name: 'Mountaineering', href: '/safaris?category=mountaineering' },
-                { name: 'Cultural Tour', href: '/safaris?category=cultural' },
+                { name: 'Cultural Tour', href: '/safaris?category=cultural-tour' },
                 { name: 'Women Only Tours', href: '/women-only-tours' },
-                { name: 'City Tours', href: '/safaris?category=city' },
+                { name: 'City Tours', href: '/safaris?category=city-tours' },
+                { name: 'Day Tours', href: '/safaris?category=day-tours' },
             ]
         },
         { name: 'Women Only Tours', href: '/women-only-tours' },
@@ -45,6 +46,7 @@ export default function Navbar() {
                 { name: 'Rwanda', href: '/destinations/rwanda' },
             ]
         },
+        { name: 'Travel Information', href: '/travel-information' },
         { name: 'Blog', href: '/blog' },
         {
             name: 'About Us',
@@ -91,24 +93,24 @@ export default function Navbar() {
                             >
                                 Henjo African Safaris
                             </span>
-                            <span
+                            {/* <span
                                 className="block text-[10px] font-semibold tracking-wider"
                                 style={{ color: 'var(--brand-gold)' }}
                             >
                                 Every step, with us is an adventure
-                            </span>
+                            </span> */}
                         </div>
                     </Link>
 
                     {/* Desktop Menu */}
-                    <div className="hidden lg:flex items-center space-x-4">
+                    <div className="hidden lg:flex items-center space-x-3 text-sm">
                         {menuItems.map((item) => (
                             <div key={item.name} className="relative group">
                                 {item.dropdown ? (
                                     <div className="flex items-center">
                                         <Link
                                             href={item.href}
-                                            className="font-medium transition"
+                                            className="font-medium transition whitespace-nowrap"
                                             style={{ color: 'var(--text-secondary)' }}
                                             onMouseEnter={(e) => {
                                                 e.currentTarget.style.color = 'var(--brand-gold)';
@@ -138,7 +140,7 @@ export default function Navbar() {
                                 ) : (
                                     <Link
                                         href={item.href}
-                                        className="font-medium transition"
+                                        className="font-medium transition whitespace-nowrap"
                                         style={{ color: 'var(--text-secondary)' }}
                                         onMouseEnter={(e) => {
                                             e.currentTarget.style.color = 'var(--brand-gold)';
@@ -190,7 +192,7 @@ export default function Navbar() {
                         {/* CTA Button */}
                         <Link
                             href="/booking"
-                            className="font-semibold px-6 py-2 rounded-full transition hover:scale-105"
+                            className="font-semibold px-6 py-2 rounded-full transition hover:scale-105 whitespace-nowrap"
                             style={{
                                 background: 'var(--brand-gold)',
                                 color: 'var(--text-on-gold)',

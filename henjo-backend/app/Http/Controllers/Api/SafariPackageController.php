@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\SafariPackage;
-use App\Models\SafariCategory;
-use App\Models\Destination;
 use App\Models\Activity;
 use App\Models\Country;
+use App\Models\Destination;
+use App\Models\SafariCategory;
+use App\Models\SafariPackage;
 use Illuminate\Http\Request;
 
 class SafariPackageController extends Controller
@@ -18,30 +18,31 @@ class SafariPackageController extends Controller
     public function index(Request $request)
     {
         $query = SafariPackage::with([
+            'media',
             'destination.country',
             'categories',
             'activities',
             'accommodations',
             'itineraryDays',
             'inclusions',
-            'exclusions'
+            'exclusions',
         ])
-        ->where('status', 'published');
+            ->where('status', 'published');
 
         // Text Search
         if ($request->filled('search')) {
             $searchTerm = $request->input('search');
-            $query->where(function($q) use ($searchTerm) {
+            $query->where(function ($q) use ($searchTerm) {
                 $q->where('title', 'like', "%{$searchTerm}%")
-                  ->orWhere('summary', 'like', "%{$searchTerm}%")
-                  ->orWhere('description', 'like', "%{$searchTerm}%");
+                    ->orWhere('summary', 'like', "%{$searchTerm}%")
+                    ->orWhere('description', 'like', "%{$searchTerm}%");
             });
         }
 
         // Category Filter
         if ($request->filled('category')) {
             $categorySlug = $request->input('category');
-            $query->whereHas('categories', function($q) use ($categorySlug) {
+            $query->whereHas('categories', function ($q) use ($categorySlug) {
                 $q->where('slug', $categorySlug);
             });
         }
@@ -49,7 +50,7 @@ class SafariPackageController extends Controller
         // Destination Filter
         if ($request->filled('destination')) {
             $destinationSlug = $request->input('destination');
-            $query->whereHas('destination', function($q) use ($destinationSlug) {
+            $query->whereHas('destination', function ($q) use ($destinationSlug) {
                 $q->where('slug', $destinationSlug);
             });
         }
@@ -57,7 +58,7 @@ class SafariPackageController extends Controller
         // Activity Filter
         if ($request->filled('activity')) {
             $activitySlug = $request->input('activity');
-            $query->whereHas('activities', function($q) use ($activitySlug) {
+            $query->whereHas('activities', function ($q) use ($activitySlug) {
                 $q->where('slug', $activitySlug);
             });
         }
@@ -65,18 +66,20 @@ class SafariPackageController extends Controller
         // Country Filter
         if ($request->filled('country')) {
             $countryNameOrSlug = $request->input('country');
-            $query->whereHas('destination.country', function($q) use ($countryNameOrSlug) {
+            $query->whereHas('destination.country', function ($q) use ($countryNameOrSlug) {
                 $q->where('name', 'like', "%{$countryNameOrSlug}%")
-                  ->orWhere('code', 'like', "%{$countryNameOrSlug}%");
+                    ->orWhere('code', 'like', "%{$countryNameOrSlug}%");
             });
         }
 
         // Pagination
-        $packages = $query->paginate(12);
+        $perPage = (int) $request->input('per_page', 12);
+        $perPage = $perPage > 0 && $perPage <= 100 ? $perPage : 12;
+        $packages = $query->paginate($perPage);
 
         return response()->json([
             'success' => true,
-            'data' => $packages
+            'data' => $packages,
         ]);
     }
 
@@ -86,50 +89,55 @@ class SafariPackageController extends Controller
     public function show($slug)
     {
         $package = SafariPackage::with([
+            'media',
             'destination.country',
             'categories',
             'activities',
             'accommodations',
             'itineraryDays',
             'inclusions',
-            'exclusions'
+            'exclusions',
         ])
-        ->where('slug', $slug)
-        ->where('status', 'published')
-        ->first();
+            ->where('slug', $slug)
+            ->where('status', 'published')
+            ->first();
 
-        if (!$package) {
+        if (! $package) {
             return response()->json([
                 'success' => false,
-                'message' => 'Package not found'
+                'message' => 'Package not found',
             ], 404);
         }
 
         return response()->json([
             'success' => true,
-            'data' => $package
+            'data' => $package,
         ]);
     }
 
     /**
      * Get featured safari packages
+     *
+     * Returns enough results for the frontend to pick a spread across
+     * countries (e.g. 2 per country) rather than just the first few rows.
      */
     public function featured()
     {
         $packages = SafariPackage::with([
+            'media',
             'destination.country',
             'categories',
             'activities',
-            'accommodations'
+            'accommodations',
         ])
-        ->where('featured', true)
-        ->where('status', 'published')
-        ->limit(6)
-        ->get();
+            ->where('featured', true)
+            ->where('status', 'published')
+            ->limit(50)
+            ->get();
 
         return response()->json([
             'success' => true,
-            'data' => $packages
+            'data' => $packages,
         ]);
     }
 
@@ -139,19 +147,20 @@ class SafariPackageController extends Controller
     public function popular()
     {
         $packages = SafariPackage::with([
+            'media',
             'destination.country',
             'categories',
             'activities',
-            'accommodations'
+            'accommodations',
         ])
-        ->where('popular', true)
-        ->where('status', 'published')
-        ->limit(6)
-        ->get();
+            ->where('popular', true)
+            ->where('status', 'published')
+            ->limit(6)
+            ->get();
 
         return response()->json([
             'success' => true,
-            'data' => $packages
+            'data' => $packages,
         ]);
     }
 
@@ -172,7 +181,7 @@ class SafariPackageController extends Controller
                 'destinations' => $destinations,
                 'activities' => $activities,
                 'countries' => $countries,
-            ]
+            ],
         ]);
     }
 }

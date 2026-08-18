@@ -7,7 +7,9 @@ use App\Filament\Resources\SafariCategories\Pages\EditSafariCategory;
 use App\Filament\Resources\SafariCategories\Pages\ListSafariCategories;
 use App\Filament\Resources\SafariCategories\Pages\ViewSafariCategory;
 use App\Models\SafariCategory;
+use App\Support\SafariIcons;
 use BackedEnum;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
@@ -42,7 +44,13 @@ class SafariCategoryResource extends Resource
             TextInput::make('name')->required()->maxLength(255),
             TextInput::make('slug')->maxLength(255),
             Textarea::make('description')->rows(5),
-            TextInput::make('icon')->maxLength(100),
+            Select::make('icon')
+                ->label('Icon')
+                ->options(SafariIcons::selectOptions())
+                ->allowHtml()
+                ->searchable()
+                ->native(false)
+                ->helperText('Shown next to this category on the public site.'),
         ]);
     }
 
@@ -52,7 +60,12 @@ class SafariCategoryResource extends Resource
             TextEntry::make('name'),
             TextEntry::make('slug'),
             TextEntry::make('description'),
-            TextEntry::make('icon'),
+            TextEntry::make('icon')
+                ->label('Icon')
+                ->html()
+                ->state(fn (SafariCategory $record): string => ($record->icon
+                    ? SafariIcons::preview($record->icon).' '.e(SafariIcons::label($record->icon))
+                    : null) ?? '-'),
         ]);
     }
 
@@ -60,9 +73,12 @@ class SafariCategoryResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('icon')
+                    ->label('Icon')
+                    ->html()
+                    ->state(fn (SafariCategory $record): string => SafariIcons::preview($record->icon) ?? '—'),
                 TextColumn::make('name')->searchable()->sortable(),
                 TextColumn::make('slug')->searchable(),
-                TextColumn::make('icon'),
             ])
             ->recordActions([
                 \Filament\Actions\EditAction::make(),

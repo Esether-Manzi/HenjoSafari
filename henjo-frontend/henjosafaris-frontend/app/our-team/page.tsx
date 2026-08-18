@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Hero from '@/components/common/Hero';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaEnvelope, FaPhone, FaArrowRight } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaArrowRight, FaLeaf } from 'react-icons/fa';
 import { teamApi } from '@/lib/api/teamApi';
 import type { TeamMember } from '@/types/team';
 
@@ -20,73 +20,51 @@ export function getMemberPhoto(member: TeamMember): string {
 export const MOCK_TEAM: TeamMember[] = [
     {
         id: 1,
-        name: 'Moses Safari',
-        position: 'Founder & Managing Director',
-        bio: 'Moses founded Henjo African Safaris with a vision to share the raw beauty of East Africa while supporting wildlife conservation and local community development.',
-        email: 'moses@henjosafaris.com',
+        name: 'Henry Katinda',
+        position: 'Founder / CEO',
+        bio: "My passion for tourism began at the age of 18 when I worked as a part time Tour guide at the source of the Nile in Jinja. Driven by a desire to share my passion with others, I founded Henjo African Safaris to provide personalized, high-quality tours that showcase the beauty and diversity of East Africa. As a strong advocate for women's empowerment, I am proud that 90% of our employees are women. I also founded the Empathy Children Initiative, supporting vulnerable children, single mothers, and teenage girls in Eastern Uganda.",
+        email: 'info@henjosafaris.com',
         phone: '+256 779 557 514',
         is_active: true,
         media: []
     },
     {
         id: 2,
-        name: 'Sarah Kemunto',
-        position: 'Head of Operations & Booking',
-        bio: 'Sarah ensures every booking, permit, and itinerary detail runs flawlessly. She coordinates our ground teams across Uganda, Kenya, and Tanzania.',
-        email: 'operations@henjosafaris.com',
-        phone: '+254 739 013 098',
+        name: 'Joan Tusubira',
+        position: 'Director / Head of Women Only Safaris / Reservations Manager',
+        bio: 'Joan is the co-founder/director of Henjo African Safaris, and among the few women in a male-dominated travel industry in Uganda. A tour guide for 7 years, she is passionate about female travel, environment, and culture, and works to ensure travelers have deeply balanced experiences across Uganda, Kenya, and Rwanda.',
+        email: 'info@henjosafaris.com',
+        phone: '+256 779 557 514',
         is_active: true,
         media: []
     },
     {
         id: 3,
-        name: 'John Henjo',
-        position: 'Senior Wildlife Guide',
-        bio: 'With over 15 years of tracking experience in the Serengeti and Masai Mara, John’s knowledge of birdlife, cat behavior, and local history is unparalleled.',
-        email: 'john@henjosafaris.com',
+        name: 'Claire Robinah',
+        position: 'Head Guide',
+        bio: "Claire leads Henjo African Safaris' guiding team across Uganda, Kenya, and Rwanda, bringing hands-on field experience to every itinerary.",
+        email: 'info@henjosafaris.com',
         phone: '+256 779 557 514',
         is_active: true,
         media: []
     },
     {
         id: 4,
-        name: 'Grace Mukasa',
-        position: 'Customer Experience & Quality Manager',
-        bio: 'Grace welcomes travelers and provides pre-safari briefings. She guarantees that every lodge, meal, and safari cruiser meets our premium luxury standards.',
-        email: 'grace@henjosafaris.com',
-        phone: '+256 700 000 001',
-        is_active: true,
-        media: []
-    },
-    {
-        id: 5,
-        name: 'David Ochieng',
-        position: 'Lead Primate Tracking Specialist',
-        bio: 'Specializing in the tropical rainforests of Bwindi and Kibale, David has a sixth sense for locating mountain gorilla families and chimpanzee troops safely.',
-        email: 'david@henjosafaris.com',
-        phone: '+256 700 000 002',
-        is_active: true,
-        media: []
-    },
-    {
-        id: 6,
-        name: 'Amelie Dubois',
-        position: 'European Relations & Marketing Director',
-        bio: 'Based partly in the Netherlands, Amelie manages our partnership network with travel agents across Europe and coordinates sustainable tourism outreach programs.',
-        email: 'amelie@henjosafaris.com',
-        phone: '+31 6 1675 3816',
+        name: 'Magemeso Faziri',
+        position: 'Driver',
+        bio: "Magemeso is one of Henjo African Safaris' professional driver-guides, ensuring safe and comfortable travel throughout every safari.",
+        email: 'info@henjosafaris.com',
+        phone: '+256 779 557 514',
         is_active: true,
         media: []
     }
 ];
 
-// Set local mock image URLs
+// Local placeholder photos (real staff photos to be uploaded via the admin panel)
 (MOCK_TEAM[0] as any).image = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop';
 (MOCK_TEAM[1] as any).image = 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop';
 (MOCK_TEAM[2] as any).image = 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop';
 (MOCK_TEAM[3] as any).image = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop';
-(MOCK_TEAM[4] as any).image = 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?q=80&w=400&auto=format&fit=crop';
-(MOCK_TEAM[5] as any).image = 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop';
 
 export default function OurTeamPage() {
     const [members, setMembers] = useState<TeamMember[]>([]);
@@ -128,8 +106,8 @@ export default function OurTeamPage() {
 
             <div className="container mx-auto px-4 max-w-6xl py-20">
                 <div className="text-center mb-16">
-                    <span className="inline-block bg-[var(--brand-gold-subtle)] text-[var(--brand-gold)] px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
-                        🌿 Expert Guidance, Unforgettable Journeys
+                    <span className="inline-flex items-center gap-2 bg-[var(--brand-gold-subtle)] text-[var(--brand-gold)] px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
+                        <FaLeaf /> Expert Guidance, Unforgettable Journeys
                     </span>
                     <h2 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
                         Meet the Experts

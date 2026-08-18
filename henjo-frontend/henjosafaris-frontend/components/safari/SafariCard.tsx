@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { getImageUrl } from '@/lib/utils/imageHelper';
-import { FaMapMarkerAlt, FaClock } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaClock, FaStar } from 'react-icons/fa';
 import type { SafariPackage } from '@/types/safari';
 
 interface SafariCardProps {
@@ -12,16 +12,16 @@ interface SafariCardProps {
 }
 
 export default function SafariCard({ tour, featured = false }: SafariCardProps) {
-    // ✅ Use the image helper
     const imageUrl = getImageUrl(tour.media, 'cover');
 
     return (
         <Link
             href={`/safaris/${tour.slug}`}
-            className={`group rounded-2xl overflow-hidden transition duration-300 ${featured ? 'md:col-span-2 lg:col-span-1' : ''}`}
+            className={`group rounded-2xl overflow-hidden transition duration-300 hover:-translate-y-1 ${featured ? 'md:col-span-2 lg:col-span-1' : ''}`}
             style={{
                 background: 'var(--bg-card)',
                 boxShadow: 'var(--shadow-md)',
+                borderTop: '3px solid var(--brand-gold)',
             }}
             onMouseEnter={(e) => {
                 e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
@@ -39,13 +39,13 @@ export default function SafariCard({ tour, featured = false }: SafariCardProps) 
                 />
                 {tour.featured && (
                     <span
-                        className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold"
+                        className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1"
                         style={{
                             background: 'var(--brand-gold)',
                             color: 'var(--text-on-gold)',
                         }}
                     >
-                        ★ Featured
+                        <FaStar /> Featured
                     </span>
                 )}
                 {tour.popular && (

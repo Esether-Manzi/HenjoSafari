@@ -805,13 +805,347 @@ class SafariPackageSeeder extends Seeder
             ]
         ];
 
+        // Real per-tour corrections sourced from henjosafaris-content-audit.md
+        // (Sections 5.2/5.3/5.4) — duration/price/category data the WordPress
+        // site actually had, replacing this seeder's earlier 1-day/$0/
+        // wildlife-adventure-only placeholder defaults. Three slugs below
+        // aren't documented in the audit (no matching product was found on
+        // the live site) — those keep base_price at 0 rather than inventing
+        // a number, but still get a corrected duration and a sensible
+        // category based on their own title.
+        $corrections = [
+            '12-day-kenya-classic-signature-wildlife-safari-2' => ['duration_days' => 12, 'duration_nights' => 11, 'base_price' => 0.0, 'categories' => ['wildlife-adventure'], 'flights' => true],
+            '5-day-masai-mara-flying-luxury-safari' => ['duration_days' => 5, 'duration_nights' => 4, 'base_price' => 0.0, 'categories' => ['flying', 'wildlife-adventure'], 'flights' => true],
+            '8-days-best-of-kenya-safari' => ['duration_days' => 8, 'duration_nights' => 7, 'base_price' => 0.0, 'categories' => ['wildlife-adventure'], 'flights' => true],
+            '9-day-kenya-beach-holiday-and-luxury-wildlife-safari' => ['duration_days' => 9, 'duration_nights' => 8, 'base_price' => 0.0, 'categories' => ['wildlife-adventure'], 'flights' => true],
+            'kigali-rwanda-city-tour' => ['duration_days' => 1, 'duration_nights' => 0, 'base_price' => 0.0, 'categories' => ['city-tours', 'day-tours']],
+            '6-day-mount-kenya-chogoria-route-climbing-package' => ['duration_days' => 6, 'duration_nights' => 5, 'base_price' => 0.0, 'categories' => ['mountaineering']],
+            '5-day-masai-mara-fly-in-luxury-safari' => ['duration_days' => 5, 'duration_nights' => 4, 'base_price' => 3000.0, 'categories' => ['flying', 'wildlife-adventure'], 'flights' => true],
+            '12-day-kenya-classic-signature-wildlife-safari' => ['duration_days' => 12, 'duration_nights' => 11, 'base_price' => 4000.0, 'categories' => ['wildlife-adventure'], 'flights' => true],
+            '4-day-bwindi-gorilla-trekking-flying-safari' => ['duration_days' => 4, 'duration_nights' => 3, 'base_price' => 3480.0, 'categories' => ['flying', 'gorilla-safaris', 'wildlife-adventure']],
+            '5-day-birding-safari-to-uganda' => ['duration_days' => 5, 'duration_nights' => 4, 'base_price' => 1308.0, 'categories' => ['birding', 'wildlife-adventure']],
+            '8-days-western-uganda-cycling-safari' => ['duration_days' => 8, 'duration_nights' => 7, 'base_price' => 1516.0, 'categories' => ['cycling', 'wildlife-adventure']],
+            'kampala-cultural-tour' => ['duration_days' => 1, 'duration_nights' => 0, 'base_price' => 180.0, 'categories' => ['city-tours', 'cultural-tour']],
+            '1-day-white-water-rafting-on-the-nile' => ['duration_days' => 1, 'duration_nights' => 0, 'base_price' => 180.0, 'categories' => ['city-tours', 'day-tours', 'wildlife-adventure']],
+            'kampala-city-tour' => ['duration_days' => 1, 'duration_nights' => 0, 'base_price' => 80.0, 'categories' => ['city-tours']],
+            '8-days-mountain-rwenzori-hiking-safari' => ['duration_days' => 8, 'duration_nights' => 7, 'base_price' => 2650.0, 'categories' => ['mountaineering']],
+            '5-day-mount-elgon-hiking-safari' => ['duration_days' => 5, 'duration_nights' => 4, 'base_price' => 1316.0, 'categories' => ['mountaineering']],
+            '3-day-safari-tarangire-ngorongoro-lake-manyara' => ['duration_days' => 3, 'duration_nights' => 2, 'base_price' => 906.0, 'categories' => ['wildlife-adventure']],
+            '4-day-luxury-tanzania-safari' => ['duration_days' => 4, 'duration_nights' => 3, 'base_price' => 2050.0, 'categories' => ['wildlife-adventure']],
+            '4-day-tanzania-safari-tarangire-serengeti-manyara' => ['duration_days' => 4, 'duration_nights' => 3, 'base_price' => 2016.0, 'categories' => ['wildlife-adventure']],
+            '7-day-luxury-tanzania-safari' => ['duration_days' => 7, 'duration_nights' => 6, 'base_price' => 3256.0, 'categories' => ['wildlife-adventure']],
+            '6-day-kenya-safari-holiday' => ['duration_days' => 6, 'duration_nights' => 5, 'base_price' => 1516.0, 'categories' => ['wildlife-adventure']],
+            '5-day-masai-mara-nakuru-naivasha' => ['duration_days' => 5, 'duration_nights' => 4, 'base_price' => 1316.0, 'categories' => ['wildlife-adventure']],
+            '4-day-tsavo-and-amboseli-kenya-safari' => ['duration_days' => 4, 'duration_nights' => 3, 'base_price' => 1016.0, 'categories' => ['wildlife-adventure']],
+            '3-day-best-of-masai-mara' => ['duration_days' => 3, 'duration_nights' => 2, 'base_price' => 978.0, 'categories' => ['wildlife-adventure']],
+            '3-day-rwandas-remarkable-akagera-safari' => ['duration_days' => 3, 'duration_nights' => 2, 'base_price' => 0.0, 'categories' => ['wildlife-adventure']],
+            '8-day-rwanda-primate-tracking-safari' => ['duration_days' => 8, 'duration_nights' => 7, 'base_price' => 0.0, 'categories' => ['gorilla-safaris', 'wildlife-adventure']],
+            '3-day-gorillas-and-golden-monkey-safari' => ['duration_days' => 3, 'duration_nights' => 2, 'base_price' => 2816.0, 'categories' => ['gorilla-safaris']],
+            '3-day-rwanda-gorilla-safari' => ['duration_days' => 3, 'duration_nights' => 2, 'base_price' => 2506.0, 'categories' => ['gorilla-safaris']],
+            '5-day-uganda-safari-holiday' => ['duration_days' => 5, 'duration_nights' => 4, 'base_price' => 1960.0, 'categories' => ['gorilla-safaris', 'wildlife-adventure']],
+            '3-day-queen-elizabeth-safari-holiday' => ['duration_days' => 3, 'duration_nights' => 2, 'base_price' => 956.0, 'categories' => ['wildlife-adventure']],
+            '4-day-queen-elizabeth-lake-mburo-national-parks-safari' => ['duration_days' => 4, 'duration_nights' => 3, 'base_price' => 1050.0, 'categories' => ['wildlife-adventure']],
+            '7-day-kibale-national-park-and-gorillas-safari' => ['duration_days' => 7, 'duration_nights' => 6, 'base_price' => 2215.0, 'categories' => ['gorilla-safaris', 'wildlife-adventure']],
+            '6-day-kidepo-and-murchison-falls-wilderness-tour' => ['duration_days' => 6, 'duration_nights' => 5, 'base_price' => 1823.0, 'categories' => ['day-tours', 'wildlife-adventure']],
+            '4-day-bwindi-lake-bunyonyi-and-queen-elizabeth-safari' => ['duration_days' => 4, 'duration_nights' => 3, 'base_price' => 1560.0, 'categories' => ['gorilla-safaris', 'wildlife-adventure']],
+            '3-day-murchison-falls-ziwa-rhino-sanctuary' => ['duration_days' => 3, 'duration_nights' => 2, 'base_price' => 0.0, 'categories' => ['wildlife-adventure', 'day-tours']],
+            '7-day-rwanda-akagera-safari-and-golden-monkey-tour' => ['duration_days' => 7, 'duration_nights' => 6, 'base_price' => 3016.0, 'categories' => ['gorilla-safaris', 'wildlife-adventure']],
+            '5-day-highlighted-gorillas-a4-day-bwindi-lake-bunyonyi-and-queen-elizabeth-safarnd-wildlife-safari' => ['duration_days' => 4, 'duration_nights' => 3, 'base_price' => 1560.0, 'categories' => ['gorilla-safaris', 'wildlife-adventure']],
+            '4-day-kidepo-wildlife-safari' => ['duration_days' => 4, 'duration_nights' => 3, 'base_price' => 750.0, 'categories' => ['day-tours', 'wildlife-adventure']],
+        ];
+
+        // Real condensed day-by-day itineraries from the audit (§5.1/§5.3),
+        // replacing the generic "Enjoy full-day game drive..." placeholder.
+        // Packages sharing one real audit listing (documented near-duplicates)
+        // reuse that listing's itinerary.
+        $sharedItineraries = [
+            'bwindi_gorilla_flying' => [
+                ['day_number' => 1, 'title' => 'Arrival at Entebbe Airport and transfer to Hotel', 'description' => "Welcome by our representative at Entebbe International Airport and transfer to your hotel in Entebbe. Overnight at Hotel No.5."],
+                ['day_number' => 2, 'title' => 'Entebbe – Fly to Bwindi – Buhoma Lodge', 'description' => 'Transfer to Entebbe Airport for a scheduled flight (approx. 2 hours) to Bwindi (Kihihi or Kisoro airstrip), then transfer to your lodge. Afternoon Batwa trail cultural experience. Overnight at Buhoma Lodge.'],
+                ['day_number' => 3, 'title' => 'Bwindi Gorilla Trekking', 'description' => "Briefing at 8am with Uganda Wildlife Authority staff, followed by gorilla trekking (2–6 hours depending on the family's location). Afternoon Buhoma Village Walk. Overnight at Buhoma Lodge."],
+                ['day_number' => 4, 'title' => 'Bwindi to the Airstrip, Fly back to Entebbe', 'description' => 'Morning or afternoon flight back to Entebbe (options depart 09:45 or 14:45). End of services.'],
+            ],
+            'birding_uganda' => [
+                ['day_number' => 1, 'title' => 'Arrival & Mabamba Wetlands', 'description' => 'Arrival, shoebill canoe trip at Mabamba wetlands, transfer to Masindi.'],
+                ['day_number' => 2, 'title' => 'Birding the Royal Mile', 'description' => 'Full day birding the Royal Mile, transfer to Budongo Eco-Lodge.'],
+                ['day_number' => 3, 'title' => 'Kaniyo Pabidi & Murchison Falls', 'description' => 'Birding at Kaniyo Pabidi, transfer to Murchison Falls National Park.'],
+                ['day_number' => 4, 'title' => 'Game Drive & Boat Trip', 'description' => 'Morning game drive and afternoon boat trip to the base of Murchison Falls.'],
+                ['day_number' => 5, 'title' => 'Top-of-Falls Birding & Departure', 'description' => 'Top-of-the-falls birding walk, transfer to the airport for departure.'],
+            ],
+            'western_uganda_cycling' => [
+                ['day_number' => 1, 'title' => 'Arrival', 'description' => 'Arrival, transfer to Entebbe/Kampala.'],
+                ['day_number' => 2, 'title' => 'Kibale to Queen Elizabeth', 'description' => 'Drive to Kibale, cycle to Queen Elizabeth National Park. Overnight Mweya Safari Lodge.'],
+                ['day_number' => 3, 'title' => 'Ishasha Sector', 'description' => 'Cycle the Ishasha sector. Overnight Savannah Resort Hotel.'],
+                ['day_number' => 4, 'title' => 'Ruhija / Bwindi', 'description' => 'Cycle to the Ruhija sector, Bwindi. Overnight Ruhija Gorilla Lodge.'],
+                ['day_number' => 5, 'title' => 'Gorilla Tracking', 'description' => 'Gorilla tracking in Bwindi Impenetrable Forest.'],
+                ['day_number' => 6, 'title' => 'Lake Bunyonyi', 'description' => 'Cycle to Lake Bunyonyi. Overnight Bunyonyi Overland Resort.'],
+                ['day_number' => 7, 'title' => 'Return to Kampala', 'description' => 'Drive back to Kampala/Entebbe.'],
+                ['day_number' => 8, 'title' => 'Departure', 'description' => 'Shopping and flight home.'],
+            ],
+            'kampala_cultural' => [
+                ['day_number' => 1, 'title' => 'Kampala Cultural Day Tour', 'description' => "Visit Maridadi Crafts (1hr), Kasubi Tombs (3hrs — Buganda royal burial site), Kabaka's Palace and the Mengo torture chambers (1hr), and the Ndere Cultural Centre traditional dance show (3hrs, Wed/Fri/Sun 7pm)."],
+            ],
+            'jinja_rafting' => [
+                ['day_number' => 1, 'title' => 'Jinja White Water Rafting', 'description' => 'Depart Kampala at 6am for Jinja. Choose a Grade 5 rapids raft or a family float option (minimum age 6). 3–4 hours on the water, plus a Jinja town city tour.'],
+            ],
+            'kampala_city' => [
+                ['day_number' => 1, 'title' => 'Kampala Walking City Tour', 'description' => "Walking tour covering the old taxi park, Owino market, Kabaka's Palace, the Idi Amin torture chambers, Kasubi Tombs, Kabaka's Lake, the Hindu and Bahai temples, the Gaddafi Mosque, the Uganda Martyrs Shrine, the Independence Monument, and Rolex street food."],
+            ],
+            'rwenzori_hiking' => [
+                ['day_number' => 1, 'title' => 'Journey to Rwenzori', 'description' => 'Transfer to the Rwenzori foothills. Overnight Equator Snow Lodge.'],
+                ['day_number' => 2, 'title' => 'Nyakalengija to Nyabitaba', 'description' => 'Trek from Nyakalengija (1,600m) to Nyabitaba Hut (2,650m).'],
+                ['day_number' => 3, 'title' => 'Nyabitaba to John Matte', 'description' => 'Trek to John Matte Hut (3,350m).'],
+                ['day_number' => 4, 'title' => 'John Matte to Bujuku', 'description' => 'Trek to Bujuku Hut (3,900m).'],
+                ['day_number' => 5, 'title' => 'Bujuku to Elena Hut', 'description' => 'Trek to Elena Hut (4,541m).'],
+                ['day_number' => 6, 'title' => 'Summit Attempt', 'description' => 'Summit attempt on Margherita Peak (5,109m), or descend to Kitandara Hut (4,023m).'],
+                ['day_number' => 7, 'title' => 'Descend to Guy Yeoman Hut', 'description' => 'Descend to Guy Yeoman Hut (3,260m).'],
+                ['day_number' => 8, 'title' => 'Descend & Departure', 'description' => 'Descend to Nyakalengija (1,600m), departure.'],
+            ],
+            'mount_elgon' => [
+                ['day_number' => 1, 'title' => 'Kampala to Sasa Camp', 'description' => 'Drive from Kampala to Budadiri, trek to Sasa Camp (2,900m) via the "Wall of Death" staircase section.'],
+                ['day_number' => 2, 'title' => 'Sasa Camp to Mude Camp', 'description' => 'Trek to Mude Camp (3,500m).'],
+                ['day_number' => 3, 'title' => 'Summit Wagagai Peak', 'description' => 'Summit Wagagai Peak (4,321m), return to Mude Camp.'],
+                ['day_number' => 4, 'title' => 'Mude Camp to Budadiri', 'description' => 'Descend from Mude Camp back to Budadiri.'],
+                ['day_number' => 5, 'title' => 'Transfer to Kampala', 'description' => 'Transfer via Jinja and the Source of the Nile back to Kampala/Entebbe.'],
+            ],
+            'tz_tarangire_ngorongoro_manyara_3day' => [
+                ['day_number' => 1, 'title' => 'Arusha to Tarangire', 'description' => 'Drive from Arusha to Tarangire National Park, lunch at Matete picnic site.'],
+                ['day_number' => 2, 'title' => 'Ngorongoro Crater', 'description' => 'Drive to Ngorongoro Crater with a viewpoint stop, lunch at the hippo pool picnic site.'],
+                ['day_number' => 3, 'title' => 'Lake Manyara & Return', 'description' => 'Visit Lake Manyara National Park (Endalla picnic site, tree-climbing lions), return to Arusha. Overnight Fig Tree Lodge & Camp.'],
+            ],
+            'tz_luxury_4day' => [
+                ['day_number' => 1, 'title' => 'Tarangire National Park', 'description' => 'Full-day game drive in Tarangire National Park. Overnight Acacia Tarangire Luxury Camp.'],
+                ['day_number' => 2, 'title' => 'Ngorongoro Crater', 'description' => 'Drive to Ngorongoro Crater, visit Lake Magadi. Overnight Ngorongoro Lion\'s Paw Camp.'],
+                ['day_number' => 3, 'title' => 'Serengeti National Park', 'description' => 'Drive to Serengeti National Park for game viewing.'],
+                ['day_number' => 4, 'title' => 'Return to Arusha', 'description' => 'Morning game drive, return to Arusha.'],
+            ],
+            'tz_tarangire_serengeti_manyara_4day' => [
+                ['day_number' => 1, 'title' => 'Tarangire National Park', 'description' => 'Game drive in Tarangire, known for its elephant migration. Overnight Embalakai Camp.'],
+                ['day_number' => 2, 'title' => 'Ngorongoro to Serengeti', 'description' => 'Half-day Ngorongoro Crater tour, then transfer to Serengeti National Park.'],
+                ['day_number' => 3, 'title' => 'Serengeti to Karatu', 'description' => "Serengeti game drive, transfer to Karatu. Overnight Eileen's Trees Inn."],
+                ['day_number' => 4, 'title' => 'Lake Manyara & Return', 'description' => 'Visit Lake Manyara National Park, return to Arusha.'],
+            ],
+            'tz_luxury_7day' => [
+                ['day_number' => 1, 'title' => 'Arrival Arusha', 'description' => 'Arrive in Arusha. Overnight Gran Melia Arusha.'],
+                ['day_number' => 2, 'title' => 'Tarangire National Park', 'description' => 'Full-day game drive in Tarangire National Park.'],
+                ['day_number' => 3, 'title' => 'Lake Manyara National Park', 'description' => 'Game drive in Lake Manyara National Park.'],
+                ['day_number' => 4, 'title' => 'Serengeti National Park', 'description' => 'Transfer to Serengeti via the Ngorongoro Conservation Area.'],
+                ['day_number' => 5, 'title' => 'Serengeti Game Drives', 'description' => 'Full day of Serengeti game drives. Overnight Lahia Tented Camp.'],
+                ['day_number' => 6, 'title' => 'Ngorongoro Crater Floor', 'description' => 'Ngorongoro Crater floor tour. Overnight Kitela Lodge.'],
+                ['day_number' => 7, 'title' => 'Departure', 'description' => 'Transfer from Karatu to the airport for departure.'],
+            ],
+            'ke_6day_holiday' => [
+                ['day_number' => 1, 'title' => 'Nairobi to Masai Mara', 'description' => 'Drive from Nairobi to Masai Mara. Overnight Mara Enkorok Tented Camp.'],
+                ['day_number' => 2, 'title' => 'Masai Mara Game Drives', 'description' => 'Full-day Masai Mara game drives.'],
+                ['day_number' => 3, 'title' => 'Lake Nakuru National Park', 'description' => 'Drive to Lake Nakuru National Park. Overnight Hotel Waterbuck.'],
+                ['day_number' => 4, 'title' => 'Nakuru to Amboseli', 'description' => 'Visit Lake Nakuru, then drive to Amboseli National Park. Overnight AA Lodge.'],
+                ['day_number' => 5, 'title' => 'Amboseli National Park', 'description' => 'Full day in Amboseli, with views of Mount Kilimanjaro.'],
+                ['day_number' => 6, 'title' => 'Return to Nairobi', 'description' => 'Drive from Amboseli back to Nairobi.'],
+            ],
+            'ke_mara_nakuru_naivasha_5day' => [
+                ['day_number' => 1, 'title' => 'Nairobi to Masai Mara', 'description' => 'Drive to Masai Mara. Overnight Goshen Camp.'],
+                ['day_number' => 2, 'title' => 'Masai Mara Game Drive', 'description' => 'Full-day game drive, optional Maasai village visit ($20pp).'],
+                ['day_number' => 3, 'title' => 'Lake Nakuru', 'description' => 'Drive to Lake Nakuru National Park. Overnight Lanet Matfam Resort.'],
+                ['day_number' => 4, 'title' => 'Nakuru to Naivasha', 'description' => 'Lake Nakuru game drive, transfer to Lake Naivasha.'],
+                ['day_number' => 5, 'title' => "Hell's Gate & Return", 'description' => "Visit Hell's Gate National Park (walking/cycling park), return to Nairobi."],
+            ],
+            'ke_tsavo_amboseli_4day' => [
+                ['day_number' => 1, 'title' => 'Mombasa to Tsavo West', 'description' => 'Drive from Mombasa to Tsavo West National Park, visit Mzima Springs. Overnight Ngulia Safari Lodge.'],
+                ['day_number' => 2, 'title' => 'Amboseli National Park', 'description' => 'Drive to Amboseli National Park. Overnight Sentrim Amboseli Camp.'],
+                ['day_number' => 3, 'title' => 'Tsavo East National Park', 'description' => 'Drive to Tsavo East National Park, known for its "red elephants." Overnight Voi Safari Lodge.'],
+                ['day_number' => 4, 'title' => 'Return to Mombasa', 'description' => 'Drive back to Mombasa.'],
+            ],
+            'ke_best_of_mara_3day' => [
+                ['day_number' => 1, 'title' => 'Nairobi to Masai Mara', 'description' => 'Drive to Masai Mara, evening game drive. Overnight Lenchada Tourist Camp.'],
+                ['day_number' => 2, 'title' => 'Full-Day Game Drive', 'description' => 'Full sunrise-to-sunset game drive, optional Maasai village visit ($20pp).'],
+                ['day_number' => 3, 'title' => 'Return to Nairobi', 'description' => 'Morning game drive, return to Nairobi.'],
+            ],
+            'rw_gorillas_golden_monkey_3day' => [
+                ['day_number' => 1, 'title' => 'Arrival Kigali to Volcanoes NP', 'description' => 'Kigali airport pickup, optional city tour and Genocide Memorial visit, transfer to Volcanoes National Park.'],
+                ['day_number' => 2, 'title' => 'Golden Monkey Trekking', 'description' => 'Golden monkey trekking, then cross the border to Bwindi, Uganda via Cyanika.'],
+                ['day_number' => 3, 'title' => 'Gorilla Trekking', 'description' => 'Gorilla trekking, transfer back to Kigali. Lodges used: Da Vinci Gorilla Lodge, Bweza Gorilla Lodge.'],
+            ],
+            'rw_gorilla_3day' => [
+                ['day_number' => 1, 'title' => 'Arrival Kigali', 'description' => 'Arrive in Kigali, hotel transfer, tour briefing.'],
+                ['day_number' => 2, 'title' => 'Kigali City Tour to Volcanoes NP', 'description' => 'Kigali city tour (Genocide Memorial, Art Gallery, Kimironko market), transfer to Volcanoes National Park (Musanze). Overnight Hotel Des Mille Collines.'],
+                ['day_number' => 3, 'title' => 'Gorilla Trekking & Departure', 'description' => 'Gorilla trekking (2–4 hours), transfer to Kigali airport for departure.'],
+            ],
+            'ug_5day_holiday' => [
+                ['day_number' => 1, 'title' => 'Entebbe to Kibale', 'description' => 'Transfer to Kibale, Bigodi Wetland walk.'],
+                ['day_number' => 2, 'title' => 'Kibale to Queen Elizabeth', 'description' => 'Chimpanzee area visit in Kibale, transfer to Queen Elizabeth National Park, Kazinga Channel water safari.'],
+                ['day_number' => 3, 'title' => 'Queen Elizabeth to Bwindi', 'description' => 'Queen Elizabeth game drives, transfer to Bwindi.'],
+                ['day_number' => 4, 'title' => 'Gorilla Trekking to Lake Mburo', 'description' => 'Gorilla trekking, transfer to Lake Mburo National Park.'],
+                ['day_number' => 5, 'title' => 'Lake Mburo & Return', 'description' => 'Lake Mburo walking safari (optional horse riding or cycling), transfer to Entebbe.'],
+            ],
+            'qe_lake_mburo_3day' => [
+                ['day_number' => 1, 'title' => 'Lake Mburo Boat Cruise', 'description' => 'Lake Mburo National Park boat cruise.'],
+                ['day_number' => 2, 'title' => 'Lake Mburo to Queen Elizabeth', 'description' => 'Transfer to Queen Elizabeth National Park, game drive.'],
+                ['day_number' => 3, 'title' => 'Queen Elizabeth to Kampala', 'description' => 'Queen Elizabeth game drive and Kazinga Channel cruise, transfer to Kampala.'],
+            ],
+            'qe_lake_mburo_4day' => [
+                ['day_number' => 1, 'title' => 'Lake Mburo Boat Cruise', 'description' => 'Lake Mburo National Park boat cruise.'],
+                ['day_number' => 2, 'title' => 'Lake Mburo to Queen Elizabeth', 'description' => 'Transfer to Queen Elizabeth National Park, game drive.'],
+                ['day_number' => 3, 'title' => 'Queen Elizabeth Game Drive', 'description' => 'Queen Elizabeth game drive and Kazinga Channel cruise.'],
+                ['day_number' => 4, 'title' => 'Return to Kampala', 'description' => 'Transfer from Queen Elizabeth back to Kampala.'],
+            ],
+            'kibale_gorillas_7day' => [
+                ['day_number' => 1, 'title' => 'Arrival Entebbe', 'description' => 'Arrive in Entebbe, optional Botanical Gardens birding walk.'],
+                ['day_number' => 2, 'title' => 'Mabamba to Kibale', 'description' => 'Mabamba shoebill wetlands visit, transfer to Kibale.'],
+                ['day_number' => 3, 'title' => 'Kibale Chimpanzee Tracking', 'description' => 'Chimpanzee tracking and birding in Kibale Forest.'],
+                ['day_number' => 4, 'title' => 'Kibale to Queen Elizabeth', 'description' => 'Transfer to Queen Elizabeth National Park.'],
+                ['day_number' => 5, 'title' => 'Ishasha to Bwindi', 'description' => 'View the Ishasha tree-climbing lions, transfer to Bwindi.'],
+                ['day_number' => 6, 'title' => 'Bwindi Gorilla Trekking', 'description' => 'Gorilla trekking in Bwindi Impenetrable Forest.'],
+                ['day_number' => 7, 'title' => 'Departure', 'description' => 'Transfer to Entebbe airport for departure.'],
+            ],
+            'kidepo_murchison_6day' => [
+                ['day_number' => 1, 'title' => 'Sipi Falls', 'description' => 'Hike at Kapchorwa/Sipi Falls, coffee tour.'],
+                ['day_number' => 2, 'title' => 'Kidepo Valley National Park', 'description' => 'Transfer to Kidepo Valley National Park.'],
+                ['day_number' => 3, 'title' => 'Kidepo Game Drive & Cultural Visit', 'description' => 'Nature walk, game drive, and a Karamojong community cultural visit.'],
+                ['day_number' => 4, 'title' => 'Murchison Falls National Park', 'description' => 'Transfer to Murchison Falls National Park.'],
+                ['day_number' => 5, 'title' => 'Falls Game Drive & Cruise', 'description' => 'Game drive and afternoon launch cruise to the base of Murchison Falls.'],
+                ['day_number' => 6, 'title' => 'Return via Ziwa Rhino Sanctuary', 'description' => 'Transfer to Kampala via Ziwa Rhino Sanctuary, departure.'],
+            ],
+            'bwindi_bunyonyi_qe_4day' => [
+                ['day_number' => 1, 'title' => 'Transfer to Bwindi & Batwa Experience', 'description' => "Transfer to Bwindi, Batwa cultural experience. Overnight Rushaga Gorilla Haven's Lodge / Broadbill Forest Camp."],
+                ['day_number' => 2, 'title' => 'Gorilla Trekking & Lake Bunyonyi', 'description' => 'Gorilla trekking, afternoon Lake Bunyonyi canoe ride. Overnight Bunyonyi Safaris Resort.'],
+                ['day_number' => 3, 'title' => 'Queen Elizabeth & Kazinga Channel', 'description' => 'Transfer to Queen Elizabeth National Park, Kazinga Channel boat cruise and evening game drive. Overnight The Bush Lodge / Banda.'],
+                ['day_number' => 4, 'title' => 'Kalinzu Forest & Departure', 'description' => 'Chimpanzee trek at Kalinzu Forest Reserve, transfer to Entebbe. End of tour.'],
+            ],
+            'kidepo_wildlife_4day' => [
+                ['day_number' => 1, 'title' => 'Kampala to Kidepo', 'description' => 'Transfer to Kidepo Valley National Park via Gulu/Kitgum. Overnight Kidepo Savannah Lodge.'],
+                ['day_number' => 2, 'title' => 'Kidepo Game Drives', 'description' => 'Two game drives, optional Kanangorok Hot Springs visit.'],
+                ['day_number' => 3, 'title' => 'Game Drive & Cultural Tour', 'description' => 'Game drive and a Karamojong cultural tour.'],
+                ['day_number' => 4, 'title' => 'Return to Entebbe', 'description' => 'Transfer to Kampala, then Entebbe airport.'],
+            ],
+            'rw_akagera_golden_monkey_7day' => [
+                ['day_number' => 1, 'title' => 'Arrival Kigali', 'description' => 'Arrival in Kigali.'],
+                ['day_number' => 2, 'title' => 'Akagera National Park', 'description' => 'Transfer to Akagera National Park, night game drive.'],
+                ['day_number' => 3, 'title' => 'Akagera Game Drives & Boat Cruise', 'description' => 'Akagera game drives and a Lake Ihema boat cruise, transfer back to Kigali. Overnight Akagera Game Lodge.'],
+                ['day_number' => 4, 'title' => 'Kigali City Tour to Musanze', 'description' => 'Kigali city tour (Genocide Memorial, Kimironko, Nyamirambo), transfer to Musanze/Volcanoes National Park.'],
+                ['day_number' => 5, 'title' => 'Golden Monkey Trek', 'description' => "Golden Monkey trek and a visit to the Iby'iwacu Cultural Village."],
+                ['day_number' => 6, 'title' => 'Bisoke Volcano Hike', 'description' => 'Bisoke Volcano hike (crater lake, 4hrs up/2hrs down), transfer to Lake Kivu.'],
+                ['day_number' => 7, 'title' => 'Lake Kivu & Departure', 'description' => 'Lake Kivu boat cruise, transfer to Kigali for departure. Overnight Paradise Malahide.'],
+            ],
+            'kigali_city_1day' => [
+                ['day_number' => 1, 'title' => 'Kigali City Tour', 'description' => 'Kimironko city market, Mt. Kigali viewpoint, a milk bar, a public art walk, Rwandan lunch, a coffee stop, and a visit to the Kigali Genocide Memorial Centre (starting 7:30am).'],
+            ],
+            'mount_kenya_chogoria_6day' => [
+                ['day_number' => 1, 'title' => 'Nairobi to Chogoria Gate', 'description' => 'Transfer to Chogoria Gate, trek to Mt Kenya Bandas. Camping accommodation.'],
+                ['day_number' => 2, 'title' => 'Lake Ellis Camp', 'description' => 'Trek to Lake Ellis Camp (3,600m).'],
+                ['day_number' => 3, 'title' => 'Mintos Hut', 'description' => 'Trek to Mintos Hut (4,200m), visit "the Temple" viewpoint.'],
+                ['day_number' => 4, 'title' => 'Austrian Hut', 'description' => 'Trek to Austrian Hut via Tooth Col.'],
+                ['day_number' => 5, 'title' => 'Summit Point Lenana', 'description' => "Pre-dawn summit of Point Lenana (hiker's summit), descend via Mackinder's Valley to Liki North Camp (3,900m)."],
+                ['day_number' => 6, 'title' => 'Return to Nairobi', 'description' => 'Descend to Old Moses Camp, transfer to Nairobi.'],
+            ],
+            'masai_mara_flying_5day' => [
+                ['day_number' => 1, 'title' => 'Fly to Masai Mara', 'description' => 'Fly from Nairobi (Wilson Airport) to Kichwa Tembo airstrip in the Masai Mara, afternoon game drive.'],
+                ['day_number' => 2, 'title' => 'Full-Day Game Drives', 'description' => 'Morning and afternoon game drives, optional hot air balloon safari, sundowners.'],
+                ['day_number' => 3, 'title' => 'Full-Day Game Drives', 'description' => 'Morning and afternoon game drives, pool time at camp.'],
+                ['day_number' => 4, 'title' => 'Game Drive & Balloon Option', 'description' => 'Morning and afternoon game drives, optional hot air balloon safari (+$450).'],
+                ['day_number' => 5, 'title' => 'Sunrise Game Drive & Departure', 'description' => 'Sunrise game drive, optional Maasai village visit, fly back to Nairobi. All 5 nights at &Beyond Kichwa Tembo Tented Camp.'],
+            ],
+            'ke_coastal_beach' => [
+                ['day_number' => 1, 'title' => 'Arrival Mombasa/Malindi', 'description' => 'Airport transfer to Diamonds Dream of Africa Resort.'],
+                ['day_number' => 2, 'title' => 'Vasco da Gama & Malindi Marine Park', 'description' => 'Visit the Vasco da Gama Pillar and Malindi Marine Park.'],
+                ['day_number' => 3, 'title' => 'Gedi Ruins', 'description' => 'Excursion to the Gedi Ruins.'],
+                ['day_number' => 4, 'title' => 'Mombasa & Haller Park', 'description' => 'Transfer to Mombasa, visit the Haller Park nature trail. Overnight Sarova Whitesands Beach Resort.'],
+                ['day_number' => 5, 'title' => 'Fort Jesus & Old Town', 'description' => 'Visit Fort Jesus and Old Town Mombasa.'],
+                ['day_number' => 6, 'title' => 'Diani & Shimba Hills', 'description' => 'Transfer to Diani, Shimba Hills National Reserve game drive and Sheldrick Falls. Overnight Baobab Beach Resort.'],
+                ['day_number' => 7, 'title' => 'Diani Beach Leisure', 'description' => 'Diani Beach leisure day with optional add-ons.'],
+                ['day_number' => 8, 'title' => 'Diani Beach Leisure', 'description' => 'Further beach leisure time, optional add-ons.'],
+                ['day_number' => 9, 'title' => 'Departure', 'description' => 'Transfer to Moi International Airport, departure.'],
+            ],
+            'ke_classic_12day' => [
+                ['day_number' => 1, 'title' => 'Arrival Nairobi', 'description' => 'Arrive in Nairobi. Overnight Ibis Styles Nairobi Westlands.'],
+                ['day_number' => 2, 'title' => 'Nairobi to Masai Mara', 'description' => 'Transfer to Masai Mara. Overnight Fisi Camp.'],
+                ['day_number' => 3, 'title' => 'Masai Mara Game Drives', 'description' => 'Full-day Masai Mara game drives, optional hot air balloon safari ($500pp).'],
+                ['day_number' => 4, 'title' => 'Masai Mara & Maasai Village', 'description' => 'Further Masai Mara game drives, optional Maasai village visit.'],
+                ['day_number' => 5, 'title' => 'Lake Naivasha', 'description' => 'Transfer to Lake Naivasha, boat ride. Overnight Panorama Hotel Naivasha.'],
+                ['day_number' => 6, 'title' => 'Lake Nakuru National Park', 'description' => 'Transfer to Lake Nakuru National Park. Overnight Hotel CityMax.'],
+                ['day_number' => 7, 'title' => 'Amboseli National Park', 'description' => 'Transfer to Amboseli National Park. Overnight AA Lodge Amboseli.'],
+                ['day_number' => 8, 'title' => 'Full-Day Amboseli', 'description' => 'Full day of game viewing in Amboseli National Park.'],
+                ['day_number' => 9, 'title' => 'Tsavo West National Park', 'description' => 'Transfer to Tsavo West National Park. Overnight Ngulia Safari Lodge.'],
+                ['day_number' => 10, 'title' => 'Tsavo East National Park', 'description' => 'Transfer to Tsavo East National Park. Overnight Ashnil Aruba.'],
+                ['day_number' => 11, 'title' => 'Full-Day Tsavo East', 'description' => 'Full day exploring Tsavo East (Aruba Dam, Mudanda Rock, Yatta Plateau).'],
+                ['day_number' => 12, 'title' => 'Return to Nairobi', 'description' => 'Transfer to Nairobi, departure.'],
+            ],
+            'rw_akagera_remarkable_3day' => [
+                ['day_number' => 1, 'title' => 'Arrival & Transfer to Akagera', 'description' => 'Arrival in Kigali, transfer to Akagera National Park.'],
+                ['day_number' => 2, 'title' => 'Akagera Game Drives', 'description' => 'Full-day game drives and a boat cruise on Lake Ihema.'],
+                ['day_number' => 3, 'title' => 'Return to Kigali', 'description' => 'Morning game drive, transfer back to Kigali for departure.'],
+            ],
+            'rw_primate_tracking_8day' => [
+                ['day_number' => 1, 'title' => 'Arrival Kigali', 'description' => 'Arrival in Kigali, transfer to hotel.'],
+                ['day_number' => 2, 'title' => 'Kigali City Tour', 'description' => 'Kigali city tour including the Genocide Memorial.'],
+                ['day_number' => 3, 'title' => 'Transfer to Volcanoes NP', 'description' => 'Transfer to Volcanoes National Park.'],
+                ['day_number' => 4, 'title' => 'Gorilla Trekking', 'description' => 'Mountain gorilla trekking.'],
+                ['day_number' => 5, 'title' => 'Golden Monkey Trekking', 'description' => 'Golden monkey trekking and a cultural village visit.'],
+                ['day_number' => 6, 'title' => 'Transfer to Nyungwe', 'description' => 'Transfer to Nyungwe Forest National Park.'],
+                ['day_number' => 7, 'title' => 'Chimpanzee Tracking', 'description' => 'Chimpanzee tracking and a canopy walk in Nyungwe Forest.'],
+                ['day_number' => 8, 'title' => 'Return to Kigali', 'description' => 'Transfer back to Kigali for departure.'],
+            ],
+            'murchison_ziwa_3day' => [
+                ['day_number' => 1, 'title' => 'Kampala to Ziwa', 'description' => 'Transfer to Ziwa Rhino Sanctuary for a rhino tracking walk.'],
+                ['day_number' => 2, 'title' => 'Murchison Falls National Park', 'description' => 'Transfer to Murchison Falls National Park, afternoon game drive.'],
+                ['day_number' => 3, 'title' => 'Falls Cruise & Return', 'description' => 'Launch cruise to the base of Murchison Falls, transfer back to Kampala.'],
+            ],
+        ];
+
+        $itineraryOverrides = [
+            '4-day-bwindi-gorilla-trekking-flying-safari' => $sharedItineraries['bwindi_gorilla_flying'],
+            '5-day-birding-safari-to-uganda' => $sharedItineraries['birding_uganda'],
+            '8-days-western-uganda-cycling-safari' => $sharedItineraries['western_uganda_cycling'],
+            'kampala-cultural-tour' => $sharedItineraries['kampala_cultural'],
+            '1-day-white-water-rafting-on-the-nile' => $sharedItineraries['jinja_rafting'],
+            'kampala-city-tour' => $sharedItineraries['kampala_city'],
+            '8-days-mountain-rwenzori-hiking-safari' => $sharedItineraries['rwenzori_hiking'],
+            '5-day-mount-elgon-hiking-safari' => $sharedItineraries['mount_elgon'],
+            '3-day-safari-tarangire-ngorongoro-lake-manyara' => $sharedItineraries['tz_tarangire_ngorongoro_manyara_3day'],
+            '4-day-luxury-tanzania-safari' => $sharedItineraries['tz_luxury_4day'],
+            '4-day-tanzania-safari-tarangire-serengeti-manyara' => $sharedItineraries['tz_tarangire_serengeti_manyara_4day'],
+            '7-day-luxury-tanzania-safari' => $sharedItineraries['tz_luxury_7day'],
+            '6-day-kenya-safari-holiday' => $sharedItineraries['ke_6day_holiday'],
+            '5-day-masai-mara-nakuru-naivasha' => $sharedItineraries['ke_mara_nakuru_naivasha_5day'],
+            '4-day-tsavo-and-amboseli-kenya-safari' => $sharedItineraries['ke_tsavo_amboseli_4day'],
+            '3-day-best-of-masai-mara' => $sharedItineraries['ke_best_of_mara_3day'],
+            '3-day-gorillas-and-golden-monkey-safari' => $sharedItineraries['rw_gorillas_golden_monkey_3day'],
+            '3-day-rwanda-gorilla-safari' => $sharedItineraries['rw_gorilla_3day'],
+            '5-day-uganda-safari-holiday' => $sharedItineraries['ug_5day_holiday'],
+            '3-day-queen-elizabeth-safari-holiday' => $sharedItineraries['qe_lake_mburo_3day'],
+            '4-day-queen-elizabeth-lake-mburo-national-parks-safari' => $sharedItineraries['qe_lake_mburo_4day'],
+            '7-day-kibale-national-park-and-gorillas-safari' => $sharedItineraries['kibale_gorillas_7day'],
+            '6-day-kidepo-and-murchison-falls-wilderness-tour' => $sharedItineraries['kidepo_murchison_6day'],
+            '4-day-bwindi-lake-bunyonyi-and-queen-elizabeth-safari' => $sharedItineraries['bwindi_bunyonyi_qe_4day'],
+            '5-day-highlighted-gorillas-a4-day-bwindi-lake-bunyonyi-and-queen-elizabeth-safarnd-wildlife-safari' => $sharedItineraries['bwindi_bunyonyi_qe_4day'],
+            '4-day-kidepo-wildlife-safari' => $sharedItineraries['kidepo_wildlife_4day'],
+            '7-day-rwanda-akagera-safari-and-golden-monkey-tour' => $sharedItineraries['rw_akagera_golden_monkey_7day'],
+            'kigali-rwanda-city-tour' => $sharedItineraries['kigali_city_1day'],
+            '6-day-mount-kenya-chogoria-route-climbing-package' => $sharedItineraries['mount_kenya_chogoria_6day'],
+            '5-day-masai-mara-flying-luxury-safari' => $sharedItineraries['masai_mara_flying_5day'],
+            '5-day-masai-mara-fly-in-luxury-safari' => $sharedItineraries['masai_mara_flying_5day'],
+            '8-days-best-of-kenya-safari' => array_slice($sharedItineraries['ke_coastal_beach'], 0, 8),
+            '9-day-kenya-beach-holiday-and-luxury-wildlife-safari' => $sharedItineraries['ke_coastal_beach'],
+            '12-day-kenya-classic-signature-wildlife-safari' => $sharedItineraries['ke_classic_12day'],
+            '12-day-kenya-classic-signature-wildlife-safari-2' => $sharedItineraries['ke_classic_12day'],
+            '3-day-rwandas-remarkable-akagera-safari' => $sharedItineraries['rw_akagera_remarkable_3day'],
+            '8-day-rwanda-primate-tracking-safari' => $sharedItineraries['rw_primate_tracking_8day'],
+            '3-day-murchison-falls-ziwa-rhino-sanctuary' => $sharedItineraries['murchison_ziwa_3day'],
+        ];
+
         foreach ($packagesData as $pData) {
             $country = Country::where('code', $pData['country_code'])->first();
             $destination = Destination::where('country_id', $country->id ?? 1)->first();
 
-            $itineraryData = $pData['itinerary'];
+            $correction = $corrections[$pData['slug']] ?? null;
+            $itineraryData = $itineraryOverrides[$pData['slug']] ?? $pData['itinerary'];
             $imageUrl = $pData['image_url'];
             unset($pData['country_code'], $pData['itinerary'], $pData['image_url']);
+
+            if ($correction) {
+                $pData['duration_days'] = $correction['duration_days'];
+                $pData['duration_nights'] = $correction['duration_nights'];
+                $pData['base_price'] = $correction['base_price'];
+            }
 
             $pData['destination_id'] = $destination->id ?? 1;
 
@@ -860,14 +1194,23 @@ class SafariPackageSeeder extends Seeder
                 ]);
             }
 
+            // Premium fly-in/luxury packages include international + domestic
+            // flights per the audit (§5.4) — everyone else excludes flights.
+            $includesFlights = $correction['flights'] ?? false;
+
+            if ($includesFlights) {
+                PackageInclusion::create([
+                    'package_id' => $package->id,
+                    'item' => 'International and domestic flights as specified in the itinerary',
+                    'display_order' => count($inclusions),
+                ]);
+            }
+
             // Seed standard Exclusions
             $package->exclusions()->delete();
-            $exclusions = [
-                'International flights and Visa fees',
-                'Personal expenses, tips and gratuities',
-                'Alcoholic and soft beverages outside game drives',
-                'Travel and medical insurance'
-            ];
+            $exclusions = $includesFlights
+                ? ['Visa fees', 'Personal expenses, tips and gratuities', 'Alcoholic and soft beverages outside game drives', 'Travel and medical insurance']
+                : ['International flights and Visa fees', 'Personal expenses, tips and gratuities', 'Alcoholic and soft beverages outside game drives', 'Travel and medical insurance'];
             foreach ($exclusions as $idx => $exc) {
                 PackageExclusion::create([
                     'package_id' => $package->id,
@@ -876,11 +1219,13 @@ class SafariPackageSeeder extends Seeder
                 ]);
             }
 
-            // Attach Category
-            $wildlifeCat = SafariCategory::where('slug', 'wildlife-adventure')->first();
-            if ($wildlifeCat) {
-                $package->categories()->syncWithoutDetaching([$wildlifeCat->id]);
-            }
+            // Attach the real category set for this tour (audit §5.2/§5.3),
+            // replacing whatever it was previously assigned — a full sync()
+            // rather than syncWithoutDetaching() so packages that were
+            // wrongly stuck on wildlife-adventure-only get corrected.
+            $categorySlugs = $correction['categories'] ?? ['wildlife-adventure'];
+            $categoryIds = SafariCategory::whereIn('slug', $categorySlugs)->pluck('id')->all();
+            $package->categories()->sync($categoryIds);
         }
 
         $this->command->info('✅ Successfully seeded ' . count($packagesData) . ' Safari Packages with Exact Live Images!');

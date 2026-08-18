@@ -18,6 +18,7 @@ class Activity extends Model implements HasMedia
         'name',
         'slug',
         'description',
+        'icon',
     ];
 
     public function sluggable(): array

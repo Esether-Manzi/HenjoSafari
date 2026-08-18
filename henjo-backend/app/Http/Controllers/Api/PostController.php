@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -15,7 +14,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Post::with(['tags', 'author'])
+        $query = Post::with(['tags', 'author', 'media'])
             ->where('status', 'published')
             ->orderBy('published_at', 'desc');
 
@@ -31,8 +30,8 @@ class PostController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'LIKE', "%{$search}%")
-                  ->orWhere('excerpt', 'LIKE', "%{$search}%")
-                  ->orWhere('content', 'LIKE', "%{$search}%");
+                    ->orWhere('excerpt', 'LIKE', "%{$search}%")
+                    ->orWhere('content', 'LIKE', "%{$search}%");
             });
         }
 
@@ -40,7 +39,7 @@ class PostController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $posts
+            'data' => $posts,
         ]);
     }
 
@@ -49,15 +48,15 @@ class PostController extends Controller
      */
     public function show($slug)
     {
-        $post = Post::with(['tags', 'author'])
+        $post = Post::with(['tags', 'author', 'media'])
             ->where('slug', $slug)
             ->where('status', 'published')
             ->first();
 
-        if (!$post) {
+        if (! $post) {
             return response()->json([
                 'success' => false,
-                'message' => 'Post not found'
+                'message' => 'Post not found',
             ], 404);
         }
 
@@ -65,10 +64,11 @@ class PostController extends Controller
         // $post->increment('views');
 
         // Get related posts (same tags)
-        $relatedPosts = Post::where('id', '!=', $post->id)
+        $relatedPosts = Post::with('media')
+            ->where('posts.id', '!=', $post->id)
             ->where('status', 'published')
             ->whereHas('tags', function ($q) use ($post) {
-                $q->whereIn('id', $post->tags->pluck('id'));
+                $q->whereIn('tags.id', $post->tags->pluck('id'));
             })
             ->limit(3)
             ->get();
@@ -77,8 +77,8 @@ class PostController extends Controller
             'success' => true,
             'data' => [
                 'post' => $post,
-                'related' => $relatedPosts
-            ]
+                'related' => $relatedPosts,
+            ],
         ]);
     }
 
@@ -87,7 +87,7 @@ class PostController extends Controller
      */
     public function featured()
     {
-        $posts = Post::with(['tags', 'author'])
+        $posts = Post::with(['tags', 'author', 'media'])
             ->where('status', 'published')
             ->where('featured', true)
             ->orderBy('published_at', 'desc')
@@ -96,7 +96,7 @@ class PostController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $posts
+            'data' => $posts,
         ]);
     }
 
@@ -111,7 +111,7 @@ class PostController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $tags
+            'data' => $tags,
         ]);
     }
 
@@ -122,14 +122,14 @@ class PostController extends Controller
     {
         $tag = Tag::where('slug', $slug)->first();
 
-        if (!$tag) {
+        if (! $tag) {
             return response()->json([
                 'success' => false,
-                'message' => 'Tag not found'
+                'message' => 'Tag not found',
             ], 404);
         }
 
-        $posts = Post::with(['tags', 'author'])
+        $posts = Post::with(['tags', 'author', 'media'])
             ->where('status', 'published')
             ->whereHas('tags', function ($q) use ($tag) {
                 $q->where('id', $tag->id);
@@ -141,8 +141,8 @@ class PostController extends Controller
             'success' => true,
             'data' => [
                 'tag' => $tag,
-                'posts' => $posts
-            ]
+                'posts' => $posts,
+            ],
         ]);
     }
 }

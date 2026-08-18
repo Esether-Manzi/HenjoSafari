@@ -10,7 +10,6 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
@@ -29,22 +28,28 @@ class AdminDashboardPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->brandName('Henjo Safaris')
-            
+
             // ==========================================
             // HENJO BRAND COLORS
+            // Same palette as the public site (app/globals.css on the frontend)
             // ==========================================
-            // Primary:   Forest Green  #2E7D32 (main actions, navigation)
-            // Secondary: Safari Gold   #D4A017 (accents, highlights)
-            // Danger:    Brand Maroon  #7B1818 (destructive actions)
+            // Primary:   Forest Green   #2E7D32 (main actions, navigation)
+            // Secondary: Safari Gold    #D4A017 (accents, highlights — used as Filament's "info")
+            // Success:   Green (light)  #4CAF50
+            // Warning:   Sunset Amber   #E5A100
+            // Danger:    Brand Maroon   #7B1818 (destructive actions)
+            // Gray:      Stone, a warm neutral — matches the site's cream/sand surfaces
+            //            (#FAFAF5, #F3F1EB, #E5E2D9) instead of Filament's default cool Zinc
             // ==========================================
             ->colors([
                 'primary' => Color::hex('#2E7D32'),
-                'gray' => Color::Zinc,
+                'gray' => Color::Stone,
                 'info' => Color::hex('#D4A017'),
                 'success' => Color::hex('#4CAF50'),
                 'warning' => Color::hex('#E5A100'),
                 'danger' => Color::hex('#7B1818'),
             ])
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->darkMode()
             ->databaseNotifications()
             ->sidebarCollapsibleOnDesktop()
@@ -56,7 +61,6 @@ class AdminDashboardPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
-                AccountWidget::class,
                 // FilamentInfoWidget::class,
             ])
             ->middleware([

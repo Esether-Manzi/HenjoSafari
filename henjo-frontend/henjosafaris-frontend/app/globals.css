@@ -417,3 +417,46 @@ body {
 .animate-slideFromRight {
   animation: slideFromRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
+.animate-slideUp,
+.animate-fadeIn {
+  animation-fill-mode: both;
+}
+
+.animation-delay-150 {
+  animation-delay: 0.15s;
+}
+
+.animation-delay-300 {
+  animation-delay: 0.3s;
+}
+
+.animation-delay-450 {
+  animation-delay: 0.45s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-18px) scale(1.05);
+  }
+}
+
+.animate-float {
+  animation: float 7s ease-in-out infinite;
+}
+
+/* =====================================================
+   DECORATIVE SECTION TEXTURE
+   Soft dot-grid used behind section headings for depth
+   without relying on imagery.
+   ===================================================== */
+
+.bg-dot-grid {
+  background-image: radial-gradient(var(--border-secondary) 1px, transparent 1px);
+  background-size: 24px 24px;
+}

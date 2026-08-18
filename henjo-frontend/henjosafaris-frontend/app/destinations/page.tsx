@@ -9,70 +9,9 @@
 import Hero from '@/components/common/Hero';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaMapMarkerAlt, FaCamera, FaArrowRight, FaStar, FaPaw, FaMountain, FaWater, FaTree } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaCamera, FaArrowRight, FaStar, FaPaw, FaMountain, FaWater, FaTree, FaGlobeAfrica } from 'react-icons/fa';
 import DestinationCard from '@/components/destination/DestinationCard';
-import type { DestinationData } from '@/components/destination/DestinationCard';
-
-// ============================================
-// DESTINATION DATA (from content audit)
-// Will be replaced with API data when backend
-// destinations endpoint is ready
-// ============================================
-
-const destinations: DestinationData[] = [
-    {
-        name: 'Uganda',
-        slug: 'uganda',
-        tagline: 'The Pearl of Africa',
-        description:
-            'Home to over half the world\'s remaining mountain gorillas in the misty Bwindi Impenetrable Forest. Trek through ancient rainforests, cruise the Kazinga Channel, and raft the source of the Nile.',
-        image: '/images/destinations/uganda.png',
-        country: 'East Africa',
-        tours: 16,
-        highlights: ['Gorilla Trekking', 'Chimpanzee Tracking', 'Source of the Nile', 'Queen Elizabeth NP', 'Rwenzori Mountains'],
-        startingPrice: 1050,
-        currency: '$',
-    },
-    {
-        name: 'Kenya',
-        slug: 'kenya',
-        tagline: 'Where the Wild Runs Free',
-        description:
-            'Witness the Great Migration sweep across the Masai Mara, spot the Big Five against the backdrop of snow-capped Kilimanjaro in Amboseli, and discover flamingo-lined Lake Nakuru.',
-        image: '/images/destinations/kenya.png',
-        country: 'East Africa',
-        tours: 4,
-        highlights: ['Great Migration', 'Masai Mara', 'Amboseli', 'Lake Nakuru', 'Tsavo'],
-        startingPrice: 978,
-        currency: '$',
-    },
-    {
-        name: 'Tanzania',
-        slug: 'tanzania',
-        tagline: 'The Roof of Africa',
-        description:
-            'From the endless Serengeti plains to the Ngorongoro Crater — the world\'s largest intact caldera — Tanzania offers the quintessential African safari. Climb Kilimanjaro or unwind on Zanzibar.',
-        image: '/images/destinations/tanzania.png',
-        country: 'East Africa',
-        tours: 4,
-        highlights: ['Serengeti', 'Ngorongoro Crater', 'Kilimanjaro', 'Tarangire', 'Zanzibar'],
-        startingPrice: 1200,
-        currency: '$',
-    },
-    {
-        name: 'Rwanda',
-        slug: 'rwanda',
-        tagline: 'The Land of a Thousand Hills',
-        description:
-            'A jewel of Central-East Africa with emerald-green volcanic mountains, intimate gorilla encounters in Volcanoes National Park, golden monkey tracking, and the stunning shores of Lake Kivu.',
-        image: '/images/destinations/rwanda.png',
-        country: 'East Africa',
-        tours: 4,
-        highlights: ['Gorilla Safaris', 'Golden Monkeys', 'Volcanoes NP', 'Lake Kivu', 'Akagera NP'],
-        startingPrice: 1500,
-        currency: '$',
-    },
-];
+import { destinations } from '@/lib/data/destinations';
 
 // ============================================
 // WHY EAST AFRICA SECTION DATA
@@ -126,13 +65,13 @@ export default function DestinationsPage() {
                     {/* Section Header */}
                     <div className="text-center mb-14">
                         <span
-                            className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold mb-4"
+                            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold mb-4"
                             style={{
                                 background: 'var(--brand-gold-subtle)',
                                 color: 'var(--brand-gold)',
                             }}
                         >
-                            🌍 Four Countries, Endless Adventures
+                            <FaGlobeAfrica /> Four Countries, Endless Adventures
                         </span>
                         <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                             Choose Your African Adventure
@@ -169,13 +108,13 @@ export default function DestinationsPage() {
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-14">
                         <span
-                            className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold mb-4"
+                            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold mb-4"
                             style={{
                                 background: 'var(--brand-green-subtle)',
                                 color: 'var(--brand-green)',
                             }}
                         >
-                            ✨ Why Choose East Africa?
+                            <FaStar /> Why Choose East Africa?
                         </span>
                         <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
                             An Experience Like No Other

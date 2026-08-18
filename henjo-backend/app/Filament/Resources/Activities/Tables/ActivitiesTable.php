@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Activities\Tables;
 
+use App\Support\SafariIcons;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -21,22 +22,17 @@ class ActivitiesTable
     {
         return $table
             ->columns([
-                SpatieMediaLibraryImageColumn::make('icon')
-                    ->collection('icons')
-                    ->circular()
-                    ->size(40),
-                // ImageColumn::make('image')
-                //     ->collection('image')
-                //     ->label('Image')
-                //     ->circular(),
+                SpatieMediaLibraryImageColumn::make('image')
+                    ->collection('image')
+                    ->label('Photo')
+                    ->circular(),
+                TextColumn::make('icon')
+                    ->label('Icon')
+                    ->html()
+                    ->formatStateUsing(fn (?string $state): string => SafariIcons::preview($state) ?? '—'),
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),
-                // TextColumn::make('icon')
-                //     ->searchable()
-                //     ->label('Icon'),
-                // TextColumn::make('slug')
-                //     ->searchable(),
                 TextColumn::make('description')
                     ->limit(50)
                     ->toggleable(),

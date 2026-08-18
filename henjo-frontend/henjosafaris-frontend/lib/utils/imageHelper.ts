@@ -49,7 +49,5 @@ export function getImageUrl(media: any, type: 'cover' | 'gallery' = 'cover', ind
         }
     }
     
-    console.log('🖼️ Image URL:', url); // Debug log - remove after testing
-    
     return url;
 }

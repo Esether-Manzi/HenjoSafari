@@ -4,7 +4,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaTiktok } from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaTiktok, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from 'react-icons/fa';
 
 export default function Footer() {
     const currentYear = new Date().getFullYear();
@@ -30,37 +30,48 @@ export default function Footer() {
 
     return (
         <footer
-            className="transition-colors duration-300"
+            className="relative transition-colors duration-300"
             style={{
                 background: 'var(--bg-footer)',
                 color: '#E0DDD5',
             }}
         >
+            {/* Brand accent line */}
+            <div
+                className="h-1 w-full"
+                style={{ background: 'linear-gradient(90deg, var(--brand-gold), var(--brand-green))' }}
+            />
+
             <div className="container mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                    
+
                     {/* Company Info */}
                     <div>
-                        <div
-                            className="relative w-20 h-20 mb-4 rounded-full overflow-hidden bg-white"
-                            style={{ border: '2px solid var(--brand-gold)' }}
-                        >
-                            <Image
-                                src="/images/henjo_icon_logo.png"
-                                alt="Henjo African Safaris"
-                                fill
-                                className="object-cover"
-                            />
+                        <div className="flex items-center gap-3 mb-4">
+                            <div
+                                className="relative w-14 h-14 rounded-full overflow-hidden bg-white flex-shrink-0"
+                                style={{ border: '2px solid var(--brand-gold)' }}
+                            >
+                                <Image
+                                    src="/images/henjo_icon_logo.png"
+                                    alt="Henjo African Safaris"
+                                    fill
+                                    className="object-cover"
+                                />
+                            </div>
+                            <span className="font-bold text-lg text-white leading-tight">
+                                Henjo African<br />Safaris
+                            </span>
                         </div>
                         <p className="text-sm leading-relaxed" style={{ color: '#9A968E' }}>
-                            Authentic African Safaris to Kenya, Uganda, Tanzania, and Rwanda. 
+                            Authentic African Safaris to Kenya, Uganda, Tanzania, and Rwanda.
                             Bespoke tours, tailor-made holidays, and luxury experiences.
                         </p>
                     </div>
 
                     {/* Quick Links */}
                     <div>
-                        <h4 className="font-bold mb-4 text-white">Quick Links</h4>
+                        <h4 className="font-bold mb-4 text-white pb-2 border-b-2 inline-block" style={{ borderColor: 'var(--brand-gold)' }}>Quick Links</h4>
                         <ul className="space-y-2 text-sm" style={{ color: '#9A968E' }}>
                             {quickLinks.map((link) => (
                                 <li key={link.name}>
@@ -78,10 +89,10 @@ export default function Footer() {
 
                     {/* Contact Info */}
                     <div>
-                        <h4 className="font-bold mb-4 text-white">Contact Us</h4>
+                        <h4 className="font-bold mb-4 text-white pb-2 border-b-2 inline-block" style={{ borderColor: 'var(--brand-gold)' }}>Contact Us</h4>
                         <ul className="space-y-3 text-sm" style={{ color: '#9A968E' }}>
                             <li className="flex items-start gap-2">
-                                <span className="mt-1" style={{ color: 'var(--brand-gold)' }}>📍</span>
+                                <span className="mt-1" style={{ color: 'var(--brand-gold)' }}><FaMapMarkerAlt /></span>
                                 <span>
                                     <strong className="text-white">Uganda Office:</strong><br />
                                     Plot 402, Seguku, Entebbe<br />
@@ -89,13 +100,13 @@ export default function Footer() {
                                 </span>
                             </li>
                             <li className="flex items-start gap-2">
-                                <span className="mt-1" style={{ color: 'var(--brand-gold)' }}>📞</span>
+                                <span className="mt-1" style={{ color: 'var(--brand-gold)' }}><FaPhoneAlt /></span>
                                 <span>
                                     <strong className="text-white">Uganda:</strong> +256 779 557 514
                                 </span>
                             </li>
                             <li className="flex items-start gap-2">
-                                <span className="mt-1" style={{ color: 'var(--brand-gold)' }}>✉️</span>
+                                <span className="mt-1" style={{ color: 'var(--brand-gold)' }}><FaEnvelope /></span>
                                 <span>
                                     <a href="mailto:info@henjosafaris.com" className="transition hover:text-[var(--brand-gold)]">
                                         info@henjosafaris.com
@@ -107,7 +118,7 @@ export default function Footer() {
 
                     {/* Social & Payment */}
                     <div>
-                        <h4 className="font-bold mb-4 text-white">Follow Us</h4>
+                        <h4 className="font-bold mb-4 text-white pb-2 border-b-2 inline-block" style={{ borderColor: 'var(--brand-gold)' }}>Follow Us</h4>
                         <div className="flex space-x-4 mb-6">
                             {socialLinks.map((social) => {
                                 const Icon = social.icon;

@@ -46,59 +46,39 @@ class BlogSeeder extends Seeder
             $this->command->info('  ✅ Tag: ' . $tag->name);
         }
 
-        // Create Posts
+        // Real posts (henjosafaris-content-audit.md §5.6 — the old WordPress
+        // blog only ever had these 2 real articles, both travel/visa guides).
         $posts = [
             [
-                'title' => 'The Great Migration: A Complete Guide',
-                'slug' => 'great-migration-complete-guide',
-                'excerpt' => 'Everything you need to know about witnessing the greatest wildlife spectacle on earth.',
-                'content' => "The Great Migration is one of the most spectacular wildlife events on the planet. Each year, over 1.5 million wildebeest and 250,000 zebras make their way across the Serengeti in search of fresh grazing.\n\n## When to Visit\n\nThe best time to witness the migration is between June and October when the herds cross the Grumeti and Mara rivers.\n\n## Where to Stay\n\nThere are numerous lodges and camps along the migration route offering incredible viewing opportunities.\n\n## Tips for Photographers\n\n- Bring a telephoto lens (300mm or longer)\n- Early morning and late afternoon offer the best light\n- Be patient - the river crossings can take hours",
-                'featured' => true,
-                'status' => 'published',
-                'published_at' => now()->subDays(10),
-                'tags' => ['wildlife', 'safari-tips', 'destinations'],
-            ],
-            [
-                'title' => 'Top 10 Safari Destinations in Tanzania',
-                'slug' => 'top-10-safari-destinations-tanzania',
-                'excerpt' => 'Discover the most incredible safari destinations Tanzania has to offer.',
-                'content' => "Tanzania is home to some of the most incredible wildlife destinations in Africa. From the endless plains of the Serengeti to the lush forests of the Mahale Mountains.\n\n## 1. Serengeti National Park\n\nThe Serengeti is Tanzania's most famous park, known for the Great Migration and incredible predator sightings.\n\n## 2. Ngorongoro Crater\n\nOften called the 'Garden of Eden,' this UNESCO World Heritage site offers incredible wildlife viewing in a unique setting.\n\n## 3. Tarangire National Park\n\nFamous for its massive elephant herds and iconic baobab trees.\n\n## 4. Lake Manyara National Park\n\nKnown for tree-climbing lions and abundant birdlife.\n\n## 5. Selous Game Reserve\n\nOne of Africa's largest protected areas, offering boat safaris and walking experiences.",
+                'title' => 'East Africa Tourist Visa guide',
+                'slug' => 'east-africa-tourist-visa-guide',
+                'excerpt' => 'Everything you need to know about the Joint East Africa Tourist Visa covering Uganda, Kenya, and Rwanda.',
+                'content' => "This is a Joint Tourist Visa and it allows the traveler to travel to Uganda, Kenya, and Rwanda ONLY. It can be used multiple times for tourism purposes. The visa prohibits employment and is issued only for tourism purposes. The visa is valid for 90 days and is not renewable upon expiry or upon exit from the block (Kenya, Uganda, Rwanda).\n\nNB: The issuing country should be your first entry point.\n\n## Where to apply\n\nThe visas are available online through: https://www.visas.immigration.go.ug/#/apply\n\n## Requirements / Attachments\n\n- Copy of the passport (Bio-data page) with at least 6 months validity\n- Copy of recent Passport size Photograph\n- Vaccination Certificate (Yellow fever)\n- Return Ticket\n- Travel Itinerary",
                 'featured' => true,
                 'status' => 'published',
                 'published_at' => now()->subDays(20),
-                'tags' => ['destinations', 'travel-guide'],
+                'tags' => ['travel-guide'],
             ],
             [
-                'title' => 'A Guide to Zanzibar Beaches and Culture',
-                'slug' => 'guide-zanzibar-beaches-culture',
-                'excerpt' => 'Explore the stunning beaches and rich cultural heritage of Zanzibar.',
-                'content' => "Zanzibar is an archipelago off the coast of Tanzania known for its beautiful beaches and rich history.\n\n## Stone Town\n\nThis UNESCO World Heritage site is the historic heart of Zanzibar, with winding alleys and beautiful architecture.\n\n## Beaches\n\n- Nungwi Beach - The most famous beach with turquoise waters\n- Kendwa Beach - Known for its beautiful sunsets\n- Paje Beach - Perfect for kite surfing\n\n## Culture\n\nZanzibar has a unique Swahili culture, influenced by African, Arab, and European traditions.",
-                'featured' => false,
-                'status' => 'published',
-                'published_at' => now()->subDays(5),
-                'tags' => ['destinations', 'culture', 'travel-guide'],
-            ],
-            [
-                'title' => 'Conservation Success Stories in Tanzania',
-                'slug' => 'conservation-success-stories-tanzania',
-                'excerpt' => 'Learn about the incredible conservation efforts protecting Tanzania\'s wildlife.',
-                'content' => "Tanzania has made significant progress in wildlife conservation over the past decades.\n\n## The Great Migration Protection\n\nConservation efforts have helped maintain the migration corridors essential for the wildebeest and zebras.\n\n## Anti-Poaching Initiatives\n\nSuccess stories include the recovery of black rhino populations and elephant protection efforts.\n\n## Community Conservation\n\nMany communities are now benefiting from conservation through tourism partnerships.",
-                'featured' => false,
-                'status' => 'published',
-                'published_at' => now()->subDays(15),
-                'tags' => ['conservation', 'wildlife'],
-            ],
-            [
-                'title' => 'What to Pack for a Safari in Tanzania',
-                'slug' => 'what-to-pack-safari-tanzania',
-                'excerpt' => 'Essential items to bring on your Tanzanian safari adventure.',
-                'content' => "Packing properly can make your safari experience much more comfortable and enjoyable.\n\n## Clothing\n\n- Neutral colors (khaki, beige, olive green)\n- Long-sleeved shirts and pants for sun protection\n- Warm layers for early morning game drives\n- Comfortable walking shoes\n\n## Equipment\n\n- Binoculars\n- Camera with telephoto lens\n- Power bank\n- Headlamp or torch\n\n## Other Essentials\n\n- Sunscreen and insect repellent\n- Hat and sunglasses\n- Reusable water bottle\n- First aid kit\n- Travel documents and vaccination certificate",
+                'title' => 'Entry Requirements For Uganda',
+                'slug' => 'entry-requirements-for-uganda',
+                'excerpt' => 'What you need for a single-entry Uganda tourist visa.',
+                'content' => "**Uganda Tourist Visa – Single Entry.** This visa is granted to travelers coming to Uganda for tourism. This is a single-entry visa and can be granted for up to 3 months.\n\n## Where to apply\n\nThe visas are available online through: https://www.visas.immigration.go.ug/#/apply\n\n## Requirements\n\n- Passport copy (bio-data page) with at least 6 months validity\n- Tour Plan\n- Travel itinerary/booking\n- Recent Passport-size Photograph\n- Vaccination Certificate (Yellow Fever)",
                 'featured' => true,
                 'status' => 'published',
-                'published_at' => now()->subDays(3),
-                'tags' => ['safari-tips', 'travel-guide'],
+                'published_at' => now()->subDays(10),
+                'tags' => ['travel-guide'],
             ],
         ];
+
+        // Remove earlier generic Tanzania-template posts (replaced by the 2 real articles above)
+        Post::whereIn('slug', [
+            'great-migration-complete-guide',
+            'top-10-safari-destinations-tanzania',
+            'guide-zanzibar-beaches-culture',
+            'conservation-success-stories-tanzania',
+            'what-to-pack-safari-tanzania',
+        ])->delete();
 
         foreach ($posts as $postData) {
             $tagSlugs = $postData['tags'];

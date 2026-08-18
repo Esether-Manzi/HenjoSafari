@@ -51,7 +51,7 @@ export default function Base({
     const [mounted, setMounted] = useState(false);
     const { theme, systemTheme } = useTheme();
 
-    // ✅ Only render after mounting to avoid hydration issues
+    // Only render after mounting to avoid hydration issues
     useEffect(() => {
         setMounted(true);
     }, []);

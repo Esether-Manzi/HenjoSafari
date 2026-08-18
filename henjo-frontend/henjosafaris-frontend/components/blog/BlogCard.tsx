@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaClock, FaTag, FaUser } from 'react-icons/fa';
+import { FaClock, FaTag, FaUser, FaStar } from 'react-icons/fa';
 import type { BlogPost } from '@/types/blog';
 
 interface BlogCardProps {
@@ -56,13 +56,13 @@ export default function BlogCard({ post, featured = false }: BlogCardProps) {
                 />
                 {post.featured && (
                     <span
-                        className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold"
+                        className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1"
                         style={{
                             background: 'var(--brand-gold)',
                             color: 'var(--text-on-gold)',
                         }}
                     >
-                        ★ Featured
+                        <FaStar /> Featured
                     </span>
                 )}
             </div>

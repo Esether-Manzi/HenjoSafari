@@ -8,7 +8,9 @@ use App\Filament\Resources\SafariPackages\Pages\ListSafariPackages;
 use App\Filament\Resources\SafariPackages\Pages\ViewSafariPackage;
 use App\Models\SafariPackage;
 use BackedEnum;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -17,6 +19,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use UnitEnum;
@@ -60,6 +63,17 @@ class SafariPackageResource extends Resource
             Toggle::make('featured'),
             Toggle::make('popular'),
             TextInput::make('status')->default('published')->maxLength(50),
+            SpatieMediaLibraryFileUpload::make('cover')
+                ->collection('cover')
+                ->image()
+                ->imageEditor()
+                ->columnSpanFull(),
+            SpatieMediaLibraryFileUpload::make('gallery')
+                ->collection('gallery')
+                ->image()
+                ->multiple()
+                ->reorderable()
+                ->columnSpanFull(),
         ]);
     }
 
@@ -78,6 +92,9 @@ class SafariPackageResource extends Resource
     {
         return $table
             ->columns([
+                SpatieMediaLibraryImageColumn::make('cover')
+                    ->collection('cover')
+                    ->label('Cover'),
                 TextColumn::make('title')->searchable()->sortable(),
                 TextColumn::make('destination.name')->label('Destination')->sortable(),
                 TextColumn::make('base_price')->money('USD')->sortable(),
@@ -85,7 +102,7 @@ class SafariPackageResource extends Resource
                 TextColumn::make('status')->badge(),
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make(),
+                EditAction::make(),
             ]);
     }
 

@@ -18,7 +18,8 @@ class SafariCategorySeeder extends Seeder
             ['name' => 'Women Only Tours', 'slug' => 'women-only-tours'],
             ['name' => 'City Tours', 'slug' => 'city-tours'],
             ['name' => 'Birding Safari', 'slug' => 'birding'],
-            ['name' => 'Cycling Safari', 'slug' => 'cycling']
+            ['name' => 'Cycling Safari', 'slug' => 'cycling'],
+            ['name' => 'Day Tours', 'slug' => 'day-tours'],
         ];
 
         foreach ($categories as $category) {

@@ -12,6 +12,8 @@ export interface SafariPackage {
     duration_nights: number;
     base_price: number;
     currency: string;
+    min_people?: number;
+    max_people?: number;
     featured: boolean;
     popular: boolean;
     status: 'draft' | 'published' | 'archived';

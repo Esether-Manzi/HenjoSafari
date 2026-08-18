@@ -12,7 +12,7 @@
 // ============================================
 
 'use client';
-// ✅ Client Component because:
+// Client Component because:
 // - It uses useState for form handling
 // - Form submissions are client-side
 
@@ -28,7 +28,8 @@ import {
     FaTwitter,
     FaInstagram,
     FaLinkedin,
-    FaTiktok
+    FaTiktok,
+    FaCheckCircle
 } from 'react-icons/fa';
 
 export default function ContactPage() {
@@ -36,7 +37,7 @@ export default function ContactPage() {
     // STATE MANAGEMENT
     // ============================================
 
-    // 📌 form: Stores form field values
+    // form: Stores form field values
     const [form, setForm] = useState({
         name: '',
         email: '',
@@ -44,14 +45,14 @@ export default function ContactPage() {
         message: ''
     });
 
-    // 📌 submitted: Tracks if form was successfully submitted
+    // submitted: Tracks if form was successfully submitted
     const [submitted, setSubmitted] = useState(false);
 
     // ============================================
     // CONTACT DATA (from audit document)
     // ============================================
 
-    // 📌 officeAddresses: Main office location
+    // officeAddresses: Main office location
     const officeAddresses = [
         {
             country: 'Uganda Office',
@@ -61,7 +62,7 @@ export default function ContactPage() {
         }
     ];
 
-    // 📌 internationalContacts: Phone numbers by country
+    // internationalContacts: Phone numbers by country
     const internationalContacts = [
         { country: 'Kenya', phone: '+254 739 013 098' },
         { country: 'USA / Canada', phone: '+1 929 243 9699' },
@@ -69,7 +70,7 @@ export default function ContactPage() {
         { country: 'Netherlands', phone: '+31 6 1675 3816' },
     ];
 
-    // 📌 socialLinks: Social media profiles with icons
+    // socialLinks: Social media profiles with icons
     const socialLinks = [
         { name: 'Facebook', icon: FaFacebook, url: 'https://facebook.com/henjosafaris' },
         { name: 'Twitter', icon: FaTwitter, url: 'https://twitter.com/henjosafaris' },
@@ -84,7 +85,7 @@ export default function ContactPage() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('📧 Form submitted:', form);
+        console.log('Form submitted:', form);
         setSubmitted(true);
         setForm({ name: '', email: '', phone: '', message: '' });
         setTimeout(() => setSubmitted(false), 5000);
@@ -276,7 +277,7 @@ export default function ContactPage() {
                                         color: 'var(--brand-green)',
                                     }}
                                 >
-                                    <div className="text-4xl mb-3">✅</div>
+                                    <FaCheckCircle className="text-4xl mb-3 mx-auto" />
                                     <h3 className="font-bold text-lg">Message Sent!</h3>
                                     <p className="text-sm opacity-80">We'll get back to you within 24 hours.</p>
                                 </div>

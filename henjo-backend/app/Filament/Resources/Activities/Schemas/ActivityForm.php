@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Activities\Schemas;
 
+use App\Support\SafariIcons;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
@@ -25,6 +26,14 @@ class ActivityForm
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur: true),
+
+                Select::make('icon')
+                    ->label('Icon')
+                    ->options(SafariIcons::selectOptions())
+                    ->allowHtml()
+                    ->searchable()
+                    ->native(false)
+                    ->helperText('Shown next to the activity on the public site.'),
 
                 SpatieMediaLibraryFileUpload::make('image')
                         ->collection('image')
