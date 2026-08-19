@@ -39,11 +39,17 @@ export interface Destination {
     id: number;
     name: string;
     slug: string;
+    tagline: string | null;
     description: string;
+    highlights: string[] | null;
+    starting_price: string | null;
+    best_time_to_visit?: string | null;
     country_id: number;
     country?: Country;
     media?: Media[];
+    hero_image_url?: string;
     packages?: SafariPackage[];
+    packages_count?: number;
 }
 
 export interface Country {

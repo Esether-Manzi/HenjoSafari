@@ -9,15 +9,13 @@ const nextConfig: NextConfig = {
     dangerouslyAllowLocalIP: process.env.NODE_ENV !== 'production',
     remotePatterns: [
       {
+        // Next.js remotePatterns treats port: '' as "default port only", not
+        // a wildcard, despite how that reads — so the backend's actual dev
+        // port must be listed explicitly to allow images it serves outside
+        // of storage:link (e.g. the public/images/** fallback paths).
         protocol: 'http',
         hostname: 'localhost',
         port: '8000',
-        pathname: '/storage/**',
-      },
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '', // Allow any port
         pathname: '/**',
       },
       {

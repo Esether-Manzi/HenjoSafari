@@ -1,5 +1,5 @@
 <x-filament-panels::page>
-    <div class="space-y-4">
-        <p class="text-sm text-gray-500">Reports and analytics will be added here.</p>
-    </div>
+    <p class="text-sm text-gray-500 dark:text-gray-400">
+        Deeper breakdowns beyond the dashboard totals — bookings, revenue, popularity, inquiries, customer geography, and booking/inquiry health. Each section can be exported to CSV.
+    </p>
 </x-filament-panels::page>

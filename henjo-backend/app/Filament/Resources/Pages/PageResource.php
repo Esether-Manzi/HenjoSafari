@@ -9,10 +9,14 @@ use App\Filament\Resources\Pages\Pages\ViewPage;
 use App\Models\Page;
 use BackedEnum;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
@@ -41,10 +45,52 @@ class PageResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('title')->required()->maxLength(255),
-            TextInput::make('slug')->maxLength(255),
-            Textarea::make('content')->rows(8),
-            Checkbox::make('is_active')->default(true),
+            Section::make('Page')
+                ->schema([
+                    TextInput::make('title')->required()->maxLength(255)->live(onBlur: true),
+                    TextInput::make('slug')->maxLength(255)->helperText('Used by the frontend to fetch this page, e.g. "about", "booking-policy".'),
+                    Checkbox::make('is_active')->default(true),
+                ])->columns(2),
+
+            Section::make('Hero')
+                ->schema([
+                    TextInput::make('hero_title')->maxLength(255),
+                    TextInput::make('hero_subtitle')->maxLength(500),
+                    TextInput::make('hero_cta_text')->maxLength(100),
+                    TextInput::make('hero_cta_href')->maxLength(255),
+                    SpatieMediaLibraryFileUpload::make('hero_image')
+                        ->collection('hero_image')
+                        ->image()
+                        ->imageEditor()
+                        ->columnSpanFull(),
+                ])->columns(2),
+
+            Section::make('Body Content')
+                ->schema([
+                    Textarea::make('content')->rows(10)->helperText('Long-form copy. Separate paragraphs with a blank line.'),
+                ]),
+
+            Section::make('Content Sections')
+                ->description('Repeatable icon/title/description cards, e.g. "Why Travel With Us" or "Our Services". Use the same Group name to render several cards together on the frontend.')
+                ->schema([
+                    Repeater::make('sections')
+                        ->schema([
+                            TextInput::make('group')->required()->maxLength(100)->helperText('e.g. why-travel, features, offers'),
+                            TextInput::make('icon')->maxLength(100),
+                            TextInput::make('title')->required()->maxLength(255),
+                            Textarea::make('description')->rows(3),
+                            TextInput::make('sort_order')->numeric()->default(0),
+                        ])
+                        ->columns(2)
+                        ->collapsible()
+                        ->itemLabel(fn (array $state): ?string => $state['title'] ?? null),
+                ]),
+
+            Section::make('SEO')
+                ->schema([
+                    TextInput::make('meta_title')->maxLength(255),
+                    Textarea::make('meta_description')->rows(2),
+                ]),
         ]);
     }
 
@@ -53,6 +99,8 @@ class PageResource extends Resource
         return $schema->components([
             TextEntry::make('title'),
             TextEntry::make('slug'),
+            TextEntry::make('hero_title'),
+            TextEntry::make('hero_subtitle'),
             TextEntry::make('content'),
             TextEntry::make('is_active'),
         ]);

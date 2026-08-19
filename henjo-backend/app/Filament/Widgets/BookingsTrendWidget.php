@@ -10,8 +10,6 @@ class BookingsTrendWidget extends ChartWidget
 {
     protected ?string $heading = 'Bookings — Last 14 Days';
 
-    protected string $color = 'info';
-
     protected int|string|array $columnSpan = 2;
 
     protected static ?int $sort = 3;
@@ -36,10 +34,36 @@ class BookingsTrendWidget extends ChartWidget
                 [
                     'label' => 'Bookings',
                     'data' => $days->map(fn (Carbon $day) => (int) ($countsByDate[$day->toDateString()] ?? 0))->all(),
+                    'borderColor' => '#2E7D32',
+                    'backgroundColor' => 'rgba(46, 125, 50, 0.15)',
+                    'pointBackgroundColor' => '#2E7D32',
+                    'pointBorderColor' => '#fff',
+                    'pointRadius' => 3,
+                    'pointHoverRadius' => 5,
                     'fill' => true,
+                    'tension' => 0.4,
                 ],
             ],
             'labels' => $days->map(fn (Carbon $day) => $day->format('M j'))->all(),
+        ];
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            'plugins' => [
+                'legend' => ['display' => false],
+            ],
+            'scales' => [
+                'y' => [
+                    'beginAtZero' => true,
+                    'ticks' => ['stepSize' => 1],
+                    'grid' => ['color' => 'rgba(150, 150, 150, 0.1)'],
+                ],
+                'x' => [
+                    'grid' => ['display' => false],
+                ],
+            ],
         ];
     }
 }

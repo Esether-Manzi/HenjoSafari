@@ -2,7 +2,11 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { FaArrowRight, FaPaw, FaStar } from 'react-icons/fa';
+import { settingsApi } from '@/lib/api/settingsApi';
+
+const DEFAULT_TAGLINE = 'Every step, with us is an adventure';
 
 interface HeroProps {
     title?: string;
@@ -32,6 +36,16 @@ export default function Hero({
     variant = 'default',
 }: HeroProps) {
     const isHome = variant === 'home';
+    const [tagline, setTagline] = useState(DEFAULT_TAGLINE);
+
+    useEffect(() => {
+        if (!showTagline) return;
+        settingsApi.getSettings()
+            .then((res) => {
+                if (res.success && res.data.tagline) setTagline(res.data.tagline);
+            })
+            .catch(() => {});
+    }, [showTagline]);
 
     const sizeClasses = {
         small: 'min-h-[40vh] py-16',
@@ -90,7 +104,7 @@ export default function Hero({
                                 color: 'var(--text-on-gold)',
                             }}
                         >
-                            <FaPaw /> Every step, with us is an adventure
+                            <FaPaw /> {tagline}
                         </div>
                     )}
 

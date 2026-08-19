@@ -16,9 +16,13 @@
 // - It uses useState for form handling
 // - Form submissions are client-side
 
-import { useState } from 'react';
-import { submitInquiry, InquiryFormData } from '@/lib/api/contactApi';
+import { useState, useEffect } from 'react';
+import { submitInquiry } from '@/lib/api/contactApi';
+import { settingsApi } from '@/lib/api/settingsApi';
+import { pagesApi } from '@/lib/api/pagesApi';
 import Hero from '@/components/common/Hero';
+import type { SiteSettings } from '@/types/settings';
+import type { CmsPage } from '@/types/page';
 import {
     FaPhone,
     FaEnvelope,
@@ -31,6 +35,15 @@ import {
     FaTiktok,
     FaCheckCircle
 } from 'react-icons/fa';
+
+// International phone numbers aren't part of the editable CMS content —
+// they're a fixed, rarely-changing list tied to each regional office.
+const internationalContacts = [
+    { country: 'Kenya', phone: '+254 739 013 098' },
+    { country: 'USA / Canada', phone: '+1 929 243 9699' },
+    { country: 'United Kingdom', phone: '+44 1226 520 77' },
+    { country: 'Netherlands', phone: '+31 6 1675 3816' },
+];
 
 export default function ContactPage() {
     // ============================================
@@ -47,48 +60,60 @@ export default function ContactPage() {
 
     // submitted: Tracks if form was successfully submitted
     const [submitted, setSubmitted] = useState(false);
+    const [submitting, setSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState<string | null>(null);
 
-    // ============================================
-    // CONTACT DATA (from audit document)
-    // ============================================
+    const [settings, setSettings] = useState<SiteSettings | null>(null);
+    const [page, setPage] = useState<CmsPage | null>(null);
 
-    // officeAddresses: Main office location
-    const officeAddresses = [
-        {
-            country: 'Uganda Office',
-            address: 'Plot 402, Seguku, Entebbe, Box 700589, Entebbe, Uganda',
-            phone: '+256 779 557 514',
-            email: 'info@henjosafaris.com'
-        }
-    ];
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const [settingsRes, pageRes] = await Promise.all([
+                    settingsApi.getSettings(),
+                    pagesApi.getBySlug('contact'),
+                ]);
+                if (settingsRes.success) setSettings(settingsRes.data);
+                if (pageRes.success) setPage(pageRes.data);
+            } catch (err) {
+                console.warn('Unable to load contact page content:', err);
+            }
+        };
+        fetchData();
+    }, []);
 
-    // internationalContacts: Phone numbers by country
-    const internationalContacts = [
-        { country: 'Kenya', phone: '+254 739 013 098' },
-        { country: 'USA / Canada', phone: '+1 929 243 9699' },
-        { country: 'United Kingdom', phone: '+44 1226 520 77' },
-        { country: 'Netherlands', phone: '+31 6 1675 3816' },
-    ];
-
-    // socialLinks: Social media profiles with icons
     const socialLinks = [
-        { name: 'Facebook', icon: FaFacebook, url: 'https://facebook.com/henjosafaris' },
-        { name: 'Twitter', icon: FaTwitter, url: 'https://twitter.com/henjosafaris' },
-        { name: 'Instagram', icon: FaInstagram, url: 'https://instagram.com/henjo.african.safaris' },
-        { name: 'LinkedIn', icon: FaLinkedin, url: '#' },
-        { name: 'TikTok', icon: FaTiktok, url: '#' },
-    ];
+        { name: 'Facebook', icon: FaFacebook, url: settings?.facebook_url },
+        { name: 'Twitter', icon: FaTwitter, url: settings?.twitter_url },
+        { name: 'Instagram', icon: FaInstagram, url: settings?.instagram_url },
+        { name: 'LinkedIn', icon: FaLinkedin, url: settings?.linkedin_url },
+        { name: 'TikTok', icon: FaTiktok, url: settings?.tiktok_url },
+    ].filter((social) => social.url);
 
     // ============================================
     // FORM HANDLERS
     // ============================================
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Form submitted:', form);
-        setSubmitted(true);
-        setForm({ name: '', email: '', phone: '', message: '' });
-        setTimeout(() => setSubmitted(false), 5000);
+        setSubmitting(true);
+        setSubmitError(null);
+        try {
+            await submitInquiry({
+                name: form.name,
+                email: form.email,
+                phone: form.phone || undefined,
+                subject: 'Website Contact Form',
+                message: form.message,
+            });
+            setSubmitted(true);
+            setForm({ name: '', email: '', phone: '', message: '' });
+            setTimeout(() => setSubmitted(false), 5000);
+        } catch (err: any) {
+            setSubmitError(err.message || 'Failed to send your message. Please try again.');
+        } finally {
+            setSubmitting(false);
+        }
     };
 
 
@@ -102,10 +127,10 @@ export default function ContactPage() {
             {/* HERO SECTION */}
             <Hero
                 size="medium"
-                title="Get In Touch"
-                subtitle="Have questions about our safaris? We'd love to hear from you."
-                ctaText="Book Now"
-                ctaLink="/safaris"
+                title={page?.hero_title || 'Get In Touch'}
+                subtitle={page?.hero_subtitle || "Have questions about our safaris? We'd love to hear from you."}
+                ctaText={page?.hero_cta_text || 'Book Now'}
+                ctaLink={page?.hero_cta_href || '/safaris'}
                 backgroundImage="/images/placeholder.png"
                 overlay={true}
                 showTagline={false}
@@ -134,56 +159,54 @@ export default function ContactPage() {
                             <div className="space-y-6">
 
                                 {/* Office Address */}
-                                {officeAddresses.map((office) => (
-                                    <div key={office.country} className="space-y-3">
-                                        <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>{office.country}</h3>
+                                <div className="space-y-3">
+                                    <h3 className="font-bold" style={{ color: 'var(--text-primary)' }}>Uganda Office</h3>
 
-                                        {/* Address */}
-                                        <div className="flex items-start gap-4">
-                                            <div
-                                                className="p-3 rounded-full flex-shrink-0"
-                                                style={{ background: 'var(--brand-gold-subtle)' }}
-                                            >
-                                                <FaMapMarkerAlt className="text-xl" style={{ color: 'var(--brand-gold)' }} />
-                                            </div>
-                                            <div>
-                                                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{office.address}</p>
-                                            </div>
+                                    {/* Address */}
+                                    <div className="flex items-start gap-4">
+                                        <div
+                                            className="p-3 rounded-full flex-shrink-0"
+                                            style={{ background: 'var(--brand-gold-subtle)' }}
+                                        >
+                                            <FaMapMarkerAlt className="text-xl" style={{ color: 'var(--brand-gold)' }} />
                                         </div>
-
-                                        {/* Phone */}
-                                        <div className="flex items-start gap-4">
-                                            <div
-                                                className="p-3 rounded-full flex-shrink-0"
-                                                style={{ background: 'var(--brand-gold-subtle)' }}
-                                            >
-                                                <FaPhone className="text-xl" style={{ color: 'var(--brand-gold)' }} />
-                                            </div>
-                                            <div>
-                                                <p style={{ color: 'var(--text-secondary)' }}>{office.phone}</p>
-                                            </div>
-                                        </div>
-
-                                        {/* Email */}
-                                        <div className="flex items-start gap-4">
-                                            <div
-                                                className="p-3 rounded-full flex-shrink-0"
-                                                style={{ background: 'var(--brand-gold-subtle)' }}
-                                            >
-                                                <FaEnvelope className="text-xl" style={{ color: 'var(--brand-gold)' }} />
-                                            </div>
-                                            <div>
-                                                <a
-                                                    href={`mailto:${office.email}`}
-                                                    className="transition hover:text-[var(--brand-gold)]"
-                                                    style={{ color: 'var(--text-secondary)' }}
-                                                >
-                                                    {office.email}
-                                                </a>
-                                            </div>
+                                        <div>
+                                            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>{settings?.address}</p>
                                         </div>
                                     </div>
-                                ))}
+
+                                    {/* Phone */}
+                                    <div className="flex items-start gap-4">
+                                        <div
+                                            className="p-3 rounded-full flex-shrink-0"
+                                            style={{ background: 'var(--brand-gold-subtle)' }}
+                                        >
+                                            <FaPhone className="text-xl" style={{ color: 'var(--brand-gold)' }} />
+                                        </div>
+                                        <div>
+                                            <p style={{ color: 'var(--text-secondary)' }}>{settings?.phone}</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Email */}
+                                    <div className="flex items-start gap-4">
+                                        <div
+                                            className="p-3 rounded-full flex-shrink-0"
+                                            style={{ background: 'var(--brand-gold-subtle)' }}
+                                        >
+                                            <FaEnvelope className="text-xl" style={{ color: 'var(--brand-gold)' }} />
+                                        </div>
+                                        <div>
+                                            <a
+                                                href={`mailto:${settings?.email}`}
+                                                className="transition hover:text-[var(--brand-gold)]"
+                                                style={{ color: 'var(--text-secondary)' }}
+                                            >
+                                                {settings?.email}
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 {/* International Contacts */}
                                 <div>
@@ -214,8 +237,8 @@ export default function ContactPage() {
                                     </div>
                                     <div>
                                         <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>Working Hours</p>
-                                        <p style={{ color: 'var(--text-secondary)' }}>Mon - Fri: 8:00 AM - 6:00 PM (EAT)</p>
-                                        <p style={{ color: 'var(--text-secondary)' }}>Sat: 9:00 AM - 4:00 PM (EAT)</p>
+                                        <p style={{ color: 'var(--text-secondary)' }}>{settings?.working_hours_weekday}</p>
+                                        <p style={{ color: 'var(--text-secondary)' }}>{settings?.working_hours_saturday}</p>
                                     </div>
                                 </div>
 
@@ -228,7 +251,7 @@ export default function ContactPage() {
                                             return (
                                                 <a
                                                     key={social.name}
-                                                    href={social.url}
+                                                    href={social.url!}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
                                                     className="p-3 rounded-full transition"
@@ -363,16 +386,22 @@ export default function ContactPage() {
                                         />
                                     </div>
 
+                                    {/* Error Message */}
+                                    {submitError && (
+                                        <p className="text-sm text-center" style={{ color: 'var(--brand-maroon)' }}>{submitError}</p>
+                                    )}
+
                                     {/* Submit Button */}
                                     <button
                                         type="submit"
-                                        className="w-full font-bold py-4 rounded-xl transition transform hover:scale-[1.02]"
+                                        disabled={submitting}
+                                        className="w-full font-bold py-4 rounded-xl transition transform hover:scale-[1.02] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
                                         style={{
                                             background: 'var(--brand-gold)',
                                             color: 'var(--text-on-gold)',
                                         }}
                                     >
-                                        Send Message
+                                        {submitting ? 'Sending...' : 'Send Message'}
                                     </button>
 
                                     {/* Trust Signal */}

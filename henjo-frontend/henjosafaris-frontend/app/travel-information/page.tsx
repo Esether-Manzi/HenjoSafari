@@ -1,16 +1,16 @@
 // ============================================
 // TRAVEL INFORMATION PAGE
 // ============================================
-// Intro copy + article cards from
-// henjosafaris-content-audit.md §3.6/§5.6. The two
-// articles are seeded as real Blog posts (BlogSeeder),
-// so this page links into /blog/[slug] rather than
-// duplicating the full article text.
+// Hero + intro copy managed via the admin dashboard (Pages > Travel Information).
+// The article cards link into real Blog posts (BlogSeeder), so this page
+// links into /blog/[slug] rather than duplicating the full article text.
 // ============================================
 
+import type { Metadata } from 'next';
 import Hero from '@/components/common/Hero';
 import Link from 'next/link';
 import { FaPassport, FaFileAlt, FaArrowRight } from 'react-icons/fa';
+import { pagesApi } from '@/lib/api/pagesApi';
 
 const articles = [
     {
@@ -27,13 +27,32 @@ const articles = [
     },
 ];
 
-export default function TravelInformationPage() {
+async function getPage() {
+    try {
+        const response = await pagesApi.getBySlug('travel-information');
+        return response.success ? response.data : null;
+    } catch {
+        return null;
+    }
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+    const page = await getPage();
+    return {
+        title: page?.meta_title || 'Travel Information | Henjo African Safaris',
+        description: page?.meta_description || 'Reliable information as you dive into the true essence of Africa.',
+    };
+}
+
+export default async function TravelInformationPage() {
+    const page = await getPage();
+
     return (
         <div className="min-h-screen">
             <Hero
                 size="small"
-                title="Travel Information"
-                subtitle="Reliable information as you dive into the true essence of Africa"
+                title={page?.hero_title || 'Travel Information'}
+                subtitle={page?.hero_subtitle || 'Reliable information as you dive into the true essence of Africa'}
                 backgroundImage="/images/destinations/uganda.png"
                 overlay={true}
                 showTagline={false}
@@ -42,9 +61,7 @@ export default function TravelInformationPage() {
             <section className="py-16 transition-colors duration-300" style={{ background: 'var(--bg-primary)' }}>
                 <div className="container mx-auto px-4 max-w-3xl text-center mb-12">
                     <p className="text-lg leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                        Africa is extraordinary and her people evoke a sense of adventure, romance and deep
-                        connection to nature. Find the reliable information from Henjo African Safaris as you
-                        dive into the true essence of Africa.
+                        {page?.content || "Africa is extraordinary and her people evoke a sense of adventure, romance and deep connection to nature. Find the reliable information from Henjo African Safaris as you dive into the true essence of Africa."}
                     </p>
                 </div>
 

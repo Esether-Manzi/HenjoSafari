@@ -1,22 +1,44 @@
 // ============================================
 // BOOKING POLICY PAGE
 // ============================================
-// This page contains the terms and conditions for booking.
-// Important legal page that must be accurate.
+// Content is managed via the admin dashboard (Pages > Booking Policy).
 // ============================================
 
+import type { Metadata } from 'next';
 import Hero from '@/components/common/Hero';
 import Link from 'next/link';
+import { pagesApi } from '@/lib/api/pagesApi';
+import { sectionsByGroup } from '@/types/page';
 
-export default function BookingPolicyPage() {
+async function getPage() {
+    try {
+        const response = await pagesApi.getBySlug('booking-policy');
+        return response.success ? response.data : null;
+    } catch {
+        return null;
+    }
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+    const page = await getPage();
+    return {
+        title: page?.meta_title || 'Booking Policy | Henjo African Safaris',
+        description: page?.meta_description || 'Terms and conditions for booking your safari.',
+    };
+}
+
+export default async function BookingPolicyPage() {
+    const page = await getPage();
+    const policySections = sectionsByGroup(page?.sections, 'policy');
+
     return (
         <div className="min-h-screen">
             <Hero
                 size="small"
-                title="Booking Policy"
-                subtitle="Terms and conditions for booking your safari"
-                ctaText="Contact Us"
-                ctaLink="/contact"
+                title={page?.hero_title || 'Booking Policy'}
+                subtitle={page?.hero_subtitle || 'Terms and conditions for booking your safari'}
+                ctaText={page?.hero_cta_text || 'Contact Us'}
+                ctaLink={page?.hero_cta_href || '/contact'}
                 backgroundImage="/images/policy-hero.jpg"
                 overlay={true}
                 showTagline={false}
@@ -27,38 +49,14 @@ export default function BookingPolicyPage() {
 
                     <h2 className="text-2xl font-bold text-gray-800">BOOKING POLICY</h2>
 
-                    <div>
-                        <h3 className="text-xl font-semibold text-gray-800 mb-2">The booking deposit and cancellation policy</h3>
-                        <p className="text-gray-600">
-                            A 30 % deposit is required to confirm your booking within 7 days of written confirmation, otherwise, the booking will be taken as a provisional only, with the possible inability to reinstate the reservation. After confirmation, a 30% deposit should be paid and the booking is taken as confirmed.<br />
-                            One calendar month before the commencement of the safari- 70% of the total safari cost is paid.<br />
-                            The above is at the discretion of Henjo African Safaris Ltd<br /><br />
-                            <strong>Special requirements and insurance</strong><br />
-                            Clients will have their incoming Travel insurance covered by Henjo African Safaris for 12 days while on a safari. However, if the client is fully covered by their insurance, details should be forwarded at least 4 weeks before the commencement of the safari<br />
-                            Any medical conditions should be mentioned<br />
-                        </p>
-                    </div>
-
-
-
-                    <div>
-                        <h3 className="text-xl font-semibold text-gray-800 mb-2">Cancellation Policy</h3>
-                        <p className="text-gray-600">
-                            Before cancellation, henjo African Safaris and the client will discuss the possibility of rescheduling. In case of cancellations, They should be made in writing and will only deem effective upon acknowledged receipt by Henjo African Safaris. <br />
-                            Cancellation will be subject to the following penalties: <br />
-                            30 days or more before the remaining 70% of the total package is paid: 5% forfeit of the 30% deposit.<br />
-                            60 days or more before commencement: Forfeit 20%<br />
-                            Less than 60 days before commencement: Forfeit 50% of the package price<br />
-                            Less than 30 days before commencement: Forfeit 100 % of the package price<br />
-                        </p>
-                    </div>
-
-                    <div>
-                        <h3 className="text-xl font-semibold text-gray-800 mb-2">Children</h3>
-                        <p className="text-gray-600">
-                            Children are welcome on our safaris, we offer kids below 5 years a free spot one kid per group and we also give a 25% discount for 6 -12 year-olds.
-                        </p>
-                    </div>
+                    {policySections.map((section) => (
+                        <div key={section.title}>
+                            <h3 className="text-xl font-semibold text-gray-800 mb-2">{section.title}</h3>
+                            <p className="text-gray-600 whitespace-pre-line">
+                                {section.description}
+                            </p>
+                        </div>
+                    ))}
 
                     <div className="bg-gray-50 p-6 rounded-xl mt-6">
                         <p className="text-gray-700">

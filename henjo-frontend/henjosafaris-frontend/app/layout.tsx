@@ -4,6 +4,10 @@ import "./globals.css";
 import { ThemeProvider } from './providers';
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
+import { settingsApi } from '@/lib/api/settingsApi';
+import { menuApi } from '@/lib/api/menuApi';
+import type { SiteSettings } from '@/types/settings';
+import type { MenuItem } from '@/types/menu';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,11 +25,36 @@ export const metadata: Metadata = {
   description: "Explore the beauty of East Africa with our expert-guided safaris",
 };
 
-export default function RootLayout({
+async function getLayoutData(): Promise<{
+    settings: SiteSettings | null;
+    navbarMenu: MenuItem[];
+    footerMenu: MenuItem[];
+}> {
+    try {
+        const [settingsRes, navbarRes, footerRes] = await Promise.all([
+            settingsApi.getSettings(),
+            menuApi.getMenu('navbar'),
+            menuApi.getMenu('footer'),
+        ]);
+
+        return {
+            settings: settingsRes.success ? settingsRes.data : null,
+            navbarMenu: navbarRes.success ? navbarRes.data : [],
+            footerMenu: footerRes.success ? footerRes.data : [],
+        };
+    } catch (err) {
+        console.error('Failed to load site settings/menus:', err);
+        return { settings: null, navbarMenu: [], footerMenu: [] };
+    }
+}
+
+export default async function RootLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    const { settings, navbarMenu, footerMenu } = await getLayoutData();
+
     return (
         <html lang="en" suppressHydrationWarning>
             <body className={`${inter.className} min-h-screen`}>
@@ -37,11 +66,15 @@ export default function RootLayout({
                             color: 'var(--text-primary)',
                         }}
                     >
-                        <Navbar />
+                        <Navbar
+                            menuItems={navbarMenu}
+                            siteName={settings?.site_name || 'Henjo African Safaris'}
+                            logoUrl={settings?.logo_url}
+                        />
                         <main className="flex-grow pt-20">
                             {children}
                         </main>
-                        <Footer />
+                        <Footer settings={settings} quickLinks={footerMenu} />
                     </div>
                 </ThemeProvider>
             </body>

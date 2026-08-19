@@ -6,59 +6,21 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { FaBars, FaTimes, FaChevronDown } from 'react-icons/fa';
 import ThemeToggle from './ThemeToggle';
+import type { MenuItem } from '@/types/menu';
 
-export default function Navbar() {
+interface NavbarProps {
+    menuItems: MenuItem[];
+    siteName: string;
+    logoUrl?: string | null;
+}
+
+export default function Navbar({ menuItems, siteName, logoUrl }: NavbarProps) {
     // ============================================
     // STATE MANAGEMENT
     // ============================================
 
     const [isOpen, setIsOpen] = useState(false);
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-
-    // ============================================
-    // NAVIGATION DATA
-    // ============================================
-
-    const menuItems = [
-        { name: 'Home', href: '/' },
-        {
-            name: 'Safaris',
-            href: '/safaris',
-            dropdown: [
-                { name: 'Wildlife Adventure', href: '/safaris?category=wildlife-adventure' },
-                { name: 'Gorilla Trekking', href: '/safaris?category=gorilla-safaris' },
-                { name: 'Fly In Safaris', href: '/safaris?category=flying' },
-                { name: 'Mountaineering', href: '/safaris?category=mountaineering' },
-                { name: 'Cultural Tour', href: '/safaris?category=cultural-tour' },
-                { name: 'Women Only Tours', href: '/women-only-tours' },
-                { name: 'City Tours', href: '/safaris?category=city-tours' },
-                { name: 'Day Tours', href: '/safaris?category=day-tours' },
-            ]
-        },
-        { name: 'Women Only Tours', href: '/women-only-tours' },
-        {
-            name: 'Destinations',
-            href: '/destinations',
-            dropdown: [
-                { name: 'Kenya', href: '/destinations/kenya' },
-                { name: 'Tanzania', href: '/destinations/tanzania' },
-                { name: 'Uganda', href: '/destinations/uganda' },
-                { name: 'Rwanda', href: '/destinations/rwanda' },
-            ]
-        },
-        { name: 'Travel Information', href: '/travel-information' },
-        { name: 'Blog', href: '/blog' },
-        {
-            name: 'About Us',
-            href: '/about',
-            dropdown: [
-                { name: 'About Our Charity', href: '/about-our-charity' },
-                { name: 'Our Team', href: '/our-team' },
-                { name: 'Booking Policy', href: '/booking-policy' },
-            ]
-        },
-        { name: 'Contact', href: '/contact' },
-    ];
 
     const toggleDropdown = (name: string) => {
         setOpenDropdown(openDropdown === name ? null : name);
@@ -77,12 +39,15 @@ export default function Navbar() {
 
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3 group">
-                        <div className="relative w-12 h-12">
+                        <div
+                            className="relative w-12 h-12 rounded-full overflow-hidden bg-white flex-shrink-0"
+                            style={{ border: '2px solid var(--brand-gold)' }}
+                        >
                             <Image
-                                src="/images/henjo_icon_logo.png"
-                                alt="Henjo African Safaris - Home"
+                                src={logoUrl || '/images/henjo_icon_logo.png'}
+                                alt={`${siteName} - Home`}
                                 fill
-                                className="object-contain"
+                                className="object-cover"
                                 priority
                             />
                         </div>
@@ -91,25 +56,19 @@ export default function Navbar() {
                                 className="text-xl font-bold transition"
                                 style={{ color: 'var(--brand-green)' }}
                             >
-                                Henjo African Safaris
+                                {siteName}
                             </span>
-                            {/* <span
-                                className="block text-[10px] font-semibold tracking-wider"
-                                style={{ color: 'var(--brand-gold)' }}
-                            >
-                                Every step, with us is an adventure
-                            </span> */}
                         </div>
                     </Link>
 
                     {/* Desktop Menu */}
                     <div className="hidden lg:flex items-center space-x-3 text-sm">
                         {menuItems.map((item) => (
-                            <div key={item.name} className="relative group">
-                                {item.dropdown ? (
+                            <div key={item.id} className="relative group">
+                                {item.children && item.children.length > 0 ? (
                                     <div className="flex items-center">
                                         <Link
-                                            href={item.href}
+                                            href={item.url}
                                             className="font-medium transition whitespace-nowrap"
                                             style={{ color: 'var(--text-secondary)' }}
                                             onMouseEnter={(e) => {
@@ -119,27 +78,27 @@ export default function Navbar() {
                                                 e.currentTarget.style.color = 'var(--text-secondary)';
                                             }}
                                         >
-                                            {item.name}
+                                            {item.label}
                                         </Link>
                                         <button
                                             className="ml-1 transition p-1"
                                             style={{ color: 'var(--text-tertiary)' }}
-                                            onClick={() => toggleDropdown(item.name)}
+                                            onClick={() => toggleDropdown(item.label)}
                                             onMouseEnter={(e) => {
                                                 e.currentTarget.style.color = 'var(--brand-gold)';
                                             }}
                                             onMouseLeave={(e) => {
                                                 e.currentTarget.style.color = 'var(--text-tertiary)';
                                             }}
-                                            aria-label={`Toggle ${item.name} dropdown`}
+                                            aria-label={`Toggle ${item.label} dropdown`}
                                         >
-                                            <FaChevronDown className={`text-xs transition-transform duration-200 ${openDropdown === item.name ? 'rotate-180' : ''
+                                            <FaChevronDown className={`text-xs transition-transform duration-200 ${openDropdown === item.label ? 'rotate-180' : ''
                                                 }`} />
                                         </button>
                                     </div>
                                 ) : (
                                     <Link
-                                        href={item.href}
+                                        href={item.url}
                                         className="font-medium transition whitespace-nowrap"
                                         style={{ color: 'var(--text-secondary)' }}
                                         onMouseEnter={(e) => {
@@ -149,11 +108,11 @@ export default function Navbar() {
                                             e.currentTarget.style.color = 'var(--text-secondary)';
                                         }}
                                     >
-                                        {item.name}
+                                        {item.label}
                                     </Link>
                                 )}
 
-                                {item.dropdown && openDropdown === item.name && (
+                                {item.children && item.children.length > 0 && openDropdown === item.label && (
                                     <div
                                         className="absolute top-full left-0 mt-2 rounded-lg py-2 min-w-[200px] z-50"
                                         style={{
@@ -162,10 +121,10 @@ export default function Navbar() {
                                             boxShadow: 'var(--shadow-lg)',
                                         }}
                                     >
-                                        {item.dropdown.map((sub) => (
+                                        {item.children.map((sub) => (
                                             <Link
-                                                key={sub.name}
-                                                href={sub.href}
+                                                key={sub.id}
+                                                href={sub.url}
                                                 className="block px-4 py-2 transition"
                                                 style={{ color: 'var(--text-secondary)' }}
                                                 onMouseEnter={(e) => {
@@ -178,7 +137,7 @@ export default function Navbar() {
                                                 }}
                                                 onClick={() => setOpenDropdown(null)}
                                             >
-                                                {sub.name}
+                                                {sub.label}
                                             </Link>
                                         ))}
                                     </div>
@@ -228,36 +187,36 @@ export default function Navbar() {
                         className="lg:hidden pb-6 space-y-2 max-h-[80vh] overflow-y-auto"
                     >
                         {menuItems.map((item) => (
-                            <div key={item.name}>
-                                {item.dropdown ? (
+                            <div key={item.id}>
+                                {item.children && item.children.length > 0 ? (
                                     <>
                                         <div className="flex items-center justify-between">
                                             <Link
-                                                href={item.href}
+                                                href={item.url}
                                                 className="py-2 font-medium transition"
                                                 style={{ color: 'var(--text-secondary)' }}
                                                 onClick={() => setIsOpen(false)}
                                             >
-                                                {item.name}
+                                                {item.label}
                                             </Link>
                                             <button
                                                 className="p-2 transition"
                                                 style={{ color: 'var(--text-tertiary)' }}
-                                                onClick={() => toggleDropdown(item.name)}
+                                                onClick={() => toggleDropdown(item.label)}
                                             >
-                                                <FaChevronDown className={`text-xs transition-transform duration-200 ${openDropdown === item.name ? 'rotate-180' : ''
+                                                <FaChevronDown className={`text-xs transition-transform duration-200 ${openDropdown === item.label ? 'rotate-180' : ''
                                                     }`} />
                                             </button>
                                         </div>
-                                        {openDropdown === item.name && (
+                                        {openDropdown === item.label && (
                                             <div
                                                 className="pl-4 space-y-1 ml-2"
                                                 style={{ borderLeft: '2px solid var(--brand-gold)' }}
                                             >
-                                                {item.dropdown.map((sub) => (
+                                                {item.children.map((sub) => (
                                                     <Link
-                                                        key={sub.name}
-                                                        href={sub.href}
+                                                        key={sub.id}
+                                                        href={sub.url}
                                                         className="block py-2 transition"
                                                         style={{ color: 'var(--text-tertiary)' }}
                                                         onClick={() => {
@@ -265,7 +224,7 @@ export default function Navbar() {
                                                             setOpenDropdown(null);
                                                         }}
                                                     >
-                                                        {sub.name}
+                                                        {sub.label}
                                                     </Link>
                                                 ))}
                                             </div>
@@ -273,12 +232,12 @@ export default function Navbar() {
                                     </>
                                 ) : (
                                     <Link
-                                        href={item.href}
+                                        href={item.url}
                                         className="block py-2 font-medium transition"
                                         style={{ color: 'var(--text-secondary)' }}
                                         onClick={() => setIsOpen(false)}
                                     >
-                                        {item.name}
+                                        {item.label}
                                     </Link>
                                 )}
                             </div>

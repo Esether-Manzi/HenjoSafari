@@ -6,6 +6,9 @@ use App\Http\Controllers\Api\DestinationController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\TeamMemberController;
 use App\Http\Controllers\Api\ActivityController;
+use App\Http\Controllers\Api\SettingController;
+use App\Http\Controllers\Api\MenuController;
+use App\Http\Controllers\Api\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +46,15 @@ Route::prefix('v1')->group(function () {
 
     // Activities
     Route::get('/activities', [ActivityController::class, 'index']);
+
+    // Site Settings
+    Route::get('/settings', [SettingController::class, 'show']);
+
+    // Menus
+    Route::get('/menus/{location}', [MenuController::class, 'show']);
+
+    // Pages
+    Route::get('/pages/{slug}', [PageController::class, 'show']);
 
     // Inquiries
     Route::post('/inquiries', [\App\Http\Controllers\Api\InquiryController::class, 'store']);

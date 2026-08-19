@@ -4,21 +4,6 @@
 
 import { FaHotel, FaHome, FaCampground, FaUmbrellaBeach } from 'react-icons/fa';
 
-export const SITE_CONFIG = {
-    name: 'Henjo African Safaris',
-    description: 'Bespoke safaris, tailor-made holidays, and gorilla trekking across Uganda, Kenya, Tanzania, and Rwanda.',
-    url: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
-    email: 'info@henjosafaris.com',
-    phone: '+256 779 557 514',
-    address: 'Plot 402, Seguku, Entebbe, Uganda',
-    social: {
-        facebook: 'https://facebook.com/profile.php?id=100083135236902',
-        twitter: 'https://twitter.com/henjosafaris',
-        instagram: 'https://instagram.com/henjo.african.safaris',
-        youtube: 'https://youtube.com/henjosafaris',
-    },
-};
-
 export const CURRENCIES = {
     USD: { code: 'USD', symbol: '$', name: 'US Dollar', rate: 1 },
     EUR: { code: 'EUR', symbol: '€', name: 'Euro', rate: 0.85 },

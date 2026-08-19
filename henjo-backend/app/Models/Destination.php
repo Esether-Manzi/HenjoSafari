@@ -18,7 +18,10 @@ class Destination extends Model implements HasMedia
         'country_id',
         'name',
         'slug',
+        'tagline',
         'description',
+        'highlights',
+        'starting_price',
         'best_time_to_visit',
         'featured',
         'is_active'
@@ -29,6 +32,8 @@ class Destination extends Model implements HasMedia
     protected $casts = [
         'featured' => 'boolean',
         'is_active' => 'boolean',
+        'highlights' => 'array',
+        'starting_price' => 'decimal:2',
     ];
 
     public function getHeroImageUrlAttribute(): ?string
@@ -37,12 +42,12 @@ class Destination extends Model implements HasMedia
             return $this->getFirstMediaUrl('hero');
         }
         foreach (['.jpg', '.png', '.jpeg', '.webp'] as $ext) {
-            $relPath = 'images/safaris/' . $this->slug . $ext;
+            $relPath = 'images/destinations/' . $this->slug . $ext;
             if (file_exists(public_path($relPath))) {
                 return asset($relPath);
             }
         }
-        return asset('images/safaris/default.jpg');
+        return asset('images/placeholder.png');
     }
 
     public function sluggable(): array

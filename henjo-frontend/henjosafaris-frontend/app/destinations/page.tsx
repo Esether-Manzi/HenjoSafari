@@ -11,7 +11,25 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { FaMapMarkerAlt, FaCamera, FaArrowRight, FaStar, FaPaw, FaMountain, FaWater, FaTree, FaGlobeAfrica } from 'react-icons/fa';
 import DestinationCard from '@/components/destination/DestinationCard';
-import { destinations } from '@/lib/data/destinations';
+import type { DestinationData } from '@/components/destination/DestinationCard';
+import { destinationApi } from '@/lib/api/destinationApi';
+import { settingsApi } from '@/lib/api/settingsApi';
+import type { Destination } from '@/types/safari';
+
+function toCardData(destination: Destination): DestinationData {
+    return {
+        name: destination.country?.name || destination.name,
+        slug: destination.slug,
+        tagline: destination.tagline || '',
+        description: destination.description,
+        image: destination.hero_image_url || '/images/placeholder.png',
+        country: 'East Africa',
+        tours: destination.packages_count ?? destination.packages?.length ?? 0,
+        highlights: destination.highlights || [],
+        startingPrice: Number(destination.starting_price) || 0,
+        currency: '$',
+    };
+}
 
 // ============================================
 // WHY EAST AFRICA SECTION DATA
@@ -44,7 +62,26 @@ const whyReasons = [
 // PAGE COMPONENT
 // ============================================
 
-export default function DestinationsPage() {
+export default async function DestinationsPage() {
+    const [destinationsRes, settingsRes] = await Promise.allSettled([
+        destinationApi.getAll(),
+        settingsApi.getSettings(),
+    ]);
+
+    const destinations = destinationsRes.status === 'fulfilled' && destinationsRes.value.success
+        ? destinationsRes.value.data.map(toCardData)
+        : [];
+    const settings = settingsRes.status === 'fulfilled' && settingsRes.value.success
+        ? settingsRes.value.data
+        : null;
+
+    const stats = [
+        { value: `${settings?.safari_package_count ?? 28}+`, label: 'Safari Packages' },
+        { value: String(settings?.country_count ?? 4), label: 'Countries' },
+        { value: settings?.years_experience || '15+', label: 'Years Experience' },
+        { value: settings?.happy_travelers_count || '500+', label: 'Happy Travelers' },
+    ];
+
     return (
         <div className="min-h-screen">
             {/* Hero */}
@@ -82,23 +119,31 @@ export default function DestinationsPage() {
                         </p>
                     </div>
 
-                    {/* Featured Layout: Uganda spans 2 cols, others are standard */}
+                    {/* Featured Layout: first destination spans 2 cols, others are standard */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                        {/* Featured: Uganda */}
-                        <DestinationCard
-                            destination={destinations[0]}
-                            index={0}
-                            layout="featured"
-                        />
+                        {destinations.length === 0 ? (
+                            <p className="col-span-full text-center" style={{ color: 'var(--text-muted)' }}>
+                                No destinations available right now — check back soon.
+                            </p>
+                        ) : (
+                            <>
+                                {/* Featured: first destination */}
+                                <DestinationCard
+                                    destination={destinations[0]}
+                                    index={0}
+                                    layout="featured"
+                                />
 
-                        {/* Standard: Kenya, Tanzania, Rwanda */}
-                        {destinations.slice(1).map((dest, i) => (
-                            <DestinationCard
-                                key={dest.slug}
-                                destination={dest}
-                                index={i + 1}
-                            />
-                        ))}
+                                {/* Standard: remaining destinations */}
+                                {destinations.slice(1).map((dest, i) => (
+                                    <DestinationCard
+                                        key={dest.slug}
+                                        destination={dest}
+                                        index={i + 1}
+                                    />
+                                ))}
+                            </>
+                        )}
                     </div>
                 </div>
             </section>
@@ -153,12 +198,7 @@ export default function DestinationsPage() {
             <section className="py-12" style={{ background: 'var(--bg-footer)' }}>
                 <div className="container mx-auto px-4">
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto text-center">
-                        {[
-                            { value: '28+', label: 'Safari Packages' },
-                            { value: '4', label: 'Countries' },
-                            { value: '15+', label: 'Years Experience' },
-                            { value: '500+', label: 'Happy Travelers' },
-                        ].map((stat) => (
+                        {stats.map((stat) => (
                             <div key={stat.label}>
                                 <p className="text-3xl md:text-4xl font-bold mb-1" style={{ color: 'var(--brand-gold)' }}>
                                     {stat.value}

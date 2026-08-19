@@ -15,9 +15,23 @@ class Page extends Model implements HasMedia
     protected $fillable = [
         'title',
         'slug',
+        'hero_title',
+        'hero_subtitle',
+        'hero_cta_text',
+        'hero_cta_href',
         'content',
+        'sections',
+        'meta_title',
+        'meta_description',
         'is_active'
     ];
+
+    protected $casts = [
+        'sections' => 'array',
+        'is_active' => 'boolean',
+    ];
+
+    protected $appends = ['hero_image_url', 'featured_image_url'];
 
     public function sluggable(): array
     {
@@ -28,8 +42,19 @@ class Page extends Model implements HasMedia
         ];
     }
 
+    public function getHeroImageUrlAttribute(): ?string
+    {
+        return $this->hasMedia('hero_image') ? $this->getFirstMediaUrl('hero_image') : null;
+    }
+
+    public function getFeaturedImageUrlAttribute(): ?string
+    {
+        return $this->hasMedia('featured_image') ? $this->getFirstMediaUrl('featured_image') : null;
+    }
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('featured_image')->singleFile();
+        $this->addMediaCollection('hero_image')->singleFile();
     }
 }

@@ -32,6 +32,25 @@
     --henjo-badge-blue-fg: #1565C0;
     --henjo-badge-maroon-bg: #FBEAEA;
     --henjo-badge-maroon-fg: #7B1818;
+    --henjo-badge-teal-bg: #E0F2F1;
+    --henjo-badge-teal-fg: #00695C;
+    --henjo-badge-purple-bg: #F1EBFA;
+    --henjo-badge-purple-fg: #6A4C93;
+
+    /* Report chart palette — six-hue rotation used across every
+       chart/progress-list so colors stay consistent site-wide. */
+    --henjo-chart-1: #D4A017;
+    /* gold */
+    --henjo-chart-2: #2E7D32;
+    /* green */
+    --henjo-chart-3: #1565C0;
+    /* blue */
+    --henjo-chart-4: #7B1818;
+    /* maroon */
+    --henjo-chart-5: #00897B;
+    /* teal */
+    --henjo-chart-6: #6A4C93;
+    /* purple */
 }
 
 .dark {
@@ -55,6 +74,17 @@
     --henjo-badge-blue-fg: #64B5F6;
     --henjo-badge-maroon-bg: rgba(212, 69, 58, 0.15);
     --henjo-badge-maroon-fg: #D4453A;
+    --henjo-badge-teal-bg: rgba(77, 182, 172, 0.15);
+    --henjo-badge-teal-fg: #4DB6AC;
+    --henjo-badge-purple-bg: rgba(167, 139, 201, 0.15);
+    --henjo-badge-purple-fg: #A78BC9;
+
+    --henjo-chart-1: #E5B83A;
+    --henjo-chart-2: #4CAF50;
+    --henjo-chart-3: #64B5F6;
+    --henjo-chart-4: #D4453A;
+    --henjo-chart-5: #4DB6AC;
+    --henjo-chart-6: #A78BC9;
 }
 
 /* =====================================================
@@ -192,4 +222,55 @@
 
 .fi-simple-layout .fi-logo {
     color: var(--henjo-gold);
+}
+
+/* =====================================================
+   REPORT WIDGETS — ranked progress lists, rank badges,
+   colorful stat cards. Shared across Dashboard + Reports
+   so both read as the same design system.
+   ===================================================== */
+
+.henjo-stat-card {
+    border-radius: 1.25rem;
+    background: var(--henjo-bg-card);
+    border: 1px solid var(--henjo-border);
+    box-shadow: var(--henjo-shadow-md);
+    padding: 1.25rem;
+    transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.henjo-stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--henjo-shadow-lg);
+}
+
+.henjo-rank-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.henjo-progress-track {
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: var(--henjo-border);
+    overflow: hidden;
+    width: 100%;
+}
+
+.henjo-progress-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 500ms ease;
+}
+
+.henjo-progress-row + .henjo-progress-row {
+    margin-top: 1rem;
 }

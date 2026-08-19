@@ -1,5 +1,11 @@
 <x-filament-panels::page>
-    <div class="space-y-4">
-        <p class="text-sm text-gray-500">Site settings and configuration will be added here.</p>
-    </div>
+    <form wire:submit="save">
+        {{ $this->form }}
+
+        <div class="mt-6">
+            <x-filament::button type="submit">
+                Save Settings
+            </x-filament::button>
+        </div>
+    </form>
 </x-filament-panels::page>

@@ -5,28 +5,26 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaTiktok, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from 'react-icons/fa';
+import type { SiteSettings } from '@/types/settings';
+import type { MenuItem } from '@/types/menu';
 
-export default function Footer() {
+interface FooterProps {
+    settings: SiteSettings | null;
+    quickLinks: MenuItem[];
+}
+
+export default function Footer({ settings, quickLinks }: FooterProps) {
     const currentYear = new Date().getFullYear();
 
     const socialLinks = [
-        { name: 'Facebook', icon: FaFacebook, url: 'https://facebook.com/henjosafaris' },
-        { name: 'Twitter', icon: FaTwitter, url: 'https://twitter.com/henjosafaris' },
-        { name: 'Instagram', icon: FaInstagram, url: 'https://instagram.com/henjo.african.safaris' },
-        { name: 'LinkedIn', icon: FaLinkedin, url: '#' },
-        { name: 'TikTok', icon: FaTiktok, url: '#' },
-    ];
+        { name: 'Facebook', icon: FaFacebook, url: settings?.facebook_url },
+        { name: 'Twitter', icon: FaTwitter, url: settings?.twitter_url },
+        { name: 'Instagram', icon: FaInstagram, url: settings?.instagram_url },
+        { name: 'LinkedIn', icon: FaLinkedin, url: settings?.linkedin_url },
+        { name: 'TikTok', icon: FaTiktok, url: settings?.tiktok_url },
+    ].filter((social) => social.url);
 
-    const quickLinks = [
-        { name: 'Home', href: '/' },
-        { name: 'Kenya Safaris', href: '/safaris' },
-        { name: 'Uganda Safaris', href: '/safaris' },
-        { name: 'Gorilla Trekking', href: '/safaris?category=gorilla' },
-        { name: 'Tanzania Safaris', href: '/safaris' },
-        { name: 'Rwanda Safaris', href: '/safaris' },
-        { name: 'Book Schedule A Meeting', href: '/booking' },
-        { name: 'Pay Online', href: 'https://payments.pesapal.com/henjoafricansafaris' },
-    ];
+    const siteName = settings?.site_name || 'Henjo African Safaris';
 
     return (
         <footer
@@ -53,19 +51,18 @@ export default function Footer() {
                                 style={{ border: '2px solid var(--brand-gold)' }}
                             >
                                 <Image
-                                    src="/images/henjo_icon_logo.png"
-                                    alt="Henjo African Safaris"
+                                    src={settings?.logo_url || '/images/henjo_icon_logo.png'}
+                                    alt={siteName}
                                     fill
                                     className="object-cover"
                                 />
                             </div>
                             <span className="font-bold text-lg text-white leading-tight">
-                                Henjo African<br />Safaris
+                                {siteName}
                             </span>
                         </div>
                         <p className="text-sm leading-relaxed" style={{ color: '#9A968E' }}>
-                            Authentic African Safaris to Kenya, Uganda, Tanzania, and Rwanda.
-                            Bespoke tours, tailor-made holidays, and luxury experiences.
+                            {settings?.footer_tagline}
                         </p>
                     </div>
 
@@ -74,13 +71,13 @@ export default function Footer() {
                         <h4 className="font-bold mb-4 text-white pb-2 border-b-2 inline-block" style={{ borderColor: 'var(--brand-gold)' }}>Quick Links</h4>
                         <ul className="space-y-2 text-sm" style={{ color: '#9A968E' }}>
                             {quickLinks.map((link) => (
-                                <li key={link.name}>
-                                    <Link 
-                                        href={link.href} 
+                                <li key={link.id}>
+                                    <Link
+                                        href={link.url}
                                         className="transition hover:text-[var(--brand-gold)]"
-                                        {...(link.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                                        {...(link.url.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                                     >
-                                        {link.name}
+                                        {link.label}
                                     </Link>
                                 </li>
                             ))}
@@ -95,21 +92,20 @@ export default function Footer() {
                                 <span className="mt-1" style={{ color: 'var(--brand-gold)' }}><FaMapMarkerAlt /></span>
                                 <span>
                                     <strong className="text-white">Uganda Office:</strong><br />
-                                    Plot 402, Seguku, Entebbe<br />
-                                    Box 700589, Entebbe, Uganda
+                                    {settings?.address}
                                 </span>
                             </li>
                             <li className="flex items-start gap-2">
                                 <span className="mt-1" style={{ color: 'var(--brand-gold)' }}><FaPhoneAlt /></span>
                                 <span>
-                                    <strong className="text-white">Uganda:</strong> +256 779 557 514
+                                    <strong className="text-white">Uganda:</strong> {settings?.phone}
                                 </span>
                             </li>
                             <li className="flex items-start gap-2">
                                 <span className="mt-1" style={{ color: 'var(--brand-gold)' }}><FaEnvelope /></span>
                                 <span>
-                                    <a href="mailto:info@henjosafaris.com" className="transition hover:text-[var(--brand-gold)]">
-                                        info@henjosafaris.com
+                                    <a href={`mailto:${settings?.email}`} className="transition hover:text-[var(--brand-gold)]">
+                                        {settings?.email}
                                     </a>
                                 </span>
                             </li>
@@ -125,7 +121,7 @@ export default function Footer() {
                                 return (
                                     <a
                                         key={social.name}
-                                        href={social.url}
+                                        href={social.url!}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="p-2 rounded-full transition-colors duration-300 bg-white/10 hover:bg-[var(--brand-gold)] text-[#9A968E] hover:text-[#1A1A1A]"
@@ -158,7 +154,7 @@ export default function Footer() {
                         color: '#6B685F',
                     }}
                 >
-                    <p>{currentYear} | All rights reserved - Henjo African Safaris.</p>
+                    <p>{currentYear} | All rights reserved - {siteName}.</p>
                 </div>
             </div>
         </footer>

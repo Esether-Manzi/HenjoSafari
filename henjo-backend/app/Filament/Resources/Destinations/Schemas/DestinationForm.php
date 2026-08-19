@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Destinations\Schemas;
 
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
@@ -33,11 +34,22 @@ class DestinationForm
                             ->disabled()
                             ->dehydrated()
                             ->helperText('This will be automatically generated from the name.'),
+                        TextInput::make('tagline')
+                            ->maxLength(255)
+                            ->columnSpanFull(),
                         Textarea::make('description')
                             ->columnSpanFull()
                             ->rows(6),
                         TextInput::make('best_time_to_visit')
                             ->placeholder('June-October'),
+                        TextInput::make('starting_price')
+                            ->numeric()
+                            ->prefix('$'),
+                        Repeater::make('highlights')
+                            ->simple(
+                                TextInput::make('highlight')->required()->maxLength(255)
+                            )
+                            ->columnSpanFull(),
                         Toggle::make('featured')
                             ->required()
                             ->inline(false),

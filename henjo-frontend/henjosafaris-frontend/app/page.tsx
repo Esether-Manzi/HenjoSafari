@@ -6,8 +6,22 @@ import Image from 'next/image';
 import Hero from '@/components/common/Hero';
 import SafariCard from '@/components/safari/SafariCard';
 import { safariApi } from '@/lib/api/safariApi';
+import { pagesApi } from '@/lib/api/pagesApi';
 import { FaGlobeAfrica, FaUserTie, FaMapMarkedAlt, FaUsers, FaLeaf, FaLaptop, FaChild, FaWheelchair, FaFirstAid, FaCompass, FaStar, FaShieldAlt } from 'react-icons/fa';
 import type { SafariPackage, Activity } from '@/types/safari';
+import type { CmsPage } from '@/types/page';
+import { sectionsByGroup, firstInGroup } from '@/types/page';
+
+const SECTION_ICONS: Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>> = {
+    'user-tie': FaUserTie,
+    map: FaMapMarkedAlt,
+    users: FaUsers,
+    leaf: FaLeaf,
+    laptop: FaLaptop,
+    child: FaChild,
+    wheelchair: FaWheelchair,
+    'first-aid': FaFirstAid,
+};
 
 // The backend's public API is served under `/api/v1`, but static files
 // (Laravel's storage:link) live directly on that same host — so we derive
@@ -97,11 +111,25 @@ const MOCK_ACTIVITIES: Activity[] = [
 export default function Home() {
     const [featured, setFeatured] = useState<SafariPackage[]>([]);
     const [activities, setActivities] = useState<Activity[]>([]);
+    const [page, setPage] = useState<CmsPage | null>(null);
     const [loading, setLoading] = useState(true);
     const [activitiesLoading, setActivitiesLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        const fetchPage = async () => {
+            try {
+                const response = await pagesApi.getBySlug('home');
+                if (response.success) {
+                    setPage(response.data);
+                }
+            } catch (err) {
+                console.warn('Unable to load home page content, using defaults:', err);
+            }
+        };
+
+        fetchPage();
+
         const fetchFeatured = async () => {
             try {
                 const response = await safariApi.getFeatured();
@@ -139,16 +167,25 @@ export default function Home() {
 
     const featuredByCountry = useMemo(() => pickPerCountry(featured, 2), [featured]);
 
+    const introSection = firstInGroup(page?.sections, 'intro');
+    const featuredHeading = firstInGroup(page?.sections, 'featured-heading');
+    const activitiesHeading = firstInGroup(page?.sections, 'activities-heading');
+    const featuresHeading = firstInGroup(page?.sections, 'features-heading');
+    const featureCards = sectionsByGroup(page?.sections, 'features');
+    const offersHeading = firstInGroup(page?.sections, 'offers-heading');
+    const offerCards = sectionsByGroup(page?.sections, 'offers');
+    const finalCta = firstInGroup(page?.sections, 'final-cta');
+
     return (
         <div>
             {/* Hero - Full size with image background */}
             <Hero
                 size="large"
                 variant="home"
-                title="Discover the Wild Side of East Africa"
-                subtitle="Bespoke safaris, gorilla trekking, and tailor-made holidays across Uganda, Kenya, Tanzania, and Rwanda."
-                ctaText="Explore Safaris"
-                ctaLink="/safaris"
+                title={page?.hero_title || 'Discover the Wild Side of East Africa'}
+                subtitle={page?.hero_subtitle || 'Bespoke safaris, gorilla trekking, and tailor-made holidays across Uganda, Kenya, Tanzania, and Rwanda.'}
+                ctaText={page?.hero_cta_text || 'Explore Safaris'}
+                ctaLink={page?.hero_cta_href || '/safaris'}
                 backgroundImage="/images/placeholder.png"
                 backgroundVideo={HERO_VIDEO_URL}
                 overlay={true}
@@ -175,11 +212,10 @@ export default function Home() {
                         <FaCompass /> Why Travel With Us
                     </span>
                     <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-                        Well organized tours to elevate your <span style={{ color: 'var(--brand-gold)' }}>spirit!</span>
+                        {introSection?.title || 'Well organized tours to elevate your spirit!'}
                     </h2>
                     <p className="text-lg" style={{ color: 'var(--text-tertiary)' }}>
-                        The combination of our experienced team of travel consultants and our certified driver guide
-                        assures a safe, treasurable, thrilling and informative safari.
+                        {introSection?.description || 'The combination of our experienced team of travel consultants and our certified driver guide assures a safe, treasurable, thrilling and informative safari.'}
                     </p>
                 </div>
             </section>
@@ -203,10 +239,10 @@ export default function Home() {
                             className="text-4xl md:text-5xl font-bold mb-4"
                             style={{ color: 'var(--text-primary)' }}
                         >
-                            Featured <span style={{ color: 'var(--brand-gold)' }}>Safaris</span>
+                            {featuredHeading?.title || 'Featured Safaris'}
                         </h2>
                         <p className="max-w-2xl mx-auto" style={{ color: 'var(--text-tertiary)' }}>
-                            Our most popular safari experiences handpicked for you
+                            {featuredHeading?.description || 'Our most popular safari experiences handpicked for you'}
                         </p>
                     </div>
 
@@ -261,10 +297,10 @@ export default function Home() {
                             className="text-3xl md:text-4xl font-bold"
                             style={{ color: 'var(--text-primary)' }}
                         >
-                            Adventure <span style={{ color: 'var(--brand-gold)' }}>Activities</span>
+                            {activitiesHeading?.title || 'Adventure Activities'}
                         </h2>
                         <p className="max-w-2xl mx-auto mt-4 text-lg" style={{ color: 'var(--text-tertiary)' }}>
-                            Choose from unique excursions and activities to customize your ideal safari adventure.
+                            {activitiesHeading?.description || 'Choose from unique excursions and activities to customize your ideal safari adventure.'}
                         </p>
                     </div>
 
@@ -331,18 +367,13 @@ export default function Home() {
                             className="text-3xl md:text-4xl font-bold"
                             style={{ color: 'var(--text-primary)' }}
                         >
-                            Why Choose <span style={{ color: 'var(--brand-gold)' }}>Henjo African Safaris</span>
+                            {featuresHeading?.title || 'Why Choose Henjo African Safaris'}
                         </h2>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                        {[
-                            { Icon: FaUserTie, title: 'Expert Guides', desc: 'Local experts with years of experience' },
-                            { Icon: FaMapMarkedAlt, title: 'Custom Itineraries', desc: 'Tailored to your preferences' },
-                            { Icon: FaUsers, title: 'Small Groups', desc: 'Intimate experiences with max 6 people' },
-                            { Icon: FaLeaf, title: 'Eco-Friendly', desc: 'Sustainable travel practices' },
-                        ].map((item, i) => (
+                        {featureCards.map((item, i) => (
                             <div
-                                key={i}
+                                key={item.title + i}
                                 className="group text-center p-6 rounded-2xl transition duration-300 hover:-translate-y-1"
                                 style={{
                                     background: 'var(--bg-card)',
@@ -362,13 +393,16 @@ export default function Home() {
                                     className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition duration-300 group-hover:scale-110"
                                     style={{ background: 'var(--brand-gold-subtle)' }}
                                 >
-                                    <item.Icon className="text-2xl" style={{ color: 'var(--brand-gold)' }} />
+                                    {(() => {
+                                        const Icon = (item.icon && SECTION_ICONS[item.icon]) || FaUserTie;
+                                        return <Icon className="text-2xl" style={{ color: 'var(--brand-gold)' }} />;
+                                    })()}
                                 </div>
                                 <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
                                     {item.title}
                                 </h3>
                                 <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
-                                    {item.desc}
+                                    {item.description}
                                 </p>
                             </div>
                         ))}
@@ -387,18 +421,13 @@ export default function Home() {
                             <FaShieldAlt /> Peace Of Mind
                         </span>
                         <h2 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
-                            Travel With <span style={{ color: 'var(--brand-green)' }}>Confidence</span>
+                            {offersHeading?.title || 'Travel With Confidence'}
                         </h2>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                        {[
-                            { Icon: FaLaptop, title: 'Book With Us Online', desc: 'Make your booking online directly with us as soon as possible in the fastest and best way possible.' },
-                            { Icon: FaChild, title: 'Special Offers For Children', desc: 'Free safari for children below 5 years from one family or group and a 25% discount for children between 6-12 years.' },
-                            { Icon: FaWheelchair, title: 'Disability Tours & Safaris', desc: 'We believe in Responsible and Inclusive Tourism, and whether you have a disability or not, we welcome you to experience your African holiday with us.' },
-                            { Icon: FaFirstAid, title: 'Medical Travel Insurance', desc: 'Our tours come with free medical insurance for up to 10 days, which protects you in the event of an illness or injury while on safari with Henjo African Safaris.' },
-                        ].map((item, i) => (
+                        {offerCards.map((item, i) => (
                             <div
-                                key={i}
+                                key={item.title + i}
                                 className="group text-center p-6 rounded-2xl transition duration-300 hover:-translate-y-1"
                                 style={{
                                     background: 'var(--bg-card)',
@@ -418,13 +447,16 @@ export default function Home() {
                                     className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition duration-300 group-hover:scale-110"
                                     style={{ background: 'var(--brand-green-subtle)' }}
                                 >
-                                    <item.Icon className="text-2xl" style={{ color: 'var(--brand-green)' }} />
+                                    {(() => {
+                                        const Icon = (item.icon && SECTION_ICONS[item.icon]) || FaLaptop;
+                                        return <Icon className="text-2xl" style={{ color: 'var(--brand-green)' }} />;
+                                    })()}
                                 </div>
                                 <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
                                     {item.title}
                                 </h3>
                                 <p className="text-sm" style={{ color: 'var(--text-tertiary)' }}>
-                                    {item.desc}
+                                    {item.description}
                                 </p>
                             </div>
                         ))}
@@ -441,10 +473,10 @@ export default function Home() {
                 />
                 <div className="relative container mx-auto px-4 text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-                        Ready for Your African Adventure?
+                        {finalCta?.title || 'Ready for Your African Adventure?'}
                     </h2>
                     <p className="text-lg text-white/80 max-w-xl mx-auto mb-8">
-                        Let our travel consultants craft a custom-made safari itinerary tailored to you - no obligation, just expert guidance.
+                        {finalCta?.description || 'Let our travel consultants craft a custom-made safari itinerary tailored to you - no obligation, just expert guidance.'}
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
                         <Link

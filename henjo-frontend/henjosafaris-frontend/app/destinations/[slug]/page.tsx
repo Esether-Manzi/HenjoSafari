@@ -16,18 +16,42 @@ import Link from 'next/link';
 import Hero from '@/components/common/Hero';
 import SafariCard from '@/components/safari/SafariCard';
 import { safariApi } from '@/lib/api/safariApi';
-import { destinations } from '@/lib/data/destinations';
+import { destinationApi } from '@/lib/api/destinationApi';
 import { FaMapMarkerAlt, FaArrowRight } from 'react-icons/fa';
-import type { SafariPackage } from '@/types/safari';
+import type { SafariPackage, Destination } from '@/types/safari';
 
 export default function DestinationDetailPage() {
     const params = useParams();
     const slug = params.slug as string;
-    const destination = destinations.find((d) => d.slug === slug);
+
+    const [destination, setDestination] = useState<Destination | null>(null);
+    const [destinationLoading, setDestinationLoading] = useState(true);
+    const [notFoundFlag, setNotFoundFlag] = useState(false);
 
     const [tours, setTours] = useState<SafariPackage[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchDestination = async () => {
+            try {
+                setDestinationLoading(true);
+                const response = await destinationApi.getBySlug(slug);
+                if (response.success) {
+                    setDestination(response.data);
+                } else {
+                    setNotFoundFlag(true);
+                }
+            } catch (err) {
+                console.error('Error fetching destination:', err);
+                setNotFoundFlag(true);
+            } finally {
+                setDestinationLoading(false);
+            }
+        };
+
+        fetchDestination();
+    }, [slug]);
 
     useEffect(() => {
         if (!destination) return;
@@ -35,7 +59,8 @@ export default function DestinationDetailPage() {
         const fetchTours = async () => {
             try {
                 setLoading(true);
-                const response = await safariApi.getAll({ country: destination.name });
+                const countryName = destination.country?.name || destination.name;
+                const response = await safariApi.getAll({ country: countryName });
                 const packageData = (response.data as any)?.data || response.data || [];
                 setTours(packageData);
             } catch (err: any) {
@@ -49,19 +74,29 @@ export default function DestinationDetailPage() {
         fetchTours();
     }, [destination]);
 
-    if (!destination) {
+    if (notFoundFlag) {
         notFound();
     }
+
+    if (destinationLoading || !destination) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <div className="rounded-2xl h-24 w-24 animate-pulse" style={{ background: 'var(--bg-tertiary)' }} />
+            </div>
+        );
+    }
+
+    const displayName = destination.country?.name || destination.name;
 
     return (
         <div className="min-h-screen">
             <Hero
                 size="medium"
-                title={destination.name}
-                subtitle={destination.tagline}
+                title={displayName}
+                subtitle={destination.tagline || undefined}
                 ctaText="View All Safaris"
                 ctaLink="/safaris"
-                backgroundImage={destination.image}
+                backgroundImage={destination.hero_image_url}
                 overlay={true}
                 showTagline={true}
             />
@@ -70,13 +105,13 @@ export default function DestinationDetailPage() {
             <section className="py-16 transition-colors duration-300" style={{ background: 'var(--bg-primary)' }}>
                 <div className="container mx-auto px-4 max-w-4xl">
                     <div className="flex items-center gap-2 text-sm font-medium mb-4" style={{ color: 'var(--brand-gold)' }}>
-                        <FaMapMarkerAlt /> {destination.country}
+                        <FaMapMarkerAlt /> East Africa
                     </div>
                     <p className="text-lg leading-relaxed mb-8" style={{ color: 'var(--text-secondary)' }}>
                         {destination.description}
                     </p>
                     <div className="flex flex-wrap gap-3">
-                        {destination.highlights.map((highlight) => (
+                        {(destination.highlights || []).map((highlight) => (
                             <span
                                 key={highlight}
                                 className="px-4 py-2 rounded-full text-sm font-semibold"
@@ -94,10 +129,10 @@ export default function DestinationDetailPage() {
                 <div className="container mx-auto px-4">
                     <div className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-                            Safaris in <span style={{ color: 'var(--brand-gold)' }}>{destination.name}</span>
+                            Safaris in <span style={{ color: 'var(--brand-gold)' }}>{displayName}</span>
                         </h2>
                         <p className="max-w-2xl mx-auto" style={{ color: 'var(--text-tertiary)' }}>
-                            Browse our full range of {destination.name} tours, from short city excursions to
+                            Browse our full range of {displayName} tours, from short city excursions to
                             multi-day wildlife and gorilla trekking adventures.
                         </p>
                     </div>
@@ -112,7 +147,7 @@ export default function DestinationDetailPage() {
                         <p className="text-center" style={{ color: 'var(--brand-maroon)' }}>{error}</p>
                     ) : tours.length === 0 ? (
                         <p className="text-center" style={{ color: 'var(--text-muted)' }}>
-                            No {destination.name} safaris available right now — check back soon or{' '}
+                            No {displayName} safaris available right now — check back soon or{' '}
                             <Link href="/contact" className="underline" style={{ color: 'var(--brand-gold)' }}>
                                 contact us
                             </Link>{' '}
@@ -132,7 +167,7 @@ export default function DestinationDetailPage() {
             <section className="py-16" style={{ background: 'var(--bg-footer)' }}>
                 <div className="container mx-auto px-4 text-center">
                     <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                        Ready to explore {destination.name}?
+                        Ready to explore {displayName}?
                     </h2>
                     <Link
                         href="/contact"

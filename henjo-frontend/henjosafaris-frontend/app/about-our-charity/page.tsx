@@ -1,22 +1,42 @@
 // ============================================
 // ABOUT OUR CHARITY PAGE
 // ============================================
-// This page describes Henjo's charitable initiatives
-// and community impact programs.
+// Content managed via the admin dashboard (Pages > About Our Charity).
 // ============================================
 
+import type { Metadata } from 'next';
 import Hero from '@/components/common/Hero';
 import Link from 'next/link';
+import { pagesApi } from '@/lib/api/pagesApi';
 
-export default function AboutOurCharityPage() {
+async function getPage() {
+    try {
+        const response = await pagesApi.getBySlug('about-our-charity');
+        return response.success ? response.data : null;
+    } catch {
+        return null;
+    }
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+    const page = await getPage();
+    return {
+        title: page?.meta_title || 'About Our Charity | Henjo African Safaris',
+        description: page?.meta_description || 'Making a difference through responsible tourism.',
+    };
+}
+
+export default async function AboutOurCharityPage() {
+    const page = await getPage();
+    const ctaHref = page?.hero_cta_href || 'https://www.empathychildreninitiative.org/';
+    const ctaText = page?.hero_cta_text || 'Learn More';
+
     return (
         <div className="min-h-screen">
             <Hero
                 size="small"
-                title="About Our Charity"
-                subtitle="Making a difference through responsible tourism"
-                // ctaText="Learn More"
-                // ctaLink="/contact"
+                title={page?.hero_title || 'About Our Charity'}
+                subtitle={page?.hero_subtitle || 'Making a difference through responsible tourism'}
                 backgroundImage="/images/charity-hero.jpg"
                 overlay={true}
                 showTagline={false}
@@ -26,17 +46,13 @@ export default function AboutOurCharityPage() {
                 <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12 space-y-6">
                     <h2 className="text-2xl font-bold text-gray-800">Our Commitment to Community</h2>
 
-                    <p className="text-gray-600 leading-relaxed">
-                        Henjo African Safaris is more than just a premier safari company; it's a beacon of hope for vulnerable children in Africa. <br />
-                        Through a strategic partnership with <a href="https://www.empathychildreninitiative.org/" target="_blank" rel="noopener noreferrer" className="text-yellow-500 hover:underline">Empathy Children Initiative</a>, Henjo African Safaris dedicates itself to making a tangible difference in the lives of these children. Every booking made directly with Henjo African Safaris contributes directly to the well-being, education and Menistrual Hygiene programs of these children.<br />
-                        Whether you're embarking on a thrilling safari adventure or planning a serene getaway, your decision to book with Henjo African Safaris means you're actively participating in changing lives and building brighter futures for those in need.<br />
-                        Join us in making a lasting impact through unforgettable experiences.
+                    <p className="text-gray-600 leading-relaxed whitespace-pre-line">
+                        {page?.content || "Henjo African Safaris is more than just a premier safari company; it's a beacon of hope for vulnerable children in Africa."}
                     </p>
 
-                    <a href="https://www.empathychildreninitiative.org/" target="_blank" rel="noopener noreferrer" className="inline-block mt-4 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold px-6 py-2 rounded-full transition">
-                        Learn More
+                    <a href={ctaHref} target="_blank" rel="noopener noreferrer" className="inline-block mt-4 bg-yellow-500 hover:bg-yellow-400 text-black font-semibold px-6 py-2 rounded-full transition">
+                        {ctaText}
                     </a>
-
 
                     <div className="bg-yellow-50 p-6 rounded-xl border border-yellow-200 mt-6">
                         <p className="text-gray-700">

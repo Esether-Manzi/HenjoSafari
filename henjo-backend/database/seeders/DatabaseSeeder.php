@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             SafariPackageSeeder::class,
             BlogSeeder::class,
             HenjoContentSeeder::class,
+            PageContentSeeder::class,
         ]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
