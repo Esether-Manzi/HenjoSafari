@@ -274,3 +274,97 @@
 .henjo-progress-row + .henjo-progress-row {
     margin-top: 1rem;
 }
+
+/* =====================================================
+   DASHBOARD TABLE WIDGETS — checkerboard theme where row
+   and column tints interchange, distinct from the plain
+   striping used on resource index tables.
+   ===================================================== */
+
+.fi-wi-table .fi-ta-table thead tr {
+    background: var(--henjo-green);
+}
+
+.fi-wi-table .fi-ta-table thead .fi-ta-header-cell {
+    color: rgb(255 255 255 / 0.85);
+}
+
+.fi-wi-table .fi-ta-row:nth-child(odd) .fi-ta-cell:nth-child(odd),
+.fi-wi-table .fi-ta-row:nth-child(even) .fi-ta-cell:nth-child(even) {
+    background: var(--henjo-badge-gold-bg);
+}
+
+.fi-wi-table .fi-ta-row:nth-child(odd) .fi-ta-cell:nth-child(even),
+.fi-wi-table .fi-ta-row:nth-child(even) .fi-ta-cell:nth-child(odd) {
+    background: var(--henjo-badge-green-bg);
+}
+
+/* =====================================================
+   COLORED SCHEMA SECTIONS — applies to every Infolist
+   (View pages) and Form (Create/Edit pages) Section across
+   every resource. A Section given ->icon()->iconColor('gold'
+   |'green'|'blue'|'maroon'|'teal'|'purple') automatically
+   gets a tinted rounded icon chip (from Filament's own
+   per-color --color-* custom properties, so this works for
+   any registered color, not just the six above) and a
+   matching accent top border — turning the default flat
+   white/gray sections into the same colorful, modern language
+   used on the Dashboard, with no per-page CSS required.
+   ===================================================== */
+
+.fi-section-header > svg.fi-icon {
+    padding: 0.5rem;
+    border-radius: 0.75rem;
+    width: 2.75rem !important;
+    height: 2.75rem !important;
+    flex-shrink: 0;
+}
+
+.fi-section-header > svg.fi-icon.fi-color-gold,
+.fi-section:has(> .fi-section-header > svg.fi-color-gold) {
+    --henjo-section-accent-bg: var(--henjo-badge-gold-bg);
+    --henjo-section-accent-fg: var(--henjo-badge-gold-fg);
+}
+
+.fi-section-header > svg.fi-icon.fi-color-green,
+.fi-section-header > svg.fi-icon.fi-color-primary,
+.fi-section:has(> .fi-section-header > svg.fi-color-green),
+.fi-section:has(> .fi-section-header > svg.fi-color-primary) {
+    --henjo-section-accent-bg: var(--henjo-badge-green-bg);
+    --henjo-section-accent-fg: var(--henjo-badge-green-fg);
+}
+
+.fi-section-header > svg.fi-icon.fi-color-blue,
+.fi-section:has(> .fi-section-header > svg.fi-color-blue) {
+    --henjo-section-accent-bg: var(--henjo-badge-blue-bg);
+    --henjo-section-accent-fg: var(--henjo-badge-blue-fg);
+}
+
+.fi-section-header > svg.fi-icon.fi-color-maroon,
+.fi-section-header > svg.fi-icon.fi-color-danger,
+.fi-section:has(> .fi-section-header > svg.fi-color-maroon),
+.fi-section:has(> .fi-section-header > svg.fi-color-danger) {
+    --henjo-section-accent-bg: var(--henjo-badge-maroon-bg);
+    --henjo-section-accent-fg: var(--henjo-badge-maroon-fg);
+}
+
+.fi-section-header > svg.fi-icon.fi-color-teal,
+.fi-section:has(> .fi-section-header > svg.fi-color-teal) {
+    --henjo-section-accent-bg: var(--henjo-badge-teal-bg);
+    --henjo-section-accent-fg: var(--henjo-badge-teal-fg);
+}
+
+.fi-section-header > svg.fi-icon.fi-color-purple,
+.fi-section:has(> .fi-section-header > svg.fi-color-purple) {
+    --henjo-section-accent-bg: var(--henjo-badge-purple-bg);
+    --henjo-section-accent-fg: var(--henjo-badge-purple-fg);
+}
+
+.fi-section-header > svg.fi-icon[class*='fi-color-'] {
+    background: var(--henjo-section-accent-bg, transparent);
+    color: var(--henjo-section-accent-fg, currentColor) !important;
+}
+
+.fi-section:has(> .fi-section-header > svg[class*='fi-color-']) {
+    border-top: 3px solid var(--henjo-section-accent-fg, var(--henjo-green));
+}

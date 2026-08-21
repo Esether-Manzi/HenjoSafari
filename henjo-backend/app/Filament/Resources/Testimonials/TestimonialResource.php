@@ -8,11 +8,16 @@ use App\Filament\Resources\Testimonials\Pages\ListTestimonials;
 use App\Filament\Resources\Testimonials\Pages\ViewTestimonial;
 use App\Models\Testimonial;
 use BackedEnum;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
@@ -41,24 +46,63 @@ class TestimonialResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('name')->required()->maxLength(255),
-            TextInput::make('country')->maxLength(255),
-            TextInput::make('trip_name')->maxLength(255),
-            Textarea::make('testimonial')->rows(5),
-            TextInput::make('rating')->numeric(),
-            Checkbox::make('featured'),
+            Section::make('Traveler')
+                ->icon(Heroicon::OutlinedIdentification)
+                ->iconColor('gold')
+                ->columns(2)
+                ->schema([
+                    SpatieMediaLibraryFileUpload::make('avatar')
+                        ->collection('avatar')
+                        ->image()
+                        ->imageEditor()
+                        ->circleCropper()
+                        ->avatar()
+                        ->columnSpanFull(),
+                    TextInput::make('name')->required()->maxLength(255),
+                    TextInput::make('country')->maxLength(255),
+                    TextInput::make('trip_name')->maxLength(255),
+                ]),
+
+            Section::make('Testimonial')
+                ->icon(Heroicon::OutlinedChatBubbleLeft)
+                ->iconColor('purple')
+                ->columns(2)
+                ->schema([
+                    Textarea::make('testimonial')->rows(5)->columnSpanFull(),
+                    TextInput::make('rating')->numeric()->minValue(1)->maxValue(5)->suffix('★'),
+                    Checkbox::make('featured'),
+                ]),
         ]);
     }
 
     public static function infolist(Schema $schema): Schema
     {
         return $schema->components([
-            TextEntry::make('name'),
-            TextEntry::make('country'),
-            TextEntry::make('trip_name'),
-            TextEntry::make('testimonial'),
-            TextEntry::make('rating'),
-            TextEntry::make('featured'),
+            Section::make('Traveler')
+                ->icon(Heroicon::OutlinedIdentification)
+                ->iconColor('gold')
+                ->columns(2)
+                ->schema([
+                    SpatieMediaLibraryImageEntry::make('avatar')
+                        ->collection('avatar')
+                        ->hiddenLabel()
+                        ->circular()
+                        ->size(64)
+                        ->columnSpanFull(),
+                    TextEntry::make('name')->weight('bold'),
+                    TextEntry::make('country')->icon(Heroicon::OutlinedGlobeAlt)->placeholder('-'),
+                    TextEntry::make('trip_name')->label('Trip')->placeholder('-'),
+                ]),
+
+            Section::make('Testimonial')
+                ->icon(Heroicon::OutlinedChatBubbleLeft)
+                ->iconColor('purple')
+                ->columns(2)
+                ->schema([
+                    TextEntry::make('testimonial')->placeholder('-')->columnSpanFull(),
+                    TextEntry::make('rating')->suffix(' ★'),
+                    IconEntry::make('featured')->boolean(),
+                ]),
         ]);
     }
 
@@ -72,7 +116,7 @@ class TestimonialResource extends Resource
                 IconColumn::make('featured')->boolean(),
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make(),
+                EditAction::make(),
             ]);
     }
 

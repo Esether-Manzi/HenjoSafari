@@ -15,8 +15,10 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
@@ -46,30 +48,84 @@ class PostResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('title')->required()->maxLength(255),
-            TextInput::make('slug')->maxLength(255),
-            Textarea::make('excerpt')->rows(3),
-            Textarea::make('content')->rows(8),
-            Select::make('author_id')->relationship('author', 'name')->searchable()->preload(),
-            Checkbox::make('featured'),
-            TextInput::make('status')->default('draft')->maxLength(50),
-            DateTimePicker::make('published_at'),
-            SpatieMediaLibraryFileUpload::make('featured_image')
-                ->collection('featured_image')
-                ->image()
-                ->imageEditor()
-                ->columnSpanFull(),
+            Section::make('Post')
+                ->icon(Heroicon::OutlinedDocumentText)
+                ->iconColor('gold')
+                ->columns(2)
+                ->schema([
+                    TextInput::make('title')->required()->maxLength(255)->columnSpanFull(),
+                    TextInput::make('slug')->required()->maxLength(255),
+                    Select::make('author_id')->label('Author')->relationship('author', 'name')->searchable()->preload(),
+                    Textarea::make('excerpt')->rows(3)->columnSpanFull(),
+                    Textarea::make('content')->required()->rows(8)->columnSpanFull(),
+                ]),
+
+            Section::make('Featured Image')
+                ->icon(Heroicon::OutlinedPhoto)
+                ->iconColor('teal')
+                ->schema([
+                    SpatieMediaLibraryFileUpload::make('featured_image')
+                        ->hiddenLabel()
+                        ->collection('featured_image')
+                        ->image()
+                        ->imageEditor()
+                        ->columnSpanFull(),
+                ]),
+
+            Section::make('Publishing')
+                ->icon(Heroicon::OutlinedMegaphone)
+                ->iconColor('blue')
+                ->columns(3)
+                ->schema([
+                    Select::make('status')
+                        ->options([
+                            'draft' => 'Draft',
+                            'published' => 'Published',
+                        ])
+                        ->default('draft')
+                        ->required(),
+                    DateTimePicker::make('published_at'),
+                    Checkbox::make('featured'),
+                ]),
         ]);
     }
 
     public static function infolist(Schema $schema): Schema
     {
         return $schema->components([
-            TextEntry::make('title'),
-            TextEntry::make('slug'),
-            TextEntry::make('author.name')->label('Author'),
-            TextEntry::make('status'),
-            TextEntry::make('published_at')->dateTime(),
+            Section::make('Featured Image')
+                ->icon(Heroicon::OutlinedPhoto)
+                ->iconColor('teal')
+                ->visible(fn ($record) => $record->hasMedia('featured_image'))
+                ->schema([
+                    SpatieMediaLibraryImageEntry::make('featured_image')
+                        ->collection('featured_image')
+                        ->hiddenLabel()
+                        ->height('14rem')
+                        ->extraImgAttributes(['class' => 'rounded-xl object-cover w-full']),
+                ]),
+
+            Section::make('Post')
+                ->icon(Heroicon::OutlinedDocumentText)
+                ->iconColor('gold')
+                ->columns(2)
+                ->schema([
+                    TextEntry::make('title')->weight('bold')->columnSpanFull(),
+                    TextEntry::make('slug')->badge()->color('gray'),
+                    TextEntry::make('author.name')->label('Author')->placeholder('-'),
+                    TextEntry::make('excerpt')->placeholder('-')->columnSpanFull(),
+                ]),
+
+            Section::make('Publishing')
+                ->icon(Heroicon::OutlinedMegaphone)
+                ->iconColor('blue')
+                ->columns(2)
+                ->schema([
+                    TextEntry::make('status')
+                        ->badge()
+                        ->color(fn (string $state): string => $state === 'published' ? 'success' : 'gray'),
+                    TextEntry::make('published_at')->dateTime()->placeholder('-'),
+                ]),
         ]);
     }
 

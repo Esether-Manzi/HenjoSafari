@@ -54,7 +54,7 @@ class Page extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('featured_image')->singleFile();
-        $this->addMediaCollection('hero_image')->singleFile();
+        $this->addMediaCollection('featured_image')->useDisk('public')->singleFile();
+        $this->addMediaCollection('hero_image')->useDisk('public')->singleFile();
     }
 }

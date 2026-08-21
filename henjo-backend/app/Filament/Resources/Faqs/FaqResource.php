@@ -8,11 +8,14 @@ use App\Filament\Resources\Faqs\Pages\ListFaqs;
 use App\Filament\Resources\Faqs\Pages\ViewFaq;
 use App\Models\Faq;
 use BackedEnum;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
@@ -41,20 +44,44 @@ class FaqResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('question')->required()->maxLength(255),
-            Textarea::make('answer')->rows(5),
-            TextInput::make('display_order')->numeric(),
-            Checkbox::make('is_active')->default(true),
+            Section::make('Question & Answer')
+                ->icon(Heroicon::OutlinedQuestionMarkCircle)
+                ->iconColor('purple')
+                ->schema([
+                    TextInput::make('question')->required()->maxLength(255)->columnSpanFull(),
+                    Textarea::make('answer')->rows(5)->columnSpanFull(),
+                ]),
+
+            Section::make('Display')
+                ->icon(Heroicon::OutlinedAdjustmentsHorizontal)
+                ->iconColor('blue')
+                ->columns(2)
+                ->schema([
+                    TextInput::make('display_order')->numeric()->default(0),
+                    Checkbox::make('is_active')->default(true),
+                ]),
         ]);
     }
 
     public static function infolist(Schema $schema): Schema
     {
         return $schema->components([
-            TextEntry::make('question'),
-            TextEntry::make('answer'),
-            TextEntry::make('display_order'),
-            TextEntry::make('is_active'),
+            Section::make('Question & Answer')
+                ->icon(Heroicon::OutlinedQuestionMarkCircle)
+                ->iconColor('purple')
+                ->schema([
+                    TextEntry::make('question')->weight('bold')->columnSpanFull(),
+                    TextEntry::make('answer')->placeholder('-')->columnSpanFull(),
+                ]),
+
+            Section::make('Display')
+                ->icon(Heroicon::OutlinedAdjustmentsHorizontal)
+                ->iconColor('blue')
+                ->columns(2)
+                ->schema([
+                    TextEntry::make('display_order')->numeric()->badge()->color('gray'),
+                    IconEntry::make('is_active')->boolean(),
+                ]),
         ]);
     }
 
@@ -67,7 +94,7 @@ class FaqResource extends Resource
                 IconColumn::make('is_active')->boolean(),
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make(),
+                EditAction::make(),
             ]);
     }
 

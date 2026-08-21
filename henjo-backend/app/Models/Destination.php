@@ -78,9 +78,11 @@ class Destination extends Model implements HasMedia
     {
         $this
             ->addMediaCollection('hero')
+            ->useDisk('public')
             ->singleFile();
 
         $this
-            ->addMediaCollection('gallery');
+            ->addMediaCollection('gallery')
+            ->useDisk('public');
     }
 }

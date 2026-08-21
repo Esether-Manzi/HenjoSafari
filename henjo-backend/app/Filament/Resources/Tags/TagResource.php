@@ -8,9 +8,11 @@ use App\Filament\Resources\Tags\Pages\ListTags;
 use App\Filament\Resources\Tags\Pages\ViewTag;
 use App\Models\Tag;
 use BackedEnum;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -38,16 +40,28 @@ class TagResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('name')->required()->maxLength(255),
-            TextInput::make('slug')->maxLength(255),
+            Section::make('Tag')
+                ->icon(Heroicon::OutlinedTag)
+                ->iconColor('teal')
+                ->columns(2)
+                ->schema([
+                    TextInput::make('name')->required()->maxLength(255),
+                    TextInput::make('slug')->maxLength(255),
+                ]),
         ]);
     }
 
     public static function infolist(Schema $schema): Schema
     {
         return $schema->components([
-            TextEntry::make('name'),
-            TextEntry::make('slug'),
+            Section::make('Tag')
+                ->icon(Heroicon::OutlinedTag)
+                ->iconColor('teal')
+                ->columns(2)
+                ->schema([
+                    TextEntry::make('name')->weight('bold'),
+                    TextEntry::make('slug')->badge()->color('gray'),
+                ]),
         ]);
     }
 
@@ -59,7 +73,7 @@ class TagResource extends Resource
                 TextColumn::make('slug')->searchable(),
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make(),
+                EditAction::make(),
             ]);
     }
 

@@ -47,6 +47,18 @@ class AdminDashboardPanelProvider extends PanelProvider
                 'success' => Color::hex('#4CAF50'),
                 'warning' => Color::hex('#E5A100'),
                 'danger' => Color::hex('#7B1818'),
+
+                // Extra named hues (beyond the five semantic slots above) so
+                // Infolist/Form Sections, badges, and icons across every
+                // resource's view/edit page can pull from one consistent
+                // six-hue brand rotation — see theme.css for how these
+                // colorize section headers (icon chip + top border).
+                'gold' => Color::hex('#D4A017'),
+                'green' => Color::hex('#2E7D32'),
+                'blue' => Color::hex('#1565C0'),
+                'maroon' => Color::hex('#7B1818'),
+                'teal' => Color::hex('#00897B'),
+                'purple' => Color::hex('#6A4C93'),
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->darkMode()

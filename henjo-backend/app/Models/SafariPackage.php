@@ -238,8 +238,8 @@ class SafariPackage extends Model implements HasMedia
     // Simplified media collections (no conversions for now)
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('cover')->singleFile();
-        $this->addMediaCollection('gallery');
+        $this->addMediaCollection('cover')->useDisk('public')->singleFile();
+        $this->addMediaCollection('gallery')->useDisk('public');
     }
 
 }

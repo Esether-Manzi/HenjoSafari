@@ -49,7 +49,7 @@ class SiteSetting extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('logo')->singleFile();
-        $this->addMediaCollection('homepage_hero')->singleFile();
+        $this->addMediaCollection('logo')->useDisk('public')->singleFile();
+        $this->addMediaCollection('homepage_hero')->useDisk('public')->singleFile();
     }
 }

@@ -13,8 +13,11 @@ use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
@@ -44,28 +47,74 @@ class TeamMemberResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('name')->required()->maxLength(255),
-            TextInput::make('position')->maxLength(255),
-            Textarea::make('bio')->rows(5),
-            TextInput::make('email')->email(),
-            TextInput::make('phone')->maxLength(50),
-            Checkbox::make('is_active')->default(true),
-            SpatieMediaLibraryFileUpload::make('photo')
-                ->collection('photo')
-                ->image()
-                ->imageEditor()
-                ->columnSpanFull(),
+            Section::make('Team Member')
+                ->icon(Heroicon::OutlinedIdentification)
+                ->iconColor('gold')
+                ->columns(2)
+                ->schema([
+                    SpatieMediaLibraryFileUpload::make('photo')
+                        ->collection('photo')
+                        ->image()
+                        ->imageEditor()
+                        ->circleCropper()
+                        ->columnSpanFull(),
+                    TextInput::make('name')->required()->maxLength(255),
+                    TextInput::make('position')->required()->maxLength(255),
+                    Textarea::make('bio')->rows(5)->columnSpanFull(),
+                ]),
+
+            Section::make('Contact')
+                ->icon(Heroicon::OutlinedPhone)
+                ->iconColor('blue')
+                ->columns(2)
+                ->schema([
+                    TextInput::make('email')->email()->prefixIcon(Heroicon::OutlinedEnvelope),
+                    TextInput::make('phone')->maxLength(50)->prefixIcon(Heroicon::OutlinedPhone),
+                ]),
+
+            Section::make('Status')
+                ->icon(Heroicon::OutlinedAdjustmentsHorizontal)
+                ->iconColor('green')
+                ->schema([
+                    Checkbox::make('is_active')->default(true),
+                ]),
         ]);
     }
 
     public static function infolist(Schema $schema): Schema
     {
         return $schema->components([
-            TextEntry::make('name'),
-            TextEntry::make('position'),
-            TextEntry::make('email'),
-            TextEntry::make('phone'),
-            TextEntry::make('is_active'),
+            Section::make('Team Member')
+                ->icon(Heroicon::OutlinedIdentification)
+                ->iconColor('gold')
+                ->columns(2)
+                ->schema([
+                    SpatieMediaLibraryImageEntry::make('photo')
+                        ->collection('photo')
+                        ->hiddenLabel()
+                        ->circular()
+                        ->size(80)
+                        ->columnSpanFull(),
+                    TextEntry::make('name')->weight('bold'),
+                    TextEntry::make('position')->badge()->color('gold')->placeholder('-'),
+                    TextEntry::make('bio')->placeholder('-')->columnSpanFull(),
+                ]),
+
+            Section::make('Contact')
+                ->icon(Heroicon::OutlinedPhone)
+                ->iconColor('blue')
+                ->columns(2)
+                ->schema([
+                    TextEntry::make('email')->icon(Heroicon::OutlinedEnvelope)->placeholder('-')->copyable(),
+                    TextEntry::make('phone')->icon(Heroicon::OutlinedPhone)->placeholder('-'),
+                ]),
+
+            Section::make('Status')
+                ->icon(Heroicon::OutlinedAdjustmentsHorizontal)
+                ->iconColor('green')
+                ->schema([
+                    IconEntry::make('is_active')->boolean(),
+                ]),
         ]);
     }
 

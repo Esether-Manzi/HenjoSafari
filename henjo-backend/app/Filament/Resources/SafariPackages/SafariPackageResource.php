@@ -14,8 +14,11 @@ use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
@@ -45,46 +48,148 @@ class SafariPackageResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('title')->required()->maxLength(255),
-            TextInput::make('slug')->maxLength(255),
-            Select::make('destination_id')
-                ->relationship('destination', 'name')
-                ->searchable()
-                ->preload()
-                ->required(),
-            Textarea::make('summary')->rows(3),
-            Textarea::make('description')->rows(5),
-            TextInput::make('duration_days')->numeric()->required(),
-            TextInput::make('duration_nights')->numeric()->required(),
-            TextInput::make('base_price')->numeric()->required(),
-            TextInput::make('currency')->default('USD')->maxLength(3),
-            TextInput::make('min_people')->numeric(),
-            TextInput::make('max_people')->numeric(),
-            Toggle::make('featured'),
-            Toggle::make('popular'),
-            TextInput::make('status')->default('published')->maxLength(50),
-            SpatieMediaLibraryFileUpload::make('cover')
-                ->collection('cover')
-                ->image()
-                ->imageEditor()
-                ->columnSpanFull(),
-            SpatieMediaLibraryFileUpload::make('gallery')
-                ->collection('gallery')
-                ->image()
-                ->multiple()
-                ->reorderable()
-                ->columnSpanFull(),
+            Section::make('Package Details')
+                ->icon(Heroicon::OutlinedMap)
+                ->iconColor('gold')
+                ->columns(2)
+                ->schema([
+                    TextInput::make('title')->required()->maxLength(255),
+                    TextInput::make('slug')->maxLength(255),
+                    Select::make('destination_id')
+                        ->label('Destination')
+                        ->relationship('destination', 'name')
+                        ->searchable()
+                        ->preload()
+                        ->required(),
+                    TextInput::make('currency')->default('USD')->maxLength(3),
+                    Textarea::make('summary')->rows(3)->columnSpanFull(),
+                    Textarea::make('description')->rows(5)->columnSpanFull(),
+                ]),
+
+            Section::make('Trip Facts')
+                ->icon(Heroicon::OutlinedCalendarDays)
+                ->iconColor('blue')
+                ->columns(4)
+                ->schema([
+                    TextInput::make('duration_days')->numeric()->required(),
+                    TextInput::make('duration_nights')->numeric()->required(),
+                    TextInput::make('min_people')->numeric(),
+                    TextInput::make('max_people')->numeric(),
+                ]),
+
+            Section::make('Pricing')
+                ->icon(Heroicon::OutlinedBanknotes)
+                ->iconColor('green')
+                ->schema([
+                    TextInput::make('base_price')->numeric()->required()->prefix('$'),
+                ]),
+
+            Section::make('Media')
+                ->icon(Heroicon::OutlinedPhoto)
+                ->iconColor('teal')
+                ->schema([
+                    SpatieMediaLibraryFileUpload::make('cover')
+                        ->collection('cover')
+                        ->image()
+                        ->imageEditor()
+                        ->columnSpanFull(),
+                    SpatieMediaLibraryFileUpload::make('gallery')
+                        ->collection('gallery')
+                        ->image()
+                        ->multiple()
+                        ->reorderable()
+                        ->columnSpanFull(),
+                ]),
+
+            Section::make('Status')
+                ->icon(Heroicon::OutlinedAdjustmentsHorizontal)
+                ->iconColor('maroon')
+                ->columns(3)
+                ->schema([
+                    Select::make('status')
+                        ->options([
+                            'draft' => 'Draft',
+                            'published' => 'Published',
+                        ])
+                        ->default('published')
+                        ->required(),
+                    Toggle::make('featured'),
+                    Toggle::make('popular'),
+                ]),
         ]);
     }
 
     public static function infolist(Schema $schema): Schema
     {
         return $schema->components([
-            TextEntry::make('title'),
-            TextEntry::make('destination.name')->label('Destination'),
-            TextEntry::make('summary'),
-            TextEntry::make('base_price')->money('USD'),
-            TextEntry::make('status'),
+            Section::make('Cover')
+                ->icon(Heroicon::OutlinedPhoto)
+                ->iconColor('teal')
+                ->visible(fn (SafariPackage $record) => $record->hasMedia('cover'))
+                ->schema([
+                    SpatieMediaLibraryImageEntry::make('cover')
+                        ->collection('cover')
+                        ->hiddenLabel()
+                        ->height('16rem')
+                        ->extraImgAttributes(['class' => 'rounded-xl object-cover w-full']),
+                ]),
+
+            Section::make('Package Details')
+                ->icon(Heroicon::OutlinedMap)
+                ->iconColor('gold')
+                ->columns(2)
+                ->schema([
+                    TextEntry::make('title')->weight('bold')->size('lg'),
+                    TextEntry::make('destination.name')->label('Destination')->icon(Heroicon::OutlinedMapPin),
+                    TextEntry::make('summary')->placeholder('-')->columnSpanFull(),
+                    TextEntry::make('description')->placeholder('-')->columnSpanFull(),
+                ]),
+
+            Section::make('Trip Facts')
+                ->icon(Heroicon::OutlinedCalendarDays)
+                ->iconColor('blue')
+                ->columns(4)
+                ->schema([
+                    TextEntry::make('duration_days')->label('Days')->numeric(),
+                    TextEntry::make('duration_nights')->label('Nights')->numeric(),
+                    TextEntry::make('min_people')->label('Min People')->placeholder('-'),
+                    TextEntry::make('max_people')->label('Max People')->placeholder('-'),
+                ]),
+
+            Section::make('Pricing')
+                ->icon(Heroicon::OutlinedBanknotes)
+                ->iconColor('green')
+                ->schema([
+                    TextEntry::make('base_price')
+                        ->label('Base Price')
+                        ->size('lg')
+                        ->weight('bold')
+                        ->money(fn (SafariPackage $record) => $record->currency ?? 'USD'),
+                ]),
+
+            Section::make('Gallery')
+                ->icon(Heroicon::OutlinedSquares2x2)
+                ->iconColor('teal')
+                ->visible(fn (SafariPackage $record) => $record->hasMedia('gallery'))
+                ->schema([
+                    SpatieMediaLibraryImageEntry::make('gallery')
+                        ->collection('gallery')
+                        ->hiddenLabel()
+                        ->extraImgAttributes(['class' => 'rounded-lg object-cover'])
+                        ->height('6rem'),
+                ]),
+
+            Section::make('Status')
+                ->icon(Heroicon::OutlinedAdjustmentsHorizontal)
+                ->iconColor('maroon')
+                ->columns(3)
+                ->schema([
+                    TextEntry::make('status')
+                        ->badge()
+                        ->color(fn (string $state): string => $state === 'published' ? 'success' : 'gray'),
+                    IconEntry::make('featured')->boolean(),
+                    IconEntry::make('popular')->boolean(),
+                ]),
         ]);
     }
 

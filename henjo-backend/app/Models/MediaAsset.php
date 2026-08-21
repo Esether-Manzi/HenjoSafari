@@ -18,7 +18,7 @@ class MediaAsset extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('file')->singleFile();
+        $this->addMediaCollection('file')->useDisk('public')->singleFile();
     }
 
     public function uploadedBy()

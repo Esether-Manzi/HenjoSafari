@@ -118,7 +118,7 @@ export default function SafariDetailPage() {
                 </div>
 
                 <div className="relative h-full container mx-auto px-4 flex flex-col justify-end pb-12">
-                    <div className="max-w-3xl">
+                    <div className="w-full max-w-[90%]">
                         <div className="flex flex-wrap gap-2 mb-4">
                             {featured && (
                                 <span className="px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1" style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}>
@@ -137,12 +137,9 @@ export default function SafariDetailPage() {
                             ))}
                         </div>
 
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
                             {title}
                         </h1>
-                        <p className="text-lg text-white/90 mb-6 max-w-2xl">
-                            {summary}
-                        </p>
 
                         <div className="flex flex-wrap items-center gap-6 text-white">
                             <div className="flex items-center gap-2">
@@ -170,13 +167,6 @@ export default function SafariDetailPage() {
                         </div>
 
                         <div className="flex flex-wrap gap-4 mt-6">
-                            <button
-                                onClick={() => setShowBookingForm(true)}
-                                className="font-bold px-8 py-3 rounded-full transition transform hover:scale-105"
-                                style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}
-                            >
-                                Book This Safari
-                            </button>
                             <button
                                 onClick={() => setIsLiked(!isLiked)}
                                 className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-4 py-3 rounded-full transition"

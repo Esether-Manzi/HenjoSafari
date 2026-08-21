@@ -2,11 +2,11 @@
 
 namespace App\Filament\Resources\Countries\Schemas;
 
-use Filament\Schemas\Components\Section;
-
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 
 class CountryForm
 {
@@ -15,6 +15,9 @@ class CountryForm
         return $schema
             ->components([
                 Section::make('Country Information')
+                    ->icon(Heroicon::OutlinedGlobeAlt)
+                    ->iconColor('green')
+                    ->description('A safari destination country and its currency.')
                     ->columns(2)
                     ->schema([
 
@@ -42,8 +45,7 @@ class CountryForm
                             ->searchable()
                             ->required(),
                     ]),
-                
-                
+
             ]);
     }
 }

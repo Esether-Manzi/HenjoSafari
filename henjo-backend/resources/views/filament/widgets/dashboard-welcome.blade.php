@@ -1,5 +1,6 @@
 @php
     $user = filament()->auth()->user();
+    $avatarUrl = $user instanceof \Filament\Models\Contracts\HasAvatar ? $user->getFilamentAvatarUrl() : null;
 @endphp
 
 <x-filament-widgets::widget>
@@ -8,12 +9,21 @@
         style="background: linear-gradient(135deg, var(--henjo-green) 0%, var(--henjo-green-dark) 100%); box-shadow: var(--henjo-shadow-lg);"
     >
         <div class="flex items-center gap-4">
-            <div
-                class="w-14 h-14 rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0"
-                style="background: var(--henjo-gold); color: #1A1A1A;"
-            >
-                {{ strtoupper(substr(filament()->getUserName($user), 0, 1)) }}
-            </div>
+            @if ($avatarUrl)
+                <img
+                    src="{{ $avatarUrl }}"
+                    alt="{{ filament()->getUserName($user) }}"
+                    class="w-14 h-14 rounded-full object-cover flex-shrink-0"
+                    style="border: 2px solid var(--henjo-gold);"
+                />
+            @else
+                <div
+                    class="w-14 h-14 rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0"
+                    style="background: var(--henjo-gold); color: #1A1A1A;"
+                >
+                    {{ strtoupper(substr(filament()->getUserName($user), 0, 1)) }}
+                </div>
+            @endif
             <div>
                 <h2 class="text-xl md:text-2xl font-bold text-white">
                     Welcome back, {{ filament()->getUserName($user) }}

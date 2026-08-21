@@ -3,7 +3,9 @@
 namespace App\Filament\Resources\Countries\Schemas;
 
 use Filament\Infolists\Components\TextEntry;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 
 class CountryInfolist
 {
@@ -11,16 +13,24 @@ class CountryInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('name'),
-                TextEntry::make('code'),
-                TextEntry::make('currency')
-                    ->badge(),
-                TextEntry::make('created_at')
-                    ->dateTime()
-                    ->placeholder('-'),
-                TextEntry::make('updated_at')
-                    ->dateTime()
-                    ->placeholder('-'),
+                Section::make('Country Information')
+                    ->icon(Heroicon::OutlinedGlobeAlt)
+                    ->iconColor('green')
+                    ->columns(2)
+                    ->schema([
+                        TextEntry::make('name')->weight('bold'),
+                        TextEntry::make('code')->badge()->color('gray'),
+                        TextEntry::make('currency')->badge()->color('gold'),
+                    ]),
+
+                Section::make('Record')
+                    ->icon(Heroicon::OutlinedClock)
+                    ->columns(2)
+                    ->collapsible()
+                    ->schema([
+                        TextEntry::make('created_at')->dateTime()->placeholder('-'),
+                        TextEntry::make('updated_at')->dateTime()->placeholder('-'),
+                    ]),
             ]);
     }
 }

@@ -8,10 +8,13 @@ use App\Filament\Resources\Accommodations\Pages\ListAccommodations;
 use App\Filament\Resources\Accommodations\Pages\ViewAccommodation;
 use App\Models\Accommodation;
 use BackedEnum;
-use Filament\Forms\Components\TextInput;
+use Filament\Actions\EditAction;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -39,25 +42,72 @@ class AccommodationResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('name')->required()->maxLength(255),
-            TextInput::make('slug')->maxLength(255),
-            TextInput::make('type')->maxLength(100),
-            TextInput::make('star_rating')->numeric(),
-            TextInput::make('location')->maxLength(255),
-            Textarea::make('description')->rows(5),
-            TextInput::make('website')->url()->maxLength(255),
-            TextInput::make('phone')->maxLength(50),
+            Section::make('Property Details')
+                ->icon(Heroicon::OutlinedHome)
+                ->iconColor('gold')
+                ->description('The core identity of the accommodation.')
+                ->columns(2)
+                ->schema([
+                    TextInput::make('name')->required()->maxLength(255),
+                    TextInput::make('slug')->maxLength(255),
+                    Select::make('type')
+                        ->options([
+                            'hotel' => 'Hotel',
+                            'lodge' => 'Lodge',
+                            'camp' => 'Camp',
+                            'resort' => 'Resort',
+                            'guesthouse' => 'Guesthouse',
+                        ])
+                        ->required(),
+                    TextInput::make('star_rating')->numeric()->suffix('★')->minValue(1)->maxValue(5),
+                    TextInput::make('location')->maxLength(255)->columnSpanFull(),
+                    Textarea::make('description')->rows(5)->columnSpanFull(),
+                ]),
+
+            Section::make('Contact')
+                ->icon(Heroicon::OutlinedPhone)
+                ->iconColor('blue')
+                ->description('How guests or the office can reach this property.')
+                ->columns(2)
+                ->schema([
+                    TextInput::make('website')->url()->maxLength(255)->prefixIcon(Heroicon::OutlinedGlobeAlt),
+                    TextInput::make('phone')->maxLength(50)->prefixIcon(Heroicon::OutlinedPhone),
+                ]),
         ]);
     }
 
     public static function infolist(Schema $schema): Schema
     {
         return $schema->components([
-            TextEntry::make('name'),
-            TextEntry::make('type'),
-            TextEntry::make('location'),
-            TextEntry::make('website'),
-            TextEntry::make('phone'),
+            Section::make('Property Details')
+                ->icon(Heroicon::OutlinedHome)
+                ->iconColor('gold')
+                ->columns(2)
+                ->schema([
+                    TextEntry::make('name')->weight('bold'),
+                    TextEntry::make('type')->badge()->color('gold')->placeholder('-'),
+                    TextEntry::make('star_rating')->label('Rating')->suffix(' ★')->placeholder('-'),
+                    TextEntry::make('location')->icon(Heroicon::OutlinedMapPin)->placeholder('-'),
+                    TextEntry::make('description')->placeholder('-')->columnSpanFull(),
+                ]),
+
+            Section::make('Contact')
+                ->icon(Heroicon::OutlinedPhone)
+                ->iconColor('blue')
+                ->columns(2)
+                ->schema([
+                    TextEntry::make('website')->url(fn ($state) => $state, true)->placeholder('-'),
+                    TextEntry::make('phone')->placeholder('-'),
+                ]),
+
+            Section::make('Record')
+                ->icon(Heroicon::OutlinedClock)
+                ->columns(2)
+                ->collapsible()
+                ->schema([
+                    TextEntry::make('created_at')->dateTime()->placeholder('-'),
+                    TextEntry::make('updated_at')->dateTime()->placeholder('-'),
+                ]),
         ]);
     }
 
@@ -71,7 +121,7 @@ class AccommodationResource extends Resource
                 TextColumn::make('phone'),
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make(),
+                EditAction::make(),
             ]);
     }
 

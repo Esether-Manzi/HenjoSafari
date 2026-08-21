@@ -15,6 +15,7 @@ use Filament\Actions\EditAction;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ImageColumn;
@@ -45,29 +46,42 @@ class MediaAssetResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('title')
-                ->maxLength(255)
-                ->helperText('Optional — defaults to the uploaded file name.'),
-            SpatieMediaLibraryFileUpload::make('file')
-                ->collection('file')
-                ->required()
-                ->acceptedFileTypes([
-                    'image/*',
-                    'video/*',
-                    'application/pdf',
-                    'application/msword',
-                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-                    'application/vnd.ms-excel',
-                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                    'application/vnd.ms-powerpoint',
-                    'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-                    'text/csv',
-                ])
-                ->maxSize(102400)
-                ->downloadable()
-                ->openable()
-                ->previewable()
-                ->columnSpanFull(),
+            Section::make('Details')
+                ->icon(Heroicon::OutlinedIdentification)
+                ->iconColor('gold')
+                ->schema([
+                    TextInput::make('title')
+                        ->maxLength(255)
+                        ->columnSpanFull()
+                        ->helperText('Optional — defaults to the uploaded file name.'),
+                ]),
+
+            Section::make('File')
+                ->icon(Heroicon::OutlinedPhoto)
+                ->iconColor('teal')
+                ->schema([
+                    SpatieMediaLibraryFileUpload::make('file')
+                        ->hiddenLabel()
+                        ->collection('file')
+                        ->required()
+                        ->acceptedFileTypes([
+                            'image/*',
+                            'video/*',
+                            'application/pdf',
+                            'application/msword',
+                            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                            'application/vnd.ms-excel',
+                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                            'application/vnd.ms-powerpoint',
+                            'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+                            'text/csv',
+                        ])
+                        ->maxSize(102400)
+                        ->downloadable()
+                        ->openable()
+                        ->previewable()
+                        ->columnSpanFull(),
+                ]),
         ]);
     }
 

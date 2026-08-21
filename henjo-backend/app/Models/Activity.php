@@ -43,6 +43,7 @@ class Activity extends Model implements HasMedia
     {
         $this
             ->addMediaCollection('image')
+            ->useDisk('public')
             ->singleFile();
     }
 

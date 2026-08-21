@@ -14,6 +14,8 @@ class BookingsTrendWidget extends ChartWidget
 
     protected static ?int $sort = 3;
 
+    protected ?string $maxHeight = '180px';
+
     protected function getType(): string
     {
         return 'line';

@@ -12,6 +12,7 @@ use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
@@ -40,28 +41,48 @@ class MenuResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            Select::make('location')
-                ->options([
-                    'navbar' => 'Navbar',
-                    'footer' => 'Footer',
-                ])
-                ->required()
-                ->live(),
-            Select::make('parent_id')
-                ->label('Parent (leave empty for a top-level item)')
-                ->relationship(
-                    'parent',
-                    'label',
-                    fn ($query, $get) => $query
-                        ->where('location', $get('location'))
-                        ->whereNull('parent_id'),
-                )
-                ->searchable()
-                ->preload(),
-            TextInput::make('label')->required()->maxLength(255),
-            TextInput::make('url')->required()->maxLength(255)->placeholder('/safaris or https://...'),
-            TextInput::make('sort_order')->numeric()->default(0),
-            Checkbox::make('is_active')->default(true),
+            Section::make('Placement')
+                ->icon(Heroicon::OutlinedBars3)
+                ->iconColor('gold')
+                ->columns(2)
+                ->schema([
+                    Select::make('location')
+                        ->options([
+                            'navbar' => 'Navbar',
+                            'footer' => 'Footer',
+                        ])
+                        ->required()
+                        ->live(),
+                    Select::make('parent_id')
+                        ->label('Parent (leave empty for a top-level item)')
+                        ->relationship(
+                            'parent',
+                            'label',
+                            fn ($query, $get) => $query
+                                ->where('location', $get('location'))
+                                ->whereNull('parent_id'),
+                        )
+                        ->searchable()
+                        ->preload(),
+                ]),
+
+            Section::make('Link')
+                ->icon(Heroicon::OutlinedLink)
+                ->iconColor('blue')
+                ->columns(2)
+                ->schema([
+                    TextInput::make('label')->required()->maxLength(255),
+                    TextInput::make('url')->required()->maxLength(255)->placeholder('/safaris or https://...'),
+                ]),
+
+            Section::make('Display')
+                ->icon(Heroicon::OutlinedAdjustmentsHorizontal)
+                ->iconColor('green')
+                ->columns(2)
+                ->schema([
+                    TextInput::make('sort_order')->numeric()->default(0),
+                    Checkbox::make('is_active')->default(true),
+                ]),
         ]);
     }
 

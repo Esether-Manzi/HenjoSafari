@@ -8,7 +8,7 @@ The project is a two-app monorepo:
 
 | App | Stack | Purpose |
 |---|---|---|
-| [`henjo-backend/`](henjo-backend) | Laravel 13 + Filament 5 | Public REST API and admin panel (safaris, destinations, bookings, blog, etc.) |
+| [`henjo-backend/`](henjo-backend) | Laravel 13 + Filament 5 | Public REST API and admin panel — the tour catalog (safaris, destinations, bookings, blog) plus the site's own content (settings, nav menus, CMS pages) |
 | [`henjo-frontend/henjosafaris-frontend/`](henjo-frontend/henjosafaris-frontend) | Next.js 16 (App Router) | Public-facing marketing site that consumes the API |
 
 The two apps are deployed and run independently — there is no shared build tooling
@@ -61,7 +61,9 @@ The site runs at `http://localhost:3000`.
 - **Admin panel** — [Filament 5](https://filamentphp.com), mounted at `/admin`.
   Resources cover safari packages, destinations, categories, activities,
   accommodations, bookings, customers, payments, inquiries, blog posts, team
-  members, and site pages — plus a dashboard with grouped stats and quick actions.
+  members, nav menus, and CMS pages — plus a global Settings page (site name/logo,
+  contact info, social links), a dashboard with grouped stats and quick actions,
+  and a Reports page with CSV-exportable analytics.
 - **Models** commonly combine `SoftDeletes`, sluggable slugs, and
   [Spatie Media Library](https://spatie.be/docs/laravel-medialibrary) for image
   uploads.
@@ -73,6 +75,9 @@ The site runs at `http://localhost:3000`.
   `components/<feature>/`.
 - All HTTP calls go through a singleton `apiClient` (`lib/api/client.ts`), with
   feature-specific request helpers in `lib/api/<feature>Api.ts`.
+- The root layout is an async Server Component that fetches site settings and the
+  navbar/footer menus from the backend on every request, so branding, navigation,
+  and a number of content pages are admin-editable rather than hardcoded.
 - Styling is Tailwind CSS v4 for layout, combined with a CSS-variable brand theme
   (`app/globals.css`) supporting light/dark mode.
 

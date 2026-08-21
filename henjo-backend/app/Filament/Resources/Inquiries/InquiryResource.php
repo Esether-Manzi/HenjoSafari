@@ -8,11 +8,13 @@ use App\Filament\Resources\Inquiries\Pages\ListInquiries;
 use App\Filament\Resources\Inquiries\Pages\ViewInquiry;
 use App\Models\Inquiry;
 use BackedEnum;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -40,25 +42,80 @@ class InquiryResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('name')->required()->maxLength(255),
-            TextInput::make('email')->email()->required(),
-            TextInput::make('phone')->maxLength(50),
-            Select::make('package_id')->relationship('safariPackage', 'title')->searchable()->preload(),
-            TextInput::make('subject')->maxLength(255),
-            Textarea::make('message')->rows(5),
-            TextInput::make('status')->default('new')->maxLength(50),
+            Section::make('Contact')
+                ->icon(Heroicon::OutlinedUserGroup)
+                ->iconColor('blue')
+                ->columns(2)
+                ->schema([
+                    TextInput::make('name')->required()->maxLength(255),
+                    TextInput::make('email')->email()->required()->prefixIcon(Heroicon::OutlinedEnvelope),
+                    TextInput::make('phone')->maxLength(50)->prefixIcon(Heroicon::OutlinedPhone),
+                    Select::make('package_id')
+                        ->label('Tour Package')
+                        ->relationship('safariPackage', 'title')
+                        ->searchable()
+                        ->preload(),
+                ]),
+
+            Section::make('Message')
+                ->icon(Heroicon::OutlinedChatBubbleLeftRight)
+                ->iconColor('gold')
+                ->schema([
+                    TextInput::make('subject')->maxLength(255)->columnSpanFull(),
+                    Textarea::make('message')->rows(5)->columnSpanFull(),
+                ]),
+
+            Section::make('Status')
+                ->icon(Heroicon::OutlinedAdjustmentsHorizontal)
+                ->iconColor('maroon')
+                ->schema([
+                    Select::make('status')
+                        ->options([
+                            'new' => 'New',
+                            'contacted' => 'Contacted',
+                            'closed' => 'Closed',
+                        ])
+                        ->default('new')
+                        ->required(),
+                ]),
         ]);
     }
 
     public static function infolist(Schema $schema): Schema
     {
         return $schema->components([
-            TextEntry::make('name'),
-            TextEntry::make('email'),
-            TextEntry::make('phone'),
-            TextEntry::make('subject'),
-            TextEntry::make('message'),
-            TextEntry::make('status'),
+            Section::make('Contact')
+                ->icon(Heroicon::OutlinedUserGroup)
+                ->iconColor('blue')
+                ->columns(2)
+                ->schema([
+                    TextEntry::make('name')->weight('bold'),
+                    TextEntry::make('email')->icon(Heroicon::OutlinedEnvelope)->copyable(),
+                    TextEntry::make('phone')->icon(Heroicon::OutlinedPhone)->placeholder('-'),
+                    TextEntry::make('safariPackage.title')->label('Tour Package')->placeholder('-'),
+                ]),
+
+            Section::make('Message')
+                ->icon(Heroicon::OutlinedChatBubbleLeftRight)
+                ->iconColor('gold')
+                ->schema([
+                    TextEntry::make('subject')->placeholder('-')->columnSpanFull(),
+                    TextEntry::make('message')->placeholder('-')->columnSpanFull(),
+                ]),
+
+            Section::make('Status')
+                ->icon(Heroicon::OutlinedAdjustmentsHorizontal)
+                ->iconColor('maroon')
+                ->schema([
+                    TextEntry::make('status')
+                        ->badge()
+                        ->color(fn (string $state): string => match ($state) {
+                            'new' => 'warning',
+                            'contacted' => 'blue',
+                            'closed' => 'success',
+                            default => 'gray',
+                        }),
+                ]),
         ]);
     }
 
@@ -72,7 +129,7 @@ class InquiryResource extends Resource
                 TextColumn::make('status')->badge(),
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make(),
+                EditAction::make(),
             ]);
     }
 

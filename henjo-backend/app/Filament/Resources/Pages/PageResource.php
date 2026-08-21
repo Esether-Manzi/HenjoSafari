@@ -8,12 +8,15 @@ use App\Filament\Resources\Pages\Pages\ListPages;
 use App\Filament\Resources\Pages\Pages\ViewPage;
 use App\Models\Page;
 use BackedEnum;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Infolists\Components\IconEntry;
+use Filament\Infolists\Components\RepeatableEntry;
+use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
 use Filament\Schemas\Components\Section;
@@ -46,6 +49,8 @@ class PageResource extends Resource
     {
         return $schema->components([
             Section::make('Page')
+                ->icon(Heroicon::OutlinedDocumentText)
+                ->iconColor('gold')
                 ->schema([
                     TextInput::make('title')->required()->maxLength(255)->live(onBlur: true),
                     TextInput::make('slug')->maxLength(255)->helperText('Used by the frontend to fetch this page, e.g. "about", "booking-policy".'),
@@ -53,6 +58,8 @@ class PageResource extends Resource
                 ])->columns(2),
 
             Section::make('Hero')
+                ->icon(Heroicon::OutlinedPhoto)
+                ->iconColor('teal')
                 ->schema([
                     TextInput::make('hero_title')->maxLength(255),
                     TextInput::make('hero_subtitle')->maxLength(500),
@@ -63,17 +70,28 @@ class PageResource extends Resource
                         ->image()
                         ->imageEditor()
                         ->columnSpanFull(),
+                    SpatieMediaLibraryFileUpload::make('featured_image')
+                        ->label('Featured Image (card / share thumbnail)')
+                        ->collection('featured_image')
+                        ->image()
+                        ->imageEditor()
+                        ->columnSpanFull(),
                 ])->columns(2),
 
             Section::make('Body Content')
+                ->icon(Heroicon::OutlinedNewspaper)
+                ->iconColor('blue')
                 ->schema([
-                    Textarea::make('content')->rows(10)->helperText('Long-form copy. Separate paragraphs with a blank line.'),
+                    Textarea::make('content')->hiddenLabel()->rows(10)->helperText('Long-form copy. Separate paragraphs with a blank line.'),
                 ]),
 
             Section::make('Content Sections')
+                ->icon(Heroicon::OutlinedSquares2x2)
+                ->iconColor('purple')
                 ->description('Repeatable icon/title/description cards, e.g. "Why Travel With Us" or "Our Services". Use the same Group name to render several cards together on the frontend.')
                 ->schema([
                     Repeater::make('sections')
+                        ->hiddenLabel()
                         ->schema([
                             TextInput::make('group')->required()->maxLength(100)->helperText('e.g. why-travel, features, offers'),
                             TextInput::make('icon')->maxLength(100),
@@ -87,6 +105,8 @@ class PageResource extends Resource
                 ]),
 
             Section::make('SEO')
+                ->icon(Heroicon::OutlinedGlobeAlt)
+                ->iconColor('green')
                 ->schema([
                     TextInput::make('meta_title')->maxLength(255),
                     Textarea::make('meta_description')->rows(2),
@@ -97,12 +117,73 @@ class PageResource extends Resource
     public static function infolist(Schema $schema): Schema
     {
         return $schema->components([
-            TextEntry::make('title'),
-            TextEntry::make('slug'),
-            TextEntry::make('hero_title'),
-            TextEntry::make('hero_subtitle'),
-            TextEntry::make('content'),
-            TextEntry::make('is_active'),
+            Section::make('Page')
+                ->icon(Heroicon::OutlinedDocumentText)
+                ->iconColor('gold')
+                ->columns(2)
+                ->schema([
+                    TextEntry::make('title')->weight('bold'),
+                    TextEntry::make('slug')->badge()->color('gray'),
+                    IconEntry::make('is_active')->boolean(),
+                ]),
+
+            Section::make('Hero')
+                ->icon(Heroicon::OutlinedPhoto)
+                ->iconColor('teal')
+                ->columns(2)
+                ->schema([
+                    SpatieMediaLibraryImageEntry::make('hero_image')
+                        ->collection('hero_image')
+                        ->height('10rem')
+                        ->extraImgAttributes(['class' => 'rounded-xl object-cover w-full']),
+                    SpatieMediaLibraryImageEntry::make('featured_image')
+                        ->collection('featured_image')
+                        ->height('10rem')
+                        ->extraImgAttributes(['class' => 'rounded-xl object-cover w-full']),
+                    TextEntry::make('hero_title')->placeholder('-'),
+                    TextEntry::make('hero_subtitle')->placeholder('-'),
+                    TextEntry::make('hero_cta_text')->placeholder('-'),
+                    TextEntry::make('hero_cta_href')->placeholder('-'),
+                ]),
+
+            Section::make('Body Content')
+                ->icon(Heroicon::OutlinedNewspaper)
+                ->iconColor('blue')
+                ->schema([
+                    TextEntry::make('content')->hiddenLabel()->placeholder('-')->prose(),
+                ]),
+
+            Section::make('Content Sections')
+                ->icon(Heroicon::OutlinedSquares2x2)
+                ->iconColor('purple')
+                ->schema([
+                    RepeatableEntry::make('sections')
+                        ->hiddenLabel()
+                        ->columns(2)
+                        ->schema([
+                            TextEntry::make('group')->badge()->color('purple'),
+                            TextEntry::make('title')->weight('bold'),
+                            TextEntry::make('description')->placeholder('-')->columnSpanFull(),
+                        ]),
+                ]),
+
+            Section::make('SEO')
+                ->icon(Heroicon::OutlinedGlobeAlt)
+                ->iconColor('green')
+                ->columns(2)
+                ->schema([
+                    TextEntry::make('meta_title')->placeholder('-'),
+                    TextEntry::make('meta_description')->placeholder('-'),
+                ]),
+
+            Section::make('Record')
+                ->icon(Heroicon::OutlinedClock)
+                ->columns(2)
+                ->collapsible()
+                ->schema([
+                    TextEntry::make('created_at')->dateTime()->placeholder('-'),
+                    TextEntry::make('updated_at')->dateTime()->placeholder('-'),
+                ]),
         ]);
     }
 
@@ -115,7 +196,7 @@ class PageResource extends Resource
                 IconColumn::make('is_active')->boolean(),
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make(),
+                EditAction::make(),
             ]);
     }
 

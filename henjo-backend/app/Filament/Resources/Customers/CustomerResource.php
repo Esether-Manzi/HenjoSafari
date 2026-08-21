@@ -8,9 +8,11 @@ use App\Filament\Resources\Customers\Pages\ListCustomers;
 use App\Filament\Resources\Customers\Pages\ViewCustomer;
 use App\Models\Customer;
 use BackedEnum;
+use Filament\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -38,22 +40,57 @@ class CustomerResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('first_name')->required()->maxLength(255),
-            TextInput::make('last_name')->required()->maxLength(255),
-            TextInput::make('email')->email()->required(),
-            TextInput::make('phone')->maxLength(50),
-            TextInput::make('country')->maxLength(255),
+            Section::make('Personal Details')
+                ->icon(Heroicon::OutlinedIdentification)
+                ->iconColor('gold')
+                ->columns(2)
+                ->schema([
+                    TextInput::make('first_name')->required()->maxLength(255),
+                    TextInput::make('last_name')->required()->maxLength(255),
+                    TextInput::make('country')->maxLength(255)->prefixIcon(Heroicon::OutlinedGlobeAlt),
+                ]),
+
+            Section::make('Contact')
+                ->icon(Heroicon::OutlinedPhone)
+                ->iconColor('blue')
+                ->columns(2)
+                ->schema([
+                    TextInput::make('email')->email()->required()->prefixIcon(Heroicon::OutlinedEnvelope),
+                    TextInput::make('phone')->maxLength(50)->prefixIcon(Heroicon::OutlinedPhone),
+                ]),
         ]);
     }
 
     public static function infolist(Schema $schema): Schema
     {
         return $schema->components([
-            TextEntry::make('first_name'),
-            TextEntry::make('last_name'),
-            TextEntry::make('email'),
-            TextEntry::make('phone'),
-            TextEntry::make('country'),
+            Section::make('Personal Details')
+                ->icon(Heroicon::OutlinedIdentification)
+                ->iconColor('gold')
+                ->columns(2)
+                ->schema([
+                    TextEntry::make('first_name')->weight('bold'),
+                    TextEntry::make('last_name')->weight('bold'),
+                    TextEntry::make('country')->icon(Heroicon::OutlinedGlobeAlt)->placeholder('-'),
+                ]),
+
+            Section::make('Contact')
+                ->icon(Heroicon::OutlinedPhone)
+                ->iconColor('blue')
+                ->columns(2)
+                ->schema([
+                    TextEntry::make('email')->icon(Heroicon::OutlinedEnvelope)->copyable(),
+                    TextEntry::make('phone')->icon(Heroicon::OutlinedPhone)->placeholder('-'),
+                ]),
+
+            Section::make('Record')
+                ->icon(Heroicon::OutlinedClock)
+                ->columns(2)
+                ->collapsible()
+                ->schema([
+                    TextEntry::make('created_at')->dateTime()->placeholder('-'),
+                    TextEntry::make('updated_at')->dateTime()->placeholder('-'),
+                ]),
         ]);
     }
 
@@ -67,7 +104,7 @@ class CustomerResource extends Resource
                 TextColumn::make('phone'),
             ])
             ->recordActions([
-                \Filament\Actions\EditAction::make(),
+                EditAction::make(),
             ]);
     }
 

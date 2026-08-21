@@ -88,7 +88,7 @@ export default async function DestinationsPage() {
             <Hero
                 size="medium"
                 title="Our Destinations"
-                subtitle="Explore the best of East Africa — from the savannas of Kenya to the misty gorilla forests of Uganda and Rwanda"
+                subtitle="Explore the best of East Africa - from the savannas of Kenya to the misty gorilla forests of Uganda and Rwanda"
                 ctaText="View All Safaris"
                 ctaLink="/safaris"
                 backgroundImage="/images/destinations-hero.jpg"
