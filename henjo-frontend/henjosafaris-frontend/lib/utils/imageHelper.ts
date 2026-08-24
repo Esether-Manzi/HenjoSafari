@@ -36,17 +36,21 @@ export function getImageUrl(media: any, type: 'cover' | 'gallery' = 'cover', ind
     
     // Resolve relative URLs against the actual backend origin
     if (url) {
+        // Spatie Media Library bakes the backend's own APP_URL into absolute
+        // URLs like original_url — which is localhost in dev regardless of
+        // where the backend is actually reachable from (a tunnel, staging,
+        // production). Rewrite those to the real backend origin.
+        const localBackendHost = /^https?:\/\/(localhost|127\.0\.0\.1):8000/;
+        if (localBackendHost.test(url)) {
+            url = url.replace(localBackendHost, BACKEND_ORIGIN);
+        }
         // If URL starts with /storage/, add the backend base URL
-        if (url.startsWith('/storage/')) {
+        else if (url.startsWith('/storage/')) {
             url = `${BACKEND_ORIGIN}${url}`;
         }
         // If URL starts with storage/ (no leading slash)
         else if (url.startsWith('storage/')) {
             url = `${BACKEND_ORIGIN}/${url}`;
-        }
-        // Replace 127.0.0.1 with localhost (keeps an already-absolute dev URL consistent)
-        else if (url.includes('127.0.0.1')) {
-            url = url.replace('127.0.0.1', 'localhost');
         }
         // If URL doesn't start with http and isn't a relative path, add backend URL
         else if (!url.startsWith('http') && !url.startsWith('/')) {
