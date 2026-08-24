@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Post extends Model implements HasMedia
 {
-    use SoftDeletes, InteractsWithMedia;
+    use InteractsWithMedia, Sluggable, SoftDeletes;
 
     protected $fillable = [
         'title',
@@ -28,22 +28,13 @@ class Post extends Model implements HasMedia
         'published_at' => 'datetime',
     ];
 
-    // Auto-generate slug
-    protected static function boot()
+    public function sluggable(): array
     {
-        parent::boot();
-        
-        static::creating(function ($post) {
-            if (empty($post->slug)) {
-                $post->slug = Str::slug($post->title);
-            }
-        });
-        
-        static::updating(function ($post) {
-            if ($post->isDirty('title') && empty($post->slug)) {
-                $post->slug = Str::slug($post->title);
-            }
-        });
+        return [
+            'slug' => [
+                'source' => 'title',
+            ],
+        ];
     }
 
     // Relationships
@@ -68,12 +59,12 @@ class Post extends Model implements HasMedia
                     ->width(300)
                     ->height(200)
                     ->sharpen(10);
-                
+
                 $this->addMediaConversion('medium')
                     ->width(800)
                     ->height(600)
                     ->sharpen(10);
-                
+
                 $this->addMediaConversion('large')
                     ->width(1200)
                     ->height(800)

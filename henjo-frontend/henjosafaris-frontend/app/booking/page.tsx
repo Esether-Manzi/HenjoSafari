@@ -13,7 +13,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { submitBooking, BookingFormData } from '@/lib/api/bookingApi';
+import { bookingFormSchema, bookingStep1Schema, bookingStep2Schema, type BookingFormValues } from '@/lib/validation/schemas';
 import Hero from '@/components/common/Hero';
 import {
     FaUser,
@@ -66,20 +69,6 @@ interface SafariPackageOption {
     };
 }
 
-interface FormData {
-    first_name: string;
-    last_name: string;
-    email: string;
-    phone: string;
-    country: string;
-    package_id: number | null;
-    package_name: string;
-    travel_date: string;
-    adults: number;
-    children: number;
-    special_requests: string;
-}
-
 const STEPS = [
     { id: 1, label: 'Personal Info', icon: FaUser },
     { id: 2, label: 'Trip Details', icon: FaMapMarkedAlt },
@@ -108,19 +97,33 @@ export default function BookingPage() {
     const [destinationCountries, setDestinationCountries] = useState<DestinationCountryOption[]>([]);
     const [selectedCountryId, setSelectedCountryId] = useState<string>('');
 
-    const [form, setForm] = useState<FormData>({
-        first_name: '',
-        last_name: '',
-        email: '',
-        phone: '',
-        country: '',
-        package_id: null,
-        package_name: '',
-        travel_date: '',
-        adults: 1,
-        children: 0,
-        special_requests: '',
+    const {
+        handleSubmit: handleFormSubmit,
+        trigger,
+        watch,
+        setValue,
+        setError: setFieldError,
+        formState: { errors },
+    } = useForm<BookingFormValues>({
+        resolver: zodResolver(bookingFormSchema),
+        defaultValues: {
+            first_name: '',
+            last_name: '',
+            email: '',
+            phone: '',
+            country: '',
+            package_id: null,
+            package_name: '',
+            travel_date: '',
+            adults: 1,
+            children: 0,
+            special_requests: '',
+        },
     });
+
+    // Read-only snapshot of the current form values, used for the review step
+    // and the success screen (rendered outside the form after submission).
+    const form = watch();
 
     // ── Fetch available safari packages (with destination/country) and country filter options ──
     useEffect(() => {
@@ -144,8 +147,8 @@ export default function BookingPage() {
     }, []);
 
     // ── Helpers ──
-    const update = (field: keyof FormData, value: string | number | null) =>
-        setForm((prev) => ({ ...prev, [field]: value }));
+    const update = (field: keyof BookingFormValues, value: string | number | null) =>
+        setValue(field, value as never, { shouldValidate: true, shouldDirty: true });
 
     // Packages narrowed down to the selected destination country (or all, if none chosen yet)
     const filteredPackages = selectedCountryId
@@ -177,20 +180,16 @@ export default function BookingPage() {
         update('package_name', pkg ? pkg.title : '');
     };
 
-    const isStep1Valid =
-        form.first_name.trim() &&
-        form.last_name.trim() &&
-        form.email.trim() &&
-        form.phone.trim() &&
-        form.country.trim();
+    const isStep1Valid = bookingStep1Schema.safeParse(form).success;
+    const isStep2Valid = bookingStep2Schema.safeParse(form).success;
 
-    const isStep2Valid =
-        form.travel_date &&
-        form.adults >= 1;
-
-    const handleNext = () => {
+    const handleNext = async () => {
         setError(null);
-        setCurrentStep((s) => s + 1);
+        const fields = currentStep === 1
+            ? (Object.keys(bookingStep1Schema.shape) as (keyof BookingFormValues)[])
+            : (Object.keys(bookingStep2Schema.shape) as (keyof BookingFormValues)[]);
+        const valid = await trigger(fields);
+        if (valid) setCurrentStep((s) => s + 1);
     };
 
     const handleBack = () => {
@@ -198,26 +197,31 @@ export default function BookingPage() {
         setCurrentStep((s) => s - 1);
     };
 
-    const handleSubmit = async () => {
+    const onSubmit = async (values: BookingFormValues) => {
         setIsLoading(true);
         setError(null);
         try {
             const payload: BookingFormData = {
-                first_name: form.first_name,
-                last_name: form.last_name,
-                email: form.email,
-                phone: form.phone,
-                country: form.country,
-                package_id: form.package_id,
-                package_name: form.package_name || null,
-                travel_date: form.travel_date,
-                adults: form.adults,
-                children: form.children,
-                special_requests: form.special_requests || undefined,
+                first_name: values.first_name,
+                last_name: values.last_name,
+                email: values.email,
+                phone: values.phone,
+                country: values.country,
+                package_id: values.package_id ?? null,
+                package_name: values.package_name || null,
+                travel_date: values.travel_date,
+                adults: values.adults,
+                children: values.children,
+                special_requests: values.special_requests || undefined,
             };
             const res = await submitBooking(payload);
             setBookingRef(res.booking_number);
         } catch (err: any) {
+            if (err.errors) {
+                Object.entries(err.errors as Record<string, string[]>).forEach(([field, messages]) => {
+                    setFieldError(field as keyof BookingFormValues, { message: messages[0] });
+                });
+            }
             setError(err.message || 'Something went wrong. Please try again.');
         } finally {
             setIsLoading(false);
@@ -449,13 +453,13 @@ export default function BookingPage() {
                                         </label>
                                         <input
                                             type="text"
-                                            style={inputStyle}
+                                            style={{ ...inputStyle, borderColor: errors.first_name ? '#cf1322' : undefined }}
                                             placeholder="e.g. Jane"
                                             value={form.first_name}
                                             onChange={(e) => update('first_name', e.target.value)}
-                                            required
                                             id="first_name"
                                         />
+                                        {errors.first_name && <p className="text-xs mt-1" style={{ color: '#cf1322' }}>{errors.first_name.message}</p>}
                                     </div>
                                     {/* Last Name */}
                                     <div>
@@ -464,13 +468,13 @@ export default function BookingPage() {
                                         </label>
                                         <input
                                             type="text"
-                                            style={inputStyle}
+                                            style={{ ...inputStyle, borderColor: errors.last_name ? '#cf1322' : undefined }}
                                             placeholder="e.g. Doe"
                                             value={form.last_name}
                                             onChange={(e) => update('last_name', e.target.value)}
-                                            required
                                             id="last_name"
                                         />
+                                        {errors.last_name && <p className="text-xs mt-1" style={{ color: '#cf1322' }}>{errors.last_name.message}</p>}
                                     </div>
                                     {/* Email */}
                                     <div>
@@ -479,13 +483,13 @@ export default function BookingPage() {
                                         </label>
                                         <input
                                             type="email"
-                                            style={inputStyle}
+                                            style={{ ...inputStyle, borderColor: errors.email ? '#cf1322' : undefined }}
                                             placeholder="jane@example.com"
                                             value={form.email}
                                             onChange={(e) => update('email', e.target.value)}
-                                            required
                                             id="email"
                                         />
+                                        {errors.email && <p className="text-xs mt-1" style={{ color: '#cf1322' }}>{errors.email.message}</p>}
                                     </div>
                                     {/* Phone */}
                                     <div>
@@ -494,13 +498,13 @@ export default function BookingPage() {
                                         </label>
                                         <input
                                             type="tel"
-                                            style={inputStyle}
+                                            style={{ ...inputStyle, borderColor: errors.phone ? '#cf1322' : undefined }}
                                             placeholder="+256 779 557 514"
                                             value={form.phone}
                                             onChange={(e) => update('phone', e.target.value)}
-                                            required
                                             id="phone"
                                         />
+                                        {errors.phone && <p className="text-xs mt-1" style={{ color: '#cf1322' }}>{errors.phone.message}</p>}
                                     </div>
                                     {/* Country */}
                                     <div className="md:col-span-2">
@@ -508,10 +512,9 @@ export default function BookingPage() {
                                             <FaGlobe className="inline mr-1 mb-0.5" size={11} /> Country / Nationality *
                                         </label>
                                         <select
-                                            style={{ ...inputStyle, cursor: 'pointer' }}
+                                            style={{ ...inputStyle, cursor: 'pointer', borderColor: errors.country ? '#cf1322' : undefined }}
                                             value={form.country}
                                             onChange={(e) => update('country', e.target.value)}
-                                            required
                                             id="country"
                                         >
                                             <option value="">Select your country…</option>
@@ -519,6 +522,7 @@ export default function BookingPage() {
                                                 <option key={c} value={c}>{c}</option>
                                             ))}
                                         </select>
+                                        {errors.country && <p className="text-xs mt-1" style={{ color: '#cf1322' }}>{errors.country.message}</p>}
                                     </div>
                                 </div>
 
@@ -614,13 +618,13 @@ export default function BookingPage() {
                                         </label>
                                         <input
                                             type="date"
-                                            style={inputStyle}
+                                            style={{ ...inputStyle, borderColor: errors.travel_date ? '#cf1322' : undefined }}
                                             min={minDate}
                                             value={form.travel_date}
                                             onChange={(e) => update('travel_date', e.target.value)}
-                                            required
                                             id="travel_date"
                                         />
+                                        {errors.travel_date && <p className="text-xs mt-1" style={{ color: '#cf1322' }}>{errors.travel_date.message}</p>}
                                     </div>
 
                                     {/* Adults & Children */}
@@ -702,6 +706,7 @@ export default function BookingPage() {
                                             onChange={(e) => update('special_requests', e.target.value)}
                                             id="special_requests"
                                         />
+                                        {errors.special_requests && <p className="text-xs mt-1" style={{ color: '#cf1322' }}>{errors.special_requests.message}</p>}
                                     </div>
                                 </div>
 
@@ -841,7 +846,7 @@ export default function BookingPage() {
                                         <FaArrowLeft /> Edit Details
                                     </button>
                                     <button
-                                        onClick={handleSubmit}
+                                        onClick={() => handleFormSubmit(onSubmit)()}
                                         disabled={isLoading}
                                         className="flex items-center gap-2 px-8 py-4 rounded-full font-bold text-base transition-all duration-200 hover:scale-105 disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100"
                                         style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}

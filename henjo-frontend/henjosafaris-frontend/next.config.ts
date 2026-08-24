@@ -1,5 +1,24 @@
 import type { NextConfig } from 'next';
 
+// Derive an image remotePattern from wherever the backend actually is
+// (NEXT_PUBLIC_API_URL), so a demo/staging/production backend host works
+// without editing this file — only the env var needs to change.
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+const backendPattern = (() => {
+  if (!apiUrl) return null;
+  try {
+    const { protocol, hostname, port } = new URL(apiUrl);
+    return {
+      protocol: protocol.replace(':', '') as 'http' | 'https',
+      hostname,
+      ...(port ? { port } : {}),
+      pathname: '/**' as const,
+    };
+  } catch {
+    return null;
+  }
+})();
+
 const nextConfig: NextConfig = {
   images: {
     // Next.js 16 blocks image fetches to hostnames that resolve to a private/loopback
@@ -18,6 +37,10 @@ const nextConfig: NextConfig = {
         port: '8000',
         pathname: '/**',
       },
+      // Whatever backend NEXT_PUBLIC_API_URL points to at build time (demo
+      // host today, the real production domain later) — skipped if it's
+      // just the localhost:8000 default already covered above.
+      ...(backendPattern && backendPattern.hostname !== 'localhost' ? [backendPattern] : []),
       {
         protocol: 'https',
         hostname: 'picsum.photos',

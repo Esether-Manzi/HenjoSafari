@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Image from 'next/image';
 import Link from 'next/link';
 import Head from 'next/head';
@@ -28,6 +30,7 @@ import { safariApi } from '@/lib/api/safariApi';
 import { submitBooking } from '@/lib/api/bookingApi';
 import { getImageUrl } from '@/lib/utils/imageHelper';
 import SafariIcon from '@/lib/config/icons';
+import { bookingFormSchema, bookingStep1Schema, type BookingFormValues } from '@/lib/validation/schemas';
 import type { SafariPackage } from '@/types/safari';
 
 export default function SafariDetailPage() {
@@ -506,51 +509,66 @@ function InclusionsTab({ inclusions, exclusions }: any) {
 // ============================================
 function BookingModal({ packageData, onClose }: any) {
     const [step, setStep] = useState(1);
-    const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        country: '',
-        travelDate: '',
-        adults: 1,
-        children: 0,
-        specialRequests: ''
-    });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [bookingRef, setBookingRef] = useState<string | null>(null);
 
-    const totalPrice = packageData.base_price * (formData.adults + formData.children * 0.5);
+    const {
+        register,
+        handleSubmit: handleFormSubmit,
+        trigger,
+        watch,
+        getValues,
+        setError: setFieldError,
+        formState: { errors },
+    } = useForm<BookingFormValues>({
+        resolver: zodResolver(bookingFormSchema),
+        defaultValues: {
+            first_name: '',
+            last_name: '',
+            email: '',
+            phone: '',
+            country: '',
+            travel_date: '',
+            adults: 1,
+            children: 0,
+            special_requests: '',
+        },
+    });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value, type } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            [name]: type === 'number' ? (value === '' ? '' : Number(value)) : value,
-        }));
+    const adults = watch('adults') || 0;
+    const children = watch('children') || 0;
+    const totalPrice = packageData.base_price * (adults + children * 0.5);
+
+    const handleContinue = async () => {
+        const valid = await trigger(Object.keys(bookingStep1Schema.shape) as (keyof BookingFormValues)[]);
+        if (valid) setStep(2);
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const onSubmit = async (values: BookingFormValues) => {
         setError(null);
         setIsSubmitting(true);
         try {
             const res = await submitBooking({
-                first_name: formData.firstName,
-                last_name: formData.lastName,
-                email: formData.email,
-                phone: formData.phone,
-                country: formData.country,
+                first_name: values.first_name,
+                last_name: values.last_name,
+                email: values.email,
+                phone: values.phone,
+                country: values.country,
                 package_id: packageData.id,
                 package_name: packageData.title,
-                travel_date: formData.travelDate,
-                adults: Number(formData.adults) || 1,
-                children: Number(formData.children) || 0,
-                special_requests: formData.specialRequests || undefined,
+                travel_date: values.travel_date,
+                adults: values.adults,
+                children: values.children,
+                special_requests: values.special_requests || undefined,
             });
             setBookingRef(res.booking_number);
         } catch (err: any) {
+            if (err.errors) {
+                Object.entries(err.errors as Record<string, string[]>).forEach(([field, messages]) => {
+                    setFieldError(field as keyof BookingFormValues, { message: messages[0] });
+                });
+            }
             setError(err.message || 'There was an error submitting your booking. Please try again.');
         } finally {
             setIsSubmitting(false);
@@ -564,7 +582,7 @@ function BookingModal({ packageData, onClose }: any) {
                     <FaCheckCircle style={{ color: 'var(--brand-green)', fontSize: '3rem' }} className="mx-auto mb-4" />
                     <h2 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>Request Received!</h2>
                     <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
-                        We&apos;ll send a personalised quote to <strong>{formData.email}</strong> within 24 hours.
+                        We&apos;ll send a personalised quote to <strong>{getValues('email')}</strong> within 24 hours.
                     </p>
                     <div className="rounded-xl p-4 mb-6" style={{ background: 'var(--brand-gold-subtle)' }}>
                         <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--brand-gold-hover)' }}>Booking Reference</p>
@@ -626,7 +644,7 @@ function BookingModal({ packageData, onClose }: any) {
                         ))}
                     </div>
 
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleFormSubmit(onSubmit)} noValidate>
                         {step === 1 && (
                             <div className="space-y-4">
                                 <div className="grid grid-cols-2 gap-4">
@@ -634,59 +652,52 @@ function BookingModal({ packageData, onClose }: any) {
                                         <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>First Name *</label>
                                         <input
                                             type="text"
-                                            name="firstName"
-                                            required
-                                            value={formData.firstName}
-                                            onChange={handleChange}
                                             className="w-full rounded-lg px-4 py-2 outline-none"
-                                            style={{ background: 'var(--bg-input)', border: '1px solid var(--border-primary)', color: 'var(--text-primary)' }}
+                                            style={{ background: 'var(--bg-input)', border: `1px solid ${errors.first_name ? '#cf1322' : 'var(--border-primary)'}`, color: 'var(--text-primary)' }}
+                                            {...register('first_name')}
                                         />
+                                        {errors.first_name && <p className="text-xs mt-1" style={{ color: '#cf1322' }}>{errors.first_name.message}</p>}
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Last Name *</label>
+                                        <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>Last Name *</label>
                                         <input
                                             type="text"
-                                            name="lastName"
-                                            required
-                                            value={formData.lastName}
-                                            onChange={handleChange}
-                                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
+                                            className="w-full rounded-lg px-4 py-2 outline-none"
+                                            style={{ background: 'var(--bg-input)', border: `1px solid ${errors.last_name ? '#cf1322' : 'var(--border-primary)'}`, color: 'var(--text-primary)' }}
+                                            {...register('last_name')}
                                         />
+                                        {errors.last_name && <p className="text-xs mt-1" style={{ color: '#cf1322' }}>{errors.last_name.message}</p>}
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                                    <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>Email *</label>
                                     <input
                                         type="email"
-                                        name="email"
-                                        required
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
+                                        className="w-full rounded-lg px-4 py-2 outline-none"
+                                        style={{ background: 'var(--bg-input)', border: `1px solid ${errors.email ? '#cf1322' : 'var(--border-primary)'}`, color: 'var(--text-primary)' }}
+                                        {...register('email')}
                                     />
+                                    {errors.email && <p className="text-xs mt-1" style={{ color: '#cf1322' }}>{errors.email.message}</p>}
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
+                                    <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>Phone *</label>
                                     <input
                                         type="tel"
-                                        name="phone"
-                                        required
-                                        value={formData.phone}
-                                        onChange={handleChange}
-                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
+                                        className="w-full rounded-lg px-4 py-2 outline-none"
+                                        style={{ background: 'var(--bg-input)', border: `1px solid ${errors.phone ? '#cf1322' : 'var(--border-primary)'}`, color: 'var(--text-primary)' }}
+                                        {...register('phone')}
                                     />
+                                    {errors.phone && <p className="text-xs mt-1" style={{ color: '#cf1322' }}>{errors.phone.message}</p>}
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Country *</label>
+                                    <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>Country *</label>
                                     <select
-                                        name="country"
-                                        required
-                                        value={formData.country}
-                                        onChange={handleChange}
-                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
+                                        className="w-full rounded-lg px-4 py-2 outline-none"
+                                        style={{ background: 'var(--bg-input)', border: `1px solid ${errors.country ? '#cf1322' : 'var(--border-primary)'}`, color: 'var(--text-primary)' }}
+                                        {...register('country')}
                                     >
                                         <option value="">Select your country</option>
                                         {[
@@ -700,6 +711,7 @@ function BookingModal({ packageData, onClose }: any) {
                                             <option key={c} value={c}>{c}</option>
                                         ))}
                                     </select>
+                                    {errors.country && <p className="text-xs mt-1" style={{ color: '#cf1322' }}>{errors.country.message}</p>}
                                 </div>
                             </div>
                         )}
@@ -707,69 +719,67 @@ function BookingModal({ packageData, onClose }: any) {
                         {step === 2 && (
                             <div className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Travel Date *</label>
+                                    <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>Travel Date *</label>
                                     <input
                                         type="date"
-                                        name="travelDate"
-                                        required
-                                        value={formData.travelDate}
-                                        onChange={handleChange}
                                         min={new Date().toISOString().split('T')[0]}
-                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
+                                        className="w-full rounded-lg px-4 py-2 outline-none"
+                                        style={{ background: 'var(--bg-input)', border: `1px solid ${errors.travel_date ? '#cf1322' : 'var(--border-primary)'}`, color: 'var(--text-primary)' }}
+                                        {...register('travel_date')}
                                     />
+                                    {errors.travel_date && <p className="text-xs mt-1" style={{ color: '#cf1322' }}>{errors.travel_date.message}</p>}
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Adults (12+ yrs) *</label>
+                                        <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>Adults (12+ yrs) *</label>
                                         <input
                                             type="number"
-                                            name="adults"
-                                            required
                                             min={1}
-                                            max={20}
-                                            value={formData.adults}
-                                            onChange={handleChange}
-                                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
+                                            max={50}
+                                            className="w-full rounded-lg px-4 py-2 outline-none"
+                                            style={{ background: 'var(--bg-input)', border: `1px solid ${errors.adults ? '#cf1322' : 'var(--border-primary)'}`, color: 'var(--text-primary)' }}
+                                            {...register('adults', { valueAsNumber: true })}
                                         />
+                                        {errors.adults && <p className="text-xs mt-1" style={{ color: '#cf1322' }}>{errors.adults.message}</p>}
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Children (3-11 yrs)</label>
+                                        <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>Children (3-11 yrs)</label>
                                         <input
                                             type="number"
-                                            name="children"
                                             min={0}
-                                            max={10}
-                                            value={formData.children}
-                                            onChange={handleChange}
-                                            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none"
+                                            max={50}
+                                            className="w-full rounded-lg px-4 py-2 outline-none"
+                                            style={{ background: 'var(--bg-input)', border: `1px solid ${errors.children ? '#cf1322' : 'var(--border-primary)'}`, color: 'var(--text-primary)' }}
+                                            {...register('children', { valueAsNumber: true })}
                                         />
+                                        {errors.children && <p className="text-xs mt-1" style={{ color: '#cf1322' }}>{errors.children.message}</p>}
                                     </div>
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Special Requests</label>
+                                    <label className="block text-sm font-medium mb-1" style={{ color: 'var(--text-secondary)' }}>Special Requests</label>
                                     <textarea
-                                        name="specialRequests"
                                         rows={3}
-                                        value={formData.specialRequests}
-                                        onChange={handleChange}
                                         placeholder="Dietary requirements, accessibility needs, etc."
-                                        className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none resize-none"
+                                        className="w-full rounded-lg px-4 py-2 outline-none resize-none"
+                                        style={{ background: 'var(--bg-input)', border: `1px solid ${errors.special_requests ? '#cf1322' : 'var(--border-primary)'}`, color: 'var(--text-primary)' }}
+                                        {...register('special_requests')}
                                     />
+                                    {errors.special_requests && <p className="text-xs mt-1" style={{ color: '#cf1322' }}>{errors.special_requests.message}</p>}
                                 </div>
 
                                 <div className="rounded-lg p-4" style={{ background: 'var(--bg-secondary)' }}>
                                     <h4 className="font-semibold mb-2">Price Summary</h4>
                                     <div className="space-y-1 text-sm">
                                         <div className="flex justify-between">
-                                            <span>Adults ({formData.adults})</span>
-                                            <span>{packageData.currency} {(packageData.base_price * formData.adults).toLocaleString()}</span>
+                                            <span>Adults ({adults})</span>
+                                            <span>{packageData.currency} {(packageData.base_price * adults).toLocaleString()}</span>
                                         </div>
-                                        {formData.children > 0 && (
+                                        {children > 0 && (
                                             <div className="flex justify-between">
-                                                <span>Children ({formData.children}) - 50%</span>
-                                                <span>{packageData.currency} {(packageData.base_price * formData.children * 0.5).toLocaleString()}</span>
+                                                <span>Children ({children}) - 50%</span>
+                                                <span>{packageData.currency} {(packageData.base_price * children * 0.5).toLocaleString()}</span>
                                             </div>
                                         )}
                                         <div className="border-t border-gray-200 pt-2 mt-2 font-bold flex justify-between">
@@ -794,7 +804,7 @@ function BookingModal({ packageData, onClose }: any) {
                             {step === 1 ? (
                                 <button
                                     type="button"
-                                    onClick={() => setStep(2)}
+                                    onClick={handleContinue}
                                     className="flex-1 font-bold py-3 rounded-lg transition"
                                     style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}
                                 >

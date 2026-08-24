@@ -3,10 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Traveler extends Model
 {
@@ -16,11 +12,11 @@ class Traveler extends Model
         'last_name',
         'date_of_birth',
         'passport_number',
-        'nationality'
+        'nationality',
     ];
 
     protected $casts = [
-        'date_of_birth' => 'date'
+        'date_of_birth' => 'date',
     ];
 
     public function booking()

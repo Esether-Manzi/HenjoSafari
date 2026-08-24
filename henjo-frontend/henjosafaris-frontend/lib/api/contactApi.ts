@@ -23,6 +23,15 @@ export const submitInquiry = async (data: InquiryFormData) => {
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
+
+        // Surface Laravel validation errors as a readable message, and attach
+        // the raw per-field errors so forms can highlight the offending fields.
+        if (errorData.errors) {
+            const firstError = Object.values(errorData.errors as Record<string, string[]>)[0];
+            const message = Array.isArray(firstError) ? firstError[0] : 'Validation failed. Please check your details.';
+            throw Object.assign(new Error(message), { errors: errorData.errors as Record<string, string[]> });
+        }
+
         throw new Error(errorData.message || 'Failed to submit inquiry');
     }
 

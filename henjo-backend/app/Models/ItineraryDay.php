@@ -3,10 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
 class ItineraryDay extends Model
 {
@@ -19,7 +15,7 @@ class ItineraryDay extends Model
         'description',
         'breakfast',
         'lunch',
-        'dinner'
+        'dinner',
     ];
 
     protected $casts = [
@@ -35,6 +31,6 @@ class ItineraryDay extends Model
 
     public function package()
     {
-       return $this->belongsTo(SafariPackage::class, 'package_id');
-     }
+        return $this->belongsTo(SafariPackage::class, 'package_id');
+    }
 }

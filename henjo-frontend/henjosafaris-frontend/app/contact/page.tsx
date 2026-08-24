@@ -17,10 +17,13 @@
 // - Form submissions are client-side
 
 import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { submitInquiry } from '@/lib/api/contactApi';
 import { settingsApi } from '@/lib/api/settingsApi';
 import { pagesApi } from '@/lib/api/pagesApi';
 import Hero from '@/components/common/Hero';
+import { contactFormSchema, type ContactFormValues } from '@/lib/validation/schemas';
 import type { SiteSettings } from '@/types/settings';
 import type { CmsPage } from '@/types/page';
 import {
@@ -50,12 +53,17 @@ export default function ContactPage() {
     // STATE MANAGEMENT
     // ============================================
 
-    // form: Stores form field values
-    const [form, setForm] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        message: ''
+    // Form state + validation, backed by the shared zod schema so the rules
+    // stay identical to the backend's StoreInquiryRequest.
+    const {
+        register,
+        handleSubmit: handleFormSubmit,
+        reset,
+        setError: setFieldError,
+        formState: { errors },
+    } = useForm<ContactFormValues>({
+        resolver: zodResolver(contactFormSchema),
+        defaultValues: { name: '', email: '', phone: '', message: '' },
     });
 
     // submitted: Tracks if form was successfully submitted
@@ -94,22 +102,29 @@ export default function ContactPage() {
     // FORM HANDLERS
     // ============================================
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
+    const onSubmit = async (values: ContactFormValues) => {
         setSubmitting(true);
         setSubmitError(null);
         try {
             await submitInquiry({
-                name: form.name,
-                email: form.email,
-                phone: form.phone || undefined,
+                name: values.name,
+                email: values.email,
+                phone: values.phone || undefined,
                 subject: 'Website Contact Form',
-                message: form.message,
+                message: values.message,
             });
             setSubmitted(true);
-            setForm({ name: '', email: '', phone: '', message: '' });
+            reset();
             setTimeout(() => setSubmitted(false), 5000);
         } catch (err: any) {
+            // Map backend field errors (if any) onto the form; otherwise show a generic message
+            if (err.errors) {
+                Object.entries(err.errors as Record<string, string[]>).forEach(([field, messages]) => {
+                    if (field in { name: 1, email: 1, phone: 1, message: 1 }) {
+                        setFieldError(field as keyof ContactFormValues, { message: messages[0] });
+                    }
+                });
+            }
             setSubmitError(err.message || 'Failed to send your message. Please try again.');
         } finally {
             setSubmitting(false);
@@ -305,7 +320,7 @@ export default function ContactPage() {
                                     <p className="text-sm opacity-80">We'll get back to you within 24 hours.</p>
                                 </div>
                             ) : (
-                                <form onSubmit={handleSubmit} className="space-y-5">
+                                <form onSubmit={handleFormSubmit(onSubmit)} className="space-y-5" noValidate>
 
                                     {/* Name Field */}
                                     <div>
@@ -317,14 +332,15 @@ export default function ContactPage() {
                                             className="w-full px-4 py-3 rounded-xl outline-none transition"
                                             style={{
                                                 background: 'var(--bg-input)',
-                                                border: '1px solid var(--border-primary)',
+                                                border: `1px solid ${errors.name ? 'var(--brand-maroon)' : 'var(--border-primary)'}`,
                                                 color: 'var(--text-primary)',
                                             }}
                                             placeholder="John Doe"
-                                            value={form.name}
-                                            onChange={(e) => setForm({ ...form, name: e.target.value })}
-                                            required
+                                            {...register('name')}
                                         />
+                                        {errors.name && (
+                                            <p className="text-xs mt-1" style={{ color: 'var(--brand-maroon)' }}>{errors.name.message}</p>
+                                        )}
                                     </div>
 
                                     {/* Email Field */}
@@ -337,14 +353,15 @@ export default function ContactPage() {
                                             className="w-full px-4 py-3 rounded-xl outline-none transition"
                                             style={{
                                                 background: 'var(--bg-input)',
-                                                border: '1px solid var(--border-primary)',
+                                                border: `1px solid ${errors.email ? 'var(--brand-maroon)' : 'var(--border-primary)'}`,
                                                 color: 'var(--text-primary)',
                                             }}
                                             placeholder="john@example.com"
-                                            value={form.email}
-                                            onChange={(e) => setForm({ ...form, email: e.target.value })}
-                                            required
+                                            {...register('email')}
                                         />
+                                        {errors.email && (
+                                            <p className="text-xs mt-1" style={{ color: 'var(--brand-maroon)' }}>{errors.email.message}</p>
+                                        )}
                                     </div>
 
                                     {/* Phone Field */}
@@ -357,13 +374,15 @@ export default function ContactPage() {
                                             className="w-full px-4 py-3 rounded-xl outline-none transition"
                                             style={{
                                                 background: 'var(--bg-input)',
-                                                border: '1px solid var(--border-primary)',
+                                                border: `1px solid ${errors.phone ? 'var(--brand-maroon)' : 'var(--border-primary)'}`,
                                                 color: 'var(--text-primary)',
                                             }}
                                             placeholder="+256 779 557 514"
-                                            value={form.phone}
-                                            onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                                            {...register('phone')}
                                         />
+                                        {errors.phone && (
+                                            <p className="text-xs mt-1" style={{ color: 'var(--brand-maroon)' }}>{errors.phone.message}</p>
+                                        )}
                                     </div>
 
                                     {/* Message Field */}
@@ -376,14 +395,15 @@ export default function ContactPage() {
                                             className="w-full px-4 py-3 rounded-xl outline-none transition resize-none"
                                             style={{
                                                 background: 'var(--bg-input)',
-                                                border: '1px solid var(--border-primary)',
+                                                border: `1px solid ${errors.message ? 'var(--brand-maroon)' : 'var(--border-primary)'}`,
                                                 color: 'var(--text-primary)',
                                             }}
                                             placeholder="Tell us about your dream safari..."
-                                            value={form.message}
-                                            onChange={(e) => setForm({ ...form, message: e.target.value })}
-                                            required
+                                            {...register('message')}
                                         />
+                                        {errors.message && (
+                                            <p className="text-xs mt-1" style={{ color: 'var(--brand-maroon)' }}>{errors.message.message}</p>
+                                        )}
                                     </div>
 
                                     {/* Error Message */}

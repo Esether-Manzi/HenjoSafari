@@ -3,10 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Payment extends Model
 {
@@ -17,11 +13,11 @@ class Payment extends Model
         'payment_method',
         'transaction_reference',
         'status',
-        'paid_at'
+        'paid_at',
     ];
 
     protected $casts = [
-        'paid_at' => 'datetime'
+        'paid_at' => 'datetime',
     ];
 
     public function booking()

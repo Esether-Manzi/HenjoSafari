@@ -7,16 +7,10 @@ import Hero from '@/components/common/Hero';
 import { safariApi } from '@/lib/api/safariApi';
 import { getImageUrl } from '@/lib/utils/imageHelper';
 import type { SafariPackage } from '@/types/safari';
-import { FaMapMarkerAlt, FaClock, FaSearch, FaFilter, FaTimes, FaGlobeAfrica, FaPaw, FaMountain, FaCompass, FaExclamationTriangle, FaStar, FaCheck } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaClock, FaSearch, FaFilter, FaTimes, FaPaw, FaMountain, FaCompass, FaExclamationTriangle, FaStar, FaCheck } from 'react-icons/fa';
 
 // Fallback search options if database is empty or API fails
 const FALLBACK_OPTIONS = {
-    countries: [
-        { id: 1, name: 'Uganda', code: 'UG' },
-        { id: 2, name: 'Kenya', code: 'KE' },
-        { id: 3, name: 'Tanzania', code: 'TZ' },
-        { id: 4, name: 'Rwanda', code: 'RW' },
-    ],
     categories: [
         { id: 1, name: 'Wildlife Adventure', slug: 'wildlife' },
         { id: 2, name: 'Gorilla Trekking', slug: 'gorilla' },
@@ -44,7 +38,6 @@ export default function SafarisPage() {
 
     // Filters Dropdowns Data
     const [options, setOptions] = useState({
-        countries: FALLBACK_OPTIONS.countries,
         categories: FALLBACK_OPTIONS.categories,
         destinations: FALLBACK_OPTIONS.destinations,
         activities: FALLBACK_OPTIONS.activities,
@@ -58,12 +51,11 @@ export default function SafarisPage() {
     // links into this page land pre-filtered instead of showing everything.
     const [filters, setFilters] = useState(() => {
         if (typeof window === 'undefined') {
-            return { search: '', country: '', category: '', destination: '', activity: '' };
+            return { search: '', category: '', destination: '', activity: '' };
         }
         const params = new URLSearchParams(window.location.search);
         return {
             search: params.get('search') || '',
-            country: params.get('country') || '',
             category: params.get('category') || '',
             destination: params.get('destination') || '',
             activity: params.get('activity') || '',
@@ -77,7 +69,6 @@ export default function SafarisPage() {
                 const response = await safariApi.getFilterOptions();
                 if (response.success && response.data) {
                     setOptions({
-                        countries: response.data.countries?.length ? response.data.countries : FALLBACK_OPTIONS.countries,
                         categories: response.data.categories?.length ? response.data.categories : FALLBACK_OPTIONS.categories,
                         destinations: response.data.destinations?.length ? response.data.destinations : FALLBACK_OPTIONS.destinations,
                         activities: response.data.activities?.length ? response.data.activities : FALLBACK_OPTIONS.activities,
@@ -98,7 +89,6 @@ export default function SafarisPage() {
                 // Construct query parameters
                 const params: any = {};
                 if (filters.search) params.search = filters.search;
-                if (filters.country) params.country = filters.country;
                 if (filters.category) params.category = filters.category;
                 if (filters.destination) params.destination = filters.destination;
                 if (filters.activity) params.activity = filters.activity;
@@ -134,7 +124,6 @@ export default function SafarisPage() {
     const handleClearFilters = () => {
         setFilters({
             search: '',
-            country: '',
             category: '',
             destination: '',
             activity: '',
@@ -161,15 +150,11 @@ export default function SafarisPage() {
     };
 
     // Helper to get active filter display label
-    const getFilterLabel = (type: 'country' | 'category' | 'destination' | 'activity', value: string) => {
+    const getFilterLabel = (type: 'category' | 'destination' | 'activity', value: string) => {
         if (!value) {
             return type.charAt(0).toUpperCase() + type.slice(1);
         }
-        if (type === 'country') {
-            const country = options.countries.find(c => c.name === value || c.code === value);
-            return country ? country.name : value;
-        }
-        
+
         let list: any[] = [];
         if (type === 'category') {
             list = options.categories;
@@ -217,7 +202,7 @@ export default function SafarisPage() {
                         e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)';
                     }}
                 >
-                    <div className="grid grid-cols-1 md:grid-cols-5 gap-3 md:gap-4 items-center">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-3 md:gap-4 items-center">
                         {/* Text Search Input */}
                         <div className="relative">
                             <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-white/70">
@@ -230,39 +215,6 @@ export default function SafarisPage() {
                                 value={filters.search}
                                 onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
                             />
-                        </div>
-
-                        {/* Country Filter Dropdown */}
-                        <div className="relative">
-                            <button
-                                onClick={(e) => toggleDropdown(e, 'country')}
-                                className="w-full px-4 py-3 rounded-2xl text-left text-sm text-white bg-black/35 focus:bg-black/50 border border-white/10 hover:border-white/30 transition-colors flex justify-between items-center"
-                            >
-                                <span className={`flex items-center gap-2 ${filters.country ? 'font-bold text-[var(--brand-gold)]' : ''}`}>
-                                    <FaGlobeAfrica /> {getFilterLabel('country', filters.country)}
-                                </span>
-                                <span className="text-white/60">▼</span>
-                            </button>
-                            {activeDropdown === 'country' && (
-                                <div className="absolute left-0 mt-2 w-56 rounded-2xl shadow-lg border p-2 z-50 bg-[#152018] border-[#2A3E2E]">
-                                    <button
-                                        onClick={() => handleSelectFilter('country', '')}
-                                        className="w-full text-left px-4 py-2 text-sm text-white hover:bg-white/10 rounded-xl transition"
-                                    >
-                                        All Countries
-                                    </button>
-                                    {options.countries.map((c) => (
-                                        <button
-                                            key={c.id}
-                                            onClick={() => handleSelectFilter('country', c.name)}
-                                            className="w-full text-left px-4 py-2 text-sm text-white hover:bg-white/10 rounded-xl transition flex justify-between"
-                                        >
-                                            <span>{c.name}</span>
-                                            {filters.country === c.name && <span className="text-[var(--brand-gold)]"><FaCheck /></span>}
-                                        </button>
-                                    ))}
-                                </div>
-                            )}
                         </div>
 
                         {/* Category Filter Dropdown */}
@@ -373,12 +325,6 @@ export default function SafarisPage() {
                                 <span className="bg-white/15 px-3 py-1 rounded-full flex items-center gap-1 border border-white/10">
                                     Search: &quot;{filters.search}&quot;
                                     <button onClick={() => handleSelectFilter('search', '')} className="hover:text-[var(--brand-gold)]"><FaTimes size={10} /></button>
-                                </span>
-                            )}
-                            {filters.country && (
-                                <span className="bg-white/15 px-3 py-1 rounded-full flex items-center gap-1 border border-white/10">
-                                    Country: {getFilterLabel('country', filters.country)}
-                                    <button onClick={() => handleSelectFilter('country', '')} className="hover:text-[var(--brand-gold)]"><FaTimes size={10} /></button>
                                 </span>
                             )}
                             {filters.category && (

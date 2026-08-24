@@ -1,3 +1,8 @@
+// The backend's origin (no /api/v1 suffix), derived from the same env var
+// every other API call uses — so this follows wherever the backend actually
+// is (local dev, a demo host, or the real production domain) with no code change.
+const BACKEND_ORIGIN = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1').replace(/\/api\/v1\/?$/, '');
+
 /**
  * Get the correct image URL from media object
  * @param media - The media array from the API
@@ -29,23 +34,23 @@ export function getImageUrl(media: any, type: 'cover' | 'gallery' = 'cover', ind
               `/storage/${item?.file_name}` ||
               '/images/placeholder.png';
     
-    // Fix the URL for local development
+    // Resolve relative URLs against the actual backend origin
     if (url) {
         // If URL starts with /storage/, add the backend base URL
         if (url.startsWith('/storage/')) {
-            url = `http://localhost:8000${url}`;
+            url = `${BACKEND_ORIGIN}${url}`;
         }
         // If URL starts with storage/ (no leading slash)
         else if (url.startsWith('storage/')) {
-            url = `http://localhost:8000/${url}`;
+            url = `${BACKEND_ORIGIN}/${url}`;
         }
-        // Replace 127.0.0.1 with localhost
+        // Replace 127.0.0.1 with localhost (keeps an already-absolute dev URL consistent)
         else if (url.includes('127.0.0.1')) {
             url = url.replace('127.0.0.1', 'localhost');
         }
         // If URL doesn't start with http and isn't a relative path, add backend URL
         else if (!url.startsWith('http') && !url.startsWith('/')) {
-            url = `http://localhost:8000/${url}`;
+            url = `${BACKEND_ORIGIN}/${url}`;
         }
     }
     

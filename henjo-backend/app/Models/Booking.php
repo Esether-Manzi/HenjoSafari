@@ -3,10 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Booking extends Model
 {
@@ -21,7 +17,7 @@ class Booking extends Model
         'quoted_price',
         'currency',
         'special_requests',
-        'status'
+        'status',
     ];
 
     public function customer()

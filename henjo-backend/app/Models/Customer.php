@@ -3,10 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
 class Customer extends Model
 {
@@ -17,7 +14,7 @@ class Customer extends Model
         'last_name',
         'email',
         'phone',
-        'country'
+        'country',
     ];
 
     public function bookings()
