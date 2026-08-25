@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { FaArrowRight, FaPaw, FaStar } from 'react-icons/fa';
 import { settingsApi } from '@/lib/api/settingsApi';
+import { cleanText, formatHeading } from '@/lib/utils/textFormat';
 
 const DEFAULT_TAGLINE = 'Every step, with us is an adventure';
 
@@ -37,6 +38,8 @@ export default function Hero({
 }: HeroProps) {
     const isHome = variant === 'home';
     const [tagline, setTagline] = useState(DEFAULT_TAGLINE);
+    const cleanTitle = formatHeading(title);
+    const cleanSubtitle = cleanText(subtitle);
 
     useEffect(() => {
         if (!showTagline) return;
@@ -74,7 +77,7 @@ export default function Hero({
                 ) : (
                     <Image
                         src={backgroundImage}
-                        alt={title}
+                        alt={cleanTitle}
                         fill
                         className="object-cover"
                         priority
@@ -120,7 +123,7 @@ export default function Hero({
                                 'text-5xl md:text-7xl lg:text-8xl'
                             }`}
                         >
-                            {title}
+                            {cleanTitle}
                         </h1>
                     </div>
 
@@ -130,7 +133,7 @@ export default function Hero({
                         size === 'large' ? 'text-xl mt-6' :
                         'text-2xl mt-6'
                     }`}>
-                        {subtitle}
+                        {cleanSubtitle}
                     </p>
 
                     {/* Buttons + stats grouped together and pushed toward the bottom,

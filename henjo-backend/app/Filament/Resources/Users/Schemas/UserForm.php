@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Users\Schemas;
 
+use App\Support\ValidationPatterns;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
@@ -32,6 +33,7 @@ class UserForm
                         TextInput::make('email')
                             ->label('Email address')
                             ->email()
+                            ->regex(ValidationPatterns::EMAIL)
                             ->required(),
                     ]),
 

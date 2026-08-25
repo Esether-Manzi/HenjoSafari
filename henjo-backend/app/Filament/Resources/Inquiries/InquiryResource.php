@@ -7,6 +7,7 @@ use App\Filament\Resources\Inquiries\Pages\EditInquiry;
 use App\Filament\Resources\Inquiries\Pages\ListInquiries;
 use App\Filament\Resources\Inquiries\Pages\ViewInquiry;
 use App\Models\Inquiry;
+use App\Support\ValidationPatterns;
 use BackedEnum;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
@@ -47,9 +48,9 @@ class InquiryResource extends Resource
                 ->iconColor('blue')
                 ->columns(2)
                 ->schema([
-                    TextInput::make('name')->required()->maxLength(255),
-                    TextInput::make('email')->email()->required()->prefixIcon(Heroicon::OutlinedEnvelope),
-                    TextInput::make('phone')->maxLength(50)->prefixIcon(Heroicon::OutlinedPhone),
+                    TextInput::make('name')->required()->maxLength(255)->regex(ValidationPatterns::NAME),
+                    TextInput::make('email')->email()->required()->regex(ValidationPatterns::EMAIL)->prefixIcon(Heroicon::OutlinedEnvelope),
+                    TextInput::make('phone')->maxLength(50)->regex(ValidationPatterns::PHONE)->prefixIcon(Heroicon::OutlinedPhone),
                     Select::make('package_id')
                         ->label('Tour Package')
                         ->relationship('safariPackage', 'title')

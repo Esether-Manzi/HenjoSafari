@@ -7,6 +7,7 @@ use App\Filament\Resources\Accommodations\Pages\EditAccommodation;
 use App\Filament\Resources\Accommodations\Pages\ListAccommodations;
 use App\Filament\Resources\Accommodations\Pages\ViewAccommodation;
 use App\Models\Accommodation;
+use App\Support\ValidationPatterns;
 use BackedEnum;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
@@ -71,7 +72,7 @@ class AccommodationResource extends Resource
                 ->columns(2)
                 ->schema([
                     TextInput::make('website')->url()->maxLength(255)->prefixIcon(Heroicon::OutlinedGlobeAlt),
-                    TextInput::make('phone')->maxLength(50)->prefixIcon(Heroicon::OutlinedPhone),
+                    TextInput::make('phone')->maxLength(50)->regex(ValidationPatterns::PHONE)->prefixIcon(Heroicon::OutlinedPhone),
                 ]),
         ]);
     }

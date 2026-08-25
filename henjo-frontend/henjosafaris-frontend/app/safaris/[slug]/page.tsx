@@ -29,6 +29,7 @@ import Hero from '@/components/common/Hero';
 import { safariApi } from '@/lib/api/safariApi';
 import { submitBooking } from '@/lib/api/bookingApi';
 import { getImageUrl } from '@/lib/utils/imageHelper';
+import { formatHeading } from '@/lib/utils/textFormat';
 import SafariIcon from '@/lib/config/icons';
 import { bookingFormSchema, bookingStep1Schema, type BookingFormValues } from '@/lib/validation/schemas';
 import type { SafariPackage } from '@/types/safari';
@@ -99,11 +100,12 @@ export default function SafariDetailPage() {
     // Get images using the helper
     const coverImage = getImageUrl(media, 'cover');
     const galleryImages = media?.filter((m: any) => m.collection_name === 'gallery') || [];
+    const displayTitle = formatHeading(title);
 
     return (
         <div className="min-h-screen" style={{ background: 'var(--bg-secondary)' }}>
             <Head>
-                <title>{title} - Henjo African Safaris</title>
+                <title>{displayTitle} - Henjo African Safaris</title>
                 <meta name="description" content={summary || description?.slice(0, 160)} />
             </Head>
 
@@ -112,7 +114,7 @@ export default function SafariDetailPage() {
                 <div className="absolute inset-0">
                     <Image
                         src={coverImage}
-                        alt={title}
+                        alt={displayTitle}
                         fill
                         className="object-cover"
                         priority
@@ -141,7 +143,7 @@ export default function SafariDetailPage() {
                         </div>
 
                         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-                            {title}
+                            {displayTitle}
                         </h1>
 
                         <div className="flex flex-wrap items-center gap-6 text-white">
@@ -195,7 +197,7 @@ export default function SafariDetailPage() {
                             <span>/</span>
                             <Link href="/safaris" className="transition hover:text-[var(--brand-gold)]">Safaris</Link>
                             <span>/</span>
-                            <span style={{ color: 'var(--text-primary)' }}>{title}</span>
+                            <span style={{ color: 'var(--text-primary)' }}>{displayTitle}</span>
                         </nav>
 
                         {/* Tabs */}
@@ -446,7 +448,7 @@ function ItineraryTab({ itineraryDays, expandedDay, onToggleDay }: any) {
                                 <span className="font-bold w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}>
                                     {day.day_number}
                                 </span>
-                                <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{day.title}</span>
+                                <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{formatHeading(day.title)}</span>
                             </div>
                             {expandedDay === day.day_number ? <FaChevronUp /> : <FaChevronDown />}
                         </button>
@@ -620,7 +622,7 @@ function BookingModal({ packageData, onClose }: any) {
                         </div>
                     )}
                     <div className="rounded-lg p-4 mb-6" style={{ background: 'var(--brand-gold-subtle)', border: '1px solid var(--brand-gold)' }}>
-                        <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>{packageData.title}</p>
+                        <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>{formatHeading(packageData.title)}</p>
                         <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
                             {packageData.duration_days} Days / {packageData.duration_nights} Nights
                         </p>

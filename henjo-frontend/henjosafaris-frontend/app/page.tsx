@@ -7,9 +7,19 @@ import Hero from '@/components/common/Hero';
 import SafariCard from '@/components/safari/SafariCard';
 import { safariApi } from '@/lib/api/safariApi';
 import { pagesApi } from '@/lib/api/pagesApi';
-import { FaGlobeAfrica, FaUserTie, FaMapMarkedAlt, FaUsers, FaLeaf, FaLaptop, FaChild, FaWheelchair, FaFirstAid, FaCompass, FaStar, FaShieldAlt } from 'react-icons/fa';
+import { testimonialApi } from '@/lib/api/testimonialApi';
+import { settingsApi } from '@/lib/api/settingsApi';
+import { getInitials } from '@/lib/utils/formatters';
+import { cleanText } from '@/lib/utils/textFormat';
+import {
+    FaGlobeAfrica, FaUserTie, FaMapMarkedAlt, FaUsers, FaLeaf, FaLaptop, FaChild, FaWheelchair,
+    FaFirstAid, FaCompass, FaStar, FaRegStar, FaShieldAlt, FaQuoteLeft, FaHandshake, FaAward,
+    FaFacebookF, FaInstagram, FaLinkedinIn, FaTiktok, FaYoutube, FaTwitter,
+} from 'react-icons/fa';
 import type { SafariPackage, Activity } from '@/types/safari';
 import type { CmsPage } from '@/types/page';
+import type { Testimonial } from '@/types/testimonial';
+import type { SiteSettings } from '@/types/settings';
 import { sectionsByGroup, firstInGroup } from '@/types/page';
 
 const SECTION_ICONS: Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>> = {
@@ -108,10 +118,84 @@ const MOCK_ACTIVITIES: Activity[] = [
     }
 ];
 
+// Used only if the backend has no featured testimonials yet, so the section
+// never renders empty.
+const MOCK_TESTIMONIALS: Testimonial[] = [
+    {
+        id: -1,
+        name: 'Sarah Mitchell',
+        country: 'United Kingdom',
+        trip_name: 'Gorilla Trekking & Queen Elizabeth Safari',
+        testimonial: 'Henjo African Safaris exceeded every expectation. Our guide knew exactly where to find the gorillas and made the trek feel safe and unforgettable.',
+        rating: 5,
+        featured: true,
+    },
+    {
+        id: -2,
+        name: 'Daniel Kruger',
+        country: 'South Africa',
+        trip_name: 'Serengeti & Ngorongoro Crater Safari',
+        testimonial: 'We saw the Big Five within three days thanks to our incredible driver-guide. Every camp was beautifully chosen and the itinerary paced perfectly.',
+        rating: 5,
+        featured: true,
+    },
+    {
+        id: -3,
+        name: 'Emily & Mark Thompson',
+        country: 'United States',
+        trip_name: 'Rwanda Gorilla & Golden Monkey Tour',
+        testimonial: 'From the first email to the final drop-off, the Henjo team was responsive, honest, and clearly passionate about conservation.',
+        rating: 5,
+        featured: true,
+    },
+];
+
+// Placeholder partner list — swap for real logos once partnership assets
+// are available; kept as clean wordmark badges in the meantime.
+const PARTNERS = [
+    { name: 'SafariBookings', icon: FaGlobeAfrica },
+    { name: 'Uganda Tourism Board', icon: FaAward },
+    { name: 'Uganda Wildlife Authority', icon: FaShieldAlt },
+    { name: 'Rwanda Development Board', icon: FaHandshake },
+    { name: 'Kenya Tourism Board', icon: FaCompass },
+    { name: 'TripAdvisor', icon: FaStar },
+];
+
+const SOCIAL_LINKS = [
+    { name: 'Facebook', icon: FaFacebookF, url: (s: SiteSettings | null) => s?.facebook_url, color: '#1877F2' },
+    { name: 'Instagram', icon: FaInstagram, url: (s: SiteSettings | null) => s?.instagram_url, color: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)' },
+    { name: 'Twitter', icon: FaTwitter, url: (s: SiteSettings | null) => s?.twitter_url, color: '#1DA1F2' },
+    { name: 'LinkedIn', icon: FaLinkedinIn, url: (s: SiteSettings | null) => s?.linkedin_url, color: '#0A66C2' },
+    { name: 'TikTok', icon: FaTiktok, url: (s: SiteSettings | null) => s?.tiktok_url, color: '#000000' },
+    { name: 'YouTube', icon: FaYoutube, url: (s: SiteSettings | null) => s?.youtube_url, color: '#FF0000' },
+];
+
+function StarRating({ rating }: { rating: number }) {
+    return (
+        <div className="flex gap-1" aria-label={`${rating} out of 5 stars`}>
+            {[1, 2, 3, 4, 5].map((n) => (
+                n <= rating
+                    ? <FaStar key={n} style={{ color: 'var(--brand-gold)' }} />
+                    : <FaRegStar key={n} style={{ color: 'var(--brand-gold)' }} />
+            ))}
+        </div>
+    );
+}
+
+function getTestimonialAvatar(testimonial: Testimonial): string | null {
+    if (testimonial.media && testimonial.media.length > 0) {
+        const avatar = testimonial.media.find((m) => m.collection_name === 'avatar');
+        return avatar?.original_url || avatar?.medium_url || null;
+    }
+    return null;
+}
+
 export default function Home() {
     const [featured, setFeatured] = useState<SafariPackage[]>([]);
     const [activities, setActivities] = useState<Activity[]>([]);
     const [page, setPage] = useState<CmsPage | null>(null);
+    const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+    const [settings, setSettings] = useState<SiteSettings | null>(null);
     const [loading, setLoading] = useState(true);
     const [activitiesLoading, setActivitiesLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -161,11 +245,45 @@ export default function Home() {
             }
         };
 
+        const fetchTestimonials = async () => {
+            try {
+                const response = await testimonialApi.getFeatured();
+                if (response.success && response.data?.length > 0) {
+                    setTestimonials(response.data);
+                } else {
+                    setTestimonials(MOCK_TESTIMONIALS);
+                }
+            } catch (err) {
+                console.warn('Unable to load testimonials from API, using placeholders:', err);
+                setTestimonials(MOCK_TESTIMONIALS);
+            }
+        };
+
+        const fetchSettings = async () => {
+            try {
+                const response = await settingsApi.getSettings();
+                if (response.success) {
+                    setSettings(response.data);
+                }
+            } catch (err) {
+                console.warn('Unable to load site settings:', err);
+            }
+        };
+
         fetchFeatured();
         fetchActivities();
+        fetchTestimonials();
+        fetchSettings();
     }, []);
 
     const featuredByCountry = useMemo(() => pickPerCountry(featured, 2), [featured]);
+
+    const activeSocialLinks = useMemo(
+        () => SOCIAL_LINKS
+            .map((social) => ({ ...social, href: social.url(settings) }))
+            .filter((social): social is typeof social & { href: string } => Boolean(social.href)),
+        [settings]
+    );
 
     const introSection = firstInGroup(page?.sections, 'intro');
     const featuredHeading = firstInGroup(page?.sections, 'featured-heading');
@@ -350,6 +468,78 @@ export default function Home() {
                 </div>
             </section>
 
+            {/* Testimonials */}
+            <section
+                className="relative py-20 overflow-hidden transition-colors duration-300"
+                style={{ background: 'var(--bg-secondary)' }}
+            >
+                <div className="absolute inset-0 bg-dot-grid opacity-[0.35] pointer-events-none" />
+
+                <div className="relative container mx-auto px-4">
+                    <div className="text-center mb-12">
+                        <span
+                            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold mb-4"
+                            style={{ background: 'var(--brand-green-subtle)', color: 'var(--brand-green)' }}
+                        >
+                            <FaQuoteLeft /> Traveler Stories
+                        </span>
+                        <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+                            What Our Travelers Say
+                        </h2>
+                        <p className="max-w-2xl mx-auto" style={{ color: 'var(--text-tertiary)' }}>
+                            Real reviews from travelers who explored East Africa with us
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        {testimonials.slice(0, 6).map((item) => {
+                            const avatarUrl = getTestimonialAvatar(item);
+                            const name = cleanText(item.name);
+                            const quote = cleanText(item.testimonial);
+                            const tripName = cleanText(item.trip_name);
+                            const country = cleanText(item.country);
+                            return (
+                                <div
+                                    key={item.id}
+                                    className="flex flex-col p-6 rounded-2xl transition duration-300 hover:-translate-y-1"
+                                    style={{
+                                        background: 'var(--bg-card)',
+                                        boxShadow: 'var(--shadow-sm)',
+                                        border: '1px solid var(--border-subtle)',
+                                    }}
+                                >
+                                    <FaQuoteLeft className="text-2xl mb-3" style={{ color: 'var(--brand-gold-subtle)' }} />
+                                    <StarRating rating={item.rating} />
+                                    <p className="mt-3 mb-6 text-sm leading-relaxed flex-1" style={{ color: 'var(--text-secondary)' }}>
+                                        &ldquo;{quote}&rdquo;
+                                    </p>
+                                    <div className="flex items-center gap-3 pt-4" style={{ borderTop: '1px solid var(--border-subtle)' }}>
+                                        {avatarUrl ? (
+                                            <div className="relative w-11 h-11 rounded-full overflow-hidden flex-shrink-0">
+                                                <Image src={avatarUrl} alt={name} fill className="object-cover" />
+                                            </div>
+                                        ) : (
+                                            <div
+                                                className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm"
+                                                style={{ background: 'var(--brand-gold-subtle)', color: 'var(--brand-gold)' }}
+                                            >
+                                                {getInitials(name)}
+                                            </div>
+                                        )}
+                                        <div>
+                                            <p className="font-bold text-sm" style={{ color: 'var(--text-primary)' }}>{name}</p>
+                                            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                                                {[tripName, country].filter(Boolean).join(' · ')}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            </section>
+
             {/* Features Section */}
             <section
                 className="py-20 transition-colors duration-300"
@@ -463,6 +653,78 @@ export default function Home() {
                     </div>
                 </div>
             </section>
+
+            {/* Partners */}
+            <section className="py-16 transition-colors duration-300" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
+                <div className="container mx-auto px-4">
+                    <div className="text-center mb-10">
+                        <span
+                            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold mb-4"
+                            style={{ background: 'var(--brand-gold-subtle)', color: 'var(--brand-gold)' }}
+                        >
+                            <FaHandshake /> Trusted Partners
+                        </span>
+                        <h2 className="text-2xl md:text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                            Recognized & Trusted By
+                        </h2>
+                    </div>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+                        {PARTNERS.map((partner) => {
+                            const Icon = partner.icon;
+                            return (
+                                <div
+                                    key={partner.name}
+                                    className="group flex flex-col items-center justify-center gap-2 p-5 rounded-xl text-center transition duration-300 hover:-translate-y-1"
+                                    style={{ background: 'var(--bg-card)', border: '1px solid var(--border-subtle)' }}
+                                >
+                                    <Icon
+                                        className="text-2xl transition-colors duration-300"
+                                        style={{ color: 'var(--text-muted)' }}
+                                    />
+                                    <span
+                                        className="text-xs font-semibold leading-tight transition-colors duration-300 group-hover:text-[var(--brand-gold)]"
+                                        style={{ color: 'var(--text-tertiary)' }}
+                                    >
+                                        {partner.name}
+                                    </span>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            </section>
+
+            {/* Social Media */}
+            {activeSocialLinks.length > 0 && (
+                <section className="py-16 transition-colors duration-300" style={{ background: 'var(--bg-primary)' }}>
+                    <div className="container mx-auto px-4 text-center">
+                        <h2 className="text-2xl md:text-3xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
+                            Follow Our Safari Journey
+                        </h2>
+                        <p className="max-w-xl mx-auto mb-8" style={{ color: 'var(--text-tertiary)' }}>
+                            Real trips, real wildlife, real stories — follow along for travel inspiration and behind-the-scenes moments
+                        </p>
+                        <div className="flex flex-wrap justify-center gap-4">
+                            {activeSocialLinks.map((social) => {
+                                const Icon = social.icon;
+                                return (
+                                    <a
+                                        key={social.name}
+                                        href={social.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={`Follow us on ${social.name}`}
+                                        className="w-14 h-14 rounded-full flex items-center justify-center text-white text-xl shadow-md transition duration-300 hover:scale-110 hover:shadow-xl"
+                                        style={{ background: social.color }}
+                                    >
+                                        <Icon />
+                                    </a>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </section>
+            )}
 
             {/* Final CTA */}
             <section className="relative py-20 overflow-hidden">

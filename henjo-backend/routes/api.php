@@ -1,14 +1,17 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\SafariPackageController;
-use App\Http\Controllers\Api\DestinationController;
-use App\Http\Controllers\Api\PostController;
-use App\Http\Controllers\Api\TeamMemberController;
 use App\Http\Controllers\Api\ActivityController;
-use App\Http\Controllers\Api\SettingController;
+use App\Http\Controllers\Api\BookingController;
+use App\Http\Controllers\Api\DestinationController;
+use App\Http\Controllers\Api\InquiryController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\PageController;
+use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\SafariPackageController;
+use App\Http\Controllers\Api\SettingController;
+use App\Http\Controllers\Api\TeamMemberController;
+use App\Http\Controllers\Api\TestimonialController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,11 +32,11 @@ Route::prefix('v1')->group(function () {
     Route::get('/safaris/popular', [SafariPackageController::class, 'popular']);
     Route::get('/safaris/filters', [SafariPackageController::class, 'filterOptions']);
     Route::get('/safaris/{slug}', [SafariPackageController::class, 'show']);
-    
+
     // Destinations
     Route::get('/destinations', [DestinationController::class, 'index']);
     Route::get('/destinations/{slug}', [DestinationController::class, 'show']);
-    
+
     // Blog Posts
     Route::get('/posts', [PostController::class, 'index']);
     Route::get('/posts/featured', [PostController::class, 'featured']);
@@ -47,6 +50,9 @@ Route::prefix('v1')->group(function () {
     // Activities
     Route::get('/activities', [ActivityController::class, 'index']);
 
+    // Testimonials
+    Route::get('/testimonials', [TestimonialController::class, 'index']);
+
     // Site Settings
     Route::get('/settings', [SettingController::class, 'show']);
 
@@ -57,8 +63,8 @@ Route::prefix('v1')->group(function () {
     Route::get('/pages/{slug}', [PageController::class, 'show']);
 
     // Inquiries
-    Route::post('/inquiries', [\App\Http\Controllers\Api\InquiryController::class, 'store']);
+    Route::post('/inquiries', [InquiryController::class, 'store']);
 
     // Bookings
-    Route::post('/bookings', [\App\Http\Controllers\Api\BookingController::class, 'store']);
+    Route::post('/bookings', [BookingController::class, 'store']);
 });

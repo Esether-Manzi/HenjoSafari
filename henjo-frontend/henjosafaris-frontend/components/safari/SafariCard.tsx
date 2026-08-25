@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { getImageUrl } from '@/lib/utils/imageHelper';
+import { formatHeading } from '@/lib/utils/textFormat';
 import { FaMapMarkerAlt, FaClock, FaStar } from 'react-icons/fa';
 import type { SafariPackage } from '@/types/safari';
 
@@ -13,6 +14,7 @@ interface SafariCardProps {
 
 export default function SafariCard({ tour, featured = false }: SafariCardProps) {
     const imageUrl = getImageUrl(tour.media, 'cover');
+    const title = formatHeading(tour.title);
 
     return (
         <Link
@@ -33,7 +35,7 @@ export default function SafariCard({ tour, featured = false }: SafariCardProps) 
             <div className="relative h-56 overflow-hidden">
                 <Image
                     src={imageUrl}
-                    alt={tour.title}
+                    alt={title}
                     fill
                     className="object-cover group-hover:scale-110 transition duration-500"
                 />
@@ -66,7 +68,7 @@ export default function SafariCard({ tour, featured = false }: SafariCardProps) 
                     className="text-xl font-bold mb-2 transition line-clamp-1 group-hover:text-[var(--brand-gold)]"
                     style={{ color: 'var(--text-primary)' }}
                 >
-                    {tour.title}
+                    {title}
                 </h3>
                 <p className="text-sm mb-4 line-clamp-2" style={{ color: 'var(--text-tertiary)' }}>
                     {tour.summary}

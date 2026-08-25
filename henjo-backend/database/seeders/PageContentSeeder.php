@@ -137,7 +137,6 @@ class PageContentSeeder extends Seeder
                 ['group' => 'offers', 'title' => 'Book With Us Online', 'description' => 'Make your booking online directly with us as soon as possible in the fastest and best way possible.', 'icon' => 'laptop', 'sort_order' => 0],
                 ['group' => 'offers', 'title' => 'Special Offers For Children', 'description' => 'Free safari for children below 5 years from one family or group and a 25% discount for children between 6-12 years.', 'icon' => 'child', 'sort_order' => 1],
                 ['group' => 'offers', 'title' => 'Disability Tours & Safaris', 'description' => 'We believe in Responsible and Inclusive Tourism, and whether you have a disability or not, we welcome you to experience your African holiday with us.', 'icon' => 'wheelchair', 'sort_order' => 2],
-                ['group' => 'offers', 'title' => 'Medical Travel Insurance', 'description' => 'Our tours come with free medical insurance for up to 10 days, which protects you in the event of an illness or injury while on safari with Henjo African Safaris.', 'icon' => 'first-aid', 'sort_order' => 3],
 
                 ['group' => 'final-cta', 'title' => 'Ready for Your African Adventure?', 'description' => 'Let our travel consultants craft a custom-made safari itinerary tailored to you - no obligation, just expert guidance.', 'icon' => null, 'sort_order' => 0],
             ],

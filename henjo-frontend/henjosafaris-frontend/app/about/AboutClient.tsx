@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Hero from '@/components/common/Hero';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -29,7 +29,7 @@ interface AboutClientProps {
 
 export default function AboutClient({ page, settings }: AboutClientProps) {
     const [team, setTeam] = useState<TeamMember[]>([]);
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const teamScrollRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const fetchTeam = async () => {
@@ -48,14 +48,13 @@ export default function AboutClient({ page, settings }: AboutClientProps) {
         fetchTeam();
     }, []);
 
-    const handleNext = () => {
-        if (team.length <= 3) return;
-        setCurrentIndex((prev) => (prev + 1) % (team.length - 2));
-    };
-
-    const handlePrev = () => {
-        if (team.length <= 3) return;
-        setCurrentIndex((prev) => (prev - 1 + (team.length - 2)) % (team.length - 2));
+    // Scrolls by one viewport's worth of cards (however many are visible at
+    // the current breakpoint — 1 on mobile, up to 3 on desktop) rather than
+    // a fixed pixel amount, so the buttons stay in sync with native swipe.
+    const scrollTeamBy = (direction: 1 | -1) => {
+        const el = teamScrollRef.current;
+        if (!el) return;
+        el.scrollBy({ left: direction * el.clientWidth, behavior: 'smooth' });
     };
 
     const whoWeAreParagraphs = (page?.content || '').split('\n').filter(Boolean);
@@ -194,10 +193,10 @@ export default function AboutClient({ page, settings }: AboutClientProps) {
                             </p>
                         </div>
                         {/* Navigation Buttons */}
-                        {team.length > 3 && (
-                            <div className="flex gap-3 mt-6 md:mt-0">
+                        {team.length > 1 && (
+                            <div className="hidden md:flex gap-3 mt-6 md:mt-0">
                                 <button
-                                    onClick={handlePrev}
+                                    onClick={() => scrollTeamBy(-1)}
                                     className="p-3 rounded-full border transition duration-300 hover:scale-105 active:scale-95"
                                     style={{
                                         borderColor: 'var(--border-primary)',
@@ -209,7 +208,7 @@ export default function AboutClient({ page, settings }: AboutClientProps) {
                                     <FaChevronLeft size={16} />
                                 </button>
                                 <button
-                                    onClick={handleNext}
+                                    onClick={() => scrollTeamBy(1)}
                                     className="p-3 rounded-full border transition duration-300 hover:scale-105 active:scale-95"
                                     style={{
                                         borderColor: 'var(--border-primary)',
@@ -224,61 +223,61 @@ export default function AboutClient({ page, settings }: AboutClientProps) {
                         )}
                     </div>
 
-                    {/* Carousel Container */}
-                    <div className="relative overflow-hidden w-full py-4">
-                        <div
-                            className="flex transition-transform duration-500 ease-in-out"
-                            style={{
-                                transform: `translateX(-${currentIndex * (100 / (team.length || 1))}%)`,
-                                width: `${((team.length || 1) * 100) / Math.min(3, team.length || 1)}%`
-                            }}
-                        >
-                            {team.map((member) => {
-                                const photoUrl = getMemberPhoto(member);
-                                return (
+                    {/* Carousel Container — a native horizontal scroll-snap
+                        strip rather than a JS-computed transform: on phones
+                        each card is full-width, so swiping snaps one member
+                        at a time; from sm/md up, 2-3 cards show per "page"
+                        and the arrow buttons (desktop-only, touch already
+                        swipes) scroll by exactly one viewport. */}
+                    <div
+                        ref={teamScrollRef}
+                        className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide py-4 -mx-3"
+                        style={{ WebkitOverflowScrolling: 'touch', scrollPaddingLeft: '0.75rem' }}
+                    >
+                        {team.map((member) => {
+                            const photoUrl = getMemberPhoto(member);
+                            return (
+                                <div
+                                    key={member.id}
+                                    className="flex-shrink-0 snap-start px-3 w-full sm:w-1/2 md:w-1/3"
+                                >
                                     <div
-                                        key={member.id}
-                                        className="px-3 transition-opacity duration-300"
-                                        style={{ width: `${100 / (team.length || 1)}%` }}
+                                        className="rounded-2xl p-6 transition duration-300 hover:shadow-lg h-full flex flex-col justify-between"
+                                        style={{
+                                            background: 'var(--bg-card)',
+                                            border: '1px solid var(--border-subtle)',
+                                            boxShadow: 'var(--shadow-md)'
+                                        }}
                                     >
-                                        <div
-                                            className="rounded-2xl p-6 transition duration-300 hover:shadow-lg h-full flex flex-col justify-between"
-                                            style={{
-                                                background: 'var(--bg-card)',
-                                                border: '1px solid var(--border-subtle)',
-                                                boxShadow: 'var(--shadow-md)'
-                                            }}
-                                        >
-                                            <div>
-                                                <div className="relative w-28 h-28 mx-auto mb-4 rounded-full overflow-hidden border-2" style={{ borderColor: 'var(--brand-gold)' }}>
-                                                    <Image
-                                                        src={photoUrl}
-                                                        alt={member.name}
-                                                        fill
-                                                        className="object-cover"
-                                                    />
-                                                </div>
-                                                <h3 className="text-xl font-bold text-center" style={{ color: 'var(--text-primary)' }}>{member.name}</h3>
-                                                <p className="text-sm font-semibold text-center mt-1" style={{ color: 'var(--brand-gold)' }}>{member.position}</p>
-                                                <p className="text-xs text-center mt-3 line-clamp-3 leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>
-                                                    {member.bio}
-                                                </p>
+                                        <div>
+                                            <div className="relative w-28 h-28 mx-auto mb-4 rounded-full overflow-hidden border-2" style={{ borderColor: 'var(--brand-gold)' }}>
+                                                <Image
+                                                    src={photoUrl}
+                                                    alt={member.name}
+                                                    fill
+                                                    className="object-cover"
+                                                />
                                             </div>
+                                            <h3 className="text-xl font-bold text-center" style={{ color: 'var(--text-primary)' }}>{member.name}</h3>
+                                            <p className="text-sm font-semibold text-center mt-1" style={{ color: 'var(--brand-gold)' }}>{member.position}</p>
+                                            <p className="text-xs text-center mt-3 line-clamp-3 leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>
+                                                {member.bio}
+                                            </p>
+                                        </div>
 
-                                            <div className="mt-6 pt-4 border-t text-center" style={{ borderColor: 'var(--border-subtle)' }}>
-                                                <Link
-                                                    href="/our-team"
-                                                    className="text-xs font-bold transition hover:text-[var(--brand-gold-hover)]"
-                                                    style={{ color: 'var(--brand-gold)' }}
-                                                >
-                                                    View Bio & Profile →
-                                                </Link>
-                                            </div>
+                                        <div className="mt-6 pt-4 border-t text-center" style={{ borderColor: 'var(--border-subtle)' }}>
+                                            <Link
+                                                href="/our-team"
+                                                className="text-xs font-bold transition hover:text-[var(--brand-gold-hover)]"
+                                                style={{ color: 'var(--brand-gold)' }}
+                                            >
+                                                View Bio & Profile →
+                                            </Link>
                                         </div>
                                     </div>
-                                );
-                            })}
-                        </div>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </section>

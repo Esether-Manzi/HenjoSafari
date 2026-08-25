@@ -227,6 +227,21 @@ body {
 }
 
 /* =====================================================
+   MOBILE TEXT ALIGNMENT
+   Below Tailwind's `sm` breakpoint, centered/right-aligned copy
+   reads poorly on narrow screens — force everything back to the
+   natural left-reading flow regardless of what alignment utility
+   a component (or admin-authored content block) applies.
+   ===================================================== */
+
+@media (max-width: 639px) {
+  .text-center,
+  .text-right {
+    text-align: left;
+  }
+}
+
+/* =====================================================
    COMPONENTS — Utility Classes
    ===================================================== */
 

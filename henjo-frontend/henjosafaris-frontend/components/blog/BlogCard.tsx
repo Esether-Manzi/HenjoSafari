@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { FaClock, FaTag, FaUser, FaStar } from 'react-icons/fa';
+import { formatHeading } from '@/lib/utils/textFormat';
 import type { BlogPost } from '@/types/blog';
 
 interface BlogCardProps {
@@ -22,6 +23,7 @@ function getBlogImageUrl(media: BlogPost['media']): string {
 
 export default function BlogCard({ post, featured = false }: BlogCardProps) {
     const imageUrl = getBlogImageUrl(post.media);
+    const title = formatHeading(post.title);
 
     const formattedDate = new Date(post.published_at).toLocaleDateString('en-US', {
         month: 'long',
@@ -50,7 +52,7 @@ export default function BlogCard({ post, featured = false }: BlogCardProps) {
             <div className="relative h-56 overflow-hidden">
                 <Image
                     src={imageUrl}
-                    alt={post.title}
+                    alt={title}
                     fill
                     className="object-cover group-hover:scale-110 transition duration-500"
                 />
@@ -88,7 +90,7 @@ export default function BlogCard({ post, featured = false }: BlogCardProps) {
                     className="text-xl font-bold mb-2 transition line-clamp-2 group-hover:text-[var(--brand-gold)]"
                     style={{ color: 'var(--text-primary)' }}
                 >
-                    {post.title}
+                    {title}
                 </h3>
 
                 {/* Excerpt */}

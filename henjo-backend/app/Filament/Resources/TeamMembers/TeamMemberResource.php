@@ -7,6 +7,8 @@ use App\Filament\Resources\TeamMembers\Pages\EditTeamMember;
 use App\Filament\Resources\TeamMembers\Pages\ListTeamMembers;
 use App\Filament\Resources\TeamMembers\Pages\ViewTeamMember;
 use App\Models\TeamMember;
+use App\Support\Sanitizer;
+use App\Support\ValidationPatterns;
 use BackedEnum;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Checkbox;
@@ -58,9 +60,12 @@ class TeamMemberResource extends Resource
                         ->imageEditor()
                         ->circleCropper()
                         ->columnSpanFull(),
-                    TextInput::make('name')->required()->maxLength(255),
-                    TextInput::make('position')->required()->maxLength(255),
-                    Textarea::make('bio')->rows(5)->columnSpanFull(),
+                    TextInput::make('name')->required()->maxLength(255)->regex(ValidationPatterns::NAME)
+                        ->dehydrateStateUsing(fn (?string $state) => Sanitizer::clean($state)),
+                    TextInput::make('position')->required()->maxLength(255)
+                        ->dehydrateStateUsing(fn (?string $state) => Sanitizer::clean($state)),
+                    Textarea::make('bio')->rows(5)->columnSpanFull()
+                        ->dehydrateStateUsing(fn (?string $state) => Sanitizer::clean($state)),
                 ]),
 
             Section::make('Contact')
@@ -68,8 +73,8 @@ class TeamMemberResource extends Resource
                 ->iconColor('blue')
                 ->columns(2)
                 ->schema([
-                    TextInput::make('email')->email()->prefixIcon(Heroicon::OutlinedEnvelope),
-                    TextInput::make('phone')->maxLength(50)->prefixIcon(Heroicon::OutlinedPhone),
+                    TextInput::make('email')->email()->regex(ValidationPatterns::EMAIL)->prefixIcon(Heroicon::OutlinedEnvelope),
+                    TextInput::make('phone')->maxLength(50)->regex(ValidationPatterns::PHONE)->prefixIcon(Heroicon::OutlinedPhone),
                 ]),
 
             Section::make('Status')

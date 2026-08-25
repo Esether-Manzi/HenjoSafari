@@ -7,6 +7,7 @@ use App\Filament\Resources\Customers\Pages\EditCustomer;
 use App\Filament\Resources\Customers\Pages\ListCustomers;
 use App\Filament\Resources\Customers\Pages\ViewCustomer;
 use App\Models\Customer;
+use App\Support\ValidationPatterns;
 use BackedEnum;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\TextInput;
@@ -45,8 +46,8 @@ class CustomerResource extends Resource
                 ->iconColor('gold')
                 ->columns(2)
                 ->schema([
-                    TextInput::make('first_name')->required()->maxLength(255),
-                    TextInput::make('last_name')->required()->maxLength(255),
+                    TextInput::make('first_name')->required()->maxLength(255)->regex(ValidationPatterns::NAME),
+                    TextInput::make('last_name')->required()->maxLength(255)->regex(ValidationPatterns::NAME),
                     TextInput::make('country')->maxLength(255)->prefixIcon(Heroicon::OutlinedGlobeAlt),
                 ]),
 
@@ -55,8 +56,8 @@ class CustomerResource extends Resource
                 ->iconColor('blue')
                 ->columns(2)
                 ->schema([
-                    TextInput::make('email')->email()->required()->prefixIcon(Heroicon::OutlinedEnvelope),
-                    TextInput::make('phone')->maxLength(50)->prefixIcon(Heroicon::OutlinedPhone),
+                    TextInput::make('email')->email()->required()->regex(ValidationPatterns::EMAIL)->prefixIcon(Heroicon::OutlinedEnvelope),
+                    TextInput::make('phone')->maxLength(50)->regex(ValidationPatterns::PHONE)->prefixIcon(Heroicon::OutlinedPhone),
                 ]),
         ]);
     }

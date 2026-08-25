@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Support\Sanitizer;
+use App\Support\ValidationPatterns;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreBookingRequest extends FormRequest
@@ -17,6 +18,9 @@ class StoreBookingRequest extends FormRequest
         $this->merge([
             'first_name' => Sanitizer::clean($this->input('first_name')),
             'last_name' => Sanitizer::clean($this->input('last_name')),
+            'email' => Sanitizer::clean($this->input('email')),
+            'phone' => Sanitizer::clean($this->input('phone')),
+            'country' => Sanitizer::clean($this->input('country')),
             'package_name' => Sanitizer::clean($this->input('package_name')),
             'special_requests' => Sanitizer::clean($this->input('special_requests')),
         ]);
@@ -26,10 +30,10 @@ class StoreBookingRequest extends FormRequest
     {
         return [
             // Personal information
-            'first_name' => 'required|string|max:100',
-            'last_name' => 'required|string|max:100',
-            'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:50',
+            'first_name' => ['required', 'string', 'max:100', 'regex:'.ValidationPatterns::NAME],
+            'last_name' => ['required', 'string', 'max:100', 'regex:'.ValidationPatterns::NAME],
+            'email' => ['required', 'email', 'max:255', 'regex:'.ValidationPatterns::EMAIL],
+            'phone' => ['required', 'string', 'max:50', 'regex:'.ValidationPatterns::PHONE],
             'country' => 'required|string|max:100',
 
             // Trip details

@@ -3,6 +3,8 @@
 namespace App\Filament\Pages;
 
 use App\Models\SiteSetting;
+use App\Support\Sanitizer;
+use App\Support\ValidationPatterns;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -41,16 +43,19 @@ class SettingsPage extends Page implements HasForms
             ->components([
                 Section::make('Site Identity')
                     ->schema([
-                        TextInput::make('site_name')->required()->maxLength(255),
-                        TextInput::make('tagline')->maxLength(255),
+                        TextInput::make('site_name')->required()->maxLength(255)
+                            ->dehydrateStateUsing(fn (?string $state) => Sanitizer::clean($state)),
+                        TextInput::make('tagline')->maxLength(255)
+                            ->dehydrateStateUsing(fn (?string $state) => Sanitizer::clean($state)),
                         FileUpload::make('logo')->image()->directory('site'),
                     ])->columns(2),
 
                 Section::make('Contact Information')
                     ->schema([
-                        TextInput::make('email')->email(),
-                        TextInput::make('phone'),
-                        TextInput::make('address')->columnSpanFull(),
+                        TextInput::make('email')->email()->regex(ValidationPatterns::EMAIL),
+                        TextInput::make('phone')->regex(ValidationPatterns::PHONE),
+                        TextInput::make('address')->columnSpanFull()
+                            ->dehydrateStateUsing(fn (?string $state) => Sanitizer::clean($state)),
                         TextInput::make('working_hours_weekday')->placeholder('Mon - Fri: 8:00 AM - 6:00 PM (EAT)'),
                         TextInput::make('working_hours_saturday')->placeholder('Sat: 9:00 AM - 4:00 PM (EAT)'),
                     ])->columns(2),
@@ -90,13 +95,13 @@ class SettingsPage extends Page implements HasForms
         $settings->update($data);
 
         if ($logo) {
-            $settings->addMedia(storage_path('app/public/' . $logo))
+            $settings->addMedia(storage_path('app/public/'.$logo))
                 ->preservingOriginal()
                 ->toMediaCollection('logo');
         }
 
         if ($hero) {
-            $settings->addMedia(storage_path('app/public/' . $hero))
+            $settings->addMedia(storage_path('app/public/'.$hero))
                 ->preservingOriginal()
                 ->toMediaCollection('homepage_hero');
         }

@@ -7,6 +7,8 @@ use App\Filament\Resources\Testimonials\Pages\EditTestimonial;
 use App\Filament\Resources\Testimonials\Pages\ListTestimonials;
 use App\Filament\Resources\Testimonials\Pages\ViewTestimonial;
 use App\Models\Testimonial;
+use App\Support\Sanitizer;
+use App\Support\ValidationPatterns;
 use BackedEnum;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Checkbox;
@@ -58,9 +60,12 @@ class TestimonialResource extends Resource
                         ->circleCropper()
                         ->avatar()
                         ->columnSpanFull(),
-                    TextInput::make('name')->required()->maxLength(255),
-                    TextInput::make('country')->maxLength(255),
-                    TextInput::make('trip_name')->maxLength(255),
+                    TextInput::make('name')->required()->maxLength(255)->regex(ValidationPatterns::NAME)
+                        ->dehydrateStateUsing(fn (?string $state) => Sanitizer::clean($state)),
+                    TextInput::make('country')->maxLength(255)
+                        ->dehydrateStateUsing(fn (?string $state) => Sanitizer::clean($state)),
+                    TextInput::make('trip_name')->maxLength(255)
+                        ->dehydrateStateUsing(fn (?string $state) => Sanitizer::clean($state)),
                 ]),
 
             Section::make('Testimonial')
@@ -68,7 +73,8 @@ class TestimonialResource extends Resource
                 ->iconColor('purple')
                 ->columns(2)
                 ->schema([
-                    Textarea::make('testimonial')->rows(5)->columnSpanFull(),
+                    Textarea::make('testimonial')->rows(5)->columnSpanFull()
+                        ->dehydrateStateUsing(fn (?string $state) => Sanitizer::clean($state)),
                     TextInput::make('rating')->numeric()->minValue(1)->maxValue(5)->suffix('★'),
                     Checkbox::make('featured'),
                 ]),

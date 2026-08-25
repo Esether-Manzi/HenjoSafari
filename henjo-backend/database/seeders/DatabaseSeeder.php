@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
 {
@@ -26,6 +25,7 @@ class DatabaseSeeder extends Seeder
             BlogSeeder::class,
             HenjoContentSeeder::class,
             PageContentSeeder::class,
+            TestimonialSeeder::class,
         ]);
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
