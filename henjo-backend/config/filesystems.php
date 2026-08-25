@@ -17,6 +17,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Media Library Disk
+    |--------------------------------------------------------------------------
+    |
+    | Which disk Spatie Media Library uploads go to. Defaults to the local
+    | "public" disk for local dev. In production this should be set to "s3"
+    | (Cloudflare R2 or AWS S3) so uploaded images survive redeploys and
+    | don't depend on the app server's local filesystem staying alive.
+    |
+    */
+
+    'media_disk' => env('MEDIA_DISK', 'public'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Filesystem Disks
     |--------------------------------------------------------------------------
     |
@@ -47,11 +61,14 @@ return [
             'report' => false,
         ],
 
+        // Works for AWS S3 or any S3-compatible provider (e.g. Cloudflare R2 —
+        // set AWS_ENDPOINT to the R2 endpoint, AWS_DEFAULT_REGION=auto, and
+        // AWS_USE_PATH_STYLE_ENDPOINT=true).
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
             'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
+            'region' => env('AWS_DEFAULT_REGION', 'auto'),
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),

@@ -22,6 +22,6 @@ class TeamMember extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('photo')->useDisk('public')->singleFile();
+        $this->addMediaCollection('photo')->useDisk(config('filesystems.media_disk'))->singleFile();
     }
 }
