@@ -38,6 +38,14 @@ class PageContentSeeder extends Seeder
             'average_rating' => '4.9',
             'footer_tagline' => 'Authentic African Safaris to Kenya, Uganda, Tanzania, and Rwanda. Bespoke tours, tailor-made holidays, and luxury experiences.',
         ]);
+
+        $heroVideoPath = public_path('videos/home-page-hero-section.mp4');
+        if (file_exists($heroVideoPath)) {
+            $settings->clearMediaCollection('homepage_hero');
+            $settings->addMedia($heroVideoPath)
+                ->preservingOriginal()
+                ->toMediaCollection('homepage_hero');
+        }
     }
 
     protected function seedMenus(): void

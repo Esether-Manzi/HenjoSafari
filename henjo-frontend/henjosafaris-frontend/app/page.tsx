@@ -305,7 +305,7 @@ export default function Home() {
                 ctaText={page?.hero_cta_text || 'Explore Safaris'}
                 ctaLink={page?.hero_cta_href || '/safaris'}
                 backgroundImage="/images/placeholder.png"
-                backgroundVideo={HERO_VIDEO_URL}
+                backgroundVideo={settings?.homepage_hero_url || HERO_VIDEO_URL}
                 overlay={true}
                 showTagline={true}
             />
