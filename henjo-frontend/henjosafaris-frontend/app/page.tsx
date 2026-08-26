@@ -13,8 +13,8 @@ import { getInitials } from '@/lib/utils/formatters';
 import { cleanText } from '@/lib/utils/textFormat';
 import {
     FaGlobeAfrica, FaUserTie, FaMapMarkedAlt, FaUsers, FaLeaf, FaLaptop, FaChild, FaWheelchair,
-    FaFirstAid, FaCompass, FaStar, FaRegStar, FaShieldAlt, FaQuoteLeft, FaHandshake, FaAward,
-    FaFacebookF, FaInstagram, FaLinkedinIn, FaTiktok, FaYoutube, FaTwitter,
+    FaFirstAid, FaCompass, FaStar, FaRegStar, FaShieldAlt, FaQuoteLeft, FaHandshake,
+    FaFacebookF, FaInstagram, FaLinkedinIn, FaTiktok, FaYoutube, FaTwitter, FaTripadvisor,
 } from 'react-icons/fa';
 import type { SafariPackage, Activity } from '@/types/safari';
 import type { CmsPage } from '@/types/page';
@@ -150,17 +150,6 @@ const MOCK_TESTIMONIALS: Testimonial[] = [
     },
 ];
 
-// Placeholder partner list — swap for real logos once partnership assets
-// are available; kept as clean wordmark badges in the meantime.
-const PARTNERS = [
-    { name: 'SafariBookings', icon: FaGlobeAfrica },
-    { name: 'Uganda Tourism Board', icon: FaAward },
-    { name: 'Uganda Wildlife Authority', icon: FaShieldAlt },
-    { name: 'Rwanda Development Board', icon: FaHandshake },
-    { name: 'Kenya Tourism Board', icon: FaCompass },
-    { name: 'TripAdvisor', icon: FaStar },
-];
-
 const SOCIAL_LINKS = [
     { name: 'Facebook', icon: FaFacebookF, url: (s: SiteSettings | null) => s?.facebook_url, color: '#1877F2' },
     { name: 'Instagram', icon: FaInstagram, url: (s: SiteSettings | null) => s?.instagram_url, color: 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)' },
@@ -168,6 +157,7 @@ const SOCIAL_LINKS = [
     { name: 'LinkedIn', icon: FaLinkedinIn, url: (s: SiteSettings | null) => s?.linkedin_url, color: '#0A66C2' },
     { name: 'TikTok', icon: FaTiktok, url: (s: SiteSettings | null) => s?.tiktok_url, color: '#000000' },
     { name: 'YouTube', icon: FaYoutube, url: (s: SiteSettings | null) => s?.youtube_url, color: '#FF0000' },
+    { name: 'TripAdvisor', icon: FaTripadvisor, url: (s: SiteSettings | null) => s?.tripadvisor_url, color: '#34E0A1' },
 ];
 
 function StarRating({ rating }: { rating: number }) {
@@ -293,6 +283,7 @@ export default function Home() {
     const offersHeading = firstInGroup(page?.sections, 'offers-heading');
     const offerCards = sectionsByGroup(page?.sections, 'offers');
     const finalCta = firstInGroup(page?.sections, 'final-cta');
+    const partners = sectionsByGroup(page?.sections, 'partners');
 
     return (
         <div>
@@ -614,7 +605,7 @@ export default function Home() {
                             {offersHeading?.title || 'Travel With Confidence'}
                         </h2>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
                         {offerCards.map((item, i) => (
                             <div
                                 key={item.title + i}
@@ -655,44 +646,69 @@ export default function Home() {
             </section>
 
             {/* Partners */}
-            <section className="py-16 transition-colors duration-300" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
-                <div className="container mx-auto px-4">
-                    <div className="text-center mb-10">
-                        <span
-                            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold mb-4"
-                            style={{ background: 'var(--brand-gold-subtle)', color: 'var(--brand-gold)' }}
-                        >
-                            <FaHandshake /> Trusted Partners
-                        </span>
-                        <h2 className="text-2xl md:text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>
-                            Recognized & Trusted By
-                        </h2>
-                    </div>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
-                        {PARTNERS.map((partner) => {
-                            const Icon = partner.icon;
-                            return (
-                                <div
-                                    key={partner.name}
-                                    className="group flex flex-col items-center justify-center gap-2 p-5 rounded-xl text-center transition duration-300 hover:-translate-y-1"
-                                    style={{ background: 'var(--bg-card)', border: '1px solid var(--border-subtle)' }}
-                                >
-                                    <Icon
-                                        className="text-2xl transition-colors duration-300"
-                                        style={{ color: 'var(--text-muted)' }}
-                                    />
-                                    <span
-                                        className="text-xs font-semibold leading-tight transition-colors duration-300 group-hover:text-[var(--brand-gold)]"
-                                        style={{ color: 'var(--text-tertiary)' }}
+            {partners.length > 0 && (
+                <section className="py-16 transition-colors duration-300" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
+                    <div className="container mx-auto px-4">
+                        <div className="text-center mb-10">
+                            <span
+                                className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold mb-4"
+                                style={{ background: 'var(--brand-gold-subtle)', color: 'var(--brand-gold)' }}
+                            >
+                                <FaHandshake /> Trusted Partners
+                            </span>
+                            <h2 className="text-2xl md:text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                                Recognized & Trusted By
+                            </h2>
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+                            {partners.map((partner) => {
+                                const logoUrl = partner.icon ? `${API_ORIGIN}/storage/henjo_profile/${partner.icon}` : null;
+                                const href = partner.description;
+                                const isExternal = href?.startsWith('http');
+
+                                const card = (
+                                    <div
+                                        className="group flex flex-col items-center justify-center gap-3 p-5 h-32 rounded-xl text-center transition duration-300 hover:-translate-y-1"
+                                        style={{ background: 'var(--bg-card)', border: '1px solid var(--border-subtle)' }}
                                     >
-                                        {partner.name}
-                                    </span>
-                                </div>
-                            );
-                        })}
+                                        {logoUrl ? (
+                                            <div className="relative w-full h-12">
+                                                <Image
+                                                    src={logoUrl}
+                                                    alt={partner.title}
+                                                    fill
+                                                    className="object-contain"
+                                                />
+                                            </div>
+                                        ) : (
+                                            <span
+                                                className="text-xs font-semibold leading-tight transition-colors duration-300 group-hover:text-[var(--brand-gold)]"
+                                                style={{ color: 'var(--text-tertiary)' }}
+                                            >
+                                                {partner.title}
+                                            </span>
+                                        )}
+                                    </div>
+                                );
+
+                                if (!href) {
+                                    return <div key={partner.title}>{card}</div>;
+                                }
+
+                                return isExternal ? (
+                                    <a key={partner.title} href={href} target="_blank" rel="noopener noreferrer" aria-label={partner.title}>
+                                        {card}
+                                    </a>
+                                ) : (
+                                    <Link key={partner.title} href={href} aria-label={partner.title}>
+                                        {card}
+                                    </Link>
+                                );
+                            })}
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            )}
 
             {/* Social Media */}
             {activeSocialLinks.length > 0 && (
@@ -728,7 +744,16 @@ export default function Home() {
 
             {/* Final CTA */}
             <section className="relative py-20 overflow-hidden">
-                <div className="absolute inset-0" style={{ background: 'linear-gradient(120deg, var(--brand-green-hover), var(--brand-green))' }} />
+                <Image
+                    src={`${API_ORIGIN}/storage/henjo_profile/vehicle_4.jpeg`}
+                    alt=""
+                    fill
+                    className="object-cover"
+                />
+                <div
+                    className="absolute inset-0"
+                    style={{ background: 'linear-gradient(120deg, var(--brand-green-hover), var(--brand-green))', opacity: 0.82 }}
+                />
                 <div
                     className="absolute -top-16 -right-16 w-80 h-80 rounded-full blur-3xl opacity-20 pointer-events-none"
                     style={{ background: 'var(--brand-gold)' }}

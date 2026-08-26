@@ -16,7 +16,7 @@ class DestinationController extends Controller
             'packages' => function ($query) {
                 $query->limit(3);
             }
-        ])->withCount('packages')->get();
+        ])->withCount('packages')->orderBy('sort_order')->orderBy('id')->get();
 
         return response()->json([
             'success' => true,

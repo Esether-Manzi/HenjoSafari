@@ -24,6 +24,7 @@ class Destination extends Model implements HasMedia
         'starting_price',
         'best_time_to_visit',
         'featured',
+        'sort_order',
         'is_active'
     ];
 

@@ -1184,7 +1184,6 @@ class SafariPackageSeeder extends Seeder
                 'Full board meals (Breakfast, Lunch, Dinner)',
                 'Services of an experienced English-speaking driver/guide',
                 'Bottled drinking water in the safari vehicle',
-                'Free Emergency Flying Doctors insurance cover'
             ];
             foreach ($inclusions as $idx => $inc) {
                 PackageInclusion::create([

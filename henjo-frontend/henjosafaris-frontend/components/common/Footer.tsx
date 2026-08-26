@@ -4,9 +4,10 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaTiktok, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from 'react-icons/fa';
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaTiktok, FaTripadvisor, FaMapMarkerAlt, FaPhoneAlt, FaEnvelope, FaWhatsapp } from 'react-icons/fa';
 import type { SiteSettings } from '@/types/settings';
 import type { MenuItem } from '@/types/menu';
+import { getWhatsAppUrl } from '@/lib/utils/whatsapp';
 
 interface FooterProps {
     settings: SiteSettings | null;
@@ -22,7 +23,10 @@ export default function Footer({ settings, quickLinks }: FooterProps) {
         { name: 'Instagram', icon: FaInstagram, url: settings?.instagram_url },
         { name: 'LinkedIn', icon: FaLinkedin, url: settings?.linkedin_url },
         { name: 'TikTok', icon: FaTiktok, url: settings?.tiktok_url },
+        { name: 'TripAdvisor', icon: FaTripadvisor, url: settings?.tripadvisor_url },
     ].filter((social) => social.url);
+
+    const whatsappUrl = getWhatsAppUrl(settings?.phone);
 
     const siteName = settings?.site_name || 'Henjo African Safaris';
 
@@ -101,6 +105,16 @@ export default function Footer({ settings, quickLinks }: FooterProps) {
                                     <strong className="text-white">Uganda:</strong> {settings?.phone}
                                 </span>
                             </li>
+                            {whatsappUrl && (
+                                <li className="flex items-start gap-2">
+                                    <span className="mt-1" style={{ color: '#25D366' }}><FaWhatsapp /></span>
+                                    <span>
+                                        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="transition hover:text-[var(--brand-gold)]">
+                                            <strong className="text-white">WhatsApp:</strong> {settings?.phone}
+                                        </a>
+                                    </span>
+                                </li>
+                            )}
                             <li className="flex items-start gap-2">
                                 <span className="mt-1" style={{ color: 'var(--brand-gold)' }}><FaEnvelope /></span>
                                 <span>
@@ -135,6 +149,17 @@ export default function Footer({ settings, quickLinks }: FooterProps) {
 
                         <div className="mt-4">
                             <h4 className="font-bold mb-3 text-white">Secure Payments</h4>
+                            {settings?.payment_url && (
+                                <a
+                                    href={settings.payment_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-block mb-3 font-bold text-sm px-5 py-2.5 rounded-full transition hover:scale-105"
+                                    style={{ background: 'var(--brand-gold)', color: '#1A1A1A' }}
+                                >
+                                    Pay Now
+                                </a>
+                            )}
                             <div className="relative w-full h-12">
                                 <Image
                                     src="/images/site/payment-logo-sprite-1-1.png"

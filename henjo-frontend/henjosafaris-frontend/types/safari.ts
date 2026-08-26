@@ -11,9 +11,17 @@ export interface SafariPackage {
     duration_days: number;
     duration_nights: number;
     base_price: number;
+    price_max?: number | null;
     currency: string;
     min_people?: number;
     max_people?: number;
+    min_age?: number | null;
+    tour_privacy?: 'private' | 'exclusive_private' | 'shared' | null;
+    comfort_level?: 'budget' | 'mid-range' | 'luxury' | null;
+    accommodation_style?: string | null;
+    customizable?: boolean | null;
+    solo_travelers_ok?: boolean | null;
+    start_flexibility?: string | null;
     featured: boolean;
     popular: boolean;
     status: 'draft' | 'published' | 'archived';
@@ -22,7 +30,7 @@ export interface SafariPackage {
     categories?: Category[];
     activities?: Activity[];
     accommodations?: Accommodation[];
-    itineraryDays?: ItineraryDay[];
+    itinerary_days?: ItineraryDay[];
     inclusions?: Inclusion[];
     exclusions?: Exclusion[];
     media?: Media[];
@@ -74,6 +82,7 @@ export interface Activity {
     slug: string;
     icon?: string;
     description?: string;
+    featured?: boolean;
     media?: Media[];
 }
 
@@ -94,10 +103,14 @@ export interface ItineraryDay {
     id: number;
     safari_package_id: number;
     day_number: number;
+    day_number_end?: number | null;
+    destination?: string | null;
     title: string;
     description: string;
-    accommodation_id?: number;
-    accommodation?: Accommodation;
+    accommodation?: string | null;
+    breakfast?: boolean;
+    lunch?: boolean;
+    dinner?: boolean;
     activities?: Activity[];
 }
 

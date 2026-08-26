@@ -9,7 +9,9 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\ImageColumn;
@@ -36,6 +38,9 @@ class ActivitiesTable
                 TextColumn::make('description')
                     ->limit(50)
                     ->toggleable(),
+                IconColumn::make('featured')
+                    ->boolean()
+                    ->label('On Homepage'),
                 TextColumn::make('deleted_at')
                     ->dateTime()
                     ->sortable()
@@ -51,6 +56,7 @@ class ActivitiesTable
             ])
             ->filters([
                 TrashedFilter::make(),
+                TernaryFilter::make('featured')->label('On Homepage'),
             ])
             ->recordActions([
                 ViewAction::make(),

@@ -17,6 +17,8 @@ export interface SiteSettings {
     linkedin_url: string | null;
     tiktok_url: string | null;
     youtube_url: string | null;
+    tripadvisor_url: string | null;
+    payment_url: string | null;
     years_experience: string | null;
     happy_travelers_count: string | null;
     average_rating: string | null;

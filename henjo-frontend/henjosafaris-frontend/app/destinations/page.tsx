@@ -78,7 +78,7 @@ export default async function DestinationsPage() {
     const stats = [
         { value: `${settings?.safari_package_count ?? 28}+`, label: 'Safari Packages' },
         { value: String(settings?.country_count ?? 4), label: 'Countries' },
-        { value: settings?.years_experience || '15+', label: 'Years Experience' },
+        { value: settings?.years_experience || '5+', label: 'Years Experience' },
         { value: settings?.happy_travelers_count || '500+', label: 'Happy Travelers' },
     ];
 
@@ -119,7 +119,8 @@ export default async function DestinationsPage() {
                         </p>
                     </div>
 
-                    {/* Featured Layout: first destination spans 2 cols, others are standard */}
+                    {/* Featured Layout: the top 2 destinations (by admin sort order) each
+                        span 2 cols, others are standard */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                         {destinations.length === 0 ? (
                             <p className="col-span-full text-center" style={{ color: 'var(--text-muted)' }}>
@@ -127,19 +128,22 @@ export default async function DestinationsPage() {
                             </p>
                         ) : (
                             <>
-                                {/* Featured: first destination */}
-                                <DestinationCard
-                                    destination={destinations[0]}
-                                    index={0}
-                                    layout="featured"
-                                />
-
-                                {/* Standard: remaining destinations */}
-                                {destinations.slice(1).map((dest, i) => (
+                                {/* Featured: top 2 destinations */}
+                                {destinations.slice(0, 2).map((dest, i) => (
                                     <DestinationCard
                                         key={dest.slug}
                                         destination={dest}
-                                        index={i + 1}
+                                        index={i}
+                                        layout="featured"
+                                    />
+                                ))}
+
+                                {/* Standard: remaining destinations */}
+                                {destinations.slice(2).map((dest, i) => (
+                                    <DestinationCard
+                                        key={dest.slug}
+                                        destination={dest}
+                                        index={i + 2}
                                     />
                                 ))}
                             </>
@@ -166,7 +170,7 @@ export default async function DestinationsPage() {
                         </h2>
                         <p className="max-w-2xl mx-auto text-lg" style={{ color: 'var(--text-secondary)' }}>
                             East Africa is one of the last truly wild places on Earth — and Henjo Safaris has been
-                            guiding travelers through it for over 15 years.
+                            guiding travelers through it for {settings?.years_experience || '5+'} years.
                         </p>
                     </div>
 

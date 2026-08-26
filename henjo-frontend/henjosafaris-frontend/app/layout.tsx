@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from './providers';
 import Navbar from "@/components/common/Navbar";
 import Footer from "@/components/common/Footer";
+import WhatsAppButton from "@/components/common/WhatsAppButton";
 import { settingsApi } from '@/lib/api/settingsApi';
 import { menuApi } from '@/lib/api/menuApi';
 import type { SiteSettings } from '@/types/settings';
@@ -75,6 +76,7 @@ export default async function RootLayout({
                             {children}
                         </main>
                         <Footer settings={settings} quickLinks={footerMenu} />
+                        <WhatsAppButton phone={settings?.phone} />
                     </div>
                 </ThemeProvider>
             </body>

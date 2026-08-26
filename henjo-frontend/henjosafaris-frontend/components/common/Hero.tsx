@@ -7,7 +7,7 @@ import { FaArrowRight, FaPaw, FaStar } from 'react-icons/fa';
 import { settingsApi } from '@/lib/api/settingsApi';
 import { cleanText, formatHeading } from '@/lib/utils/textFormat';
 
-const DEFAULT_TAGLINE = 'Every step, with us is an adventure';
+const DEFAULT_TAGLINE = 'Every day with us is an adventure';
 
 interface HeroProps {
     title?: string;
@@ -38,6 +38,7 @@ export default function Hero({
 }: HeroProps) {
     const isHome = variant === 'home';
     const [tagline, setTagline] = useState(DEFAULT_TAGLINE);
+    const [yearsExperience, setYearsExperience] = useState('5+');
     const cleanTitle = formatHeading(title);
     const cleanSubtitle = cleanText(subtitle);
 
@@ -46,6 +47,7 @@ export default function Hero({
         settingsApi.getSettings()
             .then((res) => {
                 if (res.success && res.data.tagline) setTagline(res.data.tagline);
+                if (res.success && res.data.years_experience) setYearsExperience(res.data.years_experience);
             })
             .catch(() => {});
     }, [showTagline]);
@@ -169,7 +171,7 @@ export default function Hero({
                                 }}
                             >
                                 <div>
-                                    <p className="text-xl md:text-2xl font-bold" style={{ color: 'var(--brand-gold)' }}>15+</p>
+                                    <p className="text-xl md:text-2xl font-bold" style={{ color: 'var(--brand-gold)' }}>{yearsExperience}</p>
                                     <p className="text-gray-300 text-xs">Years Experience</p>
                                 </div>
                                 <div className="border-x border-white/15 px-5 sm:px-8">

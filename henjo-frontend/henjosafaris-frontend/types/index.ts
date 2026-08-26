@@ -5,5 +5,4 @@
 // Export all types from one central file
 export * from './safari';
 export * from './api';
-export * from './blog';
 export * from './team';

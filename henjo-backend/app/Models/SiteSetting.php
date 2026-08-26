@@ -24,6 +24,8 @@ class SiteSetting extends Model implements HasMedia
         'linkedin_url',
         'tiktok_url',
         'youtube_url',
+        'tripadvisor_url',
+        'payment_url',
         'years_experience',
         'happy_travelers_count',
         'average_rating',
