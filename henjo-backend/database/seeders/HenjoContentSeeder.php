@@ -42,7 +42,7 @@ class HenjoContentSeeder extends Seeder
                 'title' => 'Women only tours to Uganda, Rwanda & Kenya',
                 'slug' => 'women-only-tours',
                 'is_active' => true,
-                'content' => "Our Women-only travel packages offer a safe and empowering way for women to explore Uganda, Kenya & Rwanda on their terms. These packages enable our clients to feel a sense of security and safety. Henjo African Safaris offers security measures such as women-only attendants in accommodations and transportation, as well as local female guides and support networks in the destinations they visit. This can give women the confidence to travel to destinations that may be considered unsafe for solo female travelers.\n\nChoosing women-only travel packages offers the opportunity to connect with other like-minded women and provides a supportive and empowering environment where women can bond and make lasting friendships — particularly beneficial for women traveling solo who may feel lonely or isolated.\n\nIn addition to the safety and social aspects, women-only travel packages also offer unique travel experiences tailored to the interests and needs of women, including wellness retreats, cultural immersion experiences, adventure sports, and teenage girls' menstrual health programs. We work with local female-owned businesses and organizations to provide authentic and empowering travel experiences.\n\nJoan Tusubira is the co-founder/director of Henjo African Safaris. She is among the few women in a male-dominated travel industry in Uganda. She has been working as a tour guide for the past 7 years and is a strong leader passionate about female travel, environment and culture. She loves doing charity work for vulnerable children and helping teenage girls with menstrual health. Her charming sense of humor will make you smile. She works hard to ensure that travelers have deeply balanced experiences while visiting Uganda, Kenya and Rwanda.",
+                'content' => "Our Women-only travel packages offer a safe and empowering way for women to explore Uganda, Kenya & Rwanda on their terms. These packages enable our clients to feel a sense of security and safety. Henjo African Safaris offers security measures such as women-only attendants in accommodations and transportation, as well as local female guides and support networks in the destinations they visit. This can give women the confidence to travel to destinations that may be considered unsafe for solo female travelers.\n\nChoosing women-only travel packages offers the opportunity to connect with other like-minded women and provides a supportive and empowering environment where women can bond and make lasting friendships — particularly beneficial for women traveling solo who may feel lonely or isolated.\n\nIn addition to the safety and social aspects, women-only travel packages also offer unique travel experiences tailored to the interests and needs of women, including wellness retreats, cultural immersion experiences, adventure sports, and teenage girls' menstrual health programs. We work with local female-owned businesses and organizations to provide authentic and empowering travel experiences.",
             ],
         ];
 
@@ -56,14 +56,6 @@ class HenjoContentSeeder extends Seeder
                 'name' => 'Henry Katinda',
                 'position' => 'Founder / CEO',
                 'bio' => "My passion for tourism began at the age of 18 when I worked as a part time Tour guide at the source of the Nile in Jinja. This experience ignited a deep love for African wildlife and the incredible landscapes that make the continent so unique.\n\nDriven by a desire to share my passion with others, I founded Henjo African Safaris to provide personalized, high-quality tours that showcase the beauty and diversity of East Africa. With a focus on responsible tourism, the company works closely with local communities and conservation organizations to ensure that its tours have a positive impact on both the environment and the people who call them home.\n\nAs a strong advocate for women's empowerment, I am proud that 90% of our employees (both directly and indirectly) are women. I believe that providing opportunities for women to succeed in the tourism industry is crucial to creating a more equitable and sustainable future for Africa.\n\nIn addition to running the safari company, I also founded the Empathy Children Initiative (empathychildren.org), a charity that helps 50 vulnerable children in Mayuge District, Eastern Uganda acquire education, helps single moms and widows with micro-revolving loans to start up their own business ventures, and helps teenage girls from vulnerable backgrounds with sanitary towels. 40% of the earnings from the safari company are directed towards these initiatives.\n\nThrough my commitment to responsible tourism, women's empowerment, and community development, I have established myself as a leader in the safari industry.",
-                'email' => 'info@henjosafaris.com',
-                'phone' => '+256779557514',
-                'is_active' => true,
-            ],
-            [
-                'name' => 'Joan Tusubira',
-                'position' => 'Director / Head of Women Only Safaris / Reservations Manager',
-                'bio' => "Joan Tusubira is the co-founder/director of Henjo African Safaris. She is among the few women in a male-dominated travel industry in Uganda. She has been working as a tour guide for the past 7 years and is a strong leader passionate about female travel, environment and culture. She loves doing charity work for vulnerable children and helping teenage girls with menstrual health. Her charming sense of humor will make you smile. She works hard to ensure that travelers have deeply balanced experiences while visiting Uganda, Kenya and Rwanda.",
                 'email' => 'info@henjosafaris.com',
                 'phone' => '+256779557514',
                 'is_active' => true,
@@ -86,8 +78,9 @@ class HenjoContentSeeder extends Seeder
             ],
         ];
 
-        // Remove earlier fabricated placeholder team members (replaced by the real roster above)
-        TeamMember::whereIn('name', ['Henry Mukasa', 'Joan Nampijja'])->delete();
+        // Remove earlier fabricated placeholder team members (replaced by the real roster above),
+        // plus Joan Tusubira — removed from the site at the client's request.
+        TeamMember::whereIn('name', ['Henry Mukasa', 'Joan Nampijja', 'Joan Tusubira'])->delete();
 
         foreach ($team as $member) {
             TeamMember::updateOrCreate(['name' => $member['name']], $member);

@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             SafariCategorySeeder::class,
             ActivitySeeder::class,
             AccommodationSeeder::class,
-            SafariPackageSeeder::class,
+            RealSafariPackageSeeder::class,
             BlogSeeder::class,
             HenjoContentSeeder::class,
             PageContentSeeder::class,

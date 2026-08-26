@@ -68,12 +68,18 @@ class SettingsPage extends Page implements HasForms
                         TextInput::make('linkedin_url')->url(),
                         TextInput::make('tiktok_url')->url(),
                         TextInput::make('youtube_url')->url(),
+                        TextInput::make('tripadvisor_url')->url(),
                     ])->columns(2),
+
+                Section::make('Payments')
+                    ->schema([
+                        TextInput::make('payment_url')->url()->placeholder('https://payments.pesapal.com/henjoafricansafaris'),
+                    ]),
 
                 Section::make('Homepage & Stats')
                     ->schema([
                         FileUpload::make('homepage_hero')->image()->directory('site'),
-                        TextInput::make('years_experience')->placeholder('15+'),
+                        TextInput::make('years_experience')->placeholder('5+'),
                         TextInput::make('happy_travelers_count')->placeholder('500+'),
                         TextInput::make('average_rating')->placeholder('4.9'),
                         TextInput::make('footer_tagline')->columnSpanFull(),

@@ -23,16 +23,48 @@ import {
     FaRegHeart,
     FaCoffee,
     FaHamburger,
-    FaUtensils
+    FaUtensils,
+    FaSlidersH,
+    FaUserFriends,
+    FaCalendarAlt,
+    FaBed,
 } from 'react-icons/fa';
 import Hero from '@/components/common/Hero';
 import { safariApi } from '@/lib/api/safariApi';
 import { submitBooking } from '@/lib/api/bookingApi';
+import { settingsApi } from '@/lib/api/settingsApi';
 import { getImageUrl } from '@/lib/utils/imageHelper';
 import { formatHeading } from '@/lib/utils/textFormat';
+import { getWhatsAppUrl } from '@/lib/utils/whatsapp';
 import SafariIcon from '@/lib/config/icons';
 import { bookingFormSchema, bookingStep1Schema, type BookingFormValues } from '@/lib/validation/schemas';
 import type { SafariPackage } from '@/types/safari';
+import type { SiteSettings } from '@/types/settings';
+
+// Some real packages are priced as a range (e.g. varying by season/room
+// type) rather than a single figure; 0 is the site-wide "price on request"
+// convention used everywhere else (cards, list page, etc).
+function formatPrice(base?: number | null, max?: number | null, currency = 'USD'): string {
+    const baseNum = Number(base) || 0;
+    if (baseNum <= 0) return 'Contact for Price';
+    const maxNum = Number(max) || 0;
+    if (maxNum > baseNum) {
+        return `${currency} ${baseNum.toLocaleString()} – ${maxNum.toLocaleString()}`;
+    }
+    return `${currency} ${baseNum.toLocaleString()}`;
+}
+
+const TRIP_PRIVACY_LABELS: Record<string, string> = {
+    private: 'Private Tour',
+    exclusive_private: 'Exclusive Private',
+    shared: 'Shared / Group',
+};
+
+const COMFORT_LEVEL_LABELS: Record<string, string> = {
+    budget: 'Budget',
+    'mid-range': 'Mid-range',
+    luxury: 'Luxury',
+};
 
 export default function SafariDetailPage() {
     const params = useParams();
@@ -45,6 +77,7 @@ export default function SafariDetailPage() {
     const [expandedDay, setExpandedDay] = useState<number | null>(1);
     const [activeTab, setActiveTab] = useState<'overview' | 'itinerary' | 'inclusions'>('overview');
     const [showBookingForm, setShowBookingForm] = useState(false);
+    const [settings, setSettings] = useState<SiteSettings | null>(null);
 
     useEffect(() => {
         const fetchPackage = async () => {
@@ -69,6 +102,14 @@ export default function SafariDetailPage() {
         }
     }, [slug]);
 
+    useEffect(() => {
+        settingsApi.getSettings()
+            .then((res) => {
+                if (res.success) setSettings(res.data);
+            })
+            .catch(() => {});
+    }, []);
+
     if (loading) {
         return <PackageSkeleton />;
     }
@@ -84,17 +125,24 @@ export default function SafariDetailPage() {
         duration_days,
         duration_nights,
         base_price,
+        price_max,
         currency,
         destination,
         categories,
         activities,
         accommodations,
-        itineraryDays,
+        itinerary_days: itineraryDays,
         inclusions,
         exclusions,
         media,
         featured,
         popular,
+        min_age,
+        tour_privacy,
+        comfort_level,
+        customizable,
+        solo_travelers_ok,
+        start_flexibility,
     } = packageData;
 
     // Get images using the helper
@@ -156,18 +204,10 @@ export default function SafariDetailPage() {
                                 <span>{duration_days} Days / {duration_nights} Nights</span>
                             </div>
                             <div className="flex items-center gap-2">
-                                {Number(base_price) > 0 ? (
-                                    <>
-                                        <span className="text-2xl font-bold" style={{ color: 'var(--brand-gold)' }}>
-                                            {currency} {base_price?.toLocaleString()}
-                                        </span>
-                                        <span className="text-white/60">/ person</span>
-                                    </>
-                                ) : (
-                                    <span className="text-2xl font-bold" style={{ color: 'var(--brand-gold)' }}>
-                                        Contact for Price
-                                    </span>
-                                )}
+                                <span className="text-2xl font-bold" style={{ color: 'var(--brand-gold)' }}>
+                                    {formatPrice(base_price, price_max, currency)}
+                                </span>
+                                {Number(base_price) > 0 && <span className="text-white/60">/ person</span>}
                             </div>
                         </div>
 
@@ -222,11 +262,14 @@ export default function SafariDetailPage() {
 
                             <div className="p-6">
                                 {activeTab === 'overview' && (
-                                    <OverviewTab 
+                                    <OverviewTab
                                         description={description}
                                         activities={activities}
                                         accommodations={accommodations}
                                         destination={destination}
+                                        customizable={customizable}
+                                        soloTravelersOk={solo_travelers_ok}
+                                        startFlexibility={start_flexibility}
                                     />
                                 )}
 
@@ -280,12 +323,38 @@ export default function SafariDetailPage() {
                     <div className="lg:col-span-1">
                         <div className="rounded-xl p-6 sticky top-24" style={{ background: 'var(--bg-card)', boxShadow: 'var(--shadow-lg)' }}>
                             <div className="text-center pb-4" style={{ borderBottom: '1px solid var(--border-primary)' }}>
-                                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Starting from</p>
-                                <p className="text-4xl font-bold" style={{ color: 'var(--brand-green)' }}>
-                                    {currency} {base_price?.toLocaleString()}
+                                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+                                    {Number(base_price) > 0 ? 'Starting from' : 'Pricing'}
                                 </p>
-                                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>per person</p>
+                                <p className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--brand-green)' }}>
+                                    {formatPrice(base_price, price_max, currency)}
+                                </p>
+                                {Number(base_price) > 0 && (
+                                    <p className="text-sm" style={{ color: 'var(--text-muted)' }}>per person</p>
+                                )}
                             </div>
+
+                            {/* Trip style — compact chips rather than prose, so the sidebar
+                                stays scannable even with these extra fields */}
+                            {(tour_privacy || comfort_level || min_age) && (
+                                <div className="flex flex-wrap gap-2 py-4" style={{ borderBottom: '1px solid var(--border-primary)' }}>
+                                    {tour_privacy && (
+                                        <span className="text-xs font-semibold px-3 py-1.5 rounded-full" style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)' }}>
+                                            {TRIP_PRIVACY_LABELS[tour_privacy] || tour_privacy}
+                                        </span>
+                                    )}
+                                    {comfort_level && (
+                                        <span className="text-xs font-semibold px-3 py-1.5 rounded-full" style={{ background: 'var(--brand-gold-subtle)', color: 'var(--brand-gold)' }}>
+                                            {COMFORT_LEVEL_LABELS[comfort_level] || comfort_level}
+                                        </span>
+                                    )}
+                                    {min_age != null && (
+                                        <span className="text-xs font-semibold px-3 py-1.5 rounded-full" style={{ background: 'var(--bg-tertiary)', color: 'var(--text-secondary)' }}>
+                                            Min age {min_age}
+                                        </span>
+                                    )}
+                                </div>
+                            )}
 
                             <div className="py-4 space-y-3">
                                 <div className="flex justify-between">
@@ -296,10 +365,17 @@ export default function SafariDetailPage() {
                                     <span style={{ color: 'var(--text-secondary)' }}>Destination</span>
                                     <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{destination?.name}</span>
                                 </div>
-                                <div className="flex justify-between">
-                                    <span style={{ color: 'var(--text-secondary)' }}>Group Size</span>
-                                    <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{packageData.min_people} - {packageData.max_people} people</span>
-                                </div>
+                                {packageData.max_people ? (
+                                    <div className="flex justify-between">
+                                        <span style={{ color: 'var(--text-secondary)' }}>Group Size</span>
+                                        <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{packageData.min_people} - {packageData.max_people} people</span>
+                                    </div>
+                                ) : packageData.min_people && packageData.min_people > 1 ? (
+                                    <div className="flex justify-between">
+                                        <span style={{ color: 'var(--text-secondary)' }}>Group Size</span>
+                                        <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{packageData.min_people}+ people</span>
+                                    </div>
+                                ) : null}
                                 <div className="flex justify-between">
                                     <span style={{ color: 'var(--text-secondary)' }}>Guaranteed</span>
                                     <span className="font-semibold flex items-center gap-1" style={{ color: 'var(--brand-green)' }}><FaCheckCircle /> Best Price</span>
@@ -314,20 +390,41 @@ export default function SafariDetailPage() {
                                 >
                                     Book Now
                                 </button>
-                                <button className="w-full font-bold py-3 rounded-full transition" style={{ border: '2px solid var(--brand-gold)', color: 'var(--brand-gold)' }}>
-                                    <FaWhatsapp className="inline mr-2" />
+                                <a
+                                    href={getWhatsAppUrl(settings?.phone, `Hi, I'd like to know more about the "${displayTitle}" safari package.`) || '#'}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="w-full font-bold py-3 rounded-full transition inline-flex items-center justify-center"
+                                    style={{ border: '2px solid var(--brand-gold)', color: 'var(--brand-gold)' }}
+                                >
+                                    <FaWhatsapp className="mr-2" />
                                     WhatsApp Inquiry
-                                </button>
-                                <button className="w-full font-semibold py-3 rounded-full transition" style={{ border: '1px solid var(--border-primary)', color: 'var(--text-secondary)' }}>
-                                    <FaEnvelope className="inline mr-2" />
+                                </a>
+                                <a
+                                    href={`mailto:${settings?.email || 'info@henjosafaris.com'}?subject=${encodeURIComponent(`Inquiry: ${displayTitle}`)}`}
+                                    className="w-full font-semibold py-3 rounded-full transition inline-flex items-center justify-center"
+                                    style={{ border: '1px solid var(--border-primary)', color: 'var(--text-secondary)' }}
+                                >
+                                    <FaEnvelope className="mr-2" />
                                     Email Inquiry
-                                </button>
+                                </a>
+                                {settings?.payment_url && (
+                                    <a
+                                        href={settings.payment_url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-full font-bold py-3 rounded-full transition inline-flex items-center justify-center"
+                                        style={{ background: 'var(--brand-green)', color: '#fff' }}
+                                    >
+                                        Pay Now
+                                    </a>
+                                )}
                             </div>
 
                             <div className="mt-4 p-4 rounded-lg text-center" style={{ background: 'var(--bg-secondary)' }}>
                                 <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
                                     Need help? Call us at<br />
-                                    <span className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>+256 779 557 514</span>
+                                    <span className="text-lg font-semibold" style={{ color: 'var(--text-primary)' }}>{settings?.phone || '+256 779 557 514'}</span>
                                 </p>
                             </div>
                         </div>
@@ -349,9 +446,29 @@ export default function SafariDetailPage() {
 // ============================================
 // COMPONENT: Overview Tab
 // ============================================
-function OverviewTab({ description, activities, accommodations, destination }: any) {
+function OverviewTab({ description, activities, accommodations, destination, customizable, soloTravelersOk, startFlexibility }: any) {
+    const goodToKnow = [
+        customizable === true && { icon: FaSlidersH, label: 'Customizable itinerary' },
+        soloTravelersOk === true && { icon: FaUserFriends, label: 'Solo-traveler friendly' },
+        startFlexibility && { icon: FaCalendarAlt, label: startFlexibility },
+    ].filter(Boolean) as { icon: typeof FaSlidersH; label: string }[];
+
     return (
         <div className="space-y-8">
+            {goodToKnow.length > 0 && (
+                <div className="flex flex-wrap gap-2">
+                    {goodToKnow.map((item, i) => (
+                        <span
+                            key={i}
+                            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold"
+                            style={{ background: 'var(--brand-green-subtle)', color: 'var(--brand-green)' }}
+                        >
+                            <item.icon /> {item.label}
+                        </span>
+                    ))}
+                </div>
+            )}
+
             <div>
                 <h3 className="text-xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>Overview</h3>
                 <div className="prose prose-lg max-w-none leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
@@ -441,20 +558,34 @@ function ItineraryTab({ itineraryDays, expandedDay, onToggleDay }: any) {
                     <div key={day.id} className="rounded-lg overflow-hidden" style={{ border: '1px solid var(--border-primary)' }}>
                         <button
                             onClick={() => onToggleDay(day.day_number)}
-                            className="w-full flex items-center justify-between p-4 transition"
+                            className="w-full flex items-center justify-between p-4 transition gap-3"
                             style={{ background: 'var(--bg-secondary)' }}
                         >
-                            <div className="flex items-center gap-4">
-                                <span className="font-bold w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}>
-                                    {day.day_number}
+                            <div className="flex items-center gap-4 min-w-0">
+                                <span className="font-bold px-3 h-10 min-w-10 rounded-full flex items-center justify-center flex-shrink-0 text-sm" style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}>
+                                    {day.day_number_end && day.day_number_end !== day.day_number
+                                        ? `${day.day_number}-${day.day_number_end}`
+                                        : day.day_number}
                                 </span>
-                                <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>{formatHeading(day.title)}</span>
+                                <div className="text-left min-w-0">
+                                    <span className="font-semibold block truncate" style={{ color: 'var(--text-primary)' }}>{formatHeading(day.title)}</span>
+                                    {day.destination && (
+                                        <span className="text-xs flex items-center gap-1 mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                                            <FaMapMarkerAlt style={{ color: 'var(--brand-gold)' }} /> {day.destination}
+                                        </span>
+                                    )}
+                                </div>
                             </div>
-                            {expandedDay === day.day_number ? <FaChevronUp /> : <FaChevronDown />}
+                            {expandedDay === day.day_number ? <FaChevronUp className="flex-shrink-0" /> : <FaChevronDown className="flex-shrink-0" />}
                         </button>
                         {expandedDay === day.day_number && (
                             <div className="p-4" style={{ background: 'var(--bg-card)' }}>
                                 <p className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{day.description}</p>
+                                {day.accommodation && (
+                                    <p className="flex items-center gap-2 mt-3 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                                        <FaBed style={{ color: 'var(--brand-gold)' }} /> {day.accommodation}
+                                    </p>
+                                )}
                                 <div className="flex gap-4 mt-3 text-sm" style={{ color: 'var(--text-muted)' }}>
                                     {day.breakfast && <span className="flex items-center gap-1"><FaCoffee /> Breakfast</span>}
                                     {day.lunch && <span className="flex items-center gap-1"><FaHamburger /> Lunch</span>}

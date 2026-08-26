@@ -23,9 +23,17 @@ class SafariPackage extends Model implements HasMedia
         'duration_days',
         'duration_nights',
         'base_price',
+        'price_max',
         'currency',
         'min_people',
         'max_people',
+        'min_age',
+        'tour_privacy',
+        'comfort_level',
+        'accommodation_style',
+        'customizable',
+        'solo_travelers_ok',
+        'start_flexibility',
         'featured',
         'popular',
         'status'
@@ -37,10 +45,14 @@ class SafariPackage extends Model implements HasMedia
         'featured' => 'boolean',
         'popular' => 'boolean',
         'base_price' => 'decimal:2',
+        'price_max' => 'decimal:2',
         'duration_days' => 'integer',
         'duration_nights' => 'integer',
         'min_people' => 'integer',
         'max_people' => 'integer',
+        'min_age' => 'integer',
+        'customizable' => 'boolean',
+        'solo_travelers_ok' => 'boolean',
     ];
 
     public function getCoverImageUrlAttribute(): ?string

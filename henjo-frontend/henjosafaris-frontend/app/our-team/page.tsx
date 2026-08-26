@@ -17,6 +17,7 @@ export function getMemberPhoto(member: TeamMember): string {
     return (member as any).image || '/images/placeholder.png';
 }
 
+// Local placeholder photos (real staff photos to be uploaded via the admin panel)
 export const MOCK_TEAM: TeamMember[] = [
     {
         id: 1,
@@ -26,18 +27,9 @@ export const MOCK_TEAM: TeamMember[] = [
         email: 'info@henjosafaris.com',
         phone: '+256 779 557 514',
         is_active: true,
-        media: []
-    },
-    {
-        id: 2,
-        name: 'Joan Tusubira',
-        position: 'Director / Head of Women Only Safaris / Reservations Manager',
-        bio: 'Joan is the co-founder/director of Henjo African Safaris, and among the few women in a male-dominated travel industry in Uganda. A tour guide for 7 years, she is passionate about female travel, environment, and culture, and works to ensure travelers have deeply balanced experiences across Uganda, Kenya, and Rwanda.',
-        email: 'info@henjosafaris.com',
-        phone: '+256 779 557 514',
-        is_active: true,
-        media: []
-    },
+        media: [],
+        image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop',
+    } as TeamMember,
     {
         id: 3,
         name: 'Claire Robinah',
@@ -46,8 +38,9 @@ export const MOCK_TEAM: TeamMember[] = [
         email: 'info@henjosafaris.com',
         phone: '+256 779 557 514',
         is_active: true,
-        media: []
-    },
+        media: [],
+        image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop',
+    } as TeamMember,
     {
         id: 4,
         name: 'Magemeso Faziri',
@@ -56,15 +49,10 @@ export const MOCK_TEAM: TeamMember[] = [
         email: 'info@henjosafaris.com',
         phone: '+256 779 557 514',
         is_active: true,
-        media: []
-    }
+        media: [],
+        image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop',
+    } as TeamMember,
 ];
-
-// Local placeholder photos (real staff photos to be uploaded via the admin panel)
-(MOCK_TEAM[0] as any).image = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop';
-(MOCK_TEAM[1] as any).image = 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&auto=format&fit=crop';
-(MOCK_TEAM[2] as any).image = 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop';
-(MOCK_TEAM[3] as any).image = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop';
 
 export default function OurTeamPage() {
     const [members, setMembers] = useState<TeamMember[]>([]);

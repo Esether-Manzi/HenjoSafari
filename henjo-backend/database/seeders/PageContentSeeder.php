@@ -23,21 +23,32 @@ class PageContentSeeder extends Seeder
         $settings = SiteSetting::current();
         $settings->update([
             'site_name' => 'Henjo African Safaris',
-            'tagline' => 'Every step, with us is an adventure',
+            'tagline' => 'Every day with us is an adventure',
             'email' => 'info@henjosafaris.com',
             'phone' => '+256 779 557 514',
             'address' => 'Plot 402, Seguku, Entebbe, Box 700589, Entebbe, Uganda',
             'working_hours_weekday' => 'Mon - Fri: 8:00 AM - 6:00 PM (EAT)',
             'working_hours_saturday' => 'Sat: 9:00 AM - 4:00 PM (EAT)',
-            'facebook_url' => 'https://facebook.com/henjosafaris',
-            'twitter_url' => 'https://twitter.com/henjosafaris',
-            'instagram_url' => 'https://instagram.com/henjo.african.safaris',
+            'facebook_url' => 'https://www.facebook.com/share/1JMp2DU53k/?mibextid=wwXIfr',
+            'twitter_url' => 'https://x.com/henjosafaris?s=11',
+            'instagram_url' => 'https://www.instagram.com/henjo.african.safaris?igsi=MTlzaDNkdDc4NDZncg%3D%3D&utm_source=qr',
+            'linkedin_url' => 'https://www.linkedin.com/company/henjo-african-safaris/',
             'youtube_url' => 'https://youtube.com/henjosafaris',
-            'years_experience' => '15+',
+            'tripadvisor_url' => 'https://www.tripadvisor.com/Attraction_Review-g293841-d25282203-Reviews-Henjo_African_Safaris-Kampala_Central_Region.html',
+            'payment_url' => 'https://payments.pesapal.com/henjoafricansafaris',
+            'years_experience' => '5+',
             'happy_travelers_count' => '500+',
             'average_rating' => '4.9',
             'footer_tagline' => 'Authentic African Safaris to Kenya, Uganda, Tanzania, and Rwanda. Bespoke tours, tailor-made holidays, and luxury experiences.',
         ]);
+
+        $heroVideoPath = public_path('videos/home-page-hero-section.mp4');
+        if (file_exists($heroVideoPath)) {
+            $settings->clearMediaCollection('homepage_hero');
+            $settings->addMedia($heroVideoPath)
+                ->preservingOriginal()
+                ->toMediaCollection('homepage_hero');
+        }
     }
 
     protected function seedMenus(): void
@@ -64,7 +75,6 @@ class PageContentSeeder extends Seeder
                 ['label' => 'Rwanda', 'url' => '/destinations/rwanda'],
             ]],
             ['label' => 'Travel Information', 'url' => '/travel-information'],
-            ['label' => 'Blog', 'url' => '/blog'],
             ['label' => 'About Us', 'url' => '/about', 'children' => [
                 ['label' => 'About Our Charity', 'url' => '/about-our-charity'],
                 ['label' => 'Our Team', 'url' => '/our-team'],
@@ -125,7 +135,18 @@ class PageContentSeeder extends Seeder
 
                 ['group' => 'featured-heading', 'title' => 'Featured Safaris', 'description' => 'Our most popular safari experiences handpicked for you', 'icon' => null, 'sort_order' => 0],
 
-                ['group' => 'activities-heading', 'title' => 'Adventure Activities', 'description' => 'Choose from unique excursions and activities to customize your ideal safari adventure.', 'icon' => null, 'sort_order' => 0],
+                ['group' => 'activities-heading', 'title' => 'Popular Experiences', 'description' => 'Choose from unique excursions and activities to customize your ideal safari adventure.', 'icon' => null, 'sort_order' => 0],
+
+                // 'icon' here holds the logo filename under storage/app/public/henjo_profile/
+                // (client-supplied partner logos), not an icon key like other groups use.
+                // 'description' holds an optional link — left null where we don't have a
+                // confirmed URL for that partner, rather than guessing one.
+                ['group' => 'partners', 'title' => 'Uganda Tourism Board', 'description' => null, 'icon' => 'Uganda_Toursim_Board.jpeg', 'sort_order' => 0],
+                ['group' => 'partners', 'title' => 'SafariBookings', 'description' => null, 'icon' => 'safariBookings.jpg', 'sort_order' => 1],
+                ['group' => 'partners', 'title' => 'TripAdvisor', 'description' => 'https://www.tripadvisor.com/Attraction_Review-g293841-d25282203-Reviews-Henjo_African_Safaris-Kampala_Central_Region.html', 'icon' => 'TripAdvisor.jpg', 'sort_order' => 2],
+                ['group' => 'partners', 'title' => 'Empathy Children Initiative', 'description' => 'https://www.empathychildreninitiative.org/', 'icon' => 'Empathy_childer_initiative.webp', 'sort_order' => 3],
+                ['group' => 'partners', 'title' => 'Empathy Community High School', 'description' => '/about-our-charity', 'icon' => 'Empathy_Community_High_School.webp', 'sort_order' => 4],
+                ['group' => 'partners', 'title' => 'Dear Future International', 'description' => null, 'icon' => 'Dear_Future.webp', 'sort_order' => 5],
 
                 ['group' => 'features-heading', 'title' => 'Why Choose Henjo African Safaris', 'description' => null, 'icon' => null, 'sort_order' => 0],
                 ['group' => 'features', 'title' => 'Expert Guides', 'description' => 'Local experts with years of experience', 'icon' => 'user-tie', 'sort_order' => 0],
@@ -145,7 +166,7 @@ class PageContentSeeder extends Seeder
 
         Page::updateOrCreate(['slug' => 'about'], [
             'title' => 'About Us',
-            'hero_title' => 'About Henjo African Safaris',
+            'hero_title' => 'About Us',
             'hero_subtitle' => 'Authentic African Safaris to Kenya, Uganda, Tanzania, and Rwanda',
             'hero_cta_text' => 'Contact Us',
             'hero_cta_href' => '/contact',
@@ -166,6 +187,9 @@ class PageContentSeeder extends Seeder
                 ['group' => 'values', 'title' => 'Passion for wildlife and conservation', 'description' => null, 'icon' => null, 'sort_order' => 1],
                 ['group' => 'values', 'title' => 'Excellence in customer service', 'description' => null, 'icon' => null, 'sort_order' => 2],
                 ['group' => 'values', 'title' => 'Respect for local communities and cultures', 'description' => null, 'icon' => null, 'sort_order' => 3],
+
+                ['group' => 'founder', 'title' => 'Our Founder — Henry Katinda', 'description' => "Henry Katinda is the Founder and Director of Henjo African Safaris, an East African travel company dedicated to creating authentic, responsible, and unforgettable travel experiences across Uganda, Kenya, Tanzania, and Rwanda.\nWith 5+ years of experience in tourism, Henry founded Henjo with a vision of connecting travelers from around the world with the incredible wildlife, landscapes, cultures, and communities of East Africa.\nBeyond tourism, Henry is also deeply committed to community development and social impact. He is the founder of Empathy Children Initiative (ECI), a nonprofit organization in Uganda working to expand opportunities for vulnerable children and communities through education, access to essential services, and community-focused initiatives.\nOne of ECI's key programs is Empathy Community High School – Mayuge, a tuition-free donor funded non profit high school established to provide vulnerable children with access to quality secondary education and a supportive learning environment.\nFor Henry, tourism and community development are closely connected. A portion of Henjo African Safaris' proceeds helps support the work of Empathy Children Initiative and Empathy Community High School, allowing travelers who choose to explore Africa with Henjo to indirectly contribute to positive change in the communities that make these journeys possible.", 'icon' => null, 'sort_order' => 0],
+                ['group' => 'founder', 'title' => 'Tourism With a Purpose', 'description' => "Henry believes that travel should create value not only for the traveler, but also for the people and communities in the destinations they visit.\nThrough Henjo African Safaris, he is building a model of tourism where unforgettable experiences and meaningful community impact can go hand in hand.\nWhen you travel with Henjo, you are not only discovering Africa—you are also becoming part of a journey that gives back.", 'icon' => null, 'sort_order' => 1],
 
                 ['group' => 'commitment', 'title' => 'Our Commitment', 'description' => "Henjo African Safaris continues to endeavor to be sustainable in practice in the tours offered, to protect African wildlife and ensure the tourism industry continues to prosper.\nWe are working towards leaving a minimal negative impact on the environment and local communities, integrating environmental and social best practices into every aspect of the business.", 'icon' => null, 'sort_order' => 0],
 
@@ -197,6 +221,10 @@ class PageContentSeeder extends Seeder
             'content' => 'Africa is extraordinary and her people evoke a sense of adventure, romance and deep connection to nature. Find the reliable information from Henjo African Safaris as you dive into the true essence of Africa.',
             'meta_title' => 'Travel Information | Henjo African Safaris',
             'meta_description' => 'Visa guides, entry requirements, and reliable travel information for your East Africa safari.',
+            'sections' => [
+                ['group' => 'articles', 'title' => 'East Africa Tourist Visa Guide', 'description' => "This is a Joint Tourist Visa and it allows the traveler to travel to Uganda, Kenya, and Rwanda ONLY. It can be used multiple times for tourism purposes. The visa prohibits employment and is issued only for tourism purposes. The visa is valid for 90 days and is not renewable upon expiry or upon exit from the block. NB: the issuing country should be your first entry point. Apply online at visas.immigration.go.ug.\nRequirements: copy of the passport (bio-data page) with at least 6 months validity, a recent passport-size photograph, a Yellow Fever vaccination certificate, a return ticket, and a travel itinerary.", 'icon' => 'passport', 'sort_order' => 0],
+                ['group' => 'articles', 'title' => 'Entry Requirements For Uganda', 'description' => "Uganda Tourist Visa – Single Entry. This visa is granted to travelers coming to Uganda for tourism, is a single-entry visa, and can be granted for up to 3 months. Apply online at visas.immigration.go.ug.\nRequirements: passport copy (bio-data page) with at least 6 months validity, a tour plan, travel itinerary/booking, a recent passport-size photograph, and a Yellow Fever vaccination certificate.", 'icon' => 'file', 'sort_order' => 1],
+            ],
             'is_active' => true,
         ]);
 
@@ -209,6 +237,10 @@ class PageContentSeeder extends Seeder
             'hero_cta_href' => 'https://www.empathychildreninitiative.org/',
             'meta_title' => 'About Our Charity | Henjo African Safaris',
             'meta_description' => "Henjo African Safaris' partnership with Empathy Children Initiative supports vulnerable children across Africa.",
+            'sections' => [
+                ['group' => 'programs', 'title' => 'Empathy Children Initiative (ECI)', 'description' => 'A nonprofit organization in Uganda working to expand opportunities for vulnerable children and communities through education, access to essential services, and community-focused initiatives.', 'icon' => null, 'sort_order' => 0],
+                ['group' => 'programs', 'title' => 'Empathy Community High School – Mayuge', 'description' => 'A tuition-free, donor-funded nonprofit high school established to provide vulnerable children with access to quality secondary education and a supportive learning environment.', 'icon' => null, 'sort_order' => 1],
+            ],
             'is_active' => true,
         ]);
 
@@ -223,8 +255,6 @@ class PageContentSeeder extends Seeder
                 ['group' => 'features', 'title' => 'Safety First', 'description' => 'Women-only attendants, transport, and local female guides throughout.', 'icon' => 'shield', 'sort_order' => 0],
                 ['group' => 'features', 'title' => 'Community & Connection', 'description' => 'Travel alongside like-minded women and build lasting friendships.', 'icon' => 'users', 'sort_order' => 1],
                 ['group' => 'features', 'title' => 'Purpose-Driven Travel', 'description' => "Supports teenage girls' menstrual health programs and female-owned businesses.", 'icon' => 'heart', 'sort_order' => 2],
-
-                ['group' => 'profile', 'title' => 'Joan Tusubira', 'description' => 'Joan Tusubira is the co-founder/director of Henjo African Safaris. She is among the few women in a male-dominated travel industry in Uganda. She has been working as a tour guide for the past 7 years and is a strong leader passionate about female travel, environment, and culture. She loves doing charity work for vulnerable children and helping teenage girls with menstrual health. Her charming sense of humor will make you smile. She works hard to ensure that travelers have deeply balanced experiences while visiting Uganda, Kenya and Rwanda.', 'icon' => 'Director / Head of Women Only Safaris', 'sort_order' => 0],
             ],
             'is_active' => true,
         ]);

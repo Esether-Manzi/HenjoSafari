@@ -11,8 +11,11 @@ class ItineraryDay extends Model
     protected $fillable = [
         'package_id',
         'day_number',
+        'day_number_end',
+        'destination',
         'title',
         'description',
+        'accommodation',
         'breakfast',
         'lunch',
         'dinner',

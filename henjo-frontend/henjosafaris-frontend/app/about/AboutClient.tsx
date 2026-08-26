@@ -4,13 +4,18 @@ import { useState, useEffect, useRef } from 'react';
 import Hero from '@/components/common/Hero';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaHeart, FaLeaf, FaUsers, FaChevronLeft, FaChevronRight, FaPaw, FaHiking, FaPlaneDeparture, FaMountain, FaLandmark, FaFemale, FaCity, FaHandshake, FaCheck, FaStar } from 'react-icons/fa';
+import { FaHeart, FaLeaf, FaUsers, FaChevronLeft, FaChevronRight, FaPaw, FaHiking, FaPlaneDeparture, FaMountain, FaLandmark, FaFemale, FaCity, FaHandshake, FaCheck, FaStar, FaQuoteLeft } from 'react-icons/fa';
 import { MOCK_TEAM, getMemberPhoto } from '@/app/our-team/page';
 import { teamApi } from '@/lib/api/teamApi';
 import type { TeamMember } from '@/types/team';
 import type { CmsPage } from '@/types/page';
 import type { SiteSettings } from '@/types/settings';
 import { sectionsByGroup, firstInGroup } from '@/types/page';
+
+// The founder photo was supplied directly by the client (not uploaded through
+// the media library) and lives under the backend's public storage symlink.
+const BACKEND_ORIGIN = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1').replace(/\/api\/v1\/?$/, '');
+const FOUNDER_PHOTO_URL = `${BACKEND_ORIGIN}/storage/henjo_profile/Henry_Katinda.jpeg`;
 
 const SERVICE_ICONS: Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>> = {
     paw: FaPaw,
@@ -61,11 +66,12 @@ export default function AboutClient({ page, settings }: AboutClientProps) {
     const servicesHeading = firstInGroup(page?.sections, 'services-heading');
     const services = sectionsByGroup(page?.sections, 'services');
     const values = sectionsByGroup(page?.sections, 'values');
+    const founderSections = sectionsByGroup(page?.sections, 'founder');
     const commitment = firstInGroup(page?.sections, 'commitment');
     const inclusive = firstInGroup(page?.sections, 'inclusive');
 
     const stats = [
-        { value: settings?.years_experience || '15+', label: 'Years Experience' },
+        { value: settings?.years_experience || '5+', label: 'Years Experience' },
         { value: settings?.happy_travelers_count || '500+', label: 'Happy Travelers' },
         { value: settings?.average_rating || '4.9', label: 'Average Rating', Icon: FaStar },
         { value: String(settings?.safari_package_count ?? 28), label: 'Tour Packages' },
@@ -78,7 +84,7 @@ export default function AboutClient({ page, settings }: AboutClientProps) {
             ============================================ */}
             <Hero
                 size="medium"
-                title={page?.hero_title || 'About Henjo African Safaris'}
+                title={page?.hero_title || 'About Us'}
                 subtitle={page?.hero_subtitle || 'Authentic African Safaris to Kenya, Uganda, Tanzania, and Rwanda'}
                 ctaText={page?.hero_cta_text || 'Contact Us'}
                 ctaLink={page?.hero_cta_href || '/contact'}
@@ -281,6 +287,67 @@ export default function AboutClient({ page, settings }: AboutClientProps) {
                     </div>
                 </div>
             </section>
+
+            {/* ============================================
+            SECTION 2.75: Our Founder
+            ============================================ */}
+            {founderSections.length > 0 && (
+                <section className="py-20" style={{ background: 'var(--bg-secondary)' }}>
+                    <div className="container mx-auto px-4 max-w-7xl">
+                        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
+                            {/* Left: Photo */}
+                            <div className="lg:col-span-2 lg:sticky lg:top-24">
+                                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden" style={{ boxShadow: 'var(--shadow-lg)' }}>
+                                    <Image
+                                        src={FOUNDER_PHOTO_URL}
+                                        alt="Henry Katinda, Founder and Director of Henjo African Safaris"
+                                        fill
+                                        className="object-cover"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Right: Bio */}
+                            <div className="lg:col-span-3">
+                                <span className="inline-flex items-center gap-2 bg-[var(--brand-gold-subtle)] text-[var(--brand-gold)] px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
+                                    <FaHandshake /> Our Founder
+                                </span>
+
+                                {founderSections.map((section, sIdx) => (
+                                    <div key={section.title} className={sIdx > 0 ? 'mt-8' : ''}>
+                                        <h2 className="text-2xl md:text-3xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
+                                            {section.title}
+                                        </h2>
+                                        {(section.description || '').split('\n').filter(Boolean).map((paragraph, i) => (
+                                            <p key={i} className={`leading-relaxed ${i > 0 ? 'mt-4' : ''}`} style={{ color: 'var(--text-secondary)' }}>
+                                                {paragraph}
+                                            </p>
+                                        ))}
+                                    </div>
+                                ))}
+
+                                <div
+                                    className="mt-8 p-6 rounded-2xl"
+                                    style={{ background: 'var(--bg-card)', borderLeft: '4px solid var(--brand-gold)', boxShadow: 'var(--shadow-sm)' }}
+                                >
+                                    <FaQuoteLeft className="text-2xl mb-3" style={{ color: 'var(--brand-gold-subtle)' }} />
+                                    <p className="italic leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                                        &ldquo;Africa is more than a destination. It is a story, a people, a culture, and an experience. My goal is to help every traveler discover that story while ensuring that tourism creates opportunities for the communities we call home.&rdquo;
+                                    </p>
+                                    <p className="mt-3 font-semibold" style={{ color: 'var(--text-primary)' }}>— Henry Katinda</p>
+                                </div>
+
+                                <p className="mt-8 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                                    Henry continues to lead Henjo African Safaris with a commitment to exceptional service, responsible tourism, authentic experiences, and meaningful impact.
+                                </p>
+                                <p className="mt-4 text-lg font-bold" style={{ color: 'var(--brand-gold)' }}>
+                                    Travel Africa. Experience More. Give Back.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            )}
 
             {/* ============================================
             SECTION 3: Core Values, Commitment & Inclusive Tourism

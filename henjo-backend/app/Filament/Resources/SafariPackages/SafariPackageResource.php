@@ -9,6 +9,7 @@ use App\Filament\Resources\SafariPackages\Pages\ViewSafariPackage;
 use App\Models\SafariPackage;
 use BackedEnum;
 use Filament\Actions\EditAction;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
@@ -80,8 +81,38 @@ class SafariPackageResource extends Resource
             Section::make('Pricing')
                 ->icon(Heroicon::OutlinedBanknotes)
                 ->iconColor('green')
+                ->columns(2)
                 ->schema([
-                    TextInput::make('base_price')->numeric()->required()->prefix('$'),
+                    TextInput::make('base_price')->numeric()->required()->prefix('$')
+                        ->helperText('0 shows "Contact for Price" on the site.'),
+                    TextInput::make('price_max')->numeric()->prefix('$')
+                        ->helperText('Optional — set only if the price is a range.'),
+                ]),
+
+            Section::make('Trip Style')
+                ->icon(Heroicon::OutlinedUserGroup)
+                ->iconColor('gold')
+                ->columns(3)
+                ->schema([
+                    Select::make('tour_privacy')
+                        ->options([
+                            'private' => 'Private',
+                            'exclusive_private' => 'Exclusive Private',
+                            'shared' => 'Shared / Group',
+                        ]),
+                    Select::make('comfort_level')
+                        ->options([
+                            'budget' => 'Budget',
+                            'mid-range' => 'Mid-range',
+                            'luxury' => 'Luxury',
+                        ]),
+                    TextInput::make('accommodation_style')->maxLength(255)
+                        ->placeholder('e.g. Lodge-based'),
+                    TextInput::make('min_age')->numeric()->label('Minimum Age'),
+                    Toggle::make('customizable'),
+                    Toggle::make('solo_travelers_ok')->label('Suitable for Solo Travelers'),
+                    TextInput::make('start_flexibility')->maxLength(255)->columnSpan(3)
+                        ->placeholder('e.g. Can start any day, subject to availability.'),
                 ]),
 
             Section::make('Media')
@@ -115,6 +146,54 @@ class SafariPackageResource extends Resource
                         ->required(),
                     Toggle::make('featured'),
                     Toggle::make('popular'),
+                ]),
+
+            Section::make('Itinerary')
+                ->icon(Heroicon::OutlinedCalendarDays)
+                ->iconColor('blue')
+                ->schema([
+                    Repeater::make('itineraryDays')
+                        ->relationship('itineraryDays')
+                        ->label('Days')
+                        ->orderColumn('day_number')
+                        ->reorderableWithButtons()
+                        ->collapsible()
+                        ->itemLabel(fn (array $state): ?string => isset($state['day_number'], $state['title'])
+                            ? "Day {$state['day_number']}: {$state['title']}"
+                            : null)
+                        ->schema([
+                            TextInput::make('day_number')->numeric()->required(),
+                            TextInput::make('day_number_end')->numeric()
+                                ->helperText('Only set if this entry spans multiple days, e.g. "Day 2-3".'),
+                            TextInput::make('destination')->maxLength(255),
+                            TextInput::make('title')->required()->maxLength(255)->columnSpanFull(),
+                            Textarea::make('description')->rows(3)->columnSpanFull(),
+                            TextInput::make('accommodation')->maxLength(255)->columnSpanFull(),
+                            Toggle::make('breakfast')->default(true),
+                            Toggle::make('lunch')->default(true),
+                            Toggle::make('dinner')->default(true),
+                        ])
+                        ->columns(3)
+                        ->columnSpanFull(),
+                ]),
+
+            Section::make("What's Included / Excluded")
+                ->icon(Heroicon::OutlinedClipboardDocumentList)
+                ->iconColor('green')
+                ->columns(2)
+                ->schema([
+                    Repeater::make('inclusions')
+                        ->relationship('inclusions')
+                        ->label('Inclusions')
+                        ->orderColumn('display_order')
+                        ->reorderableWithButtons()
+                        ->simple(TextInput::make('item')->required()),
+                    Repeater::make('exclusions')
+                        ->relationship('exclusions')
+                        ->label('Exclusions')
+                        ->orderColumn('display_order')
+                        ->reorderableWithButtons()
+                        ->simple(TextInput::make('item')->required()),
                 ]),
         ]);
     }
@@ -159,12 +238,31 @@ class SafariPackageResource extends Resource
             Section::make('Pricing')
                 ->icon(Heroicon::OutlinedBanknotes)
                 ->iconColor('green')
+                ->columns(2)
                 ->schema([
                     TextEntry::make('base_price')
                         ->label('Base Price')
                         ->size('lg')
                         ->weight('bold')
                         ->money(fn (SafariPackage $record) => $record->currency ?? 'USD'),
+                    TextEntry::make('price_max')
+                        ->label('Price Max')
+                        ->placeholder('-')
+                        ->money(fn (SafariPackage $record) => $record->currency ?? 'USD'),
+                ]),
+
+            Section::make('Trip Style')
+                ->icon(Heroicon::OutlinedUserGroup)
+                ->iconColor('gold')
+                ->columns(3)
+                ->schema([
+                    TextEntry::make('tour_privacy')->badge()->placeholder('-'),
+                    TextEntry::make('comfort_level')->badge()->placeholder('-'),
+                    TextEntry::make('accommodation_style')->placeholder('-'),
+                    TextEntry::make('min_age')->label('Minimum Age')->placeholder('-'),
+                    IconEntry::make('customizable')->boolean(),
+                    IconEntry::make('solo_travelers_ok')->label('Solo-Friendly')->boolean(),
+                    TextEntry::make('start_flexibility')->placeholder('-')->columnSpan(3),
                 ]),
 
             Section::make('Gallery')

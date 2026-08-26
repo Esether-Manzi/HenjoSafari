@@ -1,31 +1,22 @@
 // ============================================
 // TRAVEL INFORMATION PAGE
 // ============================================
-// Hero + intro copy managed via the admin dashboard (Pages > Travel Information).
-// The article cards link into real Blog posts (BlogSeeder), so this page
-// links into /blog/[slug] rather than duplicating the full article text.
+// Hero, intro copy, and the visa/entry-requirement articles below are all
+// managed via the admin dashboard (Pages > Travel Information, "articles"
+// section group). This page is the site's standalone travel-info archive —
+// there is no separate blog system.
 // ============================================
 
 import type { Metadata } from 'next';
 import Hero from '@/components/common/Hero';
-import Link from 'next/link';
-import { FaPassport, FaFileAlt, FaArrowRight } from 'react-icons/fa';
+import { FaPassport, FaFileAlt, FaGlobeAfrica } from 'react-icons/fa';
 import { pagesApi } from '@/lib/api/pagesApi';
+import { sectionsByGroup } from '@/types/page';
 
-const articles = [
-    {
-        slug: 'east-africa-tourist-visa-guide',
-        title: 'East Africa Tourist Visa guide',
-        excerpt: 'Everything you need to know about the Joint East Africa Tourist Visa covering Uganda, Kenya, and Rwanda.',
-        Icon: FaPassport,
-    },
-    {
-        slug: 'entry-requirements-for-uganda',
-        title: 'Entry Requirements For Uganda',
-        excerpt: 'What you need for a single-entry Uganda tourist visa.',
-        Icon: FaFileAlt,
-    },
-];
+const ARTICLE_ICONS: Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>> = {
+    passport: FaPassport,
+    file: FaFileAlt,
+};
 
 async function getPage() {
     try {
@@ -46,6 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function TravelInformationPage() {
     const page = await getPage();
+    const articles = sectionsByGroup(page?.sections, 'articles');
 
     return (
         <div className="min-h-screen">
@@ -65,29 +57,29 @@ export default async function TravelInformationPage() {
                     </p>
                 </div>
 
-                <div className="container mx-auto px-4 max-w-3xl grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {articles.map((article) => (
-                        <Link
-                            key={article.slug}
-                            href={`/blog/${article.slug}`}
-                            className="group block rounded-2xl p-6 transition hover:scale-[1.02]"
-                            style={{ background: 'var(--bg-card)', boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-primary)' }}
-                        >
-                            <article.Icon className="text-3xl mb-4" style={{ color: 'var(--brand-gold)' }} />
-                            <h3 className="text-xl font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
-                                {article.title}
-                            </h3>
-                            <p className="text-sm mb-4" style={{ color: 'var(--text-tertiary)' }}>
-                                {article.excerpt}
-                            </p>
-                            <span
-                                className="inline-flex items-center gap-2 text-sm font-semibold group-hover:gap-3 transition-all"
-                                style={{ color: 'var(--brand-gold)' }}
+                <div className="container mx-auto px-4 max-w-3xl space-y-6">
+                    {articles.map((article) => {
+                        const Icon = (article.icon && ARTICLE_ICONS[article.icon]) || FaGlobeAfrica;
+                        return (
+                            <div
+                                key={article.title}
+                                className="rounded-2xl p-6 md:p-8"
+                                style={{ background: 'var(--bg-card)', boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-primary)' }}
                             >
-                                Read more <FaArrowRight />
-                            </span>
-                        </Link>
-                    ))}
+                                <div className="flex items-center gap-3 mb-4">
+                                    <Icon className="text-2xl" style={{ color: 'var(--brand-gold)' }} />
+                                    <h2 className="text-xl md:text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                                        {article.title}
+                                    </h2>
+                                </div>
+                                {(article.description || '').split('\n').filter(Boolean).map((paragraph, i) => (
+                                    <p key={i} className={`leading-relaxed ${i > 0 ? 'mt-4' : ''}`} style={{ color: 'var(--text-secondary)' }}>
+                                        {paragraph}
+                                    </p>
+                                ))}
+                            </div>
+                        );
+                    })}
                 </div>
             </section>
         </div>

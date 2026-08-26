@@ -13,7 +13,10 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        $activities = Activity::with('media')->get();
+        // Only "featured" activities are shown — package detail pages still
+        // display every activity a package is actually tagged with, this
+        // endpoint just backs the homepage's curated showcase.
+        $activities = Activity::with('media')->where('featured', true)->get();
 
         return response()->json([
             'success' => true,

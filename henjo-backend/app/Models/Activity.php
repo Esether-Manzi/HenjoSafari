@@ -19,6 +19,11 @@ class Activity extends Model implements HasMedia
         'slug',
         'description',
         'icon',
+        'featured',
+    ];
+
+    protected $casts = [
+        'featured' => 'boolean',
     ];
 
     public function sluggable(): array

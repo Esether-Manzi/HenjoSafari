@@ -12,18 +12,6 @@ class DestinationSeeder extends Seeder
     {
         $destinations = [
             [
-                'country_code' => 'UG',
-                'name' => 'Uganda - The Pearl of Africa',
-                'slug' => 'uganda',
-                'tagline' => 'The Pearl of Africa',
-                'description' => 'Home to over half of the world remaining mountain gorilla population, source of the mighty River Nile, snow-capped Rwenzori mountains, and magnificent wildlife national parks.',
-                'highlights' => ['Gorilla Trekking', 'Chimpanzee Tracking', 'Source of the Nile', 'Queen Elizabeth NP', 'Rwenzori Mountains'],
-                'starting_price' => 1050,
-                'best_time_to_visit' => 'June to September, December to February',
-                'featured' => true,
-                'is_active' => true,
-            ],
-            [
                 'country_code' => 'KE',
                 'name' => 'Kenya - Wildebeest Migration',
                 'slug' => 'kenya',
@@ -33,6 +21,7 @@ class DestinationSeeder extends Seeder
                 'starting_price' => 978,
                 'best_time_to_visit' => 'July to October, January to March',
                 'featured' => true,
+                'sort_order' => 0,
                 'is_active' => true,
             ],
             [
@@ -45,6 +34,20 @@ class DestinationSeeder extends Seeder
                 'starting_price' => 1200,
                 'best_time_to_visit' => 'June to October, December to March',
                 'featured' => true,
+                'sort_order' => 1,
+                'is_active' => true,
+            ],
+            [
+                'country_code' => 'UG',
+                'name' => 'Uganda - The Pearl of Africa',
+                'slug' => 'uganda',
+                'tagline' => 'The Pearl of Africa',
+                'description' => 'Uganda is East Africa\'s premier home for Gorilla Trekking and Chimpanzee Trekking — over half of the world\'s remaining mountain gorillas live in its misty forests, alongside habituated chimpanzee families, the source of the mighty River Nile, snow-capped Rwenzori mountains, and magnificent wildlife national parks.',
+                'highlights' => ['Gorilla Trekking', 'Chimpanzee Trekking', 'Source of the Nile', 'Queen Elizabeth NP', 'Rwenzori Mountains'],
+                'starting_price' => 1050,
+                'best_time_to_visit' => 'June to September, December to February',
+                'featured' => true,
+                'sort_order' => 2,
                 'is_active' => true,
             ],
             [
@@ -57,6 +60,7 @@ class DestinationSeeder extends Seeder
                 'starting_price' => 1500,
                 'best_time_to_visit' => 'June to September, December to February',
                 'featured' => true,
+                'sort_order' => 3,
                 'is_active' => true,
             ],
         ];

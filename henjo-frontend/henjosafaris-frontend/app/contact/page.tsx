@@ -42,8 +42,6 @@ import {
 // International phone numbers aren't part of the editable CMS content —
 // they're a fixed, rarely-changing list tied to each regional office.
 const internationalContacts = [
-    { country: 'Kenya', phone: '+254 739 013 098' },
-    { country: 'USA / Canada', phone: '+1 929 243 9699' },
     { country: 'United Kingdom', phone: '+44 1226 520 77' },
     { country: 'Netherlands', phone: '+31 6 1675 3816' },
 ];

@@ -7,6 +7,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -38,6 +39,11 @@ class ActivityForm
 
                         Textarea::make('description')
                             ->rows(5)
+                            ->columnSpanFull(),
+
+                        Toggle::make('featured')
+                            ->label('Show on homepage')
+                            ->helperText('Featured activities appear in the "Popular Experiences" showcase on the homepage.')
                             ->columnSpanFull(),
                     ]),
 
