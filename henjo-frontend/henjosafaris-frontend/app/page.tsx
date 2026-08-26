@@ -14,7 +14,7 @@ import { cleanText } from '@/lib/utils/textFormat';
 import {
     FaGlobeAfrica, FaUserTie, FaMapMarkedAlt, FaUsers, FaLeaf, FaLaptop, FaChild, FaWheelchair,
     FaFirstAid, FaCompass, FaStar, FaRegStar, FaShieldAlt, FaQuoteLeft, FaHandshake,
-    FaFacebookF, FaInstagram, FaLinkedinIn, FaTiktok, FaYoutube, FaTwitter, FaTripadvisor,
+    FaFacebookF, FaInstagram, FaLinkedinIn, FaTiktok, FaTwitter, FaTripadvisor,
 } from 'react-icons/fa';
 import type { SafariPackage, Activity } from '@/types/safari';
 import type { CmsPage } from '@/types/page';
@@ -83,17 +83,17 @@ const MOCK_ACTIVITIES: Activity[] = [
     },
     {
         id: 2,
-        name: "Gorilla Trekking",
-        slug: "gorilla-trekking",
+        name: "Mountain Gorilla Trekking",
+        slug: "mountain-gorilla-trekking",
         description: "Hike through misty rainforests to sit with mountain gorillas.",
         icon: "https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=600&auto=format&fit=crop"
     },
     {
         id: 3,
-        name: "Hot Air Ballooning",
-        slug: "hot-air-ballooning",
-        description: "Float over the Serengeti plains at sunrise.",
-        icon: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600&auto=format&fit=crop"
+        name: "Chimpanzee Trekking",
+        slug: "chimpanzee-trekking",
+        description: "Track playful chimp families through the forest canopy.",
+        icon: "https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?q=80&w=600&auto=format&fit=crop"
     },
     {
         id: 4,
@@ -156,7 +156,6 @@ const SOCIAL_LINKS = [
     { name: 'Twitter', icon: FaTwitter, url: (s: SiteSettings | null) => s?.twitter_url, color: '#1DA1F2' },
     { name: 'LinkedIn', icon: FaLinkedinIn, url: (s: SiteSettings | null) => s?.linkedin_url, color: '#0A66C2' },
     { name: 'TikTok', icon: FaTiktok, url: (s: SiteSettings | null) => s?.tiktok_url, color: '#000000' },
-    { name: 'YouTube', icon: FaYoutube, url: (s: SiteSettings | null) => s?.youtube_url, color: '#FF0000' },
     { name: 'TripAdvisor', icon: FaTripadvisor, url: (s: SiteSettings | null) => s?.tripadvisor_url, color: '#34E0A1' },
 ];
 
@@ -406,7 +405,7 @@ export default function Home() {
                             className="text-3xl md:text-4xl font-bold"
                             style={{ color: 'var(--text-primary)' }}
                         >
-                            {activitiesHeading?.title || 'Adventure Activities'}
+                            {activitiesHeading?.title || 'Popular Experiences'}
                         </h2>
                         <p className="max-w-2xl mx-auto mt-4 text-lg" style={{ color: 'var(--text-tertiary)' }}>
                             {activitiesHeading?.description || 'Choose from unique excursions and activities to customize your ideal safari adventure.'}
@@ -414,46 +413,51 @@ export default function Home() {
                     </div>
 
                     {activitiesLoading ? (
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                            {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                        <div className="flex gap-6 overflow-hidden">
+                            {[1, 2, 3, 4].map((n) => (
                                 <div
                                     key={n}
-                                    className="rounded-xl h-64 animate-pulse"
+                                    className="rounded-xl h-64 w-72 flex-shrink-0 animate-pulse"
                                     style={{ background: 'var(--bg-secondary)' }}
                                 />
                             ))}
                         </div>
                     ) : (
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                            {activities.map((activity) => {
-                                const imgUrl = getActivityImage(activity);
-                                return (
-                                    <div
-                                        key={activity.id}
-                                        className="relative h-64 rounded-xl overflow-hidden group shadow-md transition duration-300 hover:shadow-xl hover:-translate-y-1"
-                                        style={{ border: '1px solid var(--border-subtle)' }}
-                                    >
-                                        <Image
-                                            src={imgUrl}
-                                            alt={activity.name}
-                                            fill
-                                            className="object-cover group-hover:scale-110 transition duration-500 ease-out"
-                                        />
-                                        {/* Gradient scrim for legible text at any time */}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent group-hover:from-black/90 transition-colors duration-300" />
+                        <div className="overflow-hidden">
+                            <div
+                                className="flex gap-6 w-max animate-marquee"
+                                style={{ animationDuration: `${Math.max(activities.length * 6, 20)}s` }}
+                            >
+                                {[...activities, ...activities].map((activity, index) => {
+                                    const imgUrl = getActivityImage(activity);
+                                    return (
+                                        <div
+                                            key={`${activity.id}-${index}`}
+                                            className="relative h-64 w-72 flex-shrink-0 rounded-xl overflow-hidden group shadow-md transition duration-300 hover:shadow-xl hover:-translate-y-1"
+                                            style={{ border: '1px solid var(--border-subtle)' }}
+                                        >
+                                            <Image
+                                                src={imgUrl}
+                                                alt={activity.name}
+                                                fill
+                                                className="object-cover group-hover:scale-110 transition duration-500 ease-out"
+                                            />
+                                            {/* Gradient scrim for legible text at any time */}
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent group-hover:from-black/90 transition-colors duration-300" />
 
-                                        {/* Text content placed on top of the overlay */}
-                                        <div className="absolute inset-0 flex flex-col justify-end p-5 z-10">
-                                            <h3 className="font-bold text-xl text-white leading-tight group-hover:text-[var(--brand-gold)] transition duration-300">
-                                                {activity.name}
-                                            </h3>
-                                            <p className="text-xs text-gray-200 line-clamp-2 mt-1.5 leading-snug opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                                {activity.description}
-                                            </p>
+                                            {/* Text content placed on top of the overlay */}
+                                            <div className="absolute inset-0 flex flex-col justify-end p-5 z-10">
+                                                <h3 className="font-bold text-xl text-white leading-tight group-hover:text-[var(--brand-gold)] transition duration-300">
+                                                    {activity.name}
+                                                </h3>
+                                                <p className="text-xs text-gray-200 line-clamp-2 mt-1.5 leading-snug opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                                    {activity.description}
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>
-                                );
-                            })}
+                                    );
+                                })}
+                            </div>
                         </div>
                     )}
                 </div>
@@ -482,51 +486,56 @@ export default function Home() {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {testimonials.slice(0, 6).map((item) => {
-                            const avatarUrl = getTestimonialAvatar(item);
-                            const name = cleanText(item.name);
-                            const quote = cleanText(item.testimonial);
-                            const tripName = cleanText(item.trip_name);
-                            const country = cleanText(item.country);
-                            return (
-                                <div
-                                    key={item.id}
-                                    className="flex flex-col p-6 rounded-2xl transition duration-300 hover:-translate-y-1"
-                                    style={{
-                                        background: 'var(--bg-card)',
-                                        boxShadow: 'var(--shadow-sm)',
-                                        border: '1px solid var(--border-subtle)',
-                                    }}
-                                >
-                                    <FaQuoteLeft className="text-2xl mb-3" style={{ color: 'var(--brand-gold-subtle)' }} />
-                                    <StarRating rating={item.rating} />
-                                    <p className="mt-3 mb-6 text-sm leading-relaxed flex-1" style={{ color: 'var(--text-secondary)' }}>
-                                        &ldquo;{quote}&rdquo;
-                                    </p>
-                                    <div className="flex items-center gap-3 pt-4" style={{ borderTop: '1px solid var(--border-subtle)' }}>
-                                        {avatarUrl ? (
-                                            <div className="relative w-11 h-11 rounded-full overflow-hidden flex-shrink-0">
-                                                <Image src={avatarUrl} alt={name} fill className="object-cover" />
+                    <div className="overflow-hidden">
+                        <div
+                            className="flex gap-6 w-max animate-marquee"
+                            style={{ animationDuration: `${Math.max(testimonials.length * 8, 20)}s` }}
+                        >
+                            {[...testimonials, ...testimonials].map((item, index) => {
+                                const avatarUrl = getTestimonialAvatar(item);
+                                const name = cleanText(item.name);
+                                const quote = cleanText(item.testimonial);
+                                const tripName = cleanText(item.trip_name);
+                                const country = cleanText(item.country);
+                                return (
+                                    <div
+                                        key={`${item.id}-${index}`}
+                                        className="flex flex-col p-6 rounded-2xl transition duration-300 hover:-translate-y-1 w-80 sm:w-96 flex-shrink-0"
+                                        style={{
+                                            background: 'var(--bg-card)',
+                                            boxShadow: 'var(--shadow-sm)',
+                                            border: '1px solid var(--border-subtle)',
+                                        }}
+                                    >
+                                        <FaQuoteLeft className="text-2xl mb-3" style={{ color: 'var(--brand-gold-subtle)' }} />
+                                        <StarRating rating={item.rating} />
+                                        <p className="mt-3 mb-6 text-sm leading-relaxed flex-1" style={{ color: 'var(--text-secondary)' }}>
+                                            &ldquo;{quote}&rdquo;
+                                        </p>
+                                        <div className="flex items-center gap-3 pt-4" style={{ borderTop: '1px solid var(--border-subtle)' }}>
+                                            {avatarUrl ? (
+                                                <div className="relative w-11 h-11 rounded-full overflow-hidden flex-shrink-0">
+                                                    <Image src={avatarUrl} alt={name} fill className="object-cover" />
+                                                </div>
+                                            ) : (
+                                                <div
+                                                    className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm"
+                                                    style={{ background: 'var(--brand-gold-subtle)', color: 'var(--brand-gold)' }}
+                                                >
+                                                    {getInitials(name)}
+                                                </div>
+                                            )}
+                                            <div>
+                                                <p className="font-bold text-sm" style={{ color: 'var(--text-primary)' }}>{name}</p>
+                                                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                                                    {[tripName, country].filter(Boolean).join(' · ')}
+                                                </p>
                                             </div>
-                                        ) : (
-                                            <div
-                                                className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm"
-                                                style={{ background: 'var(--brand-gold-subtle)', color: 'var(--brand-gold)' }}
-                                            >
-                                                {getInitials(name)}
-                                            </div>
-                                        )}
-                                        <div>
-                                            <p className="font-bold text-sm" style={{ color: 'var(--text-primary)' }}>{name}</p>
-                                            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                                                {[tripName, country].filter(Boolean).join(' · ')}
-                                            </p>
                                         </div>
                                     </div>
-                                </div>
-                            );
-                        })}
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
             </section>
@@ -744,11 +753,14 @@ export default function Home() {
 
             {/* Final CTA */}
             <section className="relative py-20 overflow-hidden">
-                <Image
-                    src={`${API_ORIGIN}/storage/henjo_profile/vehicle_4.jpeg`}
-                    alt=""
-                    fill
-                    className="object-cover"
+                <video
+                    className="absolute inset-0 w-full h-full object-cover"
+                    src={`${API_ORIGIN}/storage/safaris/tour-package.mp4`}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
+                    preload="auto"
                 />
                 <div
                     className="absolute inset-0"

@@ -9,6 +9,8 @@ import type { SiteSettings } from '@/types/settings';
 import type { MenuItem } from '@/types/menu';
 import { getWhatsAppUrl } from '@/lib/utils/whatsapp';
 
+const API_ORIGIN = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1').replace(/\/api\/v1\/?$/, '');
+
 interface FooterProps {
     settings: SiteSettings | null;
     quickLinks: MenuItem[];
@@ -162,7 +164,7 @@ export default function Footer({ settings, quickLinks }: FooterProps) {
                             )}
                             <div className="relative w-full h-12">
                                 <Image
-                                    src="/images/site/payment-logo-sprite-1-1.png"
+                                    src={`${API_ORIGIN}/storage/images/online-payment.png`}
                                     alt="Payment methods accepted"
                                     fill
                                     className="object-contain"
