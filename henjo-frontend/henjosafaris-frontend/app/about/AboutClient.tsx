@@ -334,7 +334,7 @@ export default function AboutClient({ page, settings }: AboutClientProps) {
                                     <p className="italic leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                                         &ldquo;Africa is more than a destination. It is a story, a people, a culture, and an experience. My goal is to help every traveler discover that story while ensuring that tourism creates opportunities for the communities we call home.&rdquo;
                                     </p>
-                                    <p className="mt-3 font-semibold" style={{ color: 'var(--text-primary)' }}>— Henry Katinda</p>
+                                    <p className="mt-3 font-semibold" style={{ color: 'var(--text-primary)' }}>Henry Katinda</p>
                                 </div>
 
                                 <p className="mt-8 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>

@@ -42,7 +42,7 @@ class DestinationSeeder extends Seeder
                 'name' => 'Uganda - The Pearl of Africa',
                 'slug' => 'uganda',
                 'tagline' => 'The Pearl of Africa',
-                'description' => 'Uganda is East Africa\'s premier home for Gorilla Trekking and Chimpanzee Trekking — over half of the world\'s remaining mountain gorillas live in its misty forests, alongside habituated chimpanzee families, the source of the mighty River Nile, snow-capped Rwenzori mountains, and magnificent wildlife national parks.',
+                'description' => 'Uganda is East Africa\'s premier home for Gorilla Trekking and Chimpanzee Trekking: over half of the world\'s remaining mountain gorillas live in its misty forests, alongside habituated chimpanzee families, the source of the mighty River Nile, snow-capped Rwenzori mountains, and magnificent wildlife national parks.',
                 'highlights' => ['Gorilla Trekking', 'Chimpanzee Trekking', 'Source of the Nile', 'Queen Elizabeth NP', 'Rwenzori Mountains'],
                 'starting_price' => 1050,
                 'best_time_to_visit' => 'June to September, December to February',

@@ -57,7 +57,7 @@ export default function Footer({ settings, quickLinks }: FooterProps) {
                                 style={{ border: '2px solid var(--brand-gold)' }}
                             >
                                 <Image
-                                    src={settings?.logo_url || '/images/henjo_icon_logo.png'}
+                                    src={settings?.logo_url || '/images/henjo_icon_logo.webp'}
                                     alt={siteName}
                                     fill
                                     className="object-cover"

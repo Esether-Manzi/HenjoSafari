@@ -883,7 +883,7 @@ class SafariPackageSeeder extends Seeder
                 ['day_number' => 8, 'title' => 'Departure', 'description' => 'Shopping and flight home.'],
             ],
             'kampala_cultural' => [
-                ['day_number' => 1, 'title' => 'Kampala Cultural Day Tour', 'description' => "Visit Maridadi Crafts (1hr), Kasubi Tombs (3hrs — Buganda royal burial site), Kabaka's Palace and the Mengo torture chambers (1hr), and the Ndere Cultural Centre traditional dance show (3hrs, Wed/Fri/Sun 7pm)."],
+                ['day_number' => 1, 'title' => 'Kampala Cultural Day Tour', 'description' => "Visit Maridadi Crafts (1hr), Kasubi Tombs (3hrs, Buganda royal burial site), Kabaka's Palace and the Mengo torture chambers (1hr), and the Ndere Cultural Centre traditional dance show (3hrs, Wed/Fri/Sun 7pm)."],
             ],
             'jinja_rafting' => [
                 ['day_number' => 1, 'title' => 'Jinja White Water Rafting', 'description' => 'Depart Kampala at 6am for Jinja. Choose a Grade 5 rapids raft or a family float option (minimum age 6). 3–4 hours on the water, plus a Jinja town city tour.'],

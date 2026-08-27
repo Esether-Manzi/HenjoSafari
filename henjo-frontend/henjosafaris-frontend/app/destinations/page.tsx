@@ -39,12 +39,12 @@ const whyReasons = [
     {
         icon: FaPaw,
         title: 'Unrivalled Wildlife',
-        description: 'Home to the Big Five, mountain gorillas, tree-climbing lions, and the Great Migration — the largest animal movement on Earth.',
+        description: 'Home to the Big Five, mountain gorillas, tree-climbing lions, and the Great Migration, the largest animal movement on Earth.',
     },
     {
         icon: FaMountain,
         title: 'Dramatic Landscapes',
-        description: 'From Kilimanjaro\'s snow-capped peak to the Great Rift Valley, volcanic craters, and lush rainforests — geography that takes your breath away.',
+        description: 'From Kilimanjaro\'s snow-capped peak to the Great Rift Valley, volcanic craters, and lush rainforests: geography that takes your breath away.',
     },
     {
         icon: FaStar,
@@ -124,7 +124,7 @@ export default async function DestinationsPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
                         {destinations.length === 0 ? (
                             <p className="col-span-full text-center" style={{ color: 'var(--text-muted)' }}>
-                                No destinations available right now — check back soon.
+                                No destinations available right now, check back soon.
                             </p>
                         ) : (
                             <>
@@ -169,7 +169,7 @@ export default async function DestinationsPage() {
                             An Experience Like No Other
                         </h2>
                         <p className="max-w-2xl mx-auto text-lg" style={{ color: 'var(--text-secondary)' }}>
-                            East Africa is one of the last truly wild places on Earth — and Henjo Safaris has been
+                            East Africa is one of the last truly wild places on Earth, and Henjo Safaris has been
                             guiding travelers through it for {settings?.years_experience || '5+'} years.
                         </p>
                     </div>
@@ -230,7 +230,7 @@ export default async function DestinationsPage() {
                         Not Sure Where to Start?
                     </h2>
                     <p className="text-gray-200 text-lg max-w-2xl mx-auto mb-8">
-                        Our safari experts will help you design a bespoke itinerary tailored to your
+                        Our safari experts will help you design a custom-tailored itinerary suited to your
                         interests, budget, and travel dates. Every trip is unique.
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">

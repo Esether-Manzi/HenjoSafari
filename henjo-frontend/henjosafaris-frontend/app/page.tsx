@@ -291,7 +291,7 @@ export default function Home() {
                 size="large"
                 variant="home"
                 title={page?.hero_title || 'Discover the Wild Side of East Africa'}
-                subtitle={page?.hero_subtitle || 'Bespoke safaris, gorilla trekking, and tailor-made holidays across Uganda, Kenya, Tanzania, and Rwanda.'}
+                subtitle={page?.hero_subtitle || 'Custom-designed safaris, gorilla trekking, and tailor-made holidays across Uganda, Kenya, Tanzania, and Rwanda.'}
                 ctaText={page?.hero_cta_text || 'Explore Safaris'}
                 ctaLink={page?.hero_cta_href || '/safaris'}
                 backgroundImage="/images/placeholder.png"
@@ -727,7 +727,7 @@ export default function Home() {
                             Follow Our Safari Journey
                         </h2>
                         <p className="max-w-xl mx-auto mb-8" style={{ color: 'var(--text-tertiary)' }}>
-                            Real trips, real wildlife, real stories — follow along for travel inspiration and behind-the-scenes moments
+                            Real trips, real wildlife, real stories: follow along for travel inspiration and behind-the-scenes moments
                         </p>
                         <div className="flex flex-wrap justify-center gap-4">
                             {activeSocialLinks.map((social) => {

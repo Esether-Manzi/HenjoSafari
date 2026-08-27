@@ -123,7 +123,7 @@
             <td style="background-color: #f9f9f9; padding: 16px 30px; text-align: center; border-top: 1px solid #e0e0e0;">
                 <p style="color: #999999; font-size: 12px; margin: 0;">
                     This is an automated notification from the Henjo African Safaris booking system.<br>
-                    Status: <strong>Pending</strong> — Please respond within 24 hours.
+                    Status: <strong>Pending</strong>. Please respond within 24 hours.
                 </p>
             </td>
         </tr>

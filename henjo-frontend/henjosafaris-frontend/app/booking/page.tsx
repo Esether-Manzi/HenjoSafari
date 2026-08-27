@@ -319,7 +319,7 @@ export default function BookingPage() {
                         </div>
 
                         <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-                            Check your email at <strong>{form.email}</strong> — we'll be in touch soon.
+                            Check your email at <strong>{form.email}</strong>, we'll be in touch soon.
                         </p>
 
                         <a
@@ -573,7 +573,7 @@ export default function BookingPage() {
                                             onChange={(e) => handleCountryChange(e.target.value)}
                                             id="destination_country"
                                         >
-                                            <option value="">— Any / not decided yet —</option>
+                                            <option value="">Any / not decided yet</option>
                                             {destinationCountries.map((c) => (
                                                 <option key={c.id} value={c.id}>{c.name}</option>
                                             ))}
@@ -594,19 +594,19 @@ export default function BookingPage() {
                                             onChange={(e) => handlePackageChange(e.target.value)}
                                             id="package_id"
                                         >
-                                            <option value="">— Not sure? Contact us for guidance —</option>
+                                            <option value="">Not sure? Contact us for guidance</option>
                                             {filteredPackages.map((pkg) => (
                                                 <option key={pkg.id} value={pkg.id}>
                                                     {pkg.title}
                                                     {pkg.duration_days ? ` (${pkg.duration_days} days)` : ''}
-                                                    {pkg.base_price ? ` — from $${Number(pkg.base_price).toLocaleString()}` : ''}
+                                                    {pkg.base_price ? ` (from $${Number(pkg.base_price).toLocaleString()})` : ''}
                                                 </option>
                                             ))}
                                         </select>
                                         <p className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
                                             {selectedCountryId && filteredPackages.length === 0
-                                                ? "No packages listed for this country yet — pick \"Contact us for guidance\" and our team will help."
-                                                : "Don't worry if you haven't decided — we'll help you choose."}
+                                                ? "No packages listed for this country yet, pick \"Contact us for guidance\" and our team will help."
+                                                : "Don't worry if you haven't decided, we'll help you choose."}
                                         </p>
                                     </div>
 
@@ -798,7 +798,7 @@ export default function BookingPage() {
                                                 ['Package', form.package_name || 'To be discussed with our team'],
                                                 ['Travel Date', form.travel_date
                                                     ? new Date(form.travel_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
-                                                    : '—'
+                                                    : 'To be decided'
                                                 ],
                                                 ['Adults', String(form.adults)],
                                                 ['Children', String(form.children)],

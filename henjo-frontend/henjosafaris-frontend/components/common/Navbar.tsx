@@ -44,20 +44,12 @@ export default function Navbar({ menuItems, siteName, logoUrl }: NavbarProps) {
                             style={{ border: '2px solid var(--brand-gold)' }}
                         >
                             <Image
-                                src={logoUrl || '/images/henjo_icon_logo.png'}
+                                src={logoUrl || '/images/henjo_icon_logo.webp'}
                                 alt={`${siteName} - Home`}
                                 fill
                                 className="object-cover"
                                 priority
                             />
-                        </div>
-                        <div className="hidden sm:block">
-                            <span
-                                className="text-xl font-bold transition"
-                                style={{ color: 'var(--brand-green)' }}
-                            >
-                                {siteName}
-                            </span>
                         </div>
                     </Link>
 

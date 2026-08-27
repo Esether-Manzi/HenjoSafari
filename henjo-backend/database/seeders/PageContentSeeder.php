@@ -39,7 +39,7 @@ class PageContentSeeder extends Seeder
             'years_experience' => '5+',
             'happy_travelers_count' => '500+',
             'average_rating' => '4.9',
-            'footer_tagline' => 'Authentic African Safaris to Kenya, Uganda, Tanzania, and Rwanda. Bespoke tours, tailor-made holidays, and luxury experiences.',
+            'footer_tagline' => 'Authentic African Safaris to Kenya, Uganda, Tanzania, and Rwanda. Custom-designed tours, tailor-made holidays, and luxury experiences.',
         ]);
 
         $heroVideoPath = public_path('videos/home-page-hero-section.mp4');
@@ -48,6 +48,14 @@ class PageContentSeeder extends Seeder
             $settings->addMedia($heroVideoPath)
                 ->preservingOriginal()
                 ->toMediaCollection('homepage_hero');
+        }
+
+        $logoDisk = config('filesystems.media_disk');
+        if (\Illuminate\Support\Facades\Storage::disk($logoDisk)->exists('henjo_profile/HenjoSafariLogo.webp')) {
+            $settings->clearMediaCollection('logo');
+            $settings->addMediaFromDisk('henjo_profile/HenjoSafariLogo.webp', $logoDisk)
+                ->preservingOriginal()
+                ->toMediaCollection('logo');
         }
     }
 
@@ -125,10 +133,10 @@ class PageContentSeeder extends Seeder
         Page::updateOrCreate(['slug' => 'home'], [
             'title' => 'Home',
             'hero_title' => 'Discover the Wild Side of East Africa',
-            'hero_subtitle' => 'Bespoke safaris, gorilla trekking, and tailor-made holidays across Uganda, Kenya, Tanzania, and Rwanda.',
+            'hero_subtitle' => 'Custom-designed safaris, gorilla trekking, and tailor-made holidays across Uganda, Kenya, Tanzania, and Rwanda.',
             'hero_cta_text' => 'Explore Safaris',
             'hero_cta_href' => '/safaris',
-            'meta_title' => 'Henjo African Safaris | Bespoke East Africa Tours',
+            'meta_title' => 'Henjo African Safaris | Custom-Designed East Africa Tours',
             'meta_description' => 'Explore the beauty of East Africa with our expert-guided safaris across Uganda, Kenya, Tanzania, and Rwanda.',
             'sections' => [
                 ['group' => 'intro', 'title' => 'Well organized tours to elevate your spirit!', 'description' => 'The combination of our experienced team of travel consultants and our certified driver guide assures a safe, treasurable, thrilling and informative safari.', 'icon' => null, 'sort_order' => 0],
@@ -170,9 +178,9 @@ class PageContentSeeder extends Seeder
             'hero_subtitle' => 'Authentic African Safaris to Kenya, Uganda, Tanzania, and Rwanda',
             'hero_cta_text' => 'Contact Us',
             'hero_cta_href' => '/contact',
-            'content' => "Henjo African Safaris Ltd is a Ugandan Tour agency offering Bespoke Safaris, Tailor Made Holidays, Authentic Luxury African Safaris, Fly-In Safaris, Gorilla Tracking and Cultural Safaris.\nWe take pride in having a team of professionals who have traveled in East Africa and now work to ensure that clients both acquire a unique and educational experience of African wildlife, landscape, and culture.\nThe competence and knowledge of our safari tour guides highly contributes to the overall experience.",
+            'content' => "Henjo African Safaris Ltd is a Ugandan Tour agency offering Custom-Designed Safaris, Tailor Made Holidays, Authentic Luxury African Safaris, Fly-In Safaris, Gorilla Tracking and Cultural Safaris.\nWe take pride in having a team of professionals who have traveled in East Africa and now work to ensure that clients both acquire a unique and educational experience of African wildlife, landscape, and culture.\nThe competence and knowledge of our safari tour guides highly contributes to the overall experience.",
             'meta_title' => 'About Us | Henjo African Safaris',
-            'meta_description' => 'Learn about Henjo African Safaris — bespoke, authentic tours across Uganda, Kenya, Tanzania and Rwanda.',
+            'meta_description' => 'Learn about Henjo African Safaris, offering custom-designed, authentic tours across Uganda, Kenya, Tanzania and Rwanda.',
             'sections' => [
                 ['group' => 'services-heading', 'title' => 'Our Services', 'description' => 'We offer a wide range of safari experiences tailored to your preferences', 'icon' => null, 'sort_order' => 0],
                 ['group' => 'services', 'title' => 'Wildlife Safaris', 'description' => "Experience the thrill of seeing the Big Five in their natural habitat across East Africa's national parks.", 'icon' => 'paw', 'sort_order' => 0],
@@ -188,12 +196,12 @@ class PageContentSeeder extends Seeder
                 ['group' => 'values', 'title' => 'Excellence in customer service', 'description' => null, 'icon' => null, 'sort_order' => 2],
                 ['group' => 'values', 'title' => 'Respect for local communities and cultures', 'description' => null, 'icon' => null, 'sort_order' => 3],
 
-                ['group' => 'founder', 'title' => 'Our Founder — Henry Katinda', 'description' => "Henry Katinda is the Founder and Director of Henjo African Safaris, an East African travel company dedicated to creating authentic, responsible, and unforgettable travel experiences across Uganda, Kenya, Tanzania, and Rwanda.\nWith 5+ years of experience in tourism, Henry founded Henjo with a vision of connecting travelers from around the world with the incredible wildlife, landscapes, cultures, and communities of East Africa.\nBeyond tourism, Henry is also deeply committed to community development and social impact. He is the founder of Empathy Children Initiative (ECI), a nonprofit organization in Uganda working to expand opportunities for vulnerable children and communities through education, access to essential services, and community-focused initiatives.\nOne of ECI's key programs is Empathy Community High School – Mayuge, a tuition-free donor funded non profit high school established to provide vulnerable children with access to quality secondary education and a supportive learning environment.\nFor Henry, tourism and community development are closely connected. A portion of Henjo African Safaris' proceeds helps support the work of Empathy Children Initiative and Empathy Community High School, allowing travelers who choose to explore Africa with Henjo to indirectly contribute to positive change in the communities that make these journeys possible.", 'icon' => null, 'sort_order' => 0],
-                ['group' => 'founder', 'title' => 'Tourism With a Purpose', 'description' => "Henry believes that travel should create value not only for the traveler, but also for the people and communities in the destinations they visit.\nThrough Henjo African Safaris, he is building a model of tourism where unforgettable experiences and meaningful community impact can go hand in hand.\nWhen you travel with Henjo, you are not only discovering Africa—you are also becoming part of a journey that gives back.", 'icon' => null, 'sort_order' => 1],
+                ['group' => 'founder', 'title' => 'Our Founder, Henry Katinda', 'description' => "Henry Katinda is the Founder and Director of Henjo African Safaris, an East African travel company dedicated to creating authentic, responsible, and unforgettable travel experiences across Uganda, Kenya, Tanzania, and Rwanda.\nWith 5+ years of experience in tourism, Henry founded Henjo with a vision of connecting travelers from around the world with the incredible wildlife, landscapes, cultures, and communities of East Africa.\nBeyond tourism, Henry is also deeply committed to community development and social impact. He is the founder of Empathy Children Initiative (ECI), a nonprofit organization in Uganda working to expand opportunities for vulnerable children and communities through education, access to essential services, and community-focused initiatives.\nOne of ECI's key programs is Empathy Community High School – Mayuge, a tuition-free donor funded non profit high school established to provide vulnerable children with access to quality secondary education and a supportive learning environment.\nFor Henry, tourism and community development are closely connected. A portion of Henjo African Safaris' proceeds helps support the work of Empathy Children Initiative and Empathy Community High School, allowing travelers who choose to explore Africa with Henjo to indirectly contribute to positive change in the communities that make these journeys possible.", 'icon' => null, 'sort_order' => 0],
+                ['group' => 'founder', 'title' => 'Tourism With a Purpose', 'description' => "Henry believes that travel should create value not only for the traveler, but also for the people and communities in the destinations they visit.\nThrough Henjo African Safaris, he is building a model of tourism where unforgettable experiences and meaningful community impact can go hand in hand.\nWhen you travel with Henjo, you are not only discovering Africa, you are also becoming part of a journey that gives back.", 'icon' => null, 'sort_order' => 1],
 
                 ['group' => 'commitment', 'title' => 'Our Commitment', 'description' => "Henjo African Safaris continues to endeavor to be sustainable in practice in the tours offered, to protect African wildlife and ensure the tourism industry continues to prosper.\nWe are working towards leaving a minimal negative impact on the environment and local communities, integrating environmental and social best practices into every aspect of the business.", 'icon' => null, 'sort_order' => 0],
 
-                ['group' => 'inclusive', 'title' => 'Inclusive Tourism', 'description' => "Henjo African Safaris believes in Responsible and Inclusive Tourism, and offers Disability Tours & Safaris — whether a traveler has a disability or not, they are welcomed to experience their African holiday with Henjo.\nWe are represented on SafariBookings.com and offer tours ranging from short stays to longer durations, as well as fully tailor-made safaris on request.", 'icon' => null, 'sort_order' => 0],
+                ['group' => 'inclusive', 'title' => 'Inclusive Tourism', 'description' => "Henjo African Safaris believes in Responsible and Inclusive Tourism, and offers Disability Tours & Safaris: whether a traveler has a disability or not, they are welcomed to experience their African holiday with Henjo.\nWe are represented on SafariBookings.com and offer tours ranging from short stays to longer durations, as well as fully tailor-made safaris on request.", 'icon' => null, 'sort_order' => 0],
             ],
             'is_active' => true,
         ]);
@@ -248,7 +256,7 @@ class PageContentSeeder extends Seeder
             'title' => 'Women Only Tours',
             'hero_title' => 'Women Only Tours',
             'hero_subtitle' => 'Safe, empowering travel across Uganda, Kenya & Rwanda',
-            'content' => "Our Women-only travel packages offer a safe and empowering way for women to explore Uganda, Kenya & Rwanda on their terms. These packages enable our clients to feel a sense of security and safety. Henjo African Safaris offers security measures such as women-only attendants in accommodations and transportation, as well as local female guides and support networks in the destinations they visit — giving women the confidence to travel to destinations that may be considered unsafe for solo female travelers.\nChoosing women-only travel packages offers the opportunity to connect with other like-minded women and provides a supportive and empowering environment where women can bond and make lasting friendships — particularly beneficial for women traveling solo who may feel lonely or isolated.\nIn addition to the safety and social aspects, women-only travel packages also offer unique travel experiences tailored to the interests and needs of women, including wellness retreats, cultural immersion experiences, adventure sports, and teenage girls' menstrual health programs. We work with local female-owned businesses and organizations to provide authentic and empowering travel experiences.",
+            'content' => "Our Women-only travel packages offer a safe and empowering way for women to explore Uganda, Kenya & Rwanda on their terms. These packages enable our clients to feel a sense of security and safety. Henjo African Safaris offers security measures such as women-only attendants in accommodations and transportation, as well as local female guides and support networks in the destinations they visit, giving women the confidence to travel to destinations that may be considered unsafe for solo female travelers.\nChoosing women-only travel packages offers the opportunity to connect with other like-minded women and provides a supportive and empowering environment where women can bond and make lasting friendships, particularly beneficial for women traveling solo who may feel lonely or isolated.\nIn addition to the safety and social aspects, women-only travel packages also offer unique travel experiences tailored to the interests and needs of women, including wellness retreats, cultural immersion experiences, adventure sports, and teenage girls' menstrual health programs. We work with local female-owned businesses and organizations to provide authentic and empowering travel experiences.",
             'meta_title' => 'Women Only Tours | Henjo African Safaris',
             'meta_description' => 'Safe, empowering women-only safari packages across Uganda, Kenya, and Rwanda.',
             'sections' => [
@@ -266,7 +274,7 @@ class PageContentSeeder extends Seeder
             'hero_cta_text' => 'Book Now',
             'hero_cta_href' => '/safaris',
             'meta_title' => 'Contact Us | Henjo African Safaris',
-            'meta_description' => 'Get in touch with Henjo African Safaris — office locations, phone numbers, and a contact form.',
+            'meta_description' => 'Get in touch with Henjo African Safaris: office locations, phone numbers, and a contact form.',
             'is_active' => true,
         ]);
     }

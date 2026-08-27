@@ -147,7 +147,7 @@ export default function DestinationDetailPage() {
                         <p className="text-center" style={{ color: 'var(--brand-maroon)' }}>{error}</p>
                     ) : tours.length === 0 ? (
                         <p className="text-center" style={{ color: 'var(--text-muted)' }}>
-                            No {displayName} safaris available right now — check back soon or{' '}
+                            No {displayName} safaris available right now, check back soon or{' '}
                             <Link href="/contact" className="underline" style={{ color: 'var(--brand-gold)' }}>
                                 contact us
                             </Link>{' '}
