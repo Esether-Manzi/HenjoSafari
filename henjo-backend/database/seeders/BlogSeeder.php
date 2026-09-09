@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Tag;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class BlogSeeder extends Seeder
 {
@@ -14,16 +15,22 @@ class BlogSeeder extends Seeder
     {
         $this->command->info('📝 Creating Blog Content...');
 
-        // Create author if doesn't exist
+        // Create author if doesn't exist. This is also, incidentally, the
+        // only Filament admin login this app creates (no canAccessPanel
+        // restriction means any User row can log into /admin) — so the
+        // password is randomly generated per-seed and printed once here,
+        // never hardcoded.
         $author = User::first();
         if (!$author) {
+            $password = Str::password(24);
             $author = User::create([
                 'name' => 'Admin Author',
                 'email' => 'admin@henjosafaris.com',
-                'password' => Hash::make('password'),
+                'password' => Hash::make($password),
                 'country' => 'Tanzania',
             ]);
             $this->command->info('  ✅ Author created: ' . $author->name);
+            $this->command->warn("  🔑 Admin login password (save this, it will not be shown again): {$password}");
         }
 
         // Create Tags

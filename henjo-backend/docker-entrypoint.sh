@@ -17,4 +17,9 @@ php artisan storage:link || true
 php artisan config:cache
 php artisan route:cache
 
-exec php artisan serve --host=0.0.0.0 --port="${PORT:-8000}"
+export PORT="${PORT:-8000}"
+envsubst '${PORT}' < /etc/nginx/templates/default.conf.template > /etc/nginx/sites-enabled/app.conf
+
+php-fpm -D
+
+exec nginx -g 'daemon off;'
