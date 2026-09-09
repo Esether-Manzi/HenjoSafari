@@ -1,3 +1,14 @@
+FROM node:22-alpine AS assets
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci
+
+COPY vite.config.js ./
+COPY resources ./resources
+RUN npm run build
+
 FROM php:8.4-cli
 
 RUN apt-get update && apt-get install -y \
@@ -14,6 +25,7 @@ COPY composer.json composer.lock ./
 RUN composer install --no-dev --no-scripts --no-interaction --prefer-dist --no-progress
 
 COPY . .
+COPY --from=assets /app/public/build ./public/build
 RUN chmod +x docker-entrypoint.sh \
     && mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
     && chmod -R 775 storage bootstrap/cache
