@@ -94,9 +94,7 @@ class RealSafariPackageSeeder extends Seeder
                 PackageExclusion::create(['package_id' => $package->id, 'item' => $item, 'display_order' => $i]);
             }
 
-            if ($data['destination_slug'] === 'uganda') {
-                $this->attachCoverImage($package, $data['title']);
-            }
+            $this->attachCoverImage($package, $data['destination_slug'], $data['title']);
         }
 
         $this->command->info('✅ ' . count($packages) . ' real safari packages seeded!');
@@ -129,20 +127,23 @@ class RealSafariPackageSeeder extends Seeder
     }
 
     /**
-     * Uganda packages ship with real cover photos (client-supplied, matched
-     * by exact title to database/seeders/data/uganda_package_covers.json).
-     * Any Uganda package without a matching photo falls back to the
+     * Uganda packages ship with real cover photos (client-supplied). Kenya,
+     * Tanzania, and Rwanda don't have client photos yet, so they use curated
+     * royalty-free stock (Pexels, free for commercial use) matched by park/
+     * activity theme instead — see database/seeders/data/<country>_package_covers.json,
+     * each mapping exact package title to a filename in public/images/safaris/.
+     * Any package without a matching photo falls back to the
      * chimpanzee-trekking placeholder rather than the generic silhouette.
      */
-    protected function attachCoverImage(SafariPackage $package, string $title): void
+    protected function attachCoverImage(SafariPackage $package, string $destinationSlug, string $title): void
     {
-        static $covers = null;
-        $covers ??= json_decode(
-            file_get_contents(database_path('seeders/data/uganda_package_covers.json')),
+        static $coversByDestination = [];
+        $coversByDestination[$destinationSlug] ??= json_decode(
+            file_get_contents(database_path("seeders/data/{$destinationSlug}_package_covers.json")),
             true
         );
 
-        $filename = $covers[$title] ?? null;
+        $filename = $coversByDestination[$destinationSlug][$title] ?? null;
         $path = $filename
             ? public_path('images/safaris/' . $filename)
             : public_path('images/safaris/chimpanzee-trekking-fallback.jpg');
