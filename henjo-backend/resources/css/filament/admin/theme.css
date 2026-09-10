@@ -2,106 +2,175 @@
 
 @source '../../../../app/Filament/**/*';
 @source '../../../../resources/views/filament/**/*';
+@source '../../../../resources/views/components/**/*';
 
 /* =====================================================
-   HENJO SAFARIS — ADMIN PANEL BRAND THEME
+   HENJO SAFARIS - ADMIN PANEL BRAND THEME
    Mirrors the public site's palette (see
    henjo-frontend/.../app/globals.css) so the admin panel
    and the public site read as the same product.
+
+   Sections:
+     1. Design tokens (light + dark)
+     2. Page background + decorative texture
+     3. Sidebar
+     4. Topbar
+     5. Card system (sections, widgets, tables)
+     6. Entrance motion
+     7. Buttons / inputs / badges
+     8. KPI cards, mini-stats, section titles, feeds
+     9. Report progress lists + rank badges
+    10. Dashboard table widgets
+    11. Coloured schema sections (infolist / form)
+    12. Login page
+   ===================================================== */
+
+/* =====================================================
+   1. DESIGN TOKENS
    ===================================================== */
 
 :root {
-    --henjo-gold: #D4A017;
-    --henjo-gold-hover: #C08F10;
-    --henjo-gold-subtle: #FDF6E3;
-    --henjo-green: #2E7D32;
-    --henjo-green-dark: #1F5723;
-    --henjo-maroon: #7B1818;
-    --henjo-bg-page: #FAFAF5;
-    --henjo-bg-card: #FFFFFF;
-    --henjo-border: #E5E2D9;
-    --henjo-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --henjo-shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --henjo-gold: #d4a017;
+    --henjo-gold-hover: #c08f10;
+    --henjo-gold-subtle: #fdf6e3;
+    --henjo-green: #2e7d32;
+    --henjo-green-dark: #1f5723;
+    --henjo-green-deep: #143d17;
+    --henjo-maroon: #7b1818;
 
-    /* Dashboard stat / quick-action badge accents */
-    --henjo-badge-gold-bg: #FDF6E3;
-    --henjo-badge-gold-fg: #C08F10;
-    --henjo-badge-green-bg: #E8F5E9;
-    --henjo-badge-green-fg: #2E7D32;
-    --henjo-badge-blue-bg: #E3F2FD;
-    --henjo-badge-blue-fg: #1565C0;
-    --henjo-badge-maroon-bg: #FBEAEA;
-    --henjo-badge-maroon-fg: #7B1818;
-    --henjo-badge-teal-bg: #E0F2F1;
-    --henjo-badge-teal-fg: #00695C;
-    --henjo-badge-purple-bg: #F1EBFA;
-    --henjo-badge-purple-fg: #6A4C93;
+    --henjo-bg-page: #f7f6f0;
+    --henjo-bg-card: #ffffff;
+    --henjo-bg-sunk: #efece3;
+    --henjo-border: #e6e3d9;
+    --henjo-border-strong: #d9d5c7;
 
-    /* Report chart palette — six-hue rotation used across every
-       chart/progress-list so colors stay consistent site-wide. */
-    --henjo-chart-1: #D4A017;
-    /* gold */
-    --henjo-chart-2: #2E7D32;
-    /* green */
-    --henjo-chart-3: #1565C0;
-    /* blue */
-    --henjo-chart-4: #7B1818;
-    /* maroon */
-    --henjo-chart-5: #00897B;
-    /* teal */
-    --henjo-chart-6: #6A4C93;
-    /* purple */
+    --henjo-text-strong: #1a1a1a;
+    --henjo-text-muted: #6b6b60;
+
+    --henjo-radius: 1rem;
+    --henjo-radius-lg: 1.375rem;
+
+    --henjo-shadow-sm: 0 1px 2px rgba(31, 41, 22, 0.05), 0 1px 3px rgba(31, 41, 22, 0.06);
+    --henjo-shadow-md: 0 2px 6px rgba(31, 41, 22, 0.06), 0 8px 24px rgba(31, 41, 22, 0.08);
+    --henjo-shadow-lg: 0 4px 12px rgba(31, 41, 22, 0.1), 0 18px 48px rgba(31, 41, 22, 0.14);
+
+    /* Six-hue brand rotation - badges, chips, section accents */
+    --henjo-badge-gold-bg: #fdf6e3;
+    --henjo-badge-gold-fg: #a97e07;
+    --henjo-badge-green-bg: #e7f4e8;
+    --henjo-badge-green-fg: #2e7d32;
+    --henjo-badge-blue-bg: #e4f0fb;
+    --henjo-badge-blue-fg: #1565c0;
+    --henjo-badge-maroon-bg: #fbeaea;
+    --henjo-badge-maroon-fg: #7b1818;
+    --henjo-badge-teal-bg: #e0f2f1;
+    --henjo-badge-teal-fg: #00695c;
+    --henjo-badge-purple-bg: #f1ebfa;
+    --henjo-badge-purple-fg: #6a4c93;
+
+    /* Solid hues for gradient chips + sparklines */
+    --henjo-hue-gold: #d4a017;
+    --henjo-hue-green: #2e7d32;
+    --henjo-hue-blue: #1565c0;
+    --henjo-hue-maroon: #7b1818;
+    --henjo-hue-teal: #00897b;
+    --henjo-hue-purple: #6a4c93;
+
+    --henjo-chart-1: #d4a017;
+    --henjo-chart-2: #2e7d32;
+    --henjo-chart-3: #1565c0;
+    --henjo-chart-4: #7b1818;
+    --henjo-chart-5: #00897b;
+    --henjo-chart-6: #6a4c93;
+
+    --henjo-up: #2e7d32;
+    --henjo-up-bg: #e7f4e8;
+    --henjo-down: #b3261e;
+    --henjo-down-bg: #fbeaea;
 }
 
 .dark {
-    --henjo-gold: #E5B83A;
-    --henjo-gold-hover: #F0CC5B;
+    --henjo-gold: #e5b83a;
+    --henjo-gold-hover: #f0cc5b;
     --henjo-gold-subtle: rgba(229, 184, 58, 0.12);
-    --henjo-green: #4CAF50;
-    --henjo-green-dark: #0F1A12;
-    --henjo-maroon: #D4453A;
-    --henjo-bg-page: #0F1A12;
-    --henjo-bg-card: #1A2A1E;
-    --henjo-border: #2A3E2E;
-    --henjo-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
-    --henjo-shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+    --henjo-green: #4caf50;
+    --henjo-green-dark: #12241a;
+    --henjo-green-deep: #0c1a10;
+    --henjo-maroon: #d4453a;
+
+    --henjo-bg-page: #0e1710;
+    --henjo-bg-card: #17251b;
+    --henjo-bg-sunk: #101c13;
+    --henjo-border: #2a3a2e;
+    --henjo-border-strong: #35493a;
+
+    --henjo-text-strong: #f3f5f1;
+    --henjo-text-muted: #9db29f;
+
+    --henjo-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --henjo-shadow-md: 0 2px 8px rgba(0, 0, 0, 0.35), 0 12px 32px rgba(0, 0, 0, 0.4);
+    --henjo-shadow-lg: 0 6px 18px rgba(0, 0, 0, 0.45), 0 22px 52px rgba(0, 0, 0, 0.55);
 
     --henjo-badge-gold-bg: rgba(229, 184, 58, 0.15);
-    --henjo-badge-gold-fg: #E5B83A;
-    --henjo-badge-green-bg: rgba(76, 175, 80, 0.15);
-    --henjo-badge-green-fg: #4CAF50;
-    --henjo-badge-blue-bg: rgba(66, 165, 245, 0.15);
-    --henjo-badge-blue-fg: #64B5F6;
-    --henjo-badge-maroon-bg: rgba(212, 69, 58, 0.15);
-    --henjo-badge-maroon-fg: #D4453A;
-    --henjo-badge-teal-bg: rgba(77, 182, 172, 0.15);
-    --henjo-badge-teal-fg: #4DB6AC;
-    --henjo-badge-purple-bg: rgba(167, 139, 201, 0.15);
-    --henjo-badge-purple-fg: #A78BC9;
+    --henjo-badge-gold-fg: #e5b83a;
+    --henjo-badge-green-bg: rgba(76, 175, 80, 0.16);
+    --henjo-badge-green-fg: #6ecb72;
+    --henjo-badge-blue-bg: rgba(66, 165, 245, 0.16);
+    --henjo-badge-blue-fg: #6fb6f5;
+    --henjo-badge-maroon-bg: rgba(212, 69, 58, 0.18);
+    --henjo-badge-maroon-fg: #e8776d;
+    --henjo-badge-teal-bg: rgba(77, 182, 172, 0.16);
+    --henjo-badge-teal-fg: #5ec8bf;
+    --henjo-badge-purple-bg: rgba(167, 139, 201, 0.18);
+    --henjo-badge-purple-fg: #b79ede;
 
-    --henjo-chart-1: #E5B83A;
-    --henjo-chart-2: #4CAF50;
-    --henjo-chart-3: #64B5F6;
-    --henjo-chart-4: #D4453A;
-    --henjo-chart-5: #4DB6AC;
-    --henjo-chart-6: #A78BC9;
+    --henjo-hue-gold: #e5b83a;
+    --henjo-hue-green: #4caf50;
+    --henjo-hue-blue: #42a5f5;
+    --henjo-hue-maroon: #d4453a;
+    --henjo-hue-teal: #4db6ac;
+    --henjo-hue-purple: #a78bc9;
+
+    --henjo-chart-1: #e5b83a;
+    --henjo-chart-2: #4caf50;
+    --henjo-chart-3: #64b5f6;
+    --henjo-chart-4: #d4453a;
+    --henjo-chart-5: #4db6ac;
+    --henjo-chart-6: #a78bc9;
+
+    --henjo-up: #6ecb72;
+    --henjo-up-bg: rgba(76, 175, 80, 0.16);
+    --henjo-down: #e8776d;
+    --henjo-down-bg: rgba(212, 69, 58, 0.18);
 }
 
 /* =====================================================
-   PAGE BACKGROUND
+   2. PAGE BACKGROUND + DECORATIVE TEXTURE
    ===================================================== */
 
 .fi-body {
-    background: var(--henjo-bg-page);
+    background-color: var(--henjo-bg-page);
+    background-image:
+        radial-gradient(circle at 0% 0%, rgba(212, 160, 23, 0.06), transparent 42%),
+        radial-gradient(circle at 100% 0%, rgba(46, 125, 50, 0.07), transparent 40%);
+    background-attachment: fixed;
+}
+
+.fi-main {
+    max-width: 90rem;
 }
 
 /* =====================================================
-   SIDEBAR — brand forest surface, gold active state
+   3. SIDEBAR - brand forest surface, gold active state
    ===================================================== */
 
 .fi-sidebar {
-    background: linear-gradient(180deg, var(--henjo-green) 0%, var(--henjo-green-dark) 100%);
+    background: linear-gradient(185deg, var(--henjo-green) 0%, var(--henjo-green-dark) 55%, var(--henjo-green-deep) 100%);
     border-inline-end: none;
+}
+
+.dark .fi-sidebar {
+    background: linear-gradient(185deg, #1c3a24 0%, #12241a 60%, #0c1a10 100%);
 }
 
 .fi-sidebar-header,
@@ -111,48 +180,90 @@
     border-color: rgb(255 255 255 / 0.1);
 }
 
+.fi-sidebar-nav {
+    padding-top: 0.5rem;
+    gap: 0.125rem;
+}
+
 .fi-sidebar .fi-logo {
     color: var(--henjo-gold);
+    font-weight: 700;
+    letter-spacing: -0.01em;
 }
 
-.fi-sidebar .fi-icon {
-    color: rgb(255 255 255 / 0.65);
+.fi-sidebar .fi-icon,
+.fi-sidebar-item-icon {
+    color: rgb(255 255 255 / 0.6);
 }
 
-.fi-sidebar-group-label,
+.fi-sidebar-group-label {
+    color: rgb(255 255 255 / 0.45);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-inline: 0.75rem;
+    margin-top: 0.75rem;
+}
+
 .fi-sidebar-item-label,
 .fi-sidebar-database-notifications-btn-label {
-    color: rgb(255 255 255 / 0.85);
+    color: rgb(255 255 255 / 0.82);
+    font-weight: 500;
+}
+
+.fi-sidebar-item-btn,
+.fi-sidebar-group-btn {
+    border-radius: 0.625rem;
+    margin-inline: 0.5rem;
+    transition: background-color 120ms ease, color 120ms ease;
 }
 
 .fi-sidebar-item-btn:hover,
 .fi-sidebar-group-dropdown-trigger-btn:hover,
 .fi-sidebar-database-notifications-btn:hover,
 .fi-sidebar-group-btn:hover {
-    background: rgb(255 255 255 / 0.08);
+    background: rgb(255 255 255 / 0.09);
+}
+
+.fi-sidebar-item-btn:hover .fi-sidebar-item-label,
+.fi-sidebar-item-btn:hover .fi-icon {
+    color: #fff;
 }
 
 .fi-sidebar-item.fi-active > .fi-sidebar-item-btn {
     background: var(--henjo-gold);
+    box-shadow: 0 6px 18px rgba(212, 160, 23, 0.35);
 }
 
 .fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-icon,
-.fi-sidebar-item.fi-active > .fi-sidebar-item-btn > .fi-sidebar-item-label {
-    color: #1A1A1A;
+.fi-sidebar-item.fi-active > .fi-sidebar-item-btn .fi-sidebar-item-label {
+    color: #1a1a1a;
+    font-weight: 600;
 }
 
 .fi-sidebar-item-grouped-border-part-not-first,
 .fi-sidebar-item-grouped-border-part-not-last {
+    background: rgb(255 255 255 / 0.16);
+}
+
+/* gold scrollbar inside the sidebar */
+.fi-sidebar ::-webkit-scrollbar {
+    width: 6px;
+}
+.fi-sidebar ::-webkit-scrollbar-thumb {
     background: rgb(255 255 255 / 0.2);
+    border-radius: 9999px;
 }
 
 /* =====================================================
-   TOPBAR — brand gradient accent line
+   4. TOPBAR - brand gradient accent line
    ===================================================== */
 
 .fi-topbar {
-    background: var(--henjo-bg-card);
-    box-shadow: none;
+    background: color-mix(in srgb, var(--henjo-bg-card) 88%, transparent);
+    backdrop-filter: blur(8px);
+    box-shadow: var(--henjo-shadow-sm);
     border-bottom: 1px solid var(--henjo-border);
     position: relative;
 }
@@ -163,17 +274,23 @@
     inset-inline: 0;
     bottom: -1px;
     height: 3px;
-    background: linear-gradient(90deg, var(--henjo-gold), var(--henjo-green));
+    background: linear-gradient(90deg, var(--henjo-gold), var(--henjo-green) 60%, var(--henjo-green-dark));
+}
+
+.fi-topbar .fi-global-search-field .fi-input {
+    border-radius: 9999px;
 }
 
 /* =====================================================
-   CARDS — form sections, tables, dashboard widgets
+   5. CARD SYSTEM - form sections, tables, widgets
    ===================================================== */
 
 .fi-section:not(.fi-aside),
 .fi-ta-ctn,
-.fi-simple-main {
-    border-radius: 1.25rem;
+.fi-wi-table,
+.fi-simple-main,
+.henjo-card {
+    border-radius: var(--henjo-radius);
     background: var(--henjo-bg-card);
     border: 1px solid var(--henjo-border);
     box-shadow: var(--henjo-shadow-md);
@@ -184,58 +301,429 @@
 }
 
 .fi-wi-stats-overview-stat {
-    border-radius: 1.25rem;
+    border-radius: var(--henjo-radius);
     background: var(--henjo-bg-card);
     border: 1px solid var(--henjo-border);
     box-shadow: var(--henjo-shadow-md);
     border-top: 3px solid var(--henjo-gold);
+    transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.fi-wi-stats-overview-stat:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--henjo-shadow-lg);
+}
+
+/* section headings */
+.fi-section-header {
+    padding: 1.1rem 1.25rem;
+}
+
+.fi-section-header-heading {
+    font-weight: 650;
+    letter-spacing: -0.01em;
 }
 
 /* =====================================================
-   BUTTONS — pill shape with a soft hover lift
+   6. ENTRANCE MOTION - staggered rise on dashboard / reports
+   ===================================================== */
+
+@keyframes henjo-rise {
+    from {
+        opacity: 0;
+        transform: translateY(14px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fi-page .fi-wi > .fi-wi-widget,
+.fi-page .fi-wi > [wire\:id],
+.fi-dashboard-page .fi-wi,
+.fi-wi > .fi-section {
+    animation: henjo-rise 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.fi-wi > *:nth-child(1) { animation-delay: 0ms; }
+.fi-wi > *:nth-child(2) { animation-delay: 60ms; }
+.fi-wi > *:nth-child(3) { animation-delay: 120ms; }
+.fi-wi > *:nth-child(4) { animation-delay: 180ms; }
+.fi-wi > *:nth-child(5) { animation-delay: 240ms; }
+.fi-wi > *:nth-child(6) { animation-delay: 300ms; }
+.fi-wi > *:nth-child(7) { animation-delay: 360ms; }
+.fi-wi > *:nth-child(8) { animation-delay: 420ms; }
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+/* =====================================================
+   7. BUTTONS / INPUTS / BADGES
    ===================================================== */
 
 .fi-btn {
     border-radius: 9999px;
-    transition:
-        transform 150ms ease,
-        box-shadow 150ms ease,
-        background-color 75ms ease;
+    font-weight: 600;
+    transition: transform 150ms ease, box-shadow 150ms ease, background-color 75ms ease, filter 120ms ease;
 }
 
 .fi-btn:not(.fi-disabled):not([disabled]):hover {
     transform: translateY(-1px);
     box-shadow: var(--henjo-shadow-md);
+    filter: brightness(1.03);
+}
+
+.fi-input,
+.fi-select-input,
+.fi-fo-field-wrp .fi-input {
+    border-radius: 0.625rem;
+}
+
+.fi-input:focus,
+.fi-select-input:focus {
+    --tw-ring-color: var(--henjo-gold);
+    border-color: var(--henjo-gold);
+}
+
+.fi-badge {
+    font-weight: 600;
+    border-radius: 9999px;
 }
 
 /* =====================================================
-   LOGIN PAGE
+   8. KPI CARDS / MINI-STATS / SECTION TITLES / FEEDS
    ===================================================== */
 
-.fi-simple-layout {
-    background: linear-gradient(135deg, var(--henjo-green) 0%, var(--henjo-green-dark) 55%, var(--henjo-maroon) 130%);
-}
-
-.fi-simple-main {
-    border-radius: 1.5rem;
-}
-
-.fi-simple-layout .fi-logo {
-    color: var(--henjo-gold);
-}
-
-/* =====================================================
-   REPORT WIDGETS — ranked progress lists, rank badges,
-   colorful stat cards. Shared across Dashboard + Reports
-   so both read as the same design system.
-   ===================================================== */
-
-.henjo-stat-card {
-    border-radius: 1.25rem;
+.henjo-kpi {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1.25rem 1.35rem;
+    border-radius: var(--henjo-radius);
     background: var(--henjo-bg-card);
     border: 1px solid var(--henjo-border);
     box-shadow: var(--henjo-shadow-md);
-    padding: 1.25rem;
+    overflow: hidden;
+    transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.henjo-kpi::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 3px;
+    background: var(--henjo-kpi-accent, var(--henjo-green));
+}
+
+.henjo-kpi:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--henjo-shadow-lg);
+}
+
+.henjo-kpi-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.henjo-kpi-label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--henjo-text-muted);
+    line-height: 1.3;
+}
+
+.henjo-kpi-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.75rem;
+    color: #fff;
+    flex-shrink: 0;
+    background: linear-gradient(140deg,
+        var(--henjo-kpi-accent, var(--henjo-green)),
+        color-mix(in srgb, var(--henjo-kpi-accent, var(--henjo-green)) 62%, #000));
+    box-shadow: 0 6px 16px color-mix(in srgb, var(--henjo-kpi-accent, var(--henjo-green)) 35%, transparent);
+}
+
+.henjo-kpi-icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.henjo-kpi-value {
+    font-size: 1.85rem;
+    line-height: 1.1;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+    color: var(--henjo-text-strong);
+}
+
+.henjo-kpi-foot {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.henjo-delta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.15rem;
+    padding: 0.15rem 0.5rem 0.15rem 0.35rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.henjo-delta svg {
+    width: 0.85rem;
+    height: 0.85rem;
+}
+
+.henjo-delta--up {
+    color: var(--henjo-up);
+    background: var(--henjo-up-bg);
+}
+
+.henjo-delta--down {
+    color: var(--henjo-down);
+    background: var(--henjo-down-bg);
+}
+
+.henjo-delta--flat {
+    color: var(--henjo-text-muted);
+    background: var(--henjo-bg-sunk);
+}
+
+.henjo-kpi-hint {
+    font-size: 0.75rem;
+    color: var(--henjo-text-muted);
+}
+
+.henjo-spark {
+    display: block;
+    width: 100%;
+    height: 40px;
+    overflow: visible;
+}
+
+/* compact catalog counters */
+.henjo-mini-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.9rem 1rem;
+    border-radius: 0.85rem;
+    background: var(--henjo-bg-card);
+    border: 1px solid var(--henjo-border);
+    box-shadow: var(--henjo-shadow-sm);
+    transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.henjo-mini-stat:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--henjo-shadow-md);
+    border-color: var(--henjo-border-strong);
+}
+
+.henjo-mini-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 0.7rem;
+    flex-shrink: 0;
+    background: var(--henjo-mini-accent-bg, var(--henjo-badge-green-bg));
+    color: var(--henjo-mini-accent-fg, var(--henjo-badge-green-fg));
+}
+
+.henjo-mini-icon svg {
+    width: 1.15rem;
+    height: 1.15rem;
+}
+
+.henjo-mini-value {
+    font-size: 1.25rem;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--henjo-text-strong);
+}
+
+.henjo-mini-label {
+    font-size: 0.75rem;
+    color: var(--henjo-text-muted);
+    margin-top: 0.15rem;
+}
+
+/* section titles (icon chip + label) */
+.henjo-section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    margin-bottom: 0.9rem;
+}
+
+.henjo-section-title-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.6rem;
+    flex-shrink: 0;
+    background: var(--henjo-st-accent-bg, var(--henjo-badge-green-bg));
+    color: var(--henjo-st-accent-fg, var(--henjo-badge-green-fg));
+}
+
+.henjo-section-title-icon svg {
+    width: 1.05rem;
+    height: 1.05rem;
+}
+
+.henjo-section-title h3 {
+    font-size: 0.95rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    color: var(--henjo-text-strong);
+}
+
+.henjo-section-title .henjo-section-title-action {
+    margin-inline-start: auto;
+}
+
+/* activity feed / timeline */
+.henjo-feed {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.henjo-feed-item {
+    position: relative;
+    display: flex;
+    gap: 0.85rem;
+    padding-bottom: 1.1rem;
+    padding-inline-start: 0.25rem;
+}
+
+.henjo-feed-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    inset-inline-start: 0.6rem;
+    top: 1.15rem;
+    bottom: -0.1rem;
+    width: 2px;
+    background: var(--henjo-border);
+}
+
+.henjo-feed-dot {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-top: 0.15rem;
+    border-radius: 9999px;
+    border: 3px solid var(--henjo-bg-card);
+    background: var(--henjo-feed-accent, var(--henjo-green));
+    box-shadow: 0 0 0 1px var(--henjo-border);
+}
+
+.henjo-feed-body {
+    min-width: 0;
+}
+
+.henjo-feed-title {
+    font-size: 0.85rem;
+    font-weight: 550;
+    color: var(--henjo-text-strong);
+    line-height: 1.35;
+}
+
+.henjo-feed-title a:hover {
+    color: var(--henjo-green);
+    text-decoration: underline;
+}
+
+.henjo-feed-meta {
+    font-size: 0.75rem;
+    color: var(--henjo-text-muted);
+    margin-top: 0.15rem;
+}
+
+/* decorative welcome banner */
+.henjo-welcome {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--henjo-radius-lg);
+    background: linear-gradient(125deg, var(--henjo-green) 0%, var(--henjo-green-dark) 62%, #0f3b16 120%);
+    box-shadow: var(--henjo-shadow-lg);
+    color: #fff;
+}
+
+.henjo-welcome::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle at 88% 12%, rgba(212, 160, 23, 0.28), transparent 38%),
+        repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.04) 0 2px, transparent 2px 26px);
+    pointer-events: none;
+}
+
+.henjo-welcome > * {
+    position: relative;
+    z-index: 1;
+}
+
+.henjo-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    transition: background-color 140ms ease, transform 140ms ease;
+}
+
+.henjo-chip:hover {
+    background: rgba(255, 255, 255, 0.24);
+    transform: translateY(-1px);
+}
+
+.henjo-chip svg {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* =====================================================
+   9. REPORT PROGRESS LISTS + RANK BADGES
+   ===================================================== */
+
+.henjo-stat-card {
+    border-radius: var(--henjo-radius);
+    background: var(--henjo-bg-card);
+    border: 1px solid var(--henjo-border);
+    box-shadow: var(--henjo-shadow-md);
+    padding: 1.35rem;
     transition: transform 150ms ease, box-shadow 150ms ease;
 }
 
@@ -255,20 +743,27 @@
     font-weight: 700;
     color: #fff;
     flex-shrink: 0;
+    box-shadow: 0 3px 8px color-mix(in srgb, var(--henjo-green) 30%, transparent);
 }
 
 .henjo-progress-track {
     height: 0.5rem;
     border-radius: 9999px;
-    background: var(--henjo-border);
+    background: var(--henjo-bg-sunk);
     overflow: hidden;
     width: 100%;
+}
+
+@keyframes henjo-grow {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
 }
 
 .henjo-progress-fill {
     height: 100%;
     border-radius: 9999px;
-    transition: width 500ms ease;
+    transform-origin: left center;
+    animation: henjo-grow 950ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .henjo-progress-row + .henjo-progress-row {
@@ -276,40 +771,42 @@
 }
 
 /* =====================================================
-   DASHBOARD TABLE WIDGETS — checkerboard theme where row
-   and column tints interchange, distinct from the plain
-   striping used on resource index tables.
+   10. DASHBOARD TABLE WIDGETS
    ===================================================== */
 
-.fi-wi-table .fi-ta-table thead tr {
-    background: var(--henjo-green);
+.fi-wi-table .fi-ta-ctn {
+    border: none;
+    box-shadow: none;
 }
 
-.fi-wi-table .fi-ta-table thead .fi-ta-header-cell {
-    color: rgb(255 255 255 / 0.85);
+.fi-wi-table .fi-ta-header {
+    padding-inline: 0.25rem;
 }
 
-.fi-wi-table .fi-ta-row:nth-child(odd) .fi-ta-cell:nth-child(odd),
-.fi-wi-table .fi-ta-row:nth-child(even) .fi-ta-cell:nth-child(even) {
-    background: var(--henjo-badge-gold-bg);
+.fi-ta-table thead tr {
+    background: var(--henjo-bg-sunk);
 }
 
-.fi-wi-table .fi-ta-row:nth-child(odd) .fi-ta-cell:nth-child(even),
-.fi-wi-table .fi-ta-row:nth-child(even) .fi-ta-cell:nth-child(odd) {
+.fi-ta-table thead .fi-ta-header-cell {
+    color: var(--henjo-text-muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.fi-ta-row {
+    transition: background-color 120ms ease;
+}
+
+.fi-ta-row:hover {
     background: var(--henjo-badge-green-bg);
 }
 
 /* =====================================================
-   COLORED SCHEMA SECTIONS — applies to every Infolist
-   (View pages) and Form (Create/Edit pages) Section across
-   every resource. A Section given ->icon()->iconColor('gold'
-   |'green'|'blue'|'maroon'|'teal'|'purple') automatically
-   gets a tinted rounded icon chip (from Filament's own
-   per-color --color-* custom properties, so this works for
-   any registered color, not just the six above) and a
-   matching accent top border — turning the default flat
-   white/gray sections into the same colorful, modern language
-   used on the Dashboard, with no per-page CSS required.
+   11. COLOURED SCHEMA SECTIONS - infolist (View) + form (Edit)
+   A Section given ->icon()->iconColor('gold'|'green'|'blue'|
+   'maroon'|'teal'|'purple') gets a tinted rounded icon chip
+   and a matching accent top border.
    ===================================================== */
 
 .fi-section-header > svg.fi-icon {
@@ -367,4 +864,33 @@
 
 .fi-section:has(> .fi-section-header > svg[class*='fi-color-']) {
     border-top: 3px solid var(--henjo-section-accent-fg, var(--henjo-green));
+}
+
+/* =====================================================
+   12. LOGIN PAGE
+   ===================================================== */
+
+.fi-simple-layout {
+    background: linear-gradient(135deg, var(--henjo-green) 0%, var(--henjo-green-dark) 55%, var(--henjo-maroon) 135%);
+    position: relative;
+    overflow: hidden;
+}
+
+.fi-simple-layout::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle at 15% 85%, rgba(212, 160, 23, 0.22), transparent 35%),
+        repeating-linear-gradient(120deg, rgba(255, 255, 255, 0.035) 0 2px, transparent 2px 30px);
+    pointer-events: none;
+}
+
+.fi-simple-main {
+    border-radius: var(--henjo-radius-lg);
+    box-shadow: var(--henjo-shadow-lg);
+}
+
+.fi-simple-layout .fi-logo {
+    color: var(--henjo-gold);
 }

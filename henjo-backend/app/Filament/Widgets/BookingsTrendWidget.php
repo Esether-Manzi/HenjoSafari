@@ -8,13 +8,15 @@ use Illuminate\Support\Carbon;
 
 class BookingsTrendWidget extends ChartWidget
 {
-    protected ?string $heading = 'Bookings — Last 14 Days';
+    protected ?string $heading = 'Bookings trend';
 
-    protected int|string|array $columnSpan = 2;
+    protected ?string $description = 'New bookings over the last 14 days';
+
+    protected int|string|array $columnSpan = ['default' => 'full', 'lg' => 2];
 
     protected static ?int $sort = 3;
 
-    protected ?string $maxHeight = '180px';
+    protected ?string $maxHeight = '220px';
 
     protected function getType(): string
     {
@@ -37,11 +39,12 @@ class BookingsTrendWidget extends ChartWidget
                     'label' => 'Bookings',
                     'data' => $days->map(fn (Carbon $day) => (int) ($countsByDate[$day->toDateString()] ?? 0))->all(),
                     'borderColor' => '#2E7D32',
-                    'backgroundColor' => 'rgba(46, 125, 50, 0.15)',
+                    'backgroundColor' => 'rgba(46, 125, 50, 0.16)',
                     'pointBackgroundColor' => '#2E7D32',
                     'pointBorderColor' => '#fff',
                     'pointRadius' => 3,
-                    'pointHoverRadius' => 5,
+                    'pointHoverRadius' => 6,
+                    'borderWidth' => 3,
                     'fill' => true,
                     'tension' => 0.4,
                 ],
@@ -59,8 +62,8 @@ class BookingsTrendWidget extends ChartWidget
             'scales' => [
                 'y' => [
                     'beginAtZero' => true,
-                    'ticks' => ['stepSize' => 1],
-                    'grid' => ['color' => 'rgba(150, 150, 150, 0.1)'],
+                    'ticks' => ['stepSize' => 1, 'precision' => 0],
+                    'grid' => ['color' => 'rgba(150, 150, 150, 0.12)'],
                 ],
                 'x' => [
                     'grid' => ['display' => false],

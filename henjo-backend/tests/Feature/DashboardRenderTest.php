@@ -26,9 +26,11 @@ class DashboardRenderTest extends TestCase
     public function test_dashboard_widgets_mount_without_errors(): void
     {
         Livewire::test(\App\Filament\Widgets\DashboardWelcomeWidget::class)->assertSuccessful();
-        Livewire::test(\App\Filament\Widgets\DashboardStatsWidget::class)->assertSuccessful();
-        Livewire::test(\App\Filament\Widgets\QuickActionsWidget::class)->assertSuccessful();
+        Livewire::test(\App\Filament\Widgets\DashboardKpiWidget::class)->assertSuccessful();
+        Livewire::test(\App\Filament\Widgets\CatalogStripWidget::class)->assertSuccessful();
         Livewire::test(\App\Filament\Widgets\BookingsTrendWidget::class)->assertSuccessful();
+        Livewire::test(\App\Filament\Widgets\DashboardBookingStatusWidget::class)->assertSuccessful();
         Livewire::test(\App\Filament\Widgets\RecentBookingsWidget::class)->assertSuccessful();
+        Livewire::test(\App\Filament\Widgets\RecentActivityWidget::class)->assertSuccessful();
     }
 }

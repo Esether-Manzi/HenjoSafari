@@ -1,12 +1,7 @@
 <x-filament-widgets::widget>
     <div class="space-y-6">
         <div>
-            <span
-                class="inline-block text-xs font-bold uppercase tracking-widest px-2.5 py-1 rounded-full mb-3"
-                style="background: var(--henjo-badge-maroon-bg); color: var(--henjo-badge-maroon-fg);"
-            >
-                Booking &amp; Inquiry Health
-            </span>
+            <x-henjo.section-title title="Booking &amp; inquiry health" icon="heroicon-o-heart" accent="maroon" />
 
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div class="henjo-stat-card">

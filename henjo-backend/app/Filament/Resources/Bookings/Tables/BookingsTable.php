@@ -51,6 +51,13 @@ class BookingsTable
                     ->sortable(),
                 TextColumn::make('status')
                     ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'confirmed' => 'info',
+                        'completed' => 'success',
+                        'cancelled' => 'danger',
+                        default => 'gray',
+                    })
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()

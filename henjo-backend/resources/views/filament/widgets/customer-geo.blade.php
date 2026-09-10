@@ -8,12 +8,13 @@
 
 <x-filament-widgets::widget>
     <div class="henjo-stat-card">
-        <div class="flex items-center justify-between mb-5">
-            <h3 class="text-base font-semibold text-gray-950 dark:text-white">Customers by Country</h3>
-            <x-filament::button size="sm" color="gray" icon="heroicon-o-arrow-down-tray" wire:click="exportByCountry">
-                Export
-            </x-filament::button>
-        </div>
+        <x-henjo.section-title title="Customers by country" icon="heroicon-o-globe-alt" accent="blue">
+            <x-slot:action>
+                <x-filament::button size="sm" color="gray" icon="heroicon-o-arrow-down-tray" wire:click="exportByCountry">
+                    Export
+                </x-filament::button>
+            </x-slot:action>
+        </x-henjo.section-title>
 
         @if (empty($byCountry))
             <p class="text-sm text-gray-500 dark:text-gray-400">No customers yet.</p>

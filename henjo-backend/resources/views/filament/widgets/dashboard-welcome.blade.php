@@ -1,50 +1,47 @@
 @php
     $user = filament()->auth()->user();
+    $name = filament()->getUserName($user);
     $avatarUrl = $user instanceof \Filament\Models\Contracts\HasAvatar ? $user->getFilamentAvatarUrl() : null;
 @endphp
 
 <x-filament-widgets::widget>
-    <div
-        class="rounded-2xl p-6 md:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6"
-        style="background: linear-gradient(135deg, var(--henjo-green) 0%, var(--henjo-green-dark) 100%); box-shadow: var(--henjo-shadow-lg);"
-    >
-        <div class="flex items-center gap-4">
-            @if ($avatarUrl)
-                <img
-                    src="{{ $avatarUrl }}"
-                    alt="{{ filament()->getUserName($user) }}"
-                    class="w-14 h-14 rounded-full object-cover flex-shrink-0"
-                    style="border: 2px solid var(--henjo-gold);"
-                />
-            @else
-                <div
-                    class="w-14 h-14 rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0"
-                    style="background: var(--henjo-gold); color: #1A1A1A;"
-                >
-                    {{ strtoupper(substr(filament()->getUserName($user), 0, 1)) }}
+    <div class="henjo-welcome p-6 md:p-7">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5">
+            <div class="flex items-center gap-4">
+                @if ($avatarUrl)
+                    <img
+                        src="{{ $avatarUrl }}"
+                        alt="{{ $name }}"
+                        class="w-14 h-14 rounded-full object-cover flex-shrink-0"
+                        style="border: 2px solid var(--henjo-gold);"
+                    />
+                @else
+                    <div
+                        class="w-14 h-14 rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0"
+                        style="background: var(--henjo-gold); color: #1A1A1A;"
+                    >
+                        {{ strtoupper(substr($name, 0, 1)) }}
+                    </div>
+                @endif
+                <div>
+                    <p class="text-xs font-semibold uppercase tracking-widest text-white/55">{{ $today }}</p>
+                    <h2 class="text-xl md:text-2xl font-bold text-white mt-0.5">
+                        {{ $greeting }}, {{ $name }}
+                    </h2>
+                    <p class="text-sm text-white/75 mt-1">{{ $statusLine }}</p>
                 </div>
-            @endif
-            <div>
-                <h2 class="text-xl md:text-2xl font-bold text-white">
-                    Welcome back, {{ filament()->getUserName($user) }}
-                </h2>
-                <p class="text-xs font-semibold uppercase tracking-widest text-white/60 mt-1">
-                    Last entry logged {{ $lastEntryLabel }}
-                </p>
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+                @foreach ($actions as $action)
+                    @if ($action['url'])
+                        <a href="{{ $action['url'] }}" class="henjo-chip">
+                            <x-filament::icon :icon="$action['icon']" />
+                            {{ $action['label'] }}
+                        </a>
+                    @endif
+                @endforeach
             </div>
         </div>
-
-        <form action="{{ filament()->getLogoutUrl() }}" method="post">
-            @csrf
-
-            <x-filament::button
-                color="gray"
-                :icon="\Filament\Support\Icons\Heroicon::ArrowLeftEndOnRectangle"
-                tag="button"
-                type="submit"
-            >
-                Sign out
-            </x-filament::button>
-        </form>
     </div>
 </x-filament-widgets::widget>
