@@ -5,7 +5,7 @@
 // ============================================
 // Per-country destination page (Uganda/Kenya/Tanzania/Rwanda),
 // matching the old site's /destination/{country}/ tour archives
-// (henjosafaris-content-audit.md §3.9). Reuses the shared
+// (henjosafaris-content-audit.md section 3.9). Reuses the shared
 // destinations data for the hero/highlights and fetches a live
 // tour grid filtered by country via the existing safariApi.
 // ============================================

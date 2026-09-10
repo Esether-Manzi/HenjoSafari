@@ -91,14 +91,14 @@ export default function Hero({
             </div>
 
             {/* Smooth cinematic vignette into the section below (deepens to black
-                regardless of theme — fading to a theme color here would wash out
+                regardless of theme - fading to a theme color here would wash out
                 against the still-visible photo underneath) */}
             <div
                 className="absolute inset-x-0 bottom-0 h-24 z-[1] pointer-events-none"
                 style={{ background: 'linear-gradient(to bottom, transparent, rgba(0,0,0,0.9))' }}
             />
 
-            {/* Content — always centered */}
+            {/* Content - always centered */}
             <div className={`relative container mx-auto px-4 z-10 ${isHome ? 'pb-10 md:pb-12' : ''}`}>
                 <div className="text-center">
                     {showTagline && (

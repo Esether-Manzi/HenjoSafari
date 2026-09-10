@@ -3,7 +3,7 @@
 namespace App\Filament\Widgets;
 
 /**
- * Dashboard-sized variant of {@see BookingStatusChartWidget} — same data and
+ * Dashboard-sized variant of {@see BookingStatusChartWidget} - same data and
  * doughnut, but spans one third of the dashboard's 3-column grid so it sits
  * beside the bookings trend. The Reports page keeps using the base widget.
  */

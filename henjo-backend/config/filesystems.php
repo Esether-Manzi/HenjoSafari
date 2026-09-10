@@ -61,7 +61,7 @@ return [
             'report' => false,
         ],
 
-        // Works for AWS S3 or any S3-compatible provider (e.g. Cloudflare R2 —
+        // Works for AWS S3 or any S3-compatible provider (e.g. Cloudflare R2 -
         // set AWS_ENDPOINT to the R2 endpoint, AWS_DEFAULT_REGION=auto, and
         // AWS_USE_PATH_STYLE_ENDPOINT=true).
         's3' => [

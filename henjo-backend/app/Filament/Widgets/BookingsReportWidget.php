@@ -32,9 +32,9 @@ class BookingsReportWidget extends BaseWidget
             ->striped()
             ->columns([
                 TextColumn::make('booking_number')->label('Booking #')->searchable()->weight('semibold')->icon('heroicon-o-ticket')->iconColor('warning'),
-                TextColumn::make('customer.name')->label('Customer')->placeholder('—')->searchable(),
+                TextColumn::make('customer.name')->label('Customer')->placeholder('-')->searchable(),
                 TextColumn::make('safariPackage.title')->label('Package')->placeholder('Not yet assigned')->wrap(),
-                TextColumn::make('safariPackage.destination.name')->label('Destination')->placeholder('—')->badge()->color('gray'),
+                TextColumn::make('safariPackage.destination.name')->label('Destination')->placeholder('-')->badge()->color('gray'),
                 TextColumn::make('travel_date')->date()->sortable(),
                 TextColumn::make('total_people')->label('Travelers')->sortable()->icon('heroicon-o-users')->alignCenter(),
                 TextColumn::make('quoted_price')->label('Price')->money(fn (Booking $record): string => $record->currency)->sortable()->weight('bold')->color('success'),

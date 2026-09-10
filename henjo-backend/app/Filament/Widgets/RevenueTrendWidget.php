@@ -8,7 +8,7 @@ use Illuminate\Support\Carbon;
 
 class RevenueTrendWidget extends ChartWidget
 {
-    protected ?string $heading = 'Revenue — Last 12 Months';
+    protected ?string $heading = 'Revenue - Last 12 Months';
 
     protected ?string $description = 'Quoted booking value by month (all currencies combined).';
 

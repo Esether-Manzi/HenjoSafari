@@ -55,11 +55,11 @@
             <div class="flex items-center gap-6 text-sm">
                 <span class="flex items-center gap-2">
                     <span class="w-2.5 h-2.5 rounded-full" style="background: #D4A017;"></span>
-                    <span class="text-gray-700 dark:text-gray-300">Repeat ({{ $repeatCustomers }} · {{ $repeatPct }}%)</span>
+                    <span class="text-gray-700 dark:text-gray-300">Repeat ({{ $repeatCustomers }} - {{ $repeatPct }}%)</span>
                 </span>
                 <span class="flex items-center gap-2">
                     <span class="w-2.5 h-2.5 rounded-full" style="background: #2E7D32;"></span>
-                    <span class="text-gray-700 dark:text-gray-300">New ({{ $newCustomers }} · {{ $newPct }}%)</span>
+                    <span class="text-gray-700 dark:text-gray-300">New ({{ $newCustomers }} - {{ $newPct }}%)</span>
                 </span>
             </div>
         </div>

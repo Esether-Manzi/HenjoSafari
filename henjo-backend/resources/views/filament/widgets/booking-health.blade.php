@@ -44,7 +44,7 @@
                 </div>
 
                 @if (empty($overduePending))
-                    <p class="text-sm text-gray-500 dark:text-gray-400">Nothing overdue — all pending bookings are recent.</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">Nothing overdue - all pending bookings are recent.</p>
                 @else
                     <div class="space-y-2">
                         @foreach ($overduePending as $row)

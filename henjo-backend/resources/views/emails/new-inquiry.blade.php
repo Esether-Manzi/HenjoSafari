@@ -10,7 +10,7 @@
         <!-- Header -->
         <tr>
             <td style="background-color: #1a1a2e; padding: 24px 30px; text-align: center;">
-                <h1 style="color: #d4a853; margin: 0; font-size: 22px;">🦁 Henjo Safaris</h1>
+                <h1 style="color: #d4a853; margin: 0; font-size: 22px;">Henjo Safaris</h1>
                 <p style="color: #cccccc; margin: 8px 0 0; font-size: 14px;">New Contact Form Inquiry</p>
             </td>
         </tr>

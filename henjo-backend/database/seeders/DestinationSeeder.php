@@ -77,6 +77,6 @@ class DestinationSeeder extends Seeder
             }
         }
 
-        $this->command->info('✅ Destinations seeded!');
+        $this->command->info('Destinations seeded!');
     }
 }

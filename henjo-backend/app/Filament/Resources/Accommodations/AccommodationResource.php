@@ -60,7 +60,7 @@ class AccommodationResource extends Resource
                             'guesthouse' => 'Guesthouse',
                         ])
                         ->required(),
-                    TextInput::make('star_rating')->numeric()->suffix('★')->minValue(1)->maxValue(5),
+                    TextInput::make('star_rating')->numeric()->suffixIcon('heroicon-m-star')->minValue(1)->maxValue(5),
                     TextInput::make('location')->maxLength(255)->columnSpanFull(),
                     Textarea::make('description')->rows(5)->columnSpanFull(),
                 ]),
@@ -87,7 +87,7 @@ class AccommodationResource extends Resource
                 ->schema([
                     TextEntry::make('name')->weight('bold'),
                     TextEntry::make('type')->badge()->color('gold')->placeholder('-'),
-                    TextEntry::make('star_rating')->label('Rating')->suffix(' ★')->placeholder('-'),
+                    TextEntry::make('star_rating')->label('Rating')->suffixIcon('heroicon-m-star')->placeholder('-'),
                     TextEntry::make('location')->icon(Heroicon::OutlinedMapPin)->placeholder('-'),
                     TextEntry::make('description')->placeholder('-')->columnSpanFull(),
                 ]),

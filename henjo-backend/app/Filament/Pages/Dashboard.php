@@ -31,7 +31,7 @@ class Dashboard extends BaseDashboard
 
     /**
      * Explicit list rather than the default Filament::getWidgets() (every
-     * auto-discovered widget) — keeps report-only widgets off the homepage.
+     * auto-discovered widget) - keeps report-only widgets off the homepage.
      */
     public function getWidgets(): array
     {

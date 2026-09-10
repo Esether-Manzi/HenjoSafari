@@ -19,12 +19,12 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-// ✅ Test route
+// Test route
 Route::get('/hello', function () {
     return response()->json(['message' => 'API is working!']);
 });
 
-// ✅ API V1 Routes
+// API V1 Routes
 Route::prefix('v1')->group(function () {
     // Safari Packages
     Route::get('/safaris', [SafariPackageController::class, 'index']);

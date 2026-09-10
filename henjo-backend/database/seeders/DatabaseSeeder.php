@@ -9,7 +9,7 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        $this->command->info('🚀 Starting Database Seeder...');
+        $this->command->info('Starting Database Seeder...');
 
         // Disable foreign key checks
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
@@ -30,6 +30,6 @@ class DatabaseSeeder extends Seeder
 
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        $this->command->info('✅ All seeders completed successfully! 🎉');
+        $this->command->info('All seeders completed successfully!');
     }
 }

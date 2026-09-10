@@ -91,7 +91,7 @@ class SafariCategoryResource extends Resource
                 TextColumn::make('icon')
                     ->label('Icon')
                     ->html()
-                    ->state(fn (SafariCategory $record): string => SafariIcons::preview($record->icon) ?? '—'),
+                    ->state(fn (SafariCategory $record): string => SafariIcons::preview($record->icon) ?? '-'),
                 TextColumn::make('name')->searchable()->sortable(),
                 TextColumn::make('slug')->searchable(),
             ])

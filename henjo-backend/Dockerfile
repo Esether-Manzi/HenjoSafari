@@ -2,7 +2,7 @@ FROM php:8.4-fpm
 
 # nginx + php-fpm, not `php artisan serve`: Laravel's built-in dev server
 # doesn't support chunked transfer-encoding request bodies and returns a
-# bare "Forbidden" for them — which is exactly what Railway's edge proxy
+# bare "Forbidden" for them - which is exactly what Railway's edge proxy
 # sends for POST requests (e.g. the Filament/Livewire login submit).
 RUN apt-get update && apt-get install -y \
         git unzip curl gettext-base nginx libzip-dev libpng-dev libjpeg-dev libfreetype6-dev libonig-dev libicu-dev \
@@ -27,7 +27,7 @@ COPY . .
 
 # Filament's admin theme.css imports vendor/filament/filament's own theme.css,
 # so this must run after composer install (vendor/ populated) and after the
-# full COPY . . (resources/, vite.config.js) — not in an isolated build stage.
+# full COPY . . (resources/, vite.config.js) - not in an isolated build stage.
 RUN npm run build && rm -rf node_modules
 
 COPY docker/nginx.conf.template /etc/nginx/templates/default.conf.template

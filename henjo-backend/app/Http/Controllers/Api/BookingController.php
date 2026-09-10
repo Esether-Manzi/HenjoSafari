@@ -21,11 +21,11 @@ class BookingController extends Controller
     {
         $validated = $request->validated();
 
-        // ──────────────────────────────────────────────
-        // 2-4. CREATE/UPDATE the Customer and the Booking record together —
+        // ----------------------------------------------
+        // 2-4. CREATE/UPDATE the Customer and the Booking record together -
         // wrapped in a transaction so a failure partway through can't leave
         // a Customer with no corresponding Booking.
-        // ──────────────────────────────────────────────
+        // ----------------------------------------------
         [$customer, $booking, $bookingNumber] = DB::transaction(function () use ($validated) {
             $customer = Customer::firstOrCreate(
                 ['email' => $validated['email']],
@@ -76,20 +76,20 @@ class BookingController extends Controller
         // Attach package name to booking for the email (not in DB, just context)
         $booking->package_name_label = $validated['package_name'] ?? null;
 
-        // ──────────────────────────────────────────────
+        // ----------------------------------------------
         // 5. SEND notification email to admin
-        // ──────────────────────────────────────────────
+        // ----------------------------------------------
         try {
             Mail::to('info@henjosafaris.com')
                 ->send(new NewBookingNotification($booking, $customer));
         } catch (\Exception $e) {
-            // Log the error but don't fail the request — the booking is already saved
+            // Log the error but don't fail the request - the booking is already saved
             Log::error('Failed to send booking notification email: '.$e->getMessage());
         }
 
-        // ──────────────────────────────────────────────
+        // ----------------------------------------------
         // 6. RETURN success response
-        // ──────────────────────────────────────────────
+        // ----------------------------------------------
         return response()->json([
             'success' => true,
             'message' => 'Your booking request has been received! We will contact you within 24 hours with a detailed quote.',

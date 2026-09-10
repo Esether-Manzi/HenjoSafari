@@ -2,9 +2,9 @@
 // BOOKING PAGE
 // ============================================
 // A premium 3-step booking form that collects:
-//   Step 1 — Personal Information
-//   Step 2 — Trip Details (package, dates, group size)
-//   Step 3 — Review & Submit
+//   Step 1 - Personal Information
+//   Step 2 - Trip Details (package, dates, group size)
+//   Step 3 - Review & Submit
 //
 // On success: shows a confirmation card with booking number.
 // API: POST /api/v1/bookings  (BookingController@store)
@@ -41,9 +41,9 @@ import {
     FaPlaneDeparture,
 } from 'react-icons/fa';
 
-// ──────────────────────────────────────────────────────────
+// ----------------------------------------------------------
 // TYPES
-// ──────────────────────────────────────────────────────────
+// ----------------------------------------------------------
 
 interface DestinationCountryOption {
     id: number;
@@ -84,9 +84,9 @@ const NATIONALITIES = [
     'Other',
 ];
 
-// ──────────────────────────────────────────────────────────
+// ----------------------------------------------------------
 // COMPONENT
-// ──────────────────────────────────────────────────────────
+// ----------------------------------------------------------
 
 export default function BookingPage() {
     const [currentStep, setCurrentStep] = useState(1);
@@ -125,7 +125,7 @@ export default function BookingPage() {
     // and the success screen (rendered outside the form after submission).
     const form = watch();
 
-    // ── Fetch available safari packages (with destination/country) and country filter options ──
+    // -- Fetch available safari packages (with destination/country) and country filter options --
     useEffect(() => {
         const apiUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1').replace(/\/+$/, '');
 
@@ -146,7 +146,7 @@ export default function BookingPage() {
             .catch(() => setDestinationCountries([]));
     }, []);
 
-    // ── Helpers ──
+    // -- Helpers --
     const update = (field: keyof BookingFormValues, value: string | number | null) =>
         setValue(field, value as never, { shouldValidate: true, shouldDirty: true });
 
@@ -228,14 +228,14 @@ export default function BookingPage() {
         }
     };
 
-    // ── Today's date for the min attribute on the date picker ──
+    // -- Today's date for the min attribute on the date picker --
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
     const minDate = tomorrow.toISOString().split('T')[0];
 
-    // ──────────────────────────────────────────────────────────
+    // ----------------------------------------------------------
     // SHARED INPUT STYLES
-    // ──────────────────────────────────────────────────────────
+    // ----------------------------------------------------------
     const inputStyle: React.CSSProperties = {
         background: 'var(--bg-input)',
         border: '1px solid var(--border-primary)',
@@ -256,9 +256,9 @@ export default function BookingPage() {
         color: 'var(--text-secondary)',
     };
 
-    // ──────────────────────────────────────────────────────────
+    // ----------------------------------------------------------
     // SUCCESS STATE
-    // ──────────────────────────────────────────────────────────
+    // ----------------------------------------------------------
     if (bookingRef) {
         return (
             <div className="min-h-screen" style={{ background: 'var(--bg-secondary)' }}>
@@ -335,9 +335,9 @@ export default function BookingPage() {
         );
     }
 
-    // ──────────────────────────────────────────────────────────
+    // ----------------------------------------------------------
     // MAIN FORM
-    // ──────────────────────────────────────────────────────────
+    // ----------------------------------------------------------
     return (
         <div className="min-h-screen">
             {/* HERO */}
@@ -355,7 +355,7 @@ export default function BookingPage() {
             <div className="py-16" style={{ background: 'var(--bg-secondary)' }}>
                 <div className="container mx-auto px-4 max-w-3xl">
 
-                    {/* ── Progress Steps ── */}
+                    {/* -- Progress Steps -- */}
                     <div className="flex items-center justify-center mb-10 gap-0">
                         {STEPS.map((step, idx) => {
                             const Icon = step.icon;
@@ -410,7 +410,7 @@ export default function BookingPage() {
                         })}
                     </div>
 
-                    {/* ── Form Card ── */}
+                    {/* -- Form Card -- */}
                     <div
                         className="rounded-2xl p-8 animate-slideUp"
                         style={{ background: 'var(--bg-card)', boxShadow: 'var(--shadow-lg)' }}
@@ -425,7 +425,7 @@ export default function BookingPage() {
                             </div>
                         )}
 
-                        {/* ══════════════ STEP 1 — Personal Info ══════════════ */}
+                        {/* ============== STEP 1 - Personal Info ============== */}
                         {currentStep === 1 && (
                             <div>
                                 <div className="flex items-center gap-3 mb-6">
@@ -517,7 +517,7 @@ export default function BookingPage() {
                                             onChange={(e) => update('country', e.target.value)}
                                             id="country"
                                         >
-                                            <option value="">Select your country…</option>
+                                            <option value="">Select your country...</option>
                                             {NATIONALITIES.map((c) => (
                                                 <option key={c} value={c}>{c}</option>
                                             ))}
@@ -541,7 +541,7 @@ export default function BookingPage() {
                             </div>
                         )}
 
-                        {/* ══════════════ STEP 2 — Trip Details ══════════════ */}
+                        {/* ============== STEP 2 - Trip Details ============== */}
                         {currentStep === 2 && (
                             <div>
                                 <div className="flex items-center gap-3 mb-6">
@@ -641,7 +641,7 @@ export default function BookingPage() {
                                                     style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-primary)', color: 'var(--text-primary)' }}
                                                     id="adults-minus"
                                                 >
-                                                    −
+                                                    -
                                                 </button>
                                                 <span
                                                     className="text-xl font-bold w-8 text-center"
@@ -672,7 +672,7 @@ export default function BookingPage() {
                                                     style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-primary)', color: 'var(--text-primary)' }}
                                                     id="children-minus"
                                                 >
-                                                    −
+                                                    -
                                                 </button>
                                                 <span
                                                     className="text-xl font-bold w-8 text-center"
@@ -701,7 +701,7 @@ export default function BookingPage() {
                                         <textarea
                                             rows={4}
                                             style={{ ...inputStyle, resize: 'none' }}
-                                            placeholder="e.g. dietary requirements, mobility needs, specific animals you'd love to see, honeymoon, family celebration…"
+                                            placeholder="e.g. dietary requirements, mobility needs, specific animals you'd love to see, honeymoon, family celebration..."
                                             value={form.special_requests}
                                             onChange={(e) => update('special_requests', e.target.value)}
                                             id="special_requests"
@@ -733,7 +733,7 @@ export default function BookingPage() {
                             </div>
                         )}
 
-                        {/* ══════════════ STEP 3 — Review & Submit ══════════════ */}
+                        {/* ============== STEP 3 - Review & Submit ============== */}
                         {currentStep === 3 && (
                             <div>
                                 <div className="flex items-center gap-3 mb-6">
@@ -855,7 +855,7 @@ export default function BookingPage() {
                                         {isLoading ? (
                                             <>
                                                 <FaSpinner className="animate-spin" />
-                                                Submitting…
+                                                Submitting...
                                             </>
                                         ) : (
                                             <>

@@ -37,7 +37,7 @@ class BookingHealthWidget extends Widget
             ->get()
             ->map(fn (Booking $b) => [
                 'booking_number' => $b->booking_number,
-                'customer' => $b->customer?->name ?? '—',
+                'customer' => $b->customer?->name ?? '-',
                 'days_old' => (int) $b->created_at->diffInDays(now()),
             ])
             ->all();
@@ -50,7 +50,7 @@ class BookingHealthWidget extends Widget
             ->get()
             ->map(fn (Booking $b) => [
                 'booking_number' => $b->booking_number,
-                'customer' => $b->customer?->name ?? '—',
+                'customer' => $b->customer?->name ?? '-',
                 'created_at' => $b->created_at,
             ])
             ->all();

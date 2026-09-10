@@ -26,7 +26,7 @@ return [
     |
     | Local dev origins are always allowed. Additional origins (e.g. a Vercel
     | preview/demo URL, or the real production domain once it exists) can be
-    | added without a code change via CORS_ALLOWED_ORIGINS — a comma-separated
+    | added without a code change via CORS_ALLOWED_ORIGINS - a comma-separated
     | list in .env, e.g. CORS_ALLOWED_ORIGINS=https://my-demo.vercel.app
     |
     */

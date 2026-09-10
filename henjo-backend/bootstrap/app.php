@@ -16,7 +16,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         // Railway (and most PaaS hosts) terminate TLS at an edge proxy and
         // forward plain HTTP to the container, so Laravel must trust the
-        // X-Forwarded-* headers to know the original request was HTTPS —
+        // X-Forwarded-* headers to know the original request was HTTPS -
         // otherwise asset()/url() generate http:// links behind an https:// site.
         $middleware->trustProxies(at: '*');
     })

@@ -22,7 +22,7 @@
       "@/*": ["./*"]
       // "@/*": ["./src/*"],
       // "@/types/*": ["./src/types/*"],
-      // "@/types": ["./types/index.ts"],  // 👈 This line!
+      // "@/types": ["./types/index.ts"],  // This line!
       // "@/components/*": ["./src/components/*"],
       // "@/lib/*": ["lib/*"],
       // "@/utils/*": ["lib/utils/*"],

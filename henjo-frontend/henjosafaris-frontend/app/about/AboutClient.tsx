@@ -54,7 +54,7 @@ export default function AboutClient({ page, settings }: AboutClientProps) {
     }, []);
 
     // Scrolls by one viewport's worth of cards (however many are visible at
-    // the current breakpoint — 1 on mobile, up to 3 on desktop) rather than
+    // the current breakpoint - 1 on mobile, up to 3 on desktop) rather than
     // a fixed pixel amount, so the buttons stay in sync with native swipe.
     const scrollTeamBy = (direction: 1 | -1) => {
         const el = teamScrollRef.current;
@@ -173,8 +173,8 @@ export default function AboutClient({ page, settings }: AboutClientProps) {
 
                         {/* Scroll Hint */}
                         <div className="text-center mt-6">
-                            <p className="text-sm animate-pulse" style={{ color: 'var(--text-muted)' }}>
-                                ← Scroll to see more services →
+                            <p className="text-sm animate-pulse inline-flex items-center gap-2" style={{ color: 'var(--text-muted)' }}>
+                                <FaChevronLeft className="text-xs" aria-hidden /> Scroll to see more services <FaChevronRight className="text-xs" aria-hidden />
                             </p>
                         </div>
                     </div>
@@ -229,7 +229,7 @@ export default function AboutClient({ page, settings }: AboutClientProps) {
                         )}
                     </div>
 
-                    {/* Carousel Container — a native horizontal scroll-snap
+                    {/* Carousel Container - a native horizontal scroll-snap
                         strip rather than a JS-computed transform: on phones
                         each card is full-width, so swiping snaps one member
                         at a time; from sm/md up, 2-3 cards show per "page"
@@ -277,7 +277,7 @@ export default function AboutClient({ page, settings }: AboutClientProps) {
                                                 className="text-xs font-bold transition hover:text-[var(--brand-gold-hover)]"
                                                 style={{ color: 'var(--brand-gold)' }}
                                             >
-                                                View Bio & Profile →
+                                                <span className="inline-flex items-center gap-1.5">View Bio &amp; Profile <FaChevronRight className="text-[0.65rem]" aria-hidden /></span>
                                             </Link>
                                         </div>
                                     </div>

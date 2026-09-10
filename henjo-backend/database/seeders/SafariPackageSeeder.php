@@ -15,15 +15,15 @@ class SafariPackageSeeder extends Seeder
 {
     public function run()
     {
-        $this->command->info('🚀 Starting Real Safari Package Seeder with Exact Live Images...');
+        $this->command->info('Starting Real Safari Package Seeder with Exact Live Images...');
 
         $packagesData = [
             [
                 'title' => '12-Day Kenya Classic Signature Wildlife Safari',
                 'slug' => '12-day-kenya-classic-signature-wildlife-safari-2',
                 'country_code' => 'KE',
-                'summary' => 'This 12-day safari takes you to around Kenya’s best tourist attractions from lions, elephants, cheetahs, zebras and wildebeests providing an authentic dose of African wildlife and creates memorable experiences.',
-                'description' => 'This 12-day safari takes you to around Kenya’s best tourist attractions from lions, elephants, cheetahs, zebras and wildebeests providing an authentic dose of African wildlife and creates memorable experiences.',
+                'summary' => 'This 12-day safari takes you to around Kenya\'s best tourist attractions from lions, elephants, cheetahs, zebras and wildebeests providing an authentic dose of African wildlife and creates memorable experiences.',
+                'description' => 'This 12-day safari takes you to around Kenya\'s best tourist attractions from lions, elephants, cheetahs, zebras and wildebeests providing an authentic dose of African wildlife and creates memorable experiences.',
                 'duration_days' => 1,
                 'duration_nights' => 0,
                 'base_price' => 0.0,
@@ -62,8 +62,8 @@ class SafariPackageSeeder extends Seeder
                 'title' => '8 Days Best of Kenya Safari',
                 'slug' => '8-days-best-of-kenya-safari',
                 'country_code' => 'KE',
-                'summary' => 'In this 8 days adventure, you’ll travel to Amboseli National Park, spending two nights in the home of the largest tuskers you will ever see. You’ll be stopping for a night in the idyllic Lake Nakuru and another in Lake N...',
-                'description' => 'In this 8 days adventure, you’ll travel to Amboseli National Park, spending two nights in the home of the largest tuskers you will ever see. You’ll be stopping for a night in the idyllic Lake Nakuru and another in Lake Naivasha. You’ll then go on your way to the Masai Mara is probably the most prolific wildlife destination on the planet.',
+                'summary' => 'In this 8 days adventure, you\'ll travel to Amboseli National Park, spending two nights in the home of the largest tuskers you will ever see. You\'ll be stopping for a night in the idyllic Lake Nakuru and another in Lake N...',
+                'description' => 'In this 8 days adventure, you\'ll travel to Amboseli National Park, spending two nights in the home of the largest tuskers you will ever see. You\'ll be stopping for a night in the idyllic Lake Nakuru and another in Lake Naivasha. You\'ll then go on your way to the Masai Mara is probably the most prolific wildlife destination on the planet.',
                 'duration_days' => 8,
                 'duration_nights' => 7,
                 'base_price' => 0.0,
@@ -90,7 +90,7 @@ class SafariPackageSeeder extends Seeder
                 'slug' => '9-day-kenya-beach-holiday-and-luxury-wildlife-safari',
                 'country_code' => 'KE',
                 'summary' => 'A Kenyan beach holiday and game-safari combo is one of the best ways to explore magical Kenya. The trip will take you to idyllic destinations and is perfect for married couples looking to add some spark to their union, o...',
-                'description' => 'A Kenyan beach holiday and game-safari combo is one of the best ways to explore magical Kenya. The trip will take you to idyllic destinations and is perfect for married couples looking to add some spark to their union, or even for honeymooners! A game safari will leave you in awe of Africa’s rich heritage of flora and fauna and leave you feeling connected to nature. While on the Kenyan Coast, you will encounter breathtaking natural attractions, stunningly beautiful beaches, and luxury resorts.',
+                'description' => 'A Kenyan beach holiday and game-safari combo is one of the best ways to explore magical Kenya. The trip will take you to idyllic destinations and is perfect for married couples looking to add some spark to their union, or even for honeymooners! A game safari will leave you in awe of Africa\'s rich heritage of flora and fauna and leave you feeling connected to nature. While on the Kenyan Coast, you will encounter breathtaking natural attractions, stunningly beautiful beaches, and luxury resorts.',
                 'duration_days' => 1,
                 'duration_nights' => 0,
                 'base_price' => 0.0,
@@ -109,8 +109,8 @@ class SafariPackageSeeder extends Seeder
                 'title' => 'Kigali- Rwanda City Tour',
                 'slug' => 'kigali-rwanda-city-tour',
                 'country_code' => 'RW',
-                'summary' => 'This city tour is for those people who wish to visit an interesting place in Africa but don’t have a whole lot of time. Here in Rwanda, this one day visit will take you to the City Markets (Kimironko) where the sites and...',
-                'description' => 'This city tour is for those people who wish to visit an interesting place in Africa but don’t have a whole lot of time. Here in Rwanda, this one day visit will take you to the City Markets (Kimironko) where the sites and sounds are amazing and it is also very Cheap! This trip also includes a visit of the Genocide Memorial Centre at Gizozi, where contacts with local people provide the discovery of all types of artisanal products.',
+                'summary' => 'This city tour is for those people who wish to visit an interesting place in Africa but don\'t have a whole lot of time. Here in Rwanda, this one day visit will take you to the City Markets (Kimironko) where the sites and...',
+                'description' => 'This city tour is for those people who wish to visit an interesting place in Africa but don\'t have a whole lot of time. Here in Rwanda, this one day visit will take you to the City Markets (Kimironko) where the sites and sounds are amazing and it is also very Cheap! This trip also includes a visit of the Genocide Memorial Centre at Gizozi, where contacts with local people provide the discovery of all types of artisanal products.',
                 'duration_days' => 1,
                 'duration_nights' => 0,
                 'base_price' => 0.0,
@@ -169,8 +169,8 @@ class SafariPackageSeeder extends Seeder
                 'title' => '12-Day Kenya Classic Signature Wildlife Safari',
                 'slug' => '12-day-kenya-classic-signature-wildlife-safari',
                 'country_code' => 'KE',
-                'summary' => 'Arrival You’ll be collected from the airport and Accommodation before the tour starts can be arranged for an extra cost.',
-                'description' => 'Arrival You’ll be collected from the airport and Accommodation before the tour starts can be arranged for an extra cost.',
+                'summary' => 'Arrival You\'ll be collected from the airport and Accommodation before the tour starts can be arranged for an extra cost.',
+                'description' => 'Arrival You\'ll be collected from the airport and Accommodation before the tour starts can be arranged for an extra cost.',
                 'duration_days' => 1,
                 'duration_nights' => 0,
                 'base_price' => 0.0,
@@ -189,8 +189,8 @@ class SafariPackageSeeder extends Seeder
                 'title' => '4-Day Bwindi Gorilla Trekking Flying Safari',
                 'slug' => '4-day-bwindi-gorilla-trekking-flying-safari',
                 'country_code' => 'UG',
-                'summary' => 'The top highlight on this 4-day Uganda Gorilla Safari is, of course, African Mountain Gorilla Trekking in Uganda’s Bwindi Impenetrable Forest. The Uganda gorilla trek takes us through the dense jungle to encounter the en...',
-                'description' => 'The top highlight on this 4-day Uganda Gorilla Safari is, of course, African Mountain Gorilla Trekking in Uganda’s Bwindi Impenetrable Forest. The Uganda gorilla trek takes us through the dense jungle to encounter the endangered mountain gorillas in the wild. Bwindi Forest is also known for its high biodiversity and excellent bird watching.',
+                'summary' => 'The top highlight on this 4-day Uganda Gorilla Safari is, of course, African Mountain Gorilla Trekking in Uganda\'s Bwindi Impenetrable Forest. The Uganda gorilla trek takes us through the dense jungle to encounter the en...',
+                'description' => 'The top highlight on this 4-day Uganda Gorilla Safari is, of course, African Mountain Gorilla Trekking in Uganda\'s Bwindi Impenetrable Forest. The Uganda gorilla trek takes us through the dense jungle to encounter the endangered mountain gorillas in the wild. Bwindi Forest is also known for its high biodiversity and excellent bird watching.',
                 'duration_days' => 1,
                 'duration_nights' => 0,
                 'base_price' => 0.0,
@@ -364,11 +364,11 @@ class SafariPackageSeeder extends Seeder
                 'image_url' => 'images/safaris/5-day-mount-elgon-hiking-safari.jpg',
             ],
             [
-                'title' => '3-Day Safari – Tarangire, Ngorongoro & Lake Manyara',
+                'title' => '3-Day Safari - Tarangire, Ngorongoro & Lake Manyara',
                 'slug' => '3-day-safari-tarangire-ngorongoro-lake-manyara',
                 'country_code' => 'TZ',
-                'summary' => 'This safari will visit Lake Manyara National Park where you can see the tree-climbing lions and Tarangire National Park where you can see the biggest land animals walking in big numbers. You’ll also get a scenic and mesm...',
-                'description' => 'This safari will visit Lake Manyara National Park where you can see the tree-climbing lions and Tarangire National Park where you can see the biggest land animals walking in big numbers. You’ll also get a scenic and mesmerizing visit to the Ngorongoro Crater, a place like no other in the entire world. You will enjoy wildlife and phenomenal landscapes.',
+                'summary' => 'This safari will visit Lake Manyara National Park where you can see the tree-climbing lions and Tarangire National Park where you can see the biggest land animals walking in big numbers. You\'ll also get a scenic and mesm...',
+                'description' => 'This safari will visit Lake Manyara National Park where you can see the tree-climbing lions and Tarangire National Park where you can see the biggest land animals walking in big numbers. You\'ll also get a scenic and mesmerizing visit to the Ngorongoro Crater, a place like no other in the entire world. You will enjoy wildlife and phenomenal landscapes.',
                 'duration_days' => 1,
                 'duration_nights' => 0,
                 'base_price' => 0.0,
@@ -379,7 +379,7 @@ class SafariPackageSeeder extends Seeder
                 'popular' => true,
                 'status' => 'published',
                 'itinerary' => [
-                    ['day_number' => 1, 'title' => 'Day 1 - 3-Day Safari – Tarangire, Ngorongoro & Lake Manyara', 'description' => 'Enjoy full-day game drive and sightseeing experience on Day 1.']
+                    ['day_number' => 1, 'title' => 'Day 1 - 3-Day Safari - Tarangire, Ngorongoro & Lake Manyara', 'description' => 'Enjoy full-day game drive and sightseeing experience on Day 1.']
                 ],
                 'image_url' => 'images/safaris/3-day-safari-tarangire-ngorongoro-lake-manyara.jpg',
             ],
@@ -408,7 +408,7 @@ class SafariPackageSeeder extends Seeder
                 'slug' => '4-day-tanzania-safari-tarangire-serengeti-manyara',
                 'country_code' => 'TZ',
                 'summary' => 'On this 4-day lodge safari you will visit the Lake Manyara National Park, Tarangire National Park, the Ngorongoro Crater and Serengeti National Park. The seasonal sight of thousands of wildebeests and zebras crossing the...',
-                'description' => 'On this 4-day lodge safari you will visit the Lake Manyara National Park, Tarangire National Park, the Ngorongoro Crater and Serengeti National Park. The seasonal sight of thousands of wildebeests and zebras crossing the grassland savannah is something to behold and is surely one of Africa’s natural wonders. Furthermore you will be awarded with beautiful landscapes, an animal-filled crater and thousands of flamingos.',
+                'description' => 'On this 4-day lodge safari you will visit the Lake Manyara National Park, Tarangire National Park, the Ngorongoro Crater and Serengeti National Park. The seasonal sight of thousands of wildebeests and zebras crossing the grassland savannah is something to behold and is surely one of Africa\'s natural wonders. Furthermore you will be awarded with beautiful landscapes, an animal-filled crater and thousands of flamingos.',
                 'duration_days' => 1,
                 'duration_nights' => 0,
                 'base_price' => 0.0,
@@ -467,8 +467,8 @@ class SafariPackageSeeder extends Seeder
                 'title' => '5-Day Masai Mara, Nakuru, Naivasha',
                 'slug' => '5-day-masai-mara-nakuru-naivasha',
                 'country_code' => 'KE',
-                'summary' => 'This adventure safari takes you through Kenya’s best game reserve, the Masai Mara National Reserve, for 2 nights. Then we head down the great rift valley to Lake Nakuru National Park, home to the rare white rhino species...',
-                'description' => 'This adventure safari takes you through Kenya’s best game reserve, the Masai Mara National Reserve, for 2 nights. Then we head down the great rift valley to Lake Nakuru National Park, home to the rare white rhino species as well as a bird’s paradise. We will also visit Lake Naivasha and Hell’s Gate National Park.',
+                'summary' => 'This adventure safari takes you through Kenya\'s best game reserve, the Masai Mara National Reserve, for 2 nights. Then we head down the great rift valley to Lake Nakuru National Park, home to the rare white rhino species...',
+                'description' => 'This adventure safari takes you through Kenya\'s best game reserve, the Masai Mara National Reserve, for 2 nights. Then we head down the great rift valley to Lake Nakuru National Park, home to the rare white rhino species as well as a bird\'s paradise. We will also visit Lake Naivasha and Hell\'s Gate National Park.',
                 'duration_days' => 1,
                 'duration_nights' => 0,
                 'base_price' => 0.0,
@@ -487,8 +487,8 @@ class SafariPackageSeeder extends Seeder
                 'title' => '4-Day Tsavo and Amboseli Kenya Safari',
                 'slug' => '4-day-tsavo-and-amboseli-kenya-safari',
                 'country_code' => 'KE',
-                'summary' => 'This Kenya safari with a 4×4 Land Cruiser and a driver-guide who is experienced in spotting wildlife, will visit Amboseli with the majestic Mt. Kilimanjaro on the horizon. Experience the rolling plains, the picturesque T...',
-                'description' => 'This Kenya safari with a 4×4 Land Cruiser and a driver-guide who is experienced in spotting wildlife, will visit Amboseli with the majestic Mt. Kilimanjaro on the horizon. Experience the rolling plains, the picturesque Taita Hills and the lava flows, all on a plateau dotted with acacia, scrub and bushland of Tsavo West and the large herds of “red” elephants in Tsavo East.',
+                'summary' => 'This Kenya safari with a 4x4 Land Cruiser and a driver-guide who is experienced in spotting wildlife, will visit Amboseli with the majestic Mt. Kilimanjaro on the horizon. Experience the rolling plains, the picturesque T...',
+                'description' => 'This Kenya safari with a 4x4 Land Cruiser and a driver-guide who is experienced in spotting wildlife, will visit Amboseli with the majestic Mt. Kilimanjaro on the horizon. Experience the rolling plains, the picturesque Taita Hills and the lava flows, all on a plateau dotted with acacia, scrub and bushland of Tsavo West and the large herds of "red" elephants in Tsavo East.',
                 'duration_days' => 1,
                 'duration_nights' => 0,
                 'base_price' => 0.0,
@@ -524,7 +524,7 @@ class SafariPackageSeeder extends Seeder
                 'image_url' => 'images/safaris/3-day-best-of-masai-mara.jpg',
             ],
             [
-                'title' => '3-Day Rwanda’s Remarkable Akagera Safari',
+                'title' => '3-Day Rwanda\'s Remarkable Akagera Safari',
                 'slug' => '3-day-rwandas-remarkable-akagera-safari',
                 'country_code' => 'RW',
                 'summary' => 'These 3 days Akagera national park wildlife safari will offer you the ultimate game drives experience in Akagera national park. The park is the only Savannah park in Rwanda hosting a number of big mammals with the most s...',
@@ -539,7 +539,7 @@ class SafariPackageSeeder extends Seeder
                 'popular' => true,
                 'status' => 'published',
                 'itinerary' => [
-                    ['day_number' => 1, 'title' => 'Day 1 - 3-Day Rwanda’s Remarkable Akagera Safari', 'description' => 'Enjoy full-day game drive and sightseeing experience on Day 1.']
+                    ['day_number' => 1, 'title' => 'Day 1 - 3-Day Rwanda\'s Remarkable Akagera Safari', 'description' => 'Enjoy full-day game drive and sightseeing experience on Day 1.']
                 ],
                 'image_url' => 'images/safaris/3-day-rwandas-remarkable-akagera-safari.jpg',
             ],
@@ -567,8 +567,8 @@ class SafariPackageSeeder extends Seeder
                 'title' => '3-Day Gorillas and Golden Monkey Safari',
                 'slug' => '3-day-gorillas-and-golden-monkey-safari',
                 'country_code' => 'RW',
-                'summary' => 'Welcome to Rwanda ”a country of a thousand hills” this tour has been created to visitors looking into visiting gorillas in Uganda and golden monkeys of volcanoes national park of Rwanda and friendly quote. It starts and ...',
-                'description' => 'Welcome to Rwanda ”a country of a thousand hills” this tour has been created to visitors looking into visiting gorillas in Uganda and golden monkeys of volcanoes national park of Rwanda and friendly quote. It starts and end in kigali international airport of Rwanda. Your safari guide will ready to take you places as per program.',
+                'summary' => 'Welcome to Rwanda "a country of a thousand hills" this tour has been created to visitors looking into visiting gorillas in Uganda and golden monkeys of volcanoes national park of Rwanda and friendly quote. It starts and ...',
+                'description' => 'Welcome to Rwanda "a country of a thousand hills" this tour has been created to visitors looking into visiting gorillas in Uganda and golden monkeys of volcanoes national park of Rwanda and friendly quote. It starts and end in kigali international airport of Rwanda. Your safari guide will ready to take you places as per program.',
                 'duration_days' => 1,
                 'duration_nights' => 0,
                 'base_price' => 0.0,
@@ -587,8 +587,8 @@ class SafariPackageSeeder extends Seeder
                 'title' => '3-Day Rwanda Gorilla Safari',
                 'slug' => '3-day-rwanda-gorilla-safari',
                 'country_code' => 'RW',
-                'summary' => 'Mountain gorillas survive of vegetation as their daily food, which comprises of leaves, buds, shoots, fruits, bedstraw, celery, stinging nettles and flowers among others. The young gorilla babies survive of their mother’...',
-                'description' => 'Mountain gorillas survive of vegetation as their daily food, which comprises of leaves, buds, shoots, fruits, bedstraw, celery, stinging nettles and flowers among others. The young gorilla babies survive of their mother’s breastfeeding milk rill the age of three after which they start feeding on vegetation just like the grown family members. Unlike other animal species, mountain gorillas do not drink water but only survive on the waters within the vegetation they eat.',
+                'summary' => 'Mountain gorillas survive of vegetation as their daily food, which comprises of leaves, buds, shoots, fruits, bedstraw, celery, stinging nettles and flowers among others. The young gorilla babies survive of their mother\'...',
+                'description' => 'Mountain gorillas survive of vegetation as their daily food, which comprises of leaves, buds, shoots, fruits, bedstraw, celery, stinging nettles and flowers among others. The young gorilla babies survive of their mother\'s breastfeeding milk rill the age of three after which they start feeding on vegetation just like the grown family members. Unlike other animal species, mountain gorillas do not drink water but only survive on the waters within the vegetation they eat.',
                 'duration_days' => 1,
                 'duration_nights' => 0,
                 'base_price' => 0.0,
@@ -787,8 +787,8 @@ class SafariPackageSeeder extends Seeder
                 'title' => '4-Day Kidepo Wildlife Safari',
                 'slug' => '4-day-kidepo-wildlife-safari',
                 'country_code' => 'UG',
-                'summary' => 'This four day trip takes to Kidepo one of Uganda’s most spectacular parks and it is located in Uganda’s remote north –eastern corner.',
-                'description' => 'This four day trip takes to Kidepo one of Uganda’s most spectacular parks and it is located in Uganda’s remote north –eastern corner.',
+                'summary' => 'This four day trip takes to Kidepo one of Uganda\'s most spectacular parks and it is located in Uganda\'s remote north -eastern corner.',
+                'description' => 'This four day trip takes to Kidepo one of Uganda\'s most spectacular parks and it is located in Uganda\'s remote north -eastern corner.',
                 'duration_days' => 1,
                 'duration_nights' => 0,
                 'base_price' => 0.0,
@@ -806,11 +806,11 @@ class SafariPackageSeeder extends Seeder
         ];
 
         // Real per-tour corrections sourced from henjosafaris-content-audit.md
-        // (Sections 5.2/5.3/5.4) — duration/price/category data the WordPress
+        // (Sections 5.2/5.3/5.4) - duration/price/category data the WordPress
         // site actually had, replacing this seeder's earlier 1-day/$0/
         // wildlife-adventure-only placeholder defaults. Three slugs below
         // aren't documented in the audit (no matching product was found on
-        // the live site) — those keep base_price at 0 rather than inventing
+        // the live site) - those keep base_price at 0 rather than inventing
         // a number, but still get a corrected duration and a sensible
         // category based on their own title.
         $corrections = [
@@ -854,15 +854,15 @@ class SafariPackageSeeder extends Seeder
             '4-day-kidepo-wildlife-safari' => ['duration_days' => 4, 'duration_nights' => 3, 'base_price' => 750.0, 'categories' => ['day-tours', 'wildlife-adventure']],
         ];
 
-        // Real condensed day-by-day itineraries from the audit (§5.1/§5.3),
+        // Real condensed day-by-day itineraries from the audit (section 5.1/section 5.3),
         // replacing the generic "Enjoy full-day game drive..." placeholder.
         // Packages sharing one real audit listing (documented near-duplicates)
         // reuse that listing's itinerary.
         $sharedItineraries = [
             'bwindi_gorilla_flying' => [
                 ['day_number' => 1, 'title' => 'Arrival at Entebbe Airport and transfer to Hotel', 'description' => "Welcome by our representative at Entebbe International Airport and transfer to your hotel in Entebbe. Overnight at Hotel No.5."],
-                ['day_number' => 2, 'title' => 'Entebbe – Fly to Bwindi – Buhoma Lodge', 'description' => 'Transfer to Entebbe Airport for a scheduled flight (approx. 2 hours) to Bwindi (Kihihi or Kisoro airstrip), then transfer to your lodge. Afternoon Batwa trail cultural experience. Overnight at Buhoma Lodge.'],
-                ['day_number' => 3, 'title' => 'Bwindi Gorilla Trekking', 'description' => "Briefing at 8am with Uganda Wildlife Authority staff, followed by gorilla trekking (2–6 hours depending on the family's location). Afternoon Buhoma Village Walk. Overnight at Buhoma Lodge."],
+                ['day_number' => 2, 'title' => 'Entebbe - Fly to Bwindi - Buhoma Lodge', 'description' => 'Transfer to Entebbe Airport for a scheduled flight (approx. 2 hours) to Bwindi (Kihihi or Kisoro airstrip), then transfer to your lodge. Afternoon Batwa trail cultural experience. Overnight at Buhoma Lodge.'],
+                ['day_number' => 3, 'title' => 'Bwindi Gorilla Trekking', 'description' => "Briefing at 8am with Uganda Wildlife Authority staff, followed by gorilla trekking (2-6 hours depending on the family's location). Afternoon Buhoma Village Walk. Overnight at Buhoma Lodge."],
                 ['day_number' => 4, 'title' => 'Bwindi to the Airstrip, Fly back to Entebbe', 'description' => 'Morning or afternoon flight back to Entebbe (options depart 09:45 or 14:45). End of services.'],
             ],
             'birding_uganda' => [
@@ -886,7 +886,7 @@ class SafariPackageSeeder extends Seeder
                 ['day_number' => 1, 'title' => 'Kampala Cultural Day Tour', 'description' => "Visit Maridadi Crafts (1hr), Kasubi Tombs (3hrs, Buganda royal burial site), Kabaka's Palace and the Mengo torture chambers (1hr), and the Ndere Cultural Centre traditional dance show (3hrs, Wed/Fri/Sun 7pm)."],
             ],
             'jinja_rafting' => [
-                ['day_number' => 1, 'title' => 'Jinja White Water Rafting', 'description' => 'Depart Kampala at 6am for Jinja. Choose a Grade 5 rapids raft or a family float option (minimum age 6). 3–4 hours on the water, plus a Jinja town city tour.'],
+                ['day_number' => 1, 'title' => 'Jinja White Water Rafting', 'description' => 'Depart Kampala at 6am for Jinja. Choose a Grade 5 rapids raft or a family float option (minimum age 6). 3-4 hours on the water, plus a Jinja town city tour.'],
             ],
             'kampala_city' => [
                 ['day_number' => 1, 'title' => 'Kampala Walking City Tour', 'description' => "Walking tour covering the old taxi park, Owino market, Kabaka's Palace, the Idi Amin torture chambers, Kasubi Tombs, Kabaka's Lake, the Hindu and Bahai temples, the Gaddafi Mosque, the Uganda Martyrs Shrine, the Independence Monument, and Rolex street food."],
@@ -968,7 +968,7 @@ class SafariPackageSeeder extends Seeder
             'rw_gorilla_3day' => [
                 ['day_number' => 1, 'title' => 'Arrival Kigali', 'description' => 'Arrive in Kigali, hotel transfer, tour briefing.'],
                 ['day_number' => 2, 'title' => 'Kigali City Tour to Volcanoes NP', 'description' => 'Kigali city tour (Genocide Memorial, Art Gallery, Kimironko market), transfer to Volcanoes National Park (Musanze). Overnight Hotel Des Mille Collines.'],
-                ['day_number' => 3, 'title' => 'Gorilla Trekking & Departure', 'description' => 'Gorilla trekking (2–4 hours), transfer to Kigali airport for departure.'],
+                ['day_number' => 3, 'title' => 'Gorilla Trekking & Departure', 'description' => 'Gorilla trekking (2-4 hours), transfer to Kigali airport for departure.'],
             ],
             'ug_5day_holiday' => [
                 ['day_number' => 1, 'title' => 'Entebbe to Kibale', 'description' => 'Transfer to Kibale, Bigodi Wetland walk.'],
@@ -1194,7 +1194,7 @@ class SafariPackageSeeder extends Seeder
             }
 
             // Premium fly-in/luxury packages include international + domestic
-            // flights per the audit (§5.4) — everyone else excludes flights.
+            // flights per the audit (section 5.4) - everyone else excludes flights.
             $includesFlights = $correction['flights'] ?? false;
 
             if ($includesFlights) {
@@ -1218,8 +1218,8 @@ class SafariPackageSeeder extends Seeder
                 ]);
             }
 
-            // Attach the real category set for this tour (audit §5.2/§5.3),
-            // replacing whatever it was previously assigned — a full sync()
+            // Attach the real category set for this tour (audit section 5.2/section 5.3),
+            // replacing whatever it was previously assigned - a full sync()
             // rather than syncWithoutDetaching() so packages that were
             // wrongly stuck on wildlife-adventure-only get corrected.
             $categorySlugs = $correction['categories'] ?? ['wildlife-adventure'];
@@ -1227,6 +1227,6 @@ class SafariPackageSeeder extends Seeder
             $package->categories()->sync($categoryIds);
         }
 
-        $this->command->info('✅ Successfully seeded ' . count($packagesData) . ' Safari Packages with Exact Live Images!');
+        $this->command->info('Successfully seeded ' . count($packagesData) . ' Safari Packages with Exact Live Images!');
     }
 }

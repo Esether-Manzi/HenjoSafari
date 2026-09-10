@@ -67,6 +67,6 @@ class TestimonialSeeder extends Seeder
             );
         }
 
-        $this->command->info('✅ Testimonials seeded!');
+        $this->command->info('Testimonials seeded!');
     }
 }

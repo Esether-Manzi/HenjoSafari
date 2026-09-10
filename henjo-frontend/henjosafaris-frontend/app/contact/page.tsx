@@ -39,7 +39,7 @@ import {
     FaCheckCircle
 } from 'react-icons/fa';
 
-// International phone numbers aren't part of the editable CMS content —
+// International phone numbers aren't part of the editable CMS content -
 // they're a fixed, rarely-changing list tied to each regional office.
 const internationalContacts = [
     { country: 'United Kingdom', phone: '+44 1226 520 77' },

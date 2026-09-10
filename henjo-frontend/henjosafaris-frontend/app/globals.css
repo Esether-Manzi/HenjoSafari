@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* =====================================================
-   HENJO AFRICAN SAFARIS — BRAND THEME SYSTEM
+   HENJO AFRICAN SAFARIS - BRAND THEME SYSTEM
    =====================================================
    Brand colors extracted from the company logo:
    - Safari Gold:   #D4A017  (Africa continent, sunset)
@@ -12,11 +12,11 @@
    ===================================================== */
 
 /* =====================================================
-   CSS CUSTOM PROPERTIES — LIGHT THEME (default)
+   CSS CUSTOM PROPERTIES - LIGHT THEME (default)
    ===================================================== */
 
 /* =====================================================
-   HENJO AFRICAN SAFARIS — BRAND THEME SYSTEM
+   HENJO AFRICAN SAFARIS - BRAND THEME SYSTEM
    =====================================================
    Brand colors extracted from the company logo:
    - Safari Gold:   #D4A017  (Africa continent, sunset)
@@ -26,7 +26,7 @@
    - Charcoal:      #2D2D2D  (circle, animal silhouettes)
    ===================================================== */
 /* =====================================================
-   CSS CUSTOM PROPERTIES — LIGHT THEME (default)
+   CSS CUSTOM PROPERTIES - LIGHT THEME (default)
    ===================================================== */
 :root {
   /* Brand primaries */
@@ -77,7 +77,7 @@
 }
 
 /* =====================================================
-   CSS CUSTOM PROPERTIES — DARK THEME
+   CSS CUSTOM PROPERTIES - DARK THEME
    ===================================================== */
 .dark {
   --brand-gold: #E5B83A;
@@ -91,7 +91,7 @@
   --brand-maroon: #D4453A;
   --brand-maroon-light: #EF5350;
   --brand-charcoal: #E0E0E0;
-  /* Surfaces — forest-tinted dark */
+  /* Surfaces - forest-tinted dark */
   --bg-primary: #0F1A12;
   --bg-secondary: #152018;
   --bg-tertiary: #1A2A1E;
@@ -127,7 +127,7 @@
 }
 
 /* =====================================================
-   THEME — Tailwind v4 @theme tokens
+   THEME - Tailwind v4 @theme tokens
    ===================================================== */
 @theme {
   /* Fonts */
@@ -191,7 +191,7 @@
 }
 
 /* =====================================================
-   THEME — Tailwind v4 @theme tokens
+   THEME - Tailwind v4 @theme tokens
    ===================================================== */
 
 /* @theme {
@@ -229,7 +229,7 @@ body {
 /* =====================================================
    MOBILE TEXT ALIGNMENT
    Below Tailwind's `sm` breakpoint, centered/right-aligned copy
-   reads poorly on narrow screens — force everything back to the
+   reads poorly on narrow screens - force everything back to the
    natural left-reading flow regardless of what alignment utility
    a component (or admin-authored content block) applies.
    ===================================================== */
@@ -242,7 +242,7 @@ body {
 }
 
 /* =====================================================
-   COMPONENTS — Utility Classes
+   COMPONENTS - Utility Classes
    ===================================================== */
 
 @utility card {

@@ -14,6 +14,7 @@ import {
     FaStar,
     FaCheckCircle,
     FaTimesCircle,
+    FaTimes,
     FaChevronDown,
     FaChevronUp,
     FaWhatsapp,
@@ -49,7 +50,7 @@ function formatPrice(base?: number | null, max?: number | null, currency = 'USD'
     if (baseNum <= 0) return 'Contact for Price';
     const maxNum = Number(max) || 0;
     if (maxNum > baseNum) {
-        return `${currency} ${baseNum.toLocaleString()} – ${maxNum.toLocaleString()}`;
+        return `${currency} ${baseNum.toLocaleString()} - ${maxNum.toLocaleString()}`;
     }
     return `${currency} ${baseNum.toLocaleString()}`;
 }
@@ -334,7 +335,7 @@ export default function SafariDetailPage() {
                                 )}
                             </div>
 
-                            {/* Trip style — compact chips rather than prose, so the sidebar
+                            {/* Trip style - compact chips rather than prose, so the sidebar
                                 stays scannable even with these extra fields */}
                             {(tour_privacy || comfort_level || min_age) && (
                                 <div className="flex flex-wrap gap-2 py-4" style={{ borderBottom: '1px solid var(--border-primary)' }}>
@@ -738,8 +739,8 @@ function BookingModal({ packageData, onClose }: any) {
             <div className="rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto" style={{ background: 'var(--bg-card)' }}>
                 <div className="sticky top-0 p-4 flex justify-between items-center" style={{ background: 'var(--bg-card)', borderBottom: '1px solid var(--border-primary)' }}>
                     <h2 className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>Book Your Safari</h2>
-                    <button onClick={onClose} className="text-2xl" style={{ color: 'var(--text-muted)' }}>
-                        ×
+                    <button onClick={onClose} aria-label="Close" className="text-xl" style={{ color: 'var(--text-muted)' }}>
+                        <FaTimes aria-hidden />
                     </button>
                 </div>
 
@@ -950,7 +951,7 @@ function BookingModal({ packageData, onClose }: any) {
                                     className="flex-1 font-bold py-3 rounded-lg transition disabled:opacity-60 disabled:cursor-not-allowed"
                                     style={{ background: 'var(--brand-green)', color: '#FFFFFF' }}
                                 >
-                                    {isSubmitting ? 'Submitting…' : 'Book Safari'}
+                                    {isSubmitting ? 'Submitting...' : 'Book Safari'}
                                 </button>
                             )}
                         </div>

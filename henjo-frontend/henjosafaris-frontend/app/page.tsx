@@ -14,7 +14,7 @@ import { cleanText } from '@/lib/utils/textFormat';
 import {
     FaGlobeAfrica, FaUserTie, FaMapMarkedAlt, FaUsers, FaLeaf, FaLaptop, FaChild, FaWheelchair,
     FaFirstAid, FaCompass, FaStar, FaRegStar, FaShieldAlt, FaQuoteLeft, FaHandshake,
-    FaFacebookF, FaInstagram, FaLinkedinIn, FaTiktok, FaTwitter, FaTripadvisor,
+    FaFacebookF, FaInstagram, FaLinkedinIn, FaTiktok, FaTwitter, FaTripadvisor, FaArrowRight,
 } from 'react-icons/fa';
 import type { SafariPackage, Activity } from '@/types/safari';
 import type { CmsPage } from '@/types/page';
@@ -34,13 +34,13 @@ const SECTION_ICONS: Record<string, React.ComponentType<{ className?: string; st
 };
 
 // The backend's public API is served under `/api/v1`, but static files
-// (Laravel's storage:link) live directly on that same host — so we derive
+// (Laravel's storage:link) live directly on that same host - so we derive
 // the origin from the API URL rather than hardcoding it.
 const API_ORIGIN = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1').replace(/\/api\/v1\/?$/, '');
 const HERO_VIDEO_URL = `${API_ORIGIN}/storage/images/home-page-hero-section.mp4`;
 
 // Picks up to `perCountry` packages from each destination country, preserving
-// the order countries first appear in — keeps the featured list varied
+// the order countries first appear in - keeps the featured list varied
 // instead of it being dominated by whichever country has the most entries.
 function pickPerCountry(packages: SafariPackage[], perCountry = 2): SafariPackage[] {
     const counts = new Map<string, number>();
@@ -385,7 +385,7 @@ export default function Home() {
                                 color: 'var(--text-on-gold)',
                             }}
                         >
-                            View All Safaris →
+                            <span className="inline-flex items-center gap-2">View All Safaris <FaArrowRight className="text-sm" aria-hidden /></span>
                         </Link>
                     </div>
                 </div>
@@ -528,7 +528,7 @@ export default function Home() {
                                             <div>
                                                 <p className="font-bold text-sm" style={{ color: 'var(--text-primary)' }}>{name}</p>
                                                 <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                                                    {[tripName, country].filter(Boolean).join(' · ')}
+                                                    {[tripName, country].filter(Boolean).join(' - ')}
                                                 </p>
                                             </div>
                                         </div>
@@ -783,7 +783,7 @@ export default function Home() {
                             className="font-bold px-8 py-4 rounded-full transition hover:scale-105 shadow-xl"
                             style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}
                         >
-                            Start Planning →
+                            <span className="inline-flex items-center gap-2">Start Planning <FaArrowRight className="text-sm" aria-hidden /></span>
                         </Link>
                         <Link
                             href="/contact"

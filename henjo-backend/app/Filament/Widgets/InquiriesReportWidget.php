@@ -30,9 +30,9 @@ class InquiriesReportWidget extends BaseWidget
             ->columns([
                 TextColumn::make('name')->searchable()->weight('semibold')->icon('heroicon-o-user-circle')->iconColor('info'),
                 TextColumn::make('email')->searchable()->icon('heroicon-o-envelope')->copyable(),
-                TextColumn::make('phone')->placeholder('—'),
+                TextColumn::make('phone')->placeholder('-'),
                 TextColumn::make('safariPackage.title')->label('Package')->placeholder('General inquiry')->badge()->color('gray'),
-                TextColumn::make('subject')->placeholder('—')->limit(30),
+                TextColumn::make('subject')->placeholder('-')->limit(30),
                 TextColumn::make('status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {

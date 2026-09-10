@@ -42,7 +42,7 @@ class BookingInfolist
                             ->label('Customer')
                             ->getStateUsing(fn ($record) => $record->customer
                                 ? trim("{$record->customer->first_name} {$record->customer->last_name}")
-                                : '—'),
+                                : '-'),
                         TextEntry::make('package_name')
                             ->label('Tour Package')
                             ->getStateUsing(fn ($record) => $record->safariPackage?->title ?? 'Not yet assigned'),

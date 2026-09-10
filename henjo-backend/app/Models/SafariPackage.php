@@ -105,7 +105,7 @@ class SafariPackage extends Model implements HasMedia
 
     public function categories()
     {
-        // ✅ Use the correct pivot table and column names
+        // Use the correct pivot table and column names
         return $this->belongsToMany(
             SafariCategory::class,
             'package_category',          // pivot table
@@ -128,7 +128,7 @@ class SafariPackage extends Model implements HasMedia
 
     public function activities()
     {
-        // ✅ Use the correct pivot table and column names
+        // Use the correct pivot table and column names
         return $this->belongsToMany(
             Activity::class,
             'package_activity',          // pivot table
@@ -149,7 +149,7 @@ class SafariPackage extends Model implements HasMedia
 
     public function accommodations()
     {
-        // ✅ Use the correct pivot table and column names
+        // Use the correct pivot table and column names
         return $this->belongsToMany(
             Accommodation::class,
             'package_accommodation',      // pivot table

@@ -21,9 +21,9 @@ foreach ($packages as $package) {
         $package->addMediaFromUrl($url)
                 ->usingName($package->title . ' Cover')
                 ->toMediaCollection('cover');
-        echo "✅ Added cover for: {$package->title}\n";
+        echo "Added cover for: {$package->title}\n";
     } catch (\Exception $e) {
-        echo "❌ Error adding cover for {$package->title}: " . $e->getMessage() . "\n";
+        echo "Error adding cover for {$package->title}: " . $e->getMessage() . "\n";
     }
 }
 
@@ -45,9 +45,9 @@ foreach ($packages as $package) {
             $package->addMediaFromUrl($url)
                     ->usingName($package->title . ' Gallery ' . ($index + 1))
                     ->toMediaCollection('gallery');
-            echo "✅ Added gallery image for: {$package->title}\n";
+            echo "Added gallery image for: {$package->title}\n";
         } catch (\Exception $e) {
-            echo "❌ Error: " . $e->getMessage() . "\n";
+            echo "Error: " . $e->getMessage() . "\n";
         }
     }
 }
@@ -63,4 +63,4 @@ foreach ($packages as $package) {
     echo "  Gallery: " . count($gallery) . " images\n";
 }
 
-echo "\n✅ Done!\n";
+echo "\nDone!\n";

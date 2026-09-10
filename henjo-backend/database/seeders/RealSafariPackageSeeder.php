@@ -18,7 +18,7 @@ use Illuminate\Support\Str;
  * packages (20 per country) sourced from SafariBookings.com, per the client's
  * audit documents. See henjo-safaris-content-migration notes: this data was
  * parsed from 4 .docx files into database/seeders/data/real_safari_packages.json
- * ahead of time — this seeder just imports it.
+ * ahead of time - this seeder just imports it.
  */
 class RealSafariPackageSeeder extends Seeder
 {
@@ -34,7 +34,7 @@ class RealSafariPackageSeeder extends Seeder
         foreach ($packages as $data) {
             $destinationId = $destinationIds[$data['destination_slug']] ?? null;
             if (!$destinationId) {
-                $this->command->warn("Skipping '{$data['title']}' — unknown destination slug '{$data['destination_slug']}'");
+                $this->command->warn("Skipping '{$data['title']}' - unknown destination slug '{$data['destination_slug']}'");
                 continue;
             }
 
@@ -97,7 +97,7 @@ class RealSafariPackageSeeder extends Seeder
             $this->attachCoverImage($package, $data['destination_slug'], $data['title']);
         }
 
-        $this->command->info('✅ ' . count($packages) . ' real safari packages seeded!');
+        $this->command->info('' . count($packages) . ' real safari packages seeded!');
     }
 
     /**
@@ -130,7 +130,7 @@ class RealSafariPackageSeeder extends Seeder
      * Uganda packages ship with real cover photos (client-supplied). Kenya,
      * Tanzania, and Rwanda don't have client photos yet, so they use curated
      * royalty-free stock (Pexels, free for commercial use) matched by park/
-     * activity theme instead — see database/seeders/data/<country>_package_covers.json,
+     * activity theme instead - see database/seeders/data/<country>_package_covers.json,
      * each mapping exact package title to a filename in public/images/safaris/.
      * Any package without a matching photo falls back to the
      * chimpanzee-trekking placeholder rather than the generic silhouette.
@@ -160,7 +160,7 @@ class RealSafariPackageSeeder extends Seeder
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 
-        // Bookings/inquiries survive — just lose their package association,
+        // Bookings/inquiries survive - just lose their package association,
         // matching the existing nullOnDelete FK behavior.
         DB::table('bookings')->whereNotNull('package_id')->update(['package_id' => null]);
         DB::table('inquiries')->whereNotNull('package_id')->update(['package_id' => null]);

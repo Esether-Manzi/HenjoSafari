@@ -15,7 +15,7 @@ class PageContentSeeder extends Seeder
         $this->seedMenus();
         $this->seedPages();
 
-        $this->command->info('✅ Site settings, menus, and pages seeded!');
+        $this->command->info('Site settings, menus, and pages seeded!');
     }
 
     protected function seedSiteSettings(): void
@@ -147,7 +147,7 @@ class PageContentSeeder extends Seeder
 
                 // 'icon' here holds the logo filename under storage/app/public/henjo_profile/
                 // (client-supplied partner logos), not an icon key like other groups use.
-                // 'description' holds an optional link — left null where we don't have a
+                // 'description' holds an optional link - left null where we don't have a
                 // confirmed URL for that partner, rather than guessing one.
                 ['group' => 'partners', 'title' => 'Uganda Tourism Board', 'description' => null, 'icon' => 'Uganda_Toursim_Board.jpeg', 'sort_order' => 0],
                 ['group' => 'partners', 'title' => 'SafariBookings', 'description' => null, 'icon' => 'safariBookings.jpg', 'sort_order' => 1],
@@ -196,7 +196,7 @@ class PageContentSeeder extends Seeder
                 ['group' => 'values', 'title' => 'Excellence in customer service', 'description' => null, 'icon' => null, 'sort_order' => 2],
                 ['group' => 'values', 'title' => 'Respect for local communities and cultures', 'description' => null, 'icon' => null, 'sort_order' => 3],
 
-                ['group' => 'founder', 'title' => 'Our Founder, Henry Katinda', 'description' => "Henry Katinda is the Founder and Director of Henjo African Safaris, an East African travel company dedicated to creating authentic, responsible, and unforgettable travel experiences across Uganda, Kenya, Tanzania, and Rwanda.\nWith 5+ years of experience in tourism, Henry founded Henjo with a vision of connecting travelers from around the world with the incredible wildlife, landscapes, cultures, and communities of East Africa.\nBeyond tourism, Henry is also deeply committed to community development and social impact. He is the founder of Empathy Children Initiative (ECI), a nonprofit organization in Uganda working to expand opportunities for vulnerable children and communities through education, access to essential services, and community-focused initiatives.\nOne of ECI's key programs is Empathy Community High School – Mayuge, a tuition-free donor funded non profit high school established to provide vulnerable children with access to quality secondary education and a supportive learning environment.\nFor Henry, tourism and community development are closely connected. A portion of Henjo African Safaris' proceeds helps support the work of Empathy Children Initiative and Empathy Community High School, allowing travelers who choose to explore Africa with Henjo to indirectly contribute to positive change in the communities that make these journeys possible.", 'icon' => null, 'sort_order' => 0],
+                ['group' => 'founder', 'title' => 'Our Founder, Henry Katinda', 'description' => "Henry Katinda is the Founder and Director of Henjo African Safaris, an East African travel company dedicated to creating authentic, responsible, and unforgettable travel experiences across Uganda, Kenya, Tanzania, and Rwanda.\nWith 5+ years of experience in tourism, Henry founded Henjo with a vision of connecting travelers from around the world with the incredible wildlife, landscapes, cultures, and communities of East Africa.\nBeyond tourism, Henry is also deeply committed to community development and social impact. He is the founder of Empathy Children Initiative (ECI), a nonprofit organization in Uganda working to expand opportunities for vulnerable children and communities through education, access to essential services, and community-focused initiatives.\nOne of ECI's key programs is Empathy Community High School - Mayuge, a tuition-free donor funded non profit high school established to provide vulnerable children with access to quality secondary education and a supportive learning environment.\nFor Henry, tourism and community development are closely connected. A portion of Henjo African Safaris' proceeds helps support the work of Empathy Children Initiative and Empathy Community High School, allowing travelers who choose to explore Africa with Henjo to indirectly contribute to positive change in the communities that make these journeys possible.", 'icon' => null, 'sort_order' => 0],
                 ['group' => 'founder', 'title' => 'Tourism With a Purpose', 'description' => "Henry believes that travel should create value not only for the traveler, but also for the people and communities in the destinations they visit.\nThrough Henjo African Safaris, he is building a model of tourism where unforgettable experiences and meaningful community impact can go hand in hand.\nWhen you travel with Henjo, you are not only discovering Africa, you are also becoming part of a journey that gives back.", 'icon' => null, 'sort_order' => 1],
 
                 ['group' => 'commitment', 'title' => 'Our Commitment', 'description' => "Henjo African Safaris continues to endeavor to be sustainable in practice in the tours offered, to protect African wildlife and ensure the tourism industry continues to prosper.\nWe are working towards leaving a minimal negative impact on the environment and local communities, integrating environmental and social best practices into every aspect of the business.", 'icon' => null, 'sort_order' => 0],
@@ -231,7 +231,7 @@ class PageContentSeeder extends Seeder
             'meta_description' => 'Visa guides, entry requirements, and reliable travel information for your East Africa safari.',
             'sections' => [
                 ['group' => 'articles', 'title' => 'East Africa Tourist Visa Guide', 'description' => "This is a Joint Tourist Visa and it allows the traveler to travel to Uganda, Kenya, and Rwanda ONLY. It can be used multiple times for tourism purposes. The visa prohibits employment and is issued only for tourism purposes. The visa is valid for 90 days and is not renewable upon expiry or upon exit from the block. NB: the issuing country should be your first entry point. Apply online at visas.immigration.go.ug.\nRequirements: copy of the passport (bio-data page) with at least 6 months validity, a recent passport-size photograph, a Yellow Fever vaccination certificate, a return ticket, and a travel itinerary.", 'icon' => 'passport', 'sort_order' => 0],
-                ['group' => 'articles', 'title' => 'Entry Requirements For Uganda', 'description' => "Uganda Tourist Visa – Single Entry. This visa is granted to travelers coming to Uganda for tourism, is a single-entry visa, and can be granted for up to 3 months. Apply online at visas.immigration.go.ug.\nRequirements: passport copy (bio-data page) with at least 6 months validity, a tour plan, travel itinerary/booking, a recent passport-size photograph, and a Yellow Fever vaccination certificate.", 'icon' => 'file', 'sort_order' => 1],
+                ['group' => 'articles', 'title' => 'Entry Requirements For Uganda', 'description' => "Uganda Tourist Visa - Single Entry. This visa is granted to travelers coming to Uganda for tourism, is a single-entry visa, and can be granted for up to 3 months. Apply online at visas.immigration.go.ug.\nRequirements: passport copy (bio-data page) with at least 6 months validity, a tour plan, travel itinerary/booking, a recent passport-size photograph, and a Yellow Fever vaccination certificate.", 'icon' => 'file', 'sort_order' => 1],
             ],
             'is_active' => true,
         ]);
@@ -247,7 +247,7 @@ class PageContentSeeder extends Seeder
             'meta_description' => "Henjo African Safaris' partnership with Empathy Children Initiative supports vulnerable children across Africa.",
             'sections' => [
                 ['group' => 'programs', 'title' => 'Empathy Children Initiative (ECI)', 'description' => 'A nonprofit organization in Uganda working to expand opportunities for vulnerable children and communities through education, access to essential services, and community-focused initiatives.', 'icon' => null, 'sort_order' => 0],
-                ['group' => 'programs', 'title' => 'Empathy Community High School – Mayuge', 'description' => 'A tuition-free, donor-funded nonprofit high school established to provide vulnerable children with access to quality secondary education and a supportive learning environment.', 'icon' => null, 'sort_order' => 1],
+                ['group' => 'programs', 'title' => 'Empathy Community High School - Mayuge', 'description' => 'A tuition-free, donor-funded nonprofit high school established to provide vulnerable children with access to quality secondary education and a supportive learning environment.', 'icon' => null, 'sort_order' => 1],
             ],
             'is_active' => true,
         ]);

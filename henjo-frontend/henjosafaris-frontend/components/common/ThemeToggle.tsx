@@ -1,7 +1,7 @@
 // ============================================
-// THEME TOGGLE — 3-WAY (Light / Dark / System)
+// THEME TOGGLE - 3-WAY (Light / Dark / System)
 // ============================================
-// Cycles through: Light → Dark → System on each click.
+// Cycles through: Light -> Dark -> System on each click.
 // Shows the active mode icon with a tooltip.
 //
 // Icons: Light = Sun, Dark = Moon, System = Monitor

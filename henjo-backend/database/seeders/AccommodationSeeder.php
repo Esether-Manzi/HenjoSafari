@@ -10,7 +10,7 @@ class AccommodationSeeder extends Seeder
     public function run()
     {
         // Real lodges referenced across the safari itineraries in
-        // henjosafaris-content-audit.md §5.1/§5.3, replacing the earlier
+        // henjosafaris-content-audit.md section 5.1/section 5.3, replacing the earlier
         // generic Tanzania-template placeholders.
         $accommodations = [
             ['name' => 'Buhoma Lodge', 'type' => 'lodge', 'description' => 'Lodge on the edge of Bwindi Impenetrable Forest, used on gorilla trekking safaris.', 'star_rating' => 4],
@@ -42,6 +42,6 @@ class AccommodationSeeder extends Seeder
             'Arusha Hotel',
         ])->delete();
 
-        $this->command->info('✅ Accommodations seeded!');
+        $this->command->info('Accommodations seeded!');
     }
 }

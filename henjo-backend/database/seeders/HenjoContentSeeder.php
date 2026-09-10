@@ -10,7 +10,7 @@ class HenjoContentSeeder extends Seeder
 {
     public function run()
     {
-        $this->command->info('📌 Seeding Static Pages & Team Members...');
+        $this->command->info('Seeding Static Pages & Team Members...');
 
         // 1. Pages
         $pages = [
@@ -36,7 +36,7 @@ class HenjoContentSeeder extends Seeder
                 'title' => 'Travel Information',
                 'slug' => 'travel-information',
                 'is_active' => true,
-                'content' => "Africa is extraordinary and her people evoke a sense of adventure, romance and deep connection to nature. Find reliable travel information from Henjo African Safaris as you dive into the true essence of Africa.\n\nEAST AFRICA TOURIST VISA GUIDE:\n\nThis is a Joint Tourist Visa and it allows the traveler to travel to Uganda, Kenya, and Rwanda ONLY. It can be used multiple times for tourism purposes. The visa prohibits employment and is issued only for tourism purposes. The visa is valid for 90 days and is not renewable upon expiry or upon exit from the block. NB: the issuing country should be your first entry point. Apply online at visas.immigration.go.ug. Requirements: copy of the passport (bio-data page) with at least 6 months validity, a recent passport-size photograph, a Yellow Fever vaccination certificate, a return ticket, and a travel itinerary.\n\nENTRY REQUIREMENTS FOR UGANDA:\n\nUganda Tourist Visa – Single Entry. This visa is granted to travelers coming to Uganda for tourism, is a single-entry visa, and can be granted for up to 3 months. Apply online at visas.immigration.go.ug. Requirements: passport copy (bio-data page) with at least 6 months validity, a tour plan, travel itinerary/booking, a recent passport-size photograph, and a Yellow Fever vaccination certificate.",
+                'content' => "Africa is extraordinary and her people evoke a sense of adventure, romance and deep connection to nature. Find reliable travel information from Henjo African Safaris as you dive into the true essence of Africa.\n\nEAST AFRICA TOURIST VISA GUIDE:\n\nThis is a Joint Tourist Visa and it allows the traveler to travel to Uganda, Kenya, and Rwanda ONLY. It can be used multiple times for tourism purposes. The visa prohibits employment and is issued only for tourism purposes. The visa is valid for 90 days and is not renewable upon expiry or upon exit from the block. NB: the issuing country should be your first entry point. Apply online at visas.immigration.go.ug. Requirements: copy of the passport (bio-data page) with at least 6 months validity, a recent passport-size photograph, a Yellow Fever vaccination certificate, a return ticket, and a travel itinerary.\n\nENTRY REQUIREMENTS FOR UGANDA:\n\nUganda Tourist Visa - Single Entry. This visa is granted to travelers coming to Uganda for tourism, is a single-entry visa, and can be granted for up to 3 months. Apply online at visas.immigration.go.ug. Requirements: passport copy (bio-data page) with at least 6 months validity, a tour plan, travel itinerary/booking, a recent passport-size photograph, and a Yellow Fever vaccination certificate.",
             ],
             [
                 'title' => 'Women only tours to Uganda, Rwanda & Kenya',
@@ -50,7 +50,7 @@ class HenjoContentSeeder extends Seeder
             Page::updateOrCreate(['slug' => $p['slug']], $p);
         }
 
-        // 2. Team Members (real Henjo staff, per henjosafaris-content-audit.md §3.3/§3.5/§7)
+        // 2. Team Members (real Henjo staff, per henjosafaris-content-audit.md section 3.3/section 3.5/section 7)
         $team = [
             [
                 'name' => 'Henry Katinda',
@@ -79,13 +79,13 @@ class HenjoContentSeeder extends Seeder
         ];
 
         // Remove earlier fabricated placeholder team members (replaced by the real roster above),
-        // plus Joan Tusubira — removed from the site at the client's request.
+        // plus Joan Tusubira - removed from the site at the client's request.
         TeamMember::whereIn('name', ['Henry Mukasa', 'Joan Nampijja', 'Joan Tusubira'])->delete();
 
         foreach ($team as $member) {
             TeamMember::updateOrCreate(['name' => $member['name']], $member);
         }
 
-        $this->command->info('✅ Henjo Static Pages & Team Members Seeded!');
+        $this->command->info('Henjo Static Pages & Team Members Seeded!');
     }
 }

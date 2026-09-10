@@ -3,7 +3,7 @@
 // ============================================
 // Hero, intro copy, and the visa/entry-requirement articles below are all
 // managed via the admin dashboard (Pages > Travel Information, "articles"
-// section group). This page is the site's standalone travel-info archive —
+// section group). This page is the site's standalone travel-info archive -
 // there is no separate blog system.
 // ============================================
 

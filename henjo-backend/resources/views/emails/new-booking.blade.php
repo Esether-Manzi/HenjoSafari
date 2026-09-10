@@ -11,7 +11,7 @@
         <!-- Header -->
         <tr>
             <td style="background: linear-gradient(135deg, #1a1a2e 0%, #2d1f0e 100%); padding: 28px 30px; text-align: center;">
-                <h1 style="color: #D4A017; margin: 0; font-size: 24px; letter-spacing: 1px;">🦁 Henjo African Safaris</h1>
+                <h1 style="color: #D4A017; margin: 0; font-size: 24px; letter-spacing: 1px;">Henjo African Safaris</h1>
                 <p style="color: #cccccc; margin: 8px 0 0; font-size: 14px;">New Booking Request Received</p>
             </td>
         </tr>
@@ -20,7 +20,7 @@
         <tr>
             <td style="background-color: #D4A017; padding: 14px 30px; text-align: center;">
                 <p style="margin: 0; color: #1a1a1a; font-weight: bold; font-size: 16px;">
-                    📋 Booking Reference: <span style="font-size: 18px; letter-spacing: 2px;">{{ $booking->booking_number }}</span>
+                    Booking Reference: <span style="font-size: 18px; letter-spacing: 2px;">{{ $booking->booking_number }}</span>
                 </p>
             </td>
         </tr>
@@ -34,7 +34,7 @@
 
                 <!-- Section: Customer Information -->
                 <h2 style="color: #7B1818; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 10px; padding-bottom: 6px; border-bottom: 2px solid #D4A017;">
-                    👤 Customer Information
+                    Customer Information
                 </h2>
                 <table width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #e0e0e0; border-radius: 6px; overflow: hidden; margin-bottom: 24px;">
                     <tr>
@@ -59,7 +59,7 @@
 
                 <!-- Section: Trip Details -->
                 <h2 style="color: #7B1818; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 10px; padding-bottom: 6px; border-bottom: 2px solid #D4A017;">
-                    🌍 Trip Details
+                    Trip Details
                 </h2>
                 <table width="100%" cellpadding="0" cellspacing="0" style="border: 1px solid #e0e0e0; border-radius: 6px; overflow: hidden; margin-bottom: 24px;">
                     <tr>

@@ -30,8 +30,8 @@ export interface CmsPage {
 }
 
 // Standardizes a CMS-authored section regardless of how it was typed in
-// the admin — titles get sentence-cased, both fields get whitespace/markup
-// cleanup — so editing content later can't drift the site's formatting.
+// the admin - titles get sentence-cased, both fields get whitespace/markup
+// cleanup - so editing content later can't drift the site's formatting.
 function normalizeSection(section: PageSection): PageSection {
     return {
         ...section,

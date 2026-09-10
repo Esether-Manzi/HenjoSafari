@@ -75,7 +75,7 @@ class TestimonialResource extends Resource
                 ->schema([
                     Textarea::make('testimonial')->rows(5)->columnSpanFull()
                         ->dehydrateStateUsing(fn (?string $state) => Sanitizer::clean($state)),
-                    TextInput::make('rating')->numeric()->minValue(1)->maxValue(5)->suffix('★'),
+                    TextInput::make('rating')->numeric()->minValue(1)->maxValue(5)->suffixIcon('heroicon-m-star'),
                     Checkbox::make('featured'),
                 ]),
         ]);
@@ -106,7 +106,7 @@ class TestimonialResource extends Resource
                 ->columns(2)
                 ->schema([
                     TextEntry::make('testimonial')->placeholder('-')->columnSpanFull(),
-                    TextEntry::make('rating')->suffix(' ★'),
+                    TextEntry::make('rating')->suffixIcon('heroicon-m-star'),
                     IconEntry::make('featured')->boolean(),
                 ]),
         ]);

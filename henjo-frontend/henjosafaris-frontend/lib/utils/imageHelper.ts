@@ -1,5 +1,5 @@
 // The backend's origin (no /api/v1 suffix), derived from the same env var
-// every other API call uses — so this follows wherever the backend actually
+// every other API call uses - so this follows wherever the backend actually
 // is (local dev, a demo host, or the real production domain) with no code change.
 const BACKEND_ORIGIN = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1').replace(/\/api\/v1\/?$/, '');
 
@@ -37,7 +37,7 @@ export function getImageUrl(media: any, type: 'cover' | 'gallery' = 'cover', ind
     // Resolve relative URLs against the actual backend origin
     if (url) {
         // Spatie Media Library bakes the backend's own APP_URL into absolute
-        // URLs like original_url — which is localhost in dev regardless of
+        // URLs like original_url - which is localhost in dev regardless of
         // where the backend is actually reachable from (a tunnel, staging,
         // production). Rewrite those to the real backend origin.
         const localBackendHost = /^https?:\/\/(localhost|127\.0\.0\.1):8000/;

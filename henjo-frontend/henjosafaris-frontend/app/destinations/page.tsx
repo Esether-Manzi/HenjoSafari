@@ -1,5 +1,5 @@
 // ============================================
-// DESTINATIONS PAGE — Premium Redesign
+// DESTINATIONS PAGE - Premium Redesign
 // ============================================
 // Rich, content-driven destinations page with
 // hero, featured grid, highlights section,

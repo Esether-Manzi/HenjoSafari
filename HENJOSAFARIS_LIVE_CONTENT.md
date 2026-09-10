@@ -46,11 +46,11 @@
 - **Live URL**: [https://henjosafaris.com/product/12-day-kenya-classic-signature-wildlife-safari-2/](https://henjosafaris.com/product/12-day-kenya-classic-signature-wildlife-safari-2/)
 
 **Summary**:
-> This 12-day safari takes you to around Kenya’s best tourist attractions from lions, elephants, cheetahs, zebras and wildebeests providing an authentic dose of African wildlife and creates memorable experiences.
+> This 12-day safari takes you to around Kenya's best tourist attractions from lions, elephants, cheetahs, zebras and wildebeests providing an authentic dose of African wildlife and creates memorable experiences.
 
 **Full Overview / Itinerary Description**:
 ```text
-This 12-day safari takes you to around Kenya’s best tourist attractions from lions, elephants, cheetahs, zebras and wildebeests providing an authentic dose of African wildlife and creates memorable experiences.
+This 12-day safari takes you to around Kenya's best tourist attractions from lions, elephants, cheetahs, zebras and wildebeests providing an authentic dose of African wildlife and creates memorable experiences.
 ```
 
 **Itinerary Breakdown**:
@@ -86,11 +86,11 @@ This 5-day safari takes you to and Beyond Kichwa Tembo Camp which is sprawled al
 - **Live URL**: [https://henjosafaris.com/product/8-days-best-of-kenya-safari/](https://henjosafaris.com/product/8-days-best-of-kenya-safari/)
 
 **Summary**:
-> In this 8 days adventure, you’ll travel to Amboseli National Park, spending two nights in the home of the largest tuskers you will ever see. You’ll be stopping for a night in the idyllic Lake Nakuru and another in Lake N...
+> In this 8 days adventure, you'll travel to Amboseli National Park, spending two nights in the home of the largest tuskers you will ever see. You'll be stopping for a night in the idyllic Lake Nakuru and another in Lake N...
 
 **Full Overview / Itinerary Description**:
 ```text
-In this 8 days adventure, you’ll travel to Amboseli National Park, spending two nights in the home of the largest tuskers you will ever see. You’ll be stopping for a night in the idyllic Lake Nakuru and another in Lake Naivasha. You’ll then go on your way to the Masai Mara is probably the most prolific wildlife destination on the planet.
+In this 8 days adventure, you'll travel to Amboseli National Park, spending two nights in the home of the largest tuskers you will ever see. You'll be stopping for a night in the idyllic Lake Nakuru and another in Lake Naivasha. You'll then go on your way to the Masai Mara is probably the most prolific wildlife destination on the planet.
 ```
 
 **Itinerary Breakdown**:
@@ -117,7 +117,7 @@ In this 8 days adventure, you’ll travel to Amboseli National Park, spending tw
 
 **Full Overview / Itinerary Description**:
 ```text
-A Kenyan beach holiday and game-safari combo is one of the best ways to explore magical Kenya. The trip will take you to idyllic destinations and is perfect for married couples looking to add some spark to their union, or even for honeymooners! A game safari will leave you in awe of Africa’s rich heritage of flora and fauna and leave you feeling connected to nature. While on the Kenyan Coast, you will encounter breathtaking natural attractions, stunningly beautiful beaches, and luxury resorts.
+A Kenyan beach holiday and game-safari combo is one of the best ways to explore magical Kenya. The trip will take you to idyllic destinations and is perfect for married couples looking to add some spark to their union, or even for honeymooners! A game safari will leave you in awe of Africa's rich heritage of flora and fauna and leave you feeling connected to nature. While on the Kenyan Coast, you will encounter breathtaking natural attractions, stunningly beautiful beaches, and luxury resorts.
 ```
 
 **Itinerary Breakdown**:
@@ -133,11 +133,11 @@ A Kenyan beach holiday and game-safari combo is one of the best ways to explore 
 - **Live URL**: [https://henjosafaris.com/product/kigali-rwanda-city-tour/](https://henjosafaris.com/product/kigali-rwanda-city-tour/)
 
 **Summary**:
-> This city tour is for those people who wish to visit an interesting place in Africa but don’t have a whole lot of time. Here in Rwanda, this one day visit will take you to the City Markets (Kimironko) where the sites and...
+> This city tour is for those people who wish to visit an interesting place in Africa but don't have a whole lot of time. Here in Rwanda, this one day visit will take you to the City Markets (Kimironko) where the sites and...
 
 **Full Overview / Itinerary Description**:
 ```text
-This city tour is for those people who wish to visit an interesting place in Africa but don’t have a whole lot of time. Here in Rwanda, this one day visit will take you to the City Markets (Kimironko) where the sites and sounds are amazing and it is also very Cheap! This trip also includes a visit of the Genocide Memorial Centre at Gizozi, where contacts with local people provide the discovery of all types of artisanal products.
+This city tour is for those people who wish to visit an interesting place in Africa but don't have a whole lot of time. Here in Rwanda, this one day visit will take you to the City Markets (Kimironko) where the sites and sounds are amazing and it is also very Cheap! This trip also includes a visit of the Genocide Memorial Centre at Gizozi, where contacts with local people provide the discovery of all types of artisanal products.
 ```
 
 **Itinerary Breakdown**:
@@ -193,11 +193,11 @@ This 5-day safari takes you to and Beyond Kichwa Tembo Camp which is sprawled al
 - **Live URL**: [https://henjosafaris.com/product/12-day-kenya-classic-signature-wildlife-safari/](https://henjosafaris.com/product/12-day-kenya-classic-signature-wildlife-safari/)
 
 **Summary**:
-> Arrival You’ll be collected from the airport and Accommodation before the tour starts can be arranged for an extra cost.
+> Arrival You'll be collected from the airport and Accommodation before the tour starts can be arranged for an extra cost.
 
 **Full Overview / Itinerary Description**:
 ```text
-Arrival You’ll be collected from the airport and Accommodation before the tour starts can be arranged for an extra cost.
+Arrival You'll be collected from the airport and Accommodation before the tour starts can be arranged for an extra cost.
 ```
 
 **Itinerary Breakdown**:
@@ -213,11 +213,11 @@ Arrival You’ll be collected from the airport and Accommodation before the tour
 - **Live URL**: [https://henjosafaris.com/product/4-day-bwindi-gorilla-trekking-flying-safari/](https://henjosafaris.com/product/4-day-bwindi-gorilla-trekking-flying-safari/)
 
 **Summary**:
-> The top highlight on this 4-day Uganda Gorilla Safari is, of course, African Mountain Gorilla Trekking in Uganda’s Bwindi Impenetrable Forest. The Uganda gorilla trek takes us through the dense jungle to encounter the en...
+> The top highlight on this 4-day Uganda Gorilla Safari is, of course, African Mountain Gorilla Trekking in Uganda's Bwindi Impenetrable Forest. The Uganda gorilla trek takes us through the dense jungle to encounter the en...
 
 **Full Overview / Itinerary Description**:
 ```text
-The top highlight on this 4-day Uganda Gorilla Safari is, of course, African Mountain Gorilla Trekking in Uganda’s Bwindi Impenetrable Forest. The Uganda gorilla trek takes us through the dense jungle to encounter the endangered mountain gorillas in the wild. Bwindi Forest is also known for its high biodiversity and excellent bird watching.
+The top highlight on this 4-day Uganda Gorilla Safari is, of course, African Mountain Gorilla Trekking in Uganda's Bwindi Impenetrable Forest. The Uganda gorilla trek takes us through the dense jungle to encounter the endangered mountain gorillas in the wild. Bwindi Forest is also known for its high biodiversity and excellent bird watching.
 ```
 
 **Itinerary Breakdown**:
@@ -383,7 +383,7 @@ Mount Elgon is the 7th highest mountain in Africa at 4,321m and the summit is re
 
 ---
 
-### 17. 3-Day Safari – Tarangire, Ngorongoro & Lake Manyara
+### 17. 3-Day Safari - Tarangire, Ngorongoro & Lake Manyara
 
 - **Destination Country**: Tanzania
 - **Duration**: 1 Days / 0 Nights
@@ -391,15 +391,15 @@ Mount Elgon is the 7th highest mountain in Africa at 4,321m and the summit is re
 - **Live URL**: [https://henjosafaris.com/product/3-day-safari-tarangire-ngorongoro-lake-manyara/](https://henjosafaris.com/product/3-day-safari-tarangire-ngorongoro-lake-manyara/)
 
 **Summary**:
-> This safari will visit Lake Manyara National Park where you can see the tree-climbing lions and Tarangire National Park where you can see the biggest land animals walking in big numbers. You’ll also get a scenic and mesm...
+> This safari will visit Lake Manyara National Park where you can see the tree-climbing lions and Tarangire National Park where you can see the biggest land animals walking in big numbers. You'll also get a scenic and mesm...
 
 **Full Overview / Itinerary Description**:
 ```text
-This safari will visit Lake Manyara National Park where you can see the tree-climbing lions and Tarangire National Park where you can see the biggest land animals walking in big numbers. You’ll also get a scenic and mesmerizing visit to the Ngorongoro Crater, a place like no other in the entire world. You will enjoy wildlife and phenomenal landscapes.
+This safari will visit Lake Manyara National Park where you can see the tree-climbing lions and Tarangire National Park where you can see the biggest land animals walking in big numbers. You'll also get a scenic and mesmerizing visit to the Ngorongoro Crater, a place like no other in the entire world. You will enjoy wildlife and phenomenal landscapes.
 ```
 
 **Itinerary Breakdown**:
-- **Day 1 - 3-Day Safari – Tarangire, Ngorongoro & Lake Manyara**: Enjoy full-day game drive and sightseeing experience on Day 1.
+- **Day 1 - 3-Day Safari - Tarangire, Ngorongoro & Lake Manyara**: Enjoy full-day game drive and sightseeing experience on Day 1.
 
 ---
 
@@ -435,7 +435,7 @@ This Exotic Tanzania Wildlife Safari in a luxury tented Camps and Lodges explore
 
 **Full Overview / Itinerary Description**:
 ```text
-On this 4-day lodge safari you will visit the Lake Manyara National Park, Tarangire National Park, the Ngorongoro Crater and Serengeti National Park. The seasonal sight of thousands of wildebeests and zebras crossing the grassland savannah is something to behold and is surely one of Africa’s natural wonders. Furthermore you will be awarded with beautiful landscapes, an animal-filled crater and thousands of flamingos.
+On this 4-day lodge safari you will visit the Lake Manyara National Park, Tarangire National Park, the Ngorongoro Crater and Serengeti National Park. The seasonal sight of thousands of wildebeests and zebras crossing the grassland savannah is something to behold and is surely one of Africa's natural wonders. Furthermore you will be awarded with beautiful landscapes, an animal-filled crater and thousands of flamingos.
 ```
 
 **Itinerary Breakdown**:
@@ -491,11 +491,11 @@ Masai Mara is a large game reserve measuring 1,510 square kilometers in southwes
 - **Live URL**: [https://henjosafaris.com/product/5-day-masai-mara-nakuru-naivasha/](https://henjosafaris.com/product/5-day-masai-mara-nakuru-naivasha/)
 
 **Summary**:
-> This adventure safari takes you through Kenya’s best game reserve, the Masai Mara National Reserve, for 2 nights. Then we head down the great rift valley to Lake Nakuru National Park, home to the rare white rhino species...
+> This adventure safari takes you through Kenya's best game reserve, the Masai Mara National Reserve, for 2 nights. Then we head down the great rift valley to Lake Nakuru National Park, home to the rare white rhino species...
 
 **Full Overview / Itinerary Description**:
 ```text
-This adventure safari takes you through Kenya’s best game reserve, the Masai Mara National Reserve, for 2 nights. Then we head down the great rift valley to Lake Nakuru National Park, home to the rare white rhino species as well as a bird’s paradise. We will also visit Lake Naivasha and Hell’s Gate National Park.
+This adventure safari takes you through Kenya's best game reserve, the Masai Mara National Reserve, for 2 nights. Then we head down the great rift valley to Lake Nakuru National Park, home to the rare white rhino species as well as a bird's paradise. We will also visit Lake Naivasha and Hell's Gate National Park.
 ```
 
 **Itinerary Breakdown**:
@@ -511,11 +511,11 @@ This adventure safari takes you through Kenya’s best game reserve, the Masai M
 - **Live URL**: [https://henjosafaris.com/product/4-day-tsavo-and-amboseli-kenya-safari/](https://henjosafaris.com/product/4-day-tsavo-and-amboseli-kenya-safari/)
 
 **Summary**:
-> This Kenya safari with a 4×4 Land Cruiser and a driver-guide who is experienced in spotting wildlife, will visit Amboseli with the majestic Mt. Kilimanjaro on the horizon. Experience the rolling plains, the picturesque T...
+> This Kenya safari with a 4x4 Land Cruiser and a driver-guide who is experienced in spotting wildlife, will visit Amboseli with the majestic Mt. Kilimanjaro on the horizon. Experience the rolling plains, the picturesque T...
 
 **Full Overview / Itinerary Description**:
 ```text
-This Kenya safari with a 4×4 Land Cruiser and a driver-guide who is experienced in spotting wildlife, will visit Amboseli with the majestic Mt. Kilimanjaro on the horizon. Experience the rolling plains, the picturesque Taita Hills and the lava flows, all on a plateau dotted with acacia, scrub and bushland of Tsavo West and the large herds of “red” elephants in Tsavo East.
+This Kenya safari with a 4x4 Land Cruiser and a driver-guide who is experienced in spotting wildlife, will visit Amboseli with the majestic Mt. Kilimanjaro on the horizon. Experience the rolling plains, the picturesque Taita Hills and the lava flows, all on a plateau dotted with acacia, scrub and bushland of Tsavo West and the large herds of "red" elephants in Tsavo East.
 ```
 
 **Itinerary Breakdown**:
@@ -543,7 +543,7 @@ This 3-day Masai Mara National Reserve getaway maximizes the limited available t
 
 ---
 
-### 25. 3-Day Rwanda’s Remarkable Akagera Safari
+### 25. 3-Day Rwanda's Remarkable Akagera Safari
 
 - **Destination Country**: Rwanda
 - **Duration**: 1 Days / 0 Nights
@@ -559,7 +559,7 @@ These 3 days Akagera national park wildlife safari will offer you the ultimate g
 ```
 
 **Itinerary Breakdown**:
-- **Day 1 - 3-Day Rwanda’s Remarkable Akagera Safari**: Enjoy full-day game drive and sightseeing experience on Day 1.
+- **Day 1 - 3-Day Rwanda's Remarkable Akagera Safari**: Enjoy full-day game drive and sightseeing experience on Day 1.
 
 ---
 
@@ -591,11 +591,11 @@ Enjoy tracking mountain gorillas and chimpanzees on this 8 Days Rwanda Primate T
 - **Live URL**: [https://henjosafaris.com/product/3-day-gorillas-and-golden-monkey-safari/](https://henjosafaris.com/product/3-day-gorillas-and-golden-monkey-safari/)
 
 **Summary**:
-> Welcome to Rwanda ”a country of a thousand hills” this tour has been created to visitors looking into visiting gorillas in Uganda and golden monkeys of volcanoes national park of Rwanda and friendly quote. It starts and ...
+> Welcome to Rwanda "a country of a thousand hills" this tour has been created to visitors looking into visiting gorillas in Uganda and golden monkeys of volcanoes national park of Rwanda and friendly quote. It starts and ...
 
 **Full Overview / Itinerary Description**:
 ```text
-Welcome to Rwanda ”a country of a thousand hills” this tour has been created to visitors looking into visiting gorillas in Uganda and golden monkeys of volcanoes national park of Rwanda and friendly quote. It starts and end in kigali international airport of Rwanda. Your safari guide will ready to take you places as per program.
+Welcome to Rwanda "a country of a thousand hills" this tour has been created to visitors looking into visiting gorillas in Uganda and golden monkeys of volcanoes national park of Rwanda and friendly quote. It starts and end in kigali international airport of Rwanda. Your safari guide will ready to take you places as per program.
 ```
 
 **Itinerary Breakdown**:
@@ -611,11 +611,11 @@ Welcome to Rwanda ”a country of a thousand hills” this tour has been created
 - **Live URL**: [https://henjosafaris.com/product/3-day-rwanda-gorilla-safari/](https://henjosafaris.com/product/3-day-rwanda-gorilla-safari/)
 
 **Summary**:
-> Mountain gorillas survive of vegetation as their daily food, which comprises of leaves, buds, shoots, fruits, bedstraw, celery, stinging nettles and flowers among others. The young gorilla babies survive of their mother’...
+> Mountain gorillas survive of vegetation as their daily food, which comprises of leaves, buds, shoots, fruits, bedstraw, celery, stinging nettles and flowers among others. The young gorilla babies survive of their mother'...
 
 **Full Overview / Itinerary Description**:
 ```text
-Mountain gorillas survive of vegetation as their daily food, which comprises of leaves, buds, shoots, fruits, bedstraw, celery, stinging nettles and flowers among others. The young gorilla babies survive of their mother’s breastfeeding milk rill the age of three after which they start feeding on vegetation just like the grown family members. Unlike other animal species, mountain gorillas do not drink water but only survive on the waters within the vegetation they eat.
+Mountain gorillas survive of vegetation as their daily food, which comprises of leaves, buds, shoots, fruits, bedstraw, celery, stinging nettles and flowers among others. The young gorilla babies survive of their mother's breastfeeding milk rill the age of three after which they start feeding on vegetation just like the grown family members. Unlike other animal species, mountain gorillas do not drink water but only survive on the waters within the vegetation they eat.
 ```
 
 **Itinerary Breakdown**:
@@ -811,11 +811,11 @@ This 4 day gorilla trek safari takes you to the misty Bwindi Impenetrable Forest
 - **Live URL**: [https://henjosafaris.com/product/4-day-kidepo-wildlife-safari/](https://henjosafaris.com/product/4-day-kidepo-wildlife-safari/)
 
 **Summary**:
-> This four day trip takes to Kidepo one of Uganda’s most spectacular parks and it is located in Uganda’s remote north –eastern corner.
+> This four day trip takes to Kidepo one of Uganda's most spectacular parks and it is located in Uganda's remote north -eastern corner.
 
 **Full Overview / Itinerary Description**:
 ```text
-This four day trip takes to Kidepo one of Uganda’s most spectacular parks and it is located in Uganda’s remote north –eastern corner.
+This four day trip takes to Kidepo one of Uganda's most spectacular parks and it is located in Uganda's remote north -eastern corner.
 ```
 
 **Itinerary Breakdown**:
@@ -829,7 +829,7 @@ This four day trip takes to Kidepo one of Uganda’s most spectacular parks and 
 - **Slug**: `welkom-bij-henjo-african-safaris`
 
 ```text
-Welkom op de website van Henjo African Safaris . Een aantal jaren geleden zijn wij – Henry en Joan – begonnen met het aanbieden van safari’s in Oeganda, Kenia, Tanzania en Rwanda. Wat ons anders maakt dan andere aanbieders van safari’s, zijn onze lokale “wortels ”, die er voor zorgen dat de lokale gemeenschap ook de vruchten plukt van het toerisme. Dit streven, tezamen met het organiseren van opmaat vakanties/safari’s op een duurzame wijze, maakt ons uniek ten opzichte van onze concullega’s. Waar wij echter het meest trots op zijn is ons project : Empathy Children Initiative . Dit initiatief helpt kwetsbare kinderen in onze lokale gemeenschap een veilige, gezonde en toekomstbestendige omgeving te bieden. In onze statuten is vastgelegd dat 40% van onze bedrijfswinst naar het Empathy Children Initiative gaat. Door uw safari bij Henjo African Safaris te boeken, bent u niet alleen verzekerd van een onvergetelijke ervaring onder persoonlijke, ervaren en deskundige begeleiding van Henry en zijn team, maar kunt u er ook gerust op zijn dat uw vakantie een duurzame bijdrage levert op de lokale natuur en bevolking. Meer weten? Laat hieronder uw gegevens achter of neem contact op via email of de live chat. Hoewel onze voertaal Engels is, hebben we ook iemand in Nederland, die ons helpt ons mooi bedrijf in Nederland op de kaart te zetten. Communicatie in het Nederlands is dus ook mogelijk. Na het invullen van uw e-mailadres, naam en eventuele vraag, kunt u uw aanvraag versturen door op de “verzenden” (Submit) knop te klikken. Om alvast een kijkje te nemen in ons ruim aanbod van safari’s, tours en vakanties kunt u de overige pagina’s van onze website bekijken via het menu bovenaan deze pagina of ga naar de startpagina . Deze is vooralsnog alleen in het Engels, maar we zijn druk bezig deze ook naar het Nederlands te vertalen. window.hsFormsOnReady = window.hsFormsOnReady || []; window.hsFormsOnReady.push(()=>{ hbspt.forms.create({ portalId: 144419735, formId: "cfe4c35b-2570-44a1-
+Welkom op de website van Henjo African Safaris . Een aantal jaren geleden zijn wij - Henry en Joan - begonnen met het aanbieden van safari's in Oeganda, Kenia, Tanzania en Rwanda. Wat ons anders maakt dan andere aanbieders van safari's, zijn onze lokale "wortels ", die er voor zorgen dat de lokale gemeenschap ook de vruchten plukt van het toerisme. Dit streven, tezamen met het organiseren van opmaat vakanties/safari's op een duurzame wijze, maakt ons uniek ten opzichte van onze concullega's. Waar wij echter het meest trots op zijn is ons project : Empathy Children Initiative . Dit initiatief helpt kwetsbare kinderen in onze lokale gemeenschap een veilige, gezonde en toekomstbestendige omgeving te bieden. In onze statuten is vastgelegd dat 40% van onze bedrijfswinst naar het Empathy Children Initiative gaat. Door uw safari bij Henjo African Safaris te boeken, bent u niet alleen verzekerd van een onvergetelijke ervaring onder persoonlijke, ervaren en deskundige begeleiding van Henry en zijn team, maar kunt u er ook gerust op zijn dat uw vakantie een duurzame bijdrage levert op de lokale natuur en bevolking. Meer weten? Laat hieronder uw gegevens achter of neem contact op via email of de live chat. Hoewel onze voertaal Engels is, hebben we ook iemand in Nederland, die ons helpt ons mooi bedrijf in Nederland op de kaart te zetten. Communicatie in het Nederlands is dus ook mogelijk. Na het invullen van uw e-mailadres, naam en eventuele vraag, kunt u uw aanvraag versturen door op de "verzenden" (Submit) knop te klikken. Om alvast een kijkje te nemen in ons ruim aanbod van safari's, tours en vakanties kunt u de overige pagina's van onze website bekijken via het menu bovenaan deze pagina of ga naar de startpagina . Deze is vooralsnog alleen in het Engels, maar we zijn druk bezig deze ook naar het Nederlands te vertalen. window.hsFormsOnReady = window.hsFormsOnReady || []; window.hsFormsOnReady.push(()=>{ hbspt.forms.create({ portalId: 144419735, formId: "cfe4c35b-2570-44a1-
 ```
 
 ---
@@ -928,16 +928,16 @@ Booking ID: [booking_id] Your Appointment Booked successfully! We have sent your
 - **Slug**: `about-our-charity`
 
 ```text
-[vc_row][vc_column][vc_raw_html]SGVuam8lMjBBZnJpY2FuJTIwU2FmYXJpcyUyMGlzJTIwbW9yZSUyMHRoYW4lMjBqdXN0JTIwYSUyMHByZW1pZXIlMjBzYWZhcmklMjBjb21wYW55JTNCJTIwaXQlMjdzJTIwYSUyMGJlYWNvbiUyMG9mJTIwaG9wZSUyMGZvciUyMHZ1bG5lcmFibGUlMjBjaGlsZHJlbiUyMGluJTIwQWZyaWNhLiUyMFRocm91Z2glMjBhJTIwc3RyYXRlZ2ljJTIwcGFydG5lcnNoaXAlMjB3aXRoJTIwRW1wYXRoeSUyMENoaWxkcmVuJTIwSW5pdGlhdGl2ZSUyQyUyMEhlbmpvJTIwQWZyaWNhbiUyMFNhZmFyaXMlMjBkZWRpY2F0ZXMlMjBpdHNlbGYlMjB0byUyMG1ha2luZyUyMGElMjB0YW5naWJsZSUyMGRpZmZlcmVuY2UlMjBpbiUyMHRoZSUyMGxpdmVzJTIwb2YlMjB0aGVzZSUyMGNoaWxkcmVuLiUyMEV2ZXJ5JTIwYm9va2luZyUyMG1hZGUlMjBkaXJlY3RseSUyMHdpdGglMjBIZW5qbyUyMEFmcmljYW4lMjBTYWZhcmlzJTIwY29udHJpYnV0ZXMlMjBkaXJlY3RseSUyMHRvJTIwdGhlJTIwd2VsbC1iZWluZyUyQyUyMGVkdWNhdGlvbiUyMGFuZCUyME1lbmlzdHJ1YWwlMjBIeWdpZW5lJTIwcHJvZ3JhbXMlMjBvZiUyMHRoZXNlJTIwY2hpbGRyZW4lMjAuJTIwV2hldGhlciUyMHlvdSUyN3JlJTIwZW1iYXJraW5nJTIwb24lMjBhJTIwdGhyaWxsaW5nJTIwc2FmYXJpJTIwYWR2ZW50dXJlJTIwb3IlMjBwbGFubmluZyUyMGElMjBzZXJlbmUlMjBnZXRhd2F5JTJDJTIweW91ciUyMGRlY2lzaW9uJTIwdG8lMjBib29rJTIwd2l0aCUyMEhlbmpvJTIwQWZyaWNhbiUyMFNhZmFyaXMlMjBtZWFucyUyMHlvdSUyN3JlJTIwYWN0aXZlbHklMjBwYXJ0aWNpcGF0aW5nJTIwaW4lMjBjaGFuZ2luZyUyMGxpdmVzJTIwYW5kJTIwYnVpbGRpbmclMjBicmlnaHRlciUyMGZ1dHVyZXMlMjBmb3IlMjB0aG9zZSUyMGluJTIwbmVlZC4lMjBKb2luJTIwdXMlMjBpbiUyMG1ha2luZyUyMGElMjBsYXN0aW5nJTIwaW1wYWN0JTIwdGhyb3VnaCUyMHVuZm9yZ2V0dGFibGUlMjBleHBlcmllbmNlcy4=[/vc_raw_html][vc_btn title=”Read More” link=”url:https%3A%2F%2Fempathychildren.org%2F”][/vc_column][/vc_row][vc_row][vc_column][vc_masonry_media_grid style=”lazy” items_per_page=”6″ grid_id=”vc_gid:1712164929686-624064b3-b30b-1″ include=”6470,6469,6468,6467,6466,6465,6464,6462,6461,6460″][/vc_column][/vc_row]
+[vc_row][vc_column][vc_raw_html]SGVuam8lMjBBZnJpY2FuJTIwU2FmYXJpcyUyMGlzJTIwbW9yZSUyMHRoYW4lMjBqdXN0JTIwYSUyMHByZW1pZXIlMjBzYWZhcmklMjBjb21wYW55JTNCJTIwaXQlMjdzJTIwYSUyMGJlYWNvbiUyMG9mJTIwaG9wZSUyMGZvciUyMHZ1bG5lcmFibGUlMjBjaGlsZHJlbiUyMGluJTIwQWZyaWNhLiUyMFRocm91Z2glMjBhJTIwc3RyYXRlZ2ljJTIwcGFydG5lcnNoaXAlMjB3aXRoJTIwRW1wYXRoeSUyMENoaWxkcmVuJTIwSW5pdGlhdGl2ZSUyQyUyMEhlbmpvJTIwQWZyaWNhbiUyMFNhZmFyaXMlMjBkZWRpY2F0ZXMlMjBpdHNlbGYlMjB0byUyMG1ha2luZyUyMGElMjB0YW5naWJsZSUyMGRpZmZlcmVuY2UlMjBpbiUyMHRoZSUyMGxpdmVzJTIwb2YlMjB0aGVzZSUyMGNoaWxkcmVuLiUyMEV2ZXJ5JTIwYm9va2luZyUyMG1hZGUlMjBkaXJlY3RseSUyMHdpdGglMjBIZW5qbyUyMEFmcmljYW4lMjBTYWZhcmlzJTIwY29udHJpYnV0ZXMlMjBkaXJlY3RseSUyMHRvJTIwdGhlJTIwd2VsbC1iZWluZyUyQyUyMGVkdWNhdGlvbiUyMGFuZCUyME1lbmlzdHJ1YWwlMjBIeWdpZW5lJTIwcHJvZ3JhbXMlMjBvZiUyMHRoZXNlJTIwY2hpbGRyZW4lMjAuJTIwV2hldGhlciUyMHlvdSUyN3JlJTIwZW1iYXJraW5nJTIwb24lMjBhJTIwdGhyaWxsaW5nJTIwc2FmYXJpJTIwYWR2ZW50dXJlJTIwb3IlMjBwbGFubmluZyUyMGElMjBzZXJlbmUlMjBnZXRhd2F5JTJDJTIweW91ciUyMGRlY2lzaW9uJTIwdG8lMjBib29rJTIwd2l0aCUyMEhlbmpvJTIwQWZyaWNhbiUyMFNhZmFyaXMlMjBtZWFucyUyMHlvdSUyN3JlJTIwYWN0aXZlbHklMjBwYXJ0aWNpcGF0aW5nJTIwaW4lMjBjaGFuZ2luZyUyMGxpdmVzJTIwYW5kJTIwYnVpbGRpbmclMjBicmlnaHRlciUyMGZ1dHVyZXMlMjBmb3IlMjB0aG9zZSUyMGluJTIwbmVlZC4lMjBKb2luJTIwdXMlMjBpbiUyMG1ha2luZyUyMGElMjBsYXN0aW5nJTIwaW1wYWN0JTIwdGhyb3VnaCUyMHVuZm9yZ2V0dGFibGUlMjBleHBlcmllbmNlcy4=[/vc_raw_html][vc_btn title="Read More" link="url:https%3A%2F%2Fempathychildren.org%2F"][/vc_column][/vc_row][vc_row][vc_column][vc_masonry_media_grid style="lazy" items_per_page="6" grid_id="vc_gid:1712164929686-624064b3-b30b-1" include="6470,6469,6468,6467,6466,6465,6464,6462,6461,6460"][/vc_column][/vc_row]
 ```
 
 ---
 
-### Page Title: Henjo – NL
+### Page Title: Henjo - NL
 - **Slug**: `henjo-nl`
 
 ```text
-[vc_row wrapper_container=”content-block-no-padding-margin”][vc_column] KARIBU KENYA! Henjo African safaris Explore Tours Experience the wild. Discover the wild side. Henjo African safaris Explore Tours Gorilla safaris Henjo African safaris Explore Tours Uncover the wild. Discover the wild within. Henjo African safaris Explore Tours setREVStartSize({c: 'rev_slider_5_1',rl:[1240,1024,778,480],el:[550,768,480,720],gw:[1240,1024,778,480],gh:[550,768,480,720],type:'standard',justify:'',layout:'fullwidth',mh:"0"});if (window.RS_MODULES!==undefined && window.RS_MODULES.modules!==undefined && window.RS_MODULES.modules["revslider51"]!==undefined) {window.RS_MODULES.modules["revslider51"].once = false;window.revapi5 = undefined;window.RS_MODULES.checkMinimal()} [/vc_column][/vc_row][vc_row css_animation=”none” entrada_row_bgcolor=”bg-white” css=”.vc_custom_1658414910117{padding-top: 20px !important;padding-bottom: 20px !important;}” el_class=”std-alone-search-block”][vc_column css=”.vc_custom_1562126820258{padding-top: 20px !important;padding-bottom: 20px !important;}”] Waarom Henjo African Safari's Op maat georganiseerde safari’s die je letterlijk en figuurlijk een andere wereld laten zien. Ons team bestaat uit evaren reis adviseurs en gecertificeerde gidsen, die een veilige, onvergetelijke en leerzame safari-ervaring garandeert. [vc_row_inner][vc_column_inner width=”1/4″] Boek via ons boekingskantoor in Nederland U kunt direct en zonder tussenkomst van een reisbureau uw safari boeken bij ons in Nederland gevestigd boekingskantoor. De beste prijs. De beste service! [/vc_column_inner][vc_column_inner width=”1/4″] Speciale prijzen voor kinderen Ja, u leest het goed. Kinderen tot 5 jaar zijn bij ons gratis. Voor kinderen tussen de 6 en 12 jaar oud, geldt een korting van 25%. [/vc_column_inner][vc_column_inner width=”1/4″] Safari's voor reizigers met beperkingen Wij geloven niet alleen in verantwoordelijk toerisme, maar ook in inclusiviteit. Reizigers met een lichamelijke beper
+[vc_row wrapper_container="content-block-no-padding-margin"][vc_column] KARIBU KENYA! Henjo African safaris Explore Tours Experience the wild. Discover the wild side. Henjo African safaris Explore Tours Gorilla safaris Henjo African safaris Explore Tours Uncover the wild. Discover the wild within. Henjo African safaris Explore Tours setREVStartSize({c: 'rev_slider_5_1',rl:[1240,1024,778,480],el:[550,768,480,720],gw:[1240,1024,778,480],gh:[550,768,480,720],type:'standard',justify:'',layout:'fullwidth',mh:"0"});if (window.RS_MODULES!==undefined && window.RS_MODULES.modules!==undefined && window.RS_MODULES.modules["revslider51"]!==undefined) {window.RS_MODULES.modules["revslider51"].once = false;window.revapi5 = undefined;window.RS_MODULES.checkMinimal()} [/vc_column][/vc_row][vc_row css_animation="none" entrada_row_bgcolor="bg-white" css=".vc_custom_1658414910117{padding-top: 20px !important;padding-bottom: 20px !important;}" el_class="std-alone-search-block"][vc_column css=".vc_custom_1562126820258{padding-top: 20px !important;padding-bottom: 20px !important;}"] Waarom Henjo African Safari's Op maat georganiseerde safari's die je letterlijk en figuurlijk een andere wereld laten zien. Ons team bestaat uit evaren reis adviseurs en gecertificeerde gidsen, die een veilige, onvergetelijke en leerzame safari-ervaring garandeert. [vc_row_inner][vc_column_inner width="1/4"] Boek via ons boekingskantoor in Nederland U kunt direct en zonder tussenkomst van een reisbureau uw safari boeken bij ons in Nederland gevestigd boekingskantoor. De beste prijs. De beste service! [/vc_column_inner][vc_column_inner width="1/4"] Speciale prijzen voor kinderen Ja, u leest het goed. Kinderen tot 5 jaar zijn bij ons gratis. Voor kinderen tussen de 6 en 12 jaar oud, geldt een korting van 25%. [/vc_column_inner][vc_column_inner width="1/4"] Safari's voor reizigers met beperkingen Wij geloven niet alleen in verantwoordelijk toerisme, maar ook in inclusiviteit. Reizigers met een lichamelijke beper
 ```
 
 ---
@@ -964,7 +964,7 @@ Booking ID: [booking_id] Your Appointment Booked successfully! We have sent your
 - **Slug**: `travel-information`
 
 ```text
-[vc_row][vc_column] Africa is extraordinary and her people evoke a sense of adventure, romance and deep connection to nature. Find the relaibe information from Henjo African Safaris as you dive into the true essence of Africa. [vc_row_inner css=”.vc_custom_1679501262231{padding-top: 30px !important;}”][vc_column_inner][vc_basic_grid post_type=”post” max_items=”10″ grid_id=”vc_gid:1681986090466-7f38524d-ea22-8″][/vc_column_inner][/vc_row_inner][/vc_column][/vc_row]
+[vc_row][vc_column] Africa is extraordinary and her people evoke a sense of adventure, romance and deep connection to nature. Find the relaibe information from Henjo African Safaris as you dive into the true essence of Africa. [vc_row_inner css=".vc_custom_1679501262231{padding-top: 30px !important;}"][vc_column_inner][vc_basic_grid post_type="post" max_items="10" grid_id="vc_gid:1681986090466-7f38524d-ea22-8"][/vc_column_inner][/vc_row_inner][/vc_column][/vc_row]
 ```
 
 ---
@@ -991,7 +991,7 @@ This is an auto-generated coming soon/maintenance page, You can update this page
 - **Slug**: `women-only-tours-to-uganda-rwanda-kenya`
 
 ```text
-[vc_row entrada_row_bgcolor=”bg-white”][vc_column][vc_raw_html]JTNDaW1nJTIwY2xhc3MlM0QlMjJhbGlnbmxlZnQlMjB3cC1pbWFnZS02MTQ5JTIyJTIwc3JjJTNEJTIyaHR0cHMlM0ElMkYlMkZ3d3cuaGVuam9hZnJpY2Fuc2FmYXJpcy5jb20lMkZ3cC1jb250ZW50JTJGdXBsb2FkcyUyRjIwMjIlMkYxMiUyRnBpYzMtMTAyNHgxMDI0LmpwZyUyMiUyMGFsdCUzRCUyMiUyMiUyMHdpZHRoJTNEJTIyMzI2JTIyJTIwaGVpZ2h0JTNEJTIyMzI2JTIyJTIwJTJGJTNFT3VyJTIwV29tZW4tb25seSUyMHRyYXZlbCUyMHBhY2thZ2VzJUMyJUEwJTIwb2ZmZXIlMjBhJTIwc2FmZSUyMGFuZCUyMGVtcG93ZXJpbmclMjB3YXklMjBmb3IlMjB3b21lbiUyMHRvJTIwZXhwbG9yZSUyMFVnYW5kYSUyMCUyQyUyMEtlbnlhJTIwJTI2YW1wJTNCJTIwUndhbmRhJTIwb24lMjB0aGVpciUyMHRlcm1zLiUwQVRoZXNlJTIwcGFja2FnZXMlMjBlbmFibGUlMjBvdXIlMjBjbGllbnRzJTIwdG8lMjBmZWVsJTIwYSUyMHNlbnNlJTIwb2YlMjBzZWN1cml0eSUyMGFuZCUyMHNhZmV0eSUyMGl0JTIwcHJvdmlkZXMuJTIwSGVuam8lMjBBZnJpY2FuJTIwU2FmYXJpcyUyMG9mZmVyJTIwc2VjdXJpdHklMjBtZWFzdXJlcyUyMHN1Y2glMjBhcyUyMHdvbWVuLW9ubHklMjBhdHRlbmRhbnRzJTIwaW4lMjBhY2NvbW1vZGF0aW9ucyUyQyUyMHRyYW5zcG9ydGF0aW9uJTJDJTIwYXMlMjB3ZWxsJTIwYXMlMjBsb2NhbCUyMGZlbWFsZSUyMGd1aWRlcyUyMGFuZCUyMHN1cHBvcnQlMjBuZXR3b3JrcyUyMGluJTIwdGhlJTIwZGVzdGluYXRpb25zJTIwdGhleSUyMHZpc2l0LiUyMFRoaXMlMjBjYW4lMjBnaXZlJTIwd29tZW4lMjB0aGUlMjBjb25maWRlbmNlJTIwdG8lMjB0cmF2ZWwlMjB0byUyMGRlc3RpbmF0aW9ucyUyMHRoYXQlMjBtYXklMjBiZSUyMGNvbnNpZGVyZWQlMjB1bnNhZmUlMjBmb3IlMjBzb2xvJTIwZmVtYWxlJTIwdHJhdmVsZXJzLiUwQSUwQUNob29zaW5nJTIwd29tZW4tb25seSUyMHRyYXZlbCUyMHBhY2thZ2VzJTIwb2ZmZXJzJTIwdGhlJTIwb3Bwb3J0dW5pdHklMjB0byUyMGNvbm5lY3QlMjB3aXRoJTIwb3RoZXIlMjBsaWtlLW1pbmRlZCUyMHdvbWVuJTIwYW5kJTIwcHJvdmlkZXMlMjBhJTIwc3VwcG9ydGl2ZSUyMGFuZCUyMGVtcG93ZXJpbmclMjBlbnZpcm9ubWVudCUyMHdoZXJlJTIwd29tZW4lMjBjYW4lMjBib25kJTIwYW5kJTIwbWFrZSUyMGxhc3RpbmclMjBmcmllbmRzaGlwcy4lMjBUaGlzJTIwY2FuJTIwYmUlMjBwYXJ0aWN1bGFybHklMjBiZW5lZmljaWFsJTIwZm9yJTIwd29tZW4lMjB3aG8lMjBhcmUlMjB0cmF2ZWxpbmclMjBzb2xvJTIwYW5kJTIwbWF5JTIwZmVlbCUyMGxvbmVseSUyMG9yJTIwaXNvbGF0ZWQuJTBBJTBBSW4lMjBhZGRpdGlvbiUyMHRvJTIwdGhlJTIwc2FmZXR5JTIwYW5kJTIwc29jaWFsJTIwYXNwZWN0cyUyQyUyMHdvbWVuLW9ubHklMjB0cmF2ZWwlMjBwYWNrYWdlcyUyMGFsc28lMjBvZmZlciUyMHVuaXF1Z
+[vc_row entrada_row_bgcolor="bg-white"][vc_column][vc_raw_html]JTNDaW1nJTIwY2xhc3MlM0QlMjJhbGlnbmxlZnQlMjB3cC1pbWFnZS02MTQ5JTIyJTIwc3JjJTNEJTIyaHR0cHMlM0ElMkYlMkZ3d3cuaGVuam9hZnJpY2Fuc2FmYXJpcy5jb20lMkZ3cC1jb250ZW50JTJGdXBsb2FkcyUyRjIwMjIlMkYxMiUyRnBpYzMtMTAyNHgxMDI0LmpwZyUyMiUyMGFsdCUzRCUyMiUyMiUyMHdpZHRoJTNEJTIyMzI2JTIyJTIwaGVpZ2h0JTNEJTIyMzI2JTIyJTIwJTJGJTNFT3VyJTIwV29tZW4tb25seSUyMHRyYXZlbCUyMHBhY2thZ2VzJUMyJUEwJTIwb2ZmZXIlMjBhJTIwc2FmZSUyMGFuZCUyMGVtcG93ZXJpbmclMjB3YXklMjBmb3IlMjB3b21lbiUyMHRvJTIwZXhwbG9yZSUyMFVnYW5kYSUyMCUyQyUyMEtlbnlhJTIwJTI2YW1wJTNCJTIwUndhbmRhJTIwb24lMjB0aGVpciUyMHRlcm1zLiUwQVRoZXNlJTIwcGFja2FnZXMlMjBlbmFibGUlMjBvdXIlMjBjbGllbnRzJTIwdG8lMjBmZWVsJTIwYSUyMHNlbnNlJTIwb2YlMjBzZWN1cml0eSUyMGFuZCUyMHNhZmV0eSUyMGl0JTIwcHJvdmlkZXMuJTIwSGVuam8lMjBBZnJpY2FuJTIwU2FmYXJpcyUyMG9mZmVyJTIwc2VjdXJpdHklMjBtZWFzdXJlcyUyMHN1Y2glMjBhcyUyMHdvbWVuLW9ubHklMjBhdHRlbmRhbnRzJTIwaW4lMjBhY2NvbW1vZGF0aW9ucyUyQyUyMHRyYW5zcG9ydGF0aW9uJTJDJTIwYXMlMjB3ZWxsJTIwYXMlMjBsb2NhbCUyMGZlbWFsZSUyMGd1aWRlcyUyMGFuZCUyMHN1cHBvcnQlMjBuZXR3b3JrcyUyMGluJTIwdGhlJTIwZGVzdGluYXRpb25zJTIwdGhleSUyMHZpc2l0LiUyMFRoaXMlMjBjYW4lMjBnaXZlJTIwd29tZW4lMjB0aGUlMjBjb25maWRlbmNlJTIwdG8lMjB0cmF2ZWwlMjB0byUyMGRlc3RpbmF0aW9ucyUyMHRoYXQlMjBtYXklMjBiZSUyMGNvbnNpZGVyZWQlMjB1bnNhZmUlMjBmb3IlMjBzb2xvJTIwZmVtYWxlJTIwdHJhdmVsZXJzLiUwQSUwQUNob29zaW5nJTIwd29tZW4tb25seSUyMHRyYXZlbCUyMHBhY2thZ2VzJTIwb2ZmZXJzJTIwdGhlJTIwb3Bwb3J0dW5pdHklMjB0byUyMGNvbm5lY3QlMjB3aXRoJTIwb3RoZXIlMjBsaWtlLW1pbmRlZCUyMHdvbWVuJTIwYW5kJTIwcHJvdmlkZXMlMjBhJTIwc3VwcG9ydGl2ZSUyMGFuZCUyMGVtcG93ZXJpbmclMjBlbnZpcm9ubWVudCUyMHdoZXJlJTIwd29tZW4lMjBjYW4lMjBib25kJTIwYW5kJTIwbWFrZSUyMGxhc3RpbmclMjBmcmllbmRzaGlwcy4lMjBUaGlzJTIwY2FuJTIwYmUlMjBwYXJ0aWN1bGFybHklMjBiZW5lZmljaWFsJTIwZm9yJTIwd29tZW4lMjB3aG8lMjBhcmUlMjB0cmF2ZWxpbmclMjBzb2xvJTIwYW5kJTIwbWF5JTIwZmVlbCUyMGxvbmVseSUyMG9yJTIwaXNvbGF0ZWQuJTBBJTBBSW4lMjBhZGRpdGlvbiUyMHRvJTIwdGhlJTIwc2FmZXR5JTIwYW5kJTIwc29jaWFsJTIwYXNwZWN0cyUyQyUyMHdvbWVuLW9ubHklMjB0cmF2ZWwlMjBwYWNrYWdlcyUyMGFsc28lMjBvZmZlciUyMHVuaXF1Z
 ```
 
 ---
@@ -1055,7 +1055,7 @@ This is an auto-generated coming soon/maintenance page, You can update this page
 - **Slug**: `terms-conditions`
 
 ```text
-You have to edit “Terms & Conditions” page to replace this start content with your own.
+You have to edit "Terms & Conditions" page to replace this start content with your own.
 ```
 
 ---
@@ -1074,7 +1074,7 @@ You have to edit “Terms & Conditions” page to replace this start content wit
 - **Slug**: `v2`
 
 ```text
-[vc_row wrapper_container=”content-block-no-padding-margin”][vc_column] KARIBU KENYA! Henjo African safaris Explore Tours Experience the wild. Discover the wild side. Henjo African safaris Explore Tours Gorilla safaris Henjo African safaris Explore Tours Uncover the wild. Discover the wild within. Henjo African safaris Explore Tours setREVStartSize({c: 'rev_slider_5_3',rl:[1240,1024,778,480],el:[550,768,480,720],gw:[1240,1024,778,480],gh:[550,768,480,720],type:'standard',justify:'',layout:'fullwidth',mh:"0"});if (window.RS_MODULES!==undefined && window.RS_MODULES.modules!==undefined && window.RS_MODULES.modules["revslider53"]!==undefined) {window.RS_MODULES.modules["revslider53"].once = false;window.revapi5_3 = undefined;window.RS_MODULES.checkMinimal()} [/vc_column][/vc_row][vc_row css_animation=”none” entrada_row_bgcolor=”bg-white” css=”.vc_custom_1658414910117{padding-top: 20px !important;padding-bottom: 20px !important;}” el_class=”std-alone-search-block”][vc_column css=”.vc_custom_1562126820258{padding-top: 20px !important;padding-bottom: 20px !important;}”] Why Henjo African Safaris Well organized tours to elevate your spirit! The combination of our experienced team of travel consultants and our certified driver guide assures a safe, treasurable, thrilling and informative safari. [/vc_column][/vc_row][vc_row entrada_row_bgcolor=”bg-white”][vc_column] Our Top Safari Destinations We aim at creating dreamy experiences and uncover a range of exhilarating, inspiring journeys to East Africa. We expand our operations and offer itineraries toward exploration of every corner of East Africa. KENYA Wildebeest Migration UGANDA The pearl of Africa Tanzania Home of Mount Kilimanjaro RWANDA The Land of Thousand Hills setREVStartSize({c: 'portfolio_1',rl:[1240,1024,778,480],el:[320,320,500,400],gw:[380,380,500,400],gh:[320,320,500,400],type:'carousel',justify:'',layout:'fullwidth',mh:"0"});if (window.RS_MODULES!==undefined && window.RS_MODULES.modules!==undefined && window.RS
+[vc_row wrapper_container="content-block-no-padding-margin"][vc_column] KARIBU KENYA! Henjo African safaris Explore Tours Experience the wild. Discover the wild side. Henjo African safaris Explore Tours Gorilla safaris Henjo African safaris Explore Tours Uncover the wild. Discover the wild within. Henjo African safaris Explore Tours setREVStartSize({c: 'rev_slider_5_3',rl:[1240,1024,778,480],el:[550,768,480,720],gw:[1240,1024,778,480],gh:[550,768,480,720],type:'standard',justify:'',layout:'fullwidth',mh:"0"});if (window.RS_MODULES!==undefined && window.RS_MODULES.modules!==undefined && window.RS_MODULES.modules["revslider53"]!==undefined) {window.RS_MODULES.modules["revslider53"].once = false;window.revapi5_3 = undefined;window.RS_MODULES.checkMinimal()} [/vc_column][/vc_row][vc_row css_animation="none" entrada_row_bgcolor="bg-white" css=".vc_custom_1658414910117{padding-top: 20px !important;padding-bottom: 20px !important;}" el_class="std-alone-search-block"][vc_column css=".vc_custom_1562126820258{padding-top: 20px !important;padding-bottom: 20px !important;}"] Why Henjo African Safaris Well organized tours to elevate your spirit! The combination of our experienced team of travel consultants and our certified driver guide assures a safe, treasurable, thrilling and informative safari. [/vc_column][/vc_row][vc_row entrada_row_bgcolor="bg-white"][vc_column] Our Top Safari Destinations We aim at creating dreamy experiences and uncover a range of exhilarating, inspiring journeys to East Africa. We expand our operations and offer itineraries toward exploration of every corner of East Africa. KENYA Wildebeest Migration UGANDA The pearl of Africa Tanzania Home of Mount Kilimanjaro RWANDA The Land of Thousand Hills setREVStartSize({c: 'portfolio_1',rl:[1240,1024,778,480],el:[320,320,500,400],gw:[380,380,500,400],gh:[320,320,500,400],type:'carousel',justify:'',layout:'fullwidth',mh:"0"});if (window.RS_MODULES!==undefined && window.RS_MODULES.modules!==undefined && window.RS
 ```
 
 ---
@@ -1106,29 +1106,29 @@ The Blog
 
 ---
 
-### Page Title: Header – Top Bar
+### Page Title: Header - Top Bar
 - **Slug**: `header-top`
 
 ```text
-[vc_row wrapper_container=”content-block-no-padding-margin”][vc_column] Your Dream Escape... only a quick search away A Perfect Adventure... memory of a lifetime setREVStartSize({c: 'rev_slider_1_5',rl:[1240,1024,778,480],el:[868,768,960,720],gw:[1240,1024,778,480],gh:[868,768,960,720],type:'standard',justify:'',layout:'fullwidth',mh:"0"});if (window.RS_MODULES!==undefined && window.RS_MODULES.modules!==undefined && window.RS_MODULES.modules["revslider15"]!==undefined) {window.RS_MODULES.modules["revslider15"].once = false;window.revapi1 = undefined;window.RS_MODULES.checkMinimal()} [/vc_column][/vc_row][vc_row][vc_column] Best Sellers of 2016 Our collection of the most popular adventures in 2016. 12-Day Kenya Classic Signature Wildlife Safari Wildlife Adventure 0 Place 1 Activity This 12-day safari takes you to around Kenya's best tourist attractions from lions, elephants, cheetahs, zebras and wildebeests providing an authentic dose of African wildlife and creates memorable experiences. explore from $ 0.00 5-Day Masai Mara Flying Luxury Safari Wildlife Adventure 0 Place 1 Activity This 5-day safari takes you to and Beyond Kichwa Tembo Camp which is sprawled along the Saparingo River on the edge of the Oloololo escarpment, where the riverine forest meets the sweeping plains in the seasonal path of the awe-inspiring… explore from $ 0.00 8 Days Best of Kenya Safari Wildlife Adventure 0 Place 1 Activity In this 8 days adventure, you’ll travel to Amboseli National Park, spending two nights in the home of the largest tuskers you will ever see. You'll be stopping for a night in the idyllic Lake Nakuru and another in Lake… explore from $ 0.00 9-Day Kenya Beach Holiday and Luxury Wildlife Safari Wildlife Adventure 0 Place 1 Activity A Kenyan beach holiday and game-safari combo is one of the best ways to explore magical Kenya. The trip will take you to idyllic destinations and is perfect for married couples looking to add some spark to their union, or… explore from $ 0.00 Ki
+[vc_row wrapper_container="content-block-no-padding-margin"][vc_column] Your Dream Escape... only a quick search away A Perfect Adventure... memory of a lifetime setREVStartSize({c: 'rev_slider_1_5',rl:[1240,1024,778,480],el:[868,768,960,720],gw:[1240,1024,778,480],gh:[868,768,960,720],type:'standard',justify:'',layout:'fullwidth',mh:"0"});if (window.RS_MODULES!==undefined && window.RS_MODULES.modules!==undefined && window.RS_MODULES.modules["revslider15"]!==undefined) {window.RS_MODULES.modules["revslider15"].once = false;window.revapi1 = undefined;window.RS_MODULES.checkMinimal()} [/vc_column][/vc_row][vc_row][vc_column] Best Sellers of 2016 Our collection of the most popular adventures in 2016. 12-Day Kenya Classic Signature Wildlife Safari Wildlife Adventure 0 Place 1 Activity This 12-day safari takes you to around Kenya's best tourist attractions from lions, elephants, cheetahs, zebras and wildebeests providing an authentic dose of African wildlife and creates memorable experiences. explore from $ 0.00 5-Day Masai Mara Flying Luxury Safari Wildlife Adventure 0 Place 1 Activity This 5-day safari takes you to and Beyond Kichwa Tembo Camp which is sprawled along the Saparingo River on the edge of the Oloololo escarpment, where the riverine forest meets the sweeping plains in the seasonal path of the awe-inspiring... explore from $ 0.00 8 Days Best of Kenya Safari Wildlife Adventure 0 Place 1 Activity In this 8 days adventure, you'll travel to Amboseli National Park, spending two nights in the home of the largest tuskers you will ever see. You'll be stopping for a night in the idyllic Lake Nakuru and another in Lake... explore from $ 0.00 9-Day Kenya Beach Holiday and Luxury Wildlife Safari Wildlife Adventure 0 Place 1 Activity A Kenyan beach holiday and game-safari combo is one of the best ways to explore magical Kenya. The trip will take you to idyllic destinations and is perfect for married couples looking to add some spark to their union, or... explore from $ 0.00 Ki
 ```
 
 ---
 
-### Page Title: Header – Centered Nav
+### Page Title: Header - Centered Nav
 - **Slug**: `header-centered`
 
 ```text
-[vc_row wrapper_container=”content-block-no-padding-margin”][vc_column] KARIBU KENYA! Henjo African safaris Explore Tours Experience the wild. Discover the wild side. Henjo African safaris Explore Tours Gorilla safaris Henjo African safaris Explore Tours Uncover the wild. Discover the wild within. Henjo African safaris Explore Tours setREVStartSize({c: 'rev_slider_5_6',rl:[1240,1024,778,480],el:[550,768,480,720],gw:[1240,1024,778,480],gh:[550,768,480,720],type:'standard',justify:'',layout:'fullwidth',mh:"0"});if (window.RS_MODULES!==undefined && window.RS_MODULES.modules!==undefined && window.RS_MODULES.modules["revslider56"]!==undefined) {window.RS_MODULES.modules["revslider56"].once = false;window.revapi5_6 = undefined;window.RS_MODULES.checkMinimal()} [/vc_column][/vc_row][vc_row][vc_column] Best Sellers of 2016 Our collection of the most popular adventures in 2016. 12-Day Kenya Classic Signature Wildlife Safari Wildlife Adventure 0 Place 1 Activity This 12-day safari takes you to around Kenya's best tourist attractions from lions, elephants, cheetahs, zebras and wildebeests providing an authentic dose of African wildlife and creates memorable experiences. explore from $ 0.00 5-Day Masai Mara Flying Luxury Safari Wildlife Adventure 0 Place 1 Activity This 5-day safari takes you to and Beyond Kichwa Tembo Camp which is sprawled along the Saparingo River on the edge of the Oloololo escarpment, where the riverine forest meets the sweeping plains in the seasonal path of the awe-inspiring… explore from $ 0.00 8 Days Best of Kenya Safari Wildlife Adventure 0 Place 1 Activity In this 8 days adventure, you’ll travel to Amboseli National Park, spending two nights in the home of the largest tuskers you will ever see. You'll be stopping for a night in the idyllic Lake Nakuru and another in Lake… explore from $ 0.00 9-Day Kenya Beach Holiday and Luxury Wildlife Safari Wildlife Adventure 0 Place 1 Activity A Kenyan beach holiday and game-safari combo is one of the best ways t
+[vc_row wrapper_container="content-block-no-padding-margin"][vc_column] KARIBU KENYA! Henjo African safaris Explore Tours Experience the wild. Discover the wild side. Henjo African safaris Explore Tours Gorilla safaris Henjo African safaris Explore Tours Uncover the wild. Discover the wild within. Henjo African safaris Explore Tours setREVStartSize({c: 'rev_slider_5_6',rl:[1240,1024,778,480],el:[550,768,480,720],gw:[1240,1024,778,480],gh:[550,768,480,720],type:'standard',justify:'',layout:'fullwidth',mh:"0"});if (window.RS_MODULES!==undefined && window.RS_MODULES.modules!==undefined && window.RS_MODULES.modules["revslider56"]!==undefined) {window.RS_MODULES.modules["revslider56"].once = false;window.revapi5_6 = undefined;window.RS_MODULES.checkMinimal()} [/vc_column][/vc_row][vc_row][vc_column] Best Sellers of 2016 Our collection of the most popular adventures in 2016. 12-Day Kenya Classic Signature Wildlife Safari Wildlife Adventure 0 Place 1 Activity This 12-day safari takes you to around Kenya's best tourist attractions from lions, elephants, cheetahs, zebras and wildebeests providing an authentic dose of African wildlife and creates memorable experiences. explore from $ 0.00 5-Day Masai Mara Flying Luxury Safari Wildlife Adventure 0 Place 1 Activity This 5-day safari takes you to and Beyond Kichwa Tembo Camp which is sprawled along the Saparingo River on the edge of the Oloololo escarpment, where the riverine forest meets the sweeping plains in the seasonal path of the awe-inspiring... explore from $ 0.00 8 Days Best of Kenya Safari Wildlife Adventure 0 Place 1 Activity In this 8 days adventure, you'll travel to Amboseli National Park, spending two nights in the home of the largest tuskers you will ever see. You'll be stopping for a night in the idyllic Lake Nakuru and another in Lake... explore from $ 0.00 9-Day Kenya Beach Holiday and Luxury Wildlife Safari Wildlife Adventure 0 Place 1 Activity A Kenyan beach holiday and game-safari combo is one of the best ways t
 ```
 
 ---
 
-### Page Title: Layout – Full Width
+### Page Title: Layout - Full Width
 - **Slug**: `layout-full-width`
 
 ```text
-[vc_row entrada_row_bgcolor=”bg-white”][vc_column][vc_custom_heading text=”Full Width Layout” google_fonts=”font_family:Montserrat%3Aregular%2C700|font_style:700%20bold%20regular%3A700%3Anormal”][vc_column_text]Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo onsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.[/vc_column_text][vc_empty_space height=”60px”][vc_cta h2=”Tour and travel 2019″ h2_font_container=”color:%23c4c6ff” h2_use_theme_fonts=”yes” h4_font_container=”color:%23ffffff|line_height:1.6em” h4_use_theme_fonts=”yes” style=”custom” add_button=”bottom” btn_title=”PURCHASE NOW” btn_style=”custom” btn_custom_background=”#5d55fa” btn_custom_text=”#ffffff” btn_align=”left” btn_i_icon_fontawesome=”fa fa-check” btn_css_animation=”fadeIn” css_animati
+[vc_row entrada_row_bgcolor="bg-white"][vc_column][vc_custom_heading text="Full Width Layout" google_fonts="font_family:Montserrat%3Aregular%2C700|font_style:700%20bold%20regular%3A700%3Anormal"][vc_column_text]Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo onsequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.[/vc_column_text][vc_empty_space height="60px"][vc_cta h2="Tour and travel 2019" h2_font_container="color:%23c4c6ff" h2_use_theme_fonts="yes" h4_font_container="color:%23ffffff|line_height:1.6em" h4_use_theme_fonts="yes" style="custom" add_button="bottom" btn_title="PURCHASE NOW" btn_style="custom" btn_custom_background="#5d55fa" btn_custom_text="#ffffff" btn_align="left" btn_i_icon_fontawesome="fa fa-check" btn_css_animation="fadeIn" css_animati
 ```
 
 ---
@@ -1146,7 +1146,7 @@ Opportunity page linked from Footer.
 - **Slug**: `contact`
 
 ```text
-[vc_row entrada_row_bgcolor=”bg-white”][vc_column] Get in Touch Contact us by email, phone or through our web form below. [vc_row_inner el_class=”contact-info”][vc_column_inner width=”1/3″] +256 779 557 514 Call Us [/vc_column_inner][vc_column_inner width=”1/3″][/vc_column_inner][vc_column_inner width=”1/3″] Email info@henjoafricansafaris.com [/vc_column_inner][/vc_row_inner][vc_row_inner el_class=”contact-info”][vc_column_inner width=”1/2″][contact-form-7 id=”3289″ title=”Contact Us”][/vc_column_inner][vc_column_inner width=”1/2″] [/vc_column_inner][/vc_row_inner][/vc_column][/vc_row][vc_row][vc_column][/vc_column][/vc_row]
+[vc_row entrada_row_bgcolor="bg-white"][vc_column] Get in Touch Contact us by email, phone or through our web form below. [vc_row_inner el_class="contact-info"][vc_column_inner width="1/3"] +256 779 557 514 Call Us [/vc_column_inner][vc_column_inner width="1/3"][/vc_column_inner][vc_column_inner width="1/3"] Email info@henjoafricansafaris.com [/vc_column_inner][/vc_row_inner][vc_row_inner el_class="contact-info"][vc_column_inner width="1/2"][contact-form-7 id="3289" title="Contact Us"][/vc_column_inner][vc_column_inner width="1/2"] [/vc_column_inner][/vc_row_inner][/vc_column][/vc_row][vc_row][vc_column][/vc_column][/vc_row]
 ```
 
 ---

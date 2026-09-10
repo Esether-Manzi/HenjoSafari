@@ -33,11 +33,11 @@ class AdminDashboardPanelProvider extends PanelProvider
             // Same palette as the public site (app/globals.css on the frontend)
             // ==========================================
             // Primary:   Forest Green   #2E7D32 (main actions, navigation)
-            // Secondary: Safari Gold    #D4A017 (accents, highlights — used as Filament's "info")
+            // Secondary: Safari Gold    #D4A017 (accents, highlights - used as Filament's "info")
             // Success:   Green (light)  #4CAF50
             // Warning:   Sunset Amber   #E5A100
             // Danger:    Brand Maroon   #7B1818 (destructive actions)
-            // Gray:      Stone, a warm neutral — matches the site's cream/sand surfaces
+            // Gray:      Stone, a warm neutral - matches the site's cream/sand surfaces
             //            (#FAFAF5, #F3F1EB, #E5E2D9) instead of Filament's default cool Zinc
             // ==========================================
             ->colors([
@@ -51,7 +51,7 @@ class AdminDashboardPanelProvider extends PanelProvider
                 // Extra named hues (beyond the five semantic slots above) so
                 // Infolist/Form Sections, badges, and icons across every
                 // resource's view/edit page can pull from one consistent
-                // six-hue brand rotation — see theme.css for how these
+                // six-hue brand rotation - see theme.css for how these
                 // colorize section headers (icon chip + top border).
                 'gold' => Color::hex('#D4A017'),
                 'green' => Color::hex('#2E7D32'),

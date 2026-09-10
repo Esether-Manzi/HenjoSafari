@@ -25,7 +25,7 @@ class BookingsTable
                     ->label('Customer')
                     ->getStateUsing(fn ($record) => $record->customer
                         ? trim("{$record->customer->first_name} {$record->customer->last_name}")
-                        : '—')
+                        : '-')
                     ->searchable(query: function (Builder $query, string $search): Builder {
                         return $query->orWhereHas('customer', function (Builder $q) use ($search) {
                             $q->where('first_name', 'like', "%{$search}%")

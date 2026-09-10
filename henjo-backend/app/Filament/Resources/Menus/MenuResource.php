@@ -93,7 +93,7 @@ class MenuResource extends Resource
                 TextColumn::make('location')->badge()->sortable(),
                 TextColumn::make('label')->searchable()->sortable(),
                 TextColumn::make('url'),
-                TextColumn::make('parent.label')->label('Parent')->placeholder('— top level —'),
+                TextColumn::make('parent.label')->label('Parent')->placeholder('- top level -'),
                 TextColumn::make('sort_order')->sortable(),
                 IconColumn::make('is_active')->boolean(),
             ])

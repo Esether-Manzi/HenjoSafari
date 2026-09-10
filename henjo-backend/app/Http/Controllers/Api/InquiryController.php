@@ -29,7 +29,7 @@ class InquiryController extends Controller
             Mail::to('info@henjosafaris.com')
                 ->send(new NewInquiryNotification($inquiry));
         } catch (\Exception $e) {
-            // Log the error but don't fail the request — the inquiry is already saved
+            // Log the error but don't fail the request - the inquiry is already saved
             Log::error('Failed to send inquiry notification email: '.$e->getMessage());
         }
 

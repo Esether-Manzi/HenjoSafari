@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { getImageUrl } from '@/lib/utils/imageHelper';
 import { formatHeading } from '@/lib/utils/textFormat';
-import { FaMapMarkerAlt, FaClock, FaStar } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaClock, FaStar, FaArrowRight } from 'react-icons/fa';
 import type { SafariPackage } from '@/types/safari';
 
 interface SafariCardProps {
@@ -110,7 +110,7 @@ export default function SafariCard({ tour, featured = false }: SafariCardProps) 
                             color: 'var(--text-on-gold)',
                         }}
                     >
-                        View Details →
+                        <span className="inline-flex items-center gap-1.5">View Details <FaArrowRight className="text-xs" aria-hidden /></span>
                     </span>
                 </div>
             </div>

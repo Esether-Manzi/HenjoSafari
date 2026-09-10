@@ -23,10 +23,10 @@ class CountrySeeder extends Seeder
             );
         }
 
-        // South Africa is no longer an offered destination — remove any
+        // South Africa is no longer an offered destination - remove any
         // leftover row (and, via cascade, its destinations) on reseed.
         Country::whereIn('code', ['ZA'])->delete();
 
-        $this->command->info('✅ Countries seeded!');
+        $this->command->info('Countries seeded!');
     }
 }

@@ -53,7 +53,7 @@ class MediaAssetResource extends Resource
                     TextInput::make('title')
                         ->maxLength(255)
                         ->columnSpanFull()
-                        ->helperText('Optional — defaults to the uploaded file name.'),
+                        ->helperText('Optional - defaults to the uploaded file name.'),
                 ]),
 
             Section::make('File')
@@ -117,7 +117,7 @@ class MediaAssetResource extends Resource
                 TextColumn::make('size')
                     ->state(fn (MediaAsset $record): string => $record->file()
                         ? Number::fileSize($record->file()->size)
-                        : '—'),
+                        : '-'),
                 TextColumn::make('uploadedBy.name')
                     ->label('Uploaded By')
                     ->toggleable(),

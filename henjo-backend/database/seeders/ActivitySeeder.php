@@ -24,11 +24,11 @@ class ActivitySeeder extends Seeder
             ['name' => 'White Water Rafting', 'slug' => 'white-water-rafting', 'image' => 'white-water-rafting.jpeg', 'featured' => true],
         ];
 
-        // Retired placeholder activity — removed here so re-running this
+        // Retired placeholder activity - removed here so re-running this
         // seeder cleans up anything created by an earlier version of this
         // list. NOTE: 'photography' used to be here too, but that slug is
         // now the real "Photography" activity real packages are tagged
-        // with (RealSafariPackageSeeder) — unfeatured, not deleted.
+        // with (RealSafariPackageSeeder) - unfeatured, not deleted.
         Activity::whereIn('slug', ['hot-air-balloon'])->delete();
 
         foreach ($activities as $activity) {
@@ -49,6 +49,6 @@ class ActivitySeeder extends Seeder
             }
         }
 
-        $this->command->info('✅ Activities seeded!');
+        $this->command->info('Activities seeded!');
     }
 }

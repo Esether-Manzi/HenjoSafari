@@ -7,7 +7,7 @@ import Hero from '@/components/common/Hero';
 import { safariApi } from '@/lib/api/safariApi';
 import { getImageUrl } from '@/lib/utils/imageHelper';
 import type { SafariPackage } from '@/types/safari';
-import { FaMapMarkerAlt, FaClock, FaSearch, FaFilter, FaTimes, FaPaw, FaMountain, FaCompass, FaExclamationTriangle, FaStar, FaCheck } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaClock, FaSearch, FaFilter, FaTimes, FaPaw, FaMountain, FaCompass, FaExclamationTriangle, FaStar, FaCheck, FaChevronDown, FaArrowRight } from 'react-icons/fa';
 
 // Fallback search options if database is empty or API fails
 const FALLBACK_OPTIONS = {
@@ -46,7 +46,7 @@ export default function SafarisPage() {
     // Active dropdown selector state
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
-    // Filters Selected State — initialized from the URL's query string
+    // Filters Selected State - initialized from the URL's query string
     // (e.g. /safaris?category=gorilla-safaris from the nav dropdown) so
     // links into this page land pre-filtered instead of showing everything.
     const [filters, setFilters] = useState(() => {
@@ -226,7 +226,7 @@ export default function SafarisPage() {
                                 <span className={`flex items-center gap-2 ${filters.category ? 'font-bold text-[var(--brand-gold)]' : ''}`}>
                                     <FaPaw /> {getFilterLabel('category', filters.category)}
                                 </span>
-                                <span className="text-white/60">▼</span>
+                                <FaChevronDown className="text-white/60 text-xs" aria-hidden />
                             </button>
                             {activeDropdown === 'category' && (
                                 <div className="absolute left-0 mt-2 w-56 rounded-2xl shadow-lg border p-2 z-50 bg-[#152018] border-[#2A3E2E]">
@@ -259,7 +259,7 @@ export default function SafarisPage() {
                                 <span className={`flex items-center gap-2 ${filters.destination ? 'font-bold text-[var(--brand-gold)]' : ''}`}>
                                     <FaMountain /> {getFilterLabel('destination', filters.destination)}
                                 </span>
-                                <span className="text-white/60">▼</span>
+                                <FaChevronDown className="text-white/60 text-xs" aria-hidden />
                             </button>
                             {activeDropdown === 'destination' && (
                                 <div className="absolute left-0 mt-2 w-56 rounded-2xl shadow-lg border p-2 z-50 bg-[#152018] border-[#2A3E2E]">
@@ -292,7 +292,7 @@ export default function SafarisPage() {
                                 <span className={`flex items-center gap-2 ${filters.activity ? 'font-bold text-[var(--brand-gold)]' : ''}`}>
                                     <FaCompass /> {getFilterLabel('activity', filters.activity)}
                                 </span>
-                                <span className="text-white/60">▼</span>
+                                <FaChevronDown className="text-white/60 text-xs" aria-hidden />
                             </button>
                             {activeDropdown === 'activity' && (
                                 <div className="absolute left-0 mt-2 w-56 rounded-2xl shadow-lg border p-2 z-50 bg-[#152018] border-[#2A3E2E]">
@@ -505,7 +505,7 @@ export default function SafarisPage() {
                                                         color: 'var(--text-on-gold)',
                                                     }}
                                                 >
-                                                    View Details →
+                                                    <span className="inline-flex items-center gap-1.5">View Details <FaArrowRight className="text-xs" aria-hidden /></span>
                                                 </span>
                                             </div>
                                         </div>

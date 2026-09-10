@@ -86,7 +86,7 @@ class SafariPackageResource extends Resource
                     TextInput::make('base_price')->numeric()->required()->prefix('$')
                         ->helperText('0 shows "Contact for Price" on the site.'),
                     TextInput::make('price_max')->numeric()->prefix('$')
-                        ->helperText('Optional — set only if the price is a range.'),
+                        ->helperText('Optional - set only if the price is a range.'),
                 ]),
 
             Section::make('Trip Style')

@@ -13,11 +13,11 @@ class BlogSeeder extends Seeder
 {
     public function run()
     {
-        $this->command->info('📝 Creating Blog Content...');
+        $this->command->info('Creating Blog Content...');
 
         // Create author if doesn't exist. This is also, incidentally, the
         // only Filament admin login this app creates (no canAccessPanel
-        // restriction means any User row can log into /admin) — so the
+        // restriction means any User row can log into /admin) - so the
         // password is randomly generated per-seed and printed once here,
         // never hardcoded.
         $author = User::first();
@@ -29,8 +29,8 @@ class BlogSeeder extends Seeder
                 'password' => Hash::make($password),
                 'country' => 'Tanzania',
             ]);
-            $this->command->info('  ✅ Author created: ' . $author->name);
-            $this->command->warn("  🔑 Admin login password (save this, it will not be shown again): {$password}");
+            $this->command->info('  Author created: ' . $author->name);
+            $this->command->warn("  Admin login password (save this, it will not be shown again): {$password}");
         }
 
         // Create Tags
@@ -50,10 +50,10 @@ class BlogSeeder extends Seeder
                 $tagData
             );
             $tagModels[] = $tag;
-            $this->command->info('  ✅ Tag: ' . $tag->name);
+            $this->command->info('  Tag: ' . $tag->name);
         }
 
-        // Real posts (henjosafaris-content-audit.md §5.6 — the old WordPress
+        // Real posts (henjosafaris-content-audit.md section 5.6 - the old WordPress
         // blog only ever had these 2 real articles, both travel/visa guides).
         $posts = [
             [
@@ -70,7 +70,7 @@ class BlogSeeder extends Seeder
                 'title' => 'Entry Requirements For Uganda',
                 'slug' => 'entry-requirements-for-uganda',
                 'excerpt' => 'What you need for a single-entry Uganda tourist visa.',
-                'content' => "**Uganda Tourist Visa – Single Entry.** This visa is granted to travelers coming to Uganda for tourism. This is a single-entry visa and can be granted for up to 3 months.\n\n## Where to apply\n\nThe visas are available online through: https://www.visas.immigration.go.ug/#/apply\n\n## Requirements\n\n- Passport copy (bio-data page) with at least 6 months validity\n- Tour Plan\n- Travel itinerary/booking\n- Recent Passport-size Photograph\n- Vaccination Certificate (Yellow Fever)",
+                'content' => "**Uganda Tourist Visa - Single Entry.** This visa is granted to travelers coming to Uganda for tourism. This is a single-entry visa and can be granted for up to 3 months.\n\n## Where to apply\n\nThe visas are available online through: https://www.visas.immigration.go.ug/#/apply\n\n## Requirements\n\n- Passport copy (bio-data page) with at least 6 months validity\n- Tour Plan\n- Travel itinerary/booking\n- Recent Passport-size Photograph\n- Vaccination Certificate (Yellow Fever)",
                 'featured' => true,
                 'status' => 'published',
                 'published_at' => now()->subDays(10),
@@ -105,10 +105,10 @@ class BlogSeeder extends Seeder
                 $post->tags()->sync($tagIds);
             }
 
-            $this->command->info("  ✅ Post: {$post->title}");
+            $this->command->info("  Post: {$post->title}");
         }
 
-        $this->command->info('✅ Blog content seeded successfully!');
+        $this->command->info('Blog content seeded successfully!');
     }
 }
 

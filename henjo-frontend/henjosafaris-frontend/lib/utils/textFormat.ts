@@ -3,7 +3,7 @@
 // ============================================
 // Applied to CMS/admin-editable copy (Page sections, SiteSetting, safari
 // and blog titles, etc.) at render time, so formatting stays consistent
-// site-wide no matter how it was typed in the Filament admin — no backend
+// site-wide no matter how it was typed in the Filament admin - no backend
 // deploy needed to fix a heading typed in ALL CAPS or with stray spacing.
 
 const HTML_TAG_REGEX = /<[^>]*>/g;
@@ -42,7 +42,7 @@ export function cleanText(input: string | null | undefined): string {
 }
 
 // Domain proper nouns that must stay capitalized even when the rest of a
-// heading gets lowercased for sentence case — extend as new destinations
+// heading gets lowercased for sentence case - extend as new destinations
 // or brand terms come up.
 const PROPER_NOUNS = [
     'Uganda', 'Kenya', 'Tanzania', 'Rwanda', 'Africa', 'East Africa',
@@ -71,7 +71,7 @@ function capitalizeFirst(text: string): string {
 
 /**
  * Standardize a heading/title to sentence case. Only rewrites text typed
- * as ALL CAPS or all lowercase — a heading already in deliberate mixed
+ * as ALL CAPS or all lowercase - a heading already in deliberate mixed
  * case (the common case for well-formed admin input) is left alone aside
  * from whitespace cleanup and re-asserting known proper nouns, so this
  * never mangles intentional formatting.

@@ -29,6 +29,6 @@ class SafariCategorySeeder extends Seeder
             );
         }
 
-        $this->command->info('✅ Safari categories seeded!');
+        $this->command->info('Safari categories seeded!');
     }
 }

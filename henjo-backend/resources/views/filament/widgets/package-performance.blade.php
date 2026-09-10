@@ -29,7 +29,7 @@
                                     {{ $package['title'] }}
                                 </span>
                                 <span class="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
-                                    {{ $package['bookings'] }} {{ Str::plural('booking', $package['bookings']) }} · {{ number_format($package['revenue'], 0) }}
+                                    {{ $package['bookings'] }} {{ Str::plural('booking', $package['bookings']) }} - {{ number_format($package['revenue'], 0) }}
                                 </span>
                             </div>
                             <div class="henjo-progress-track">
@@ -67,7 +67,7 @@
                                     {{ $destination['name'] }}
                                 </span>
                                 <span class="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
-                                    {{ $destination['bookings'] }} {{ Str::plural('booking', $destination['bookings']) }} · {{ number_format($destination['revenue'], 0) }}
+                                    {{ $destination['bookings'] }} {{ Str::plural('booking', $destination['bookings']) }} - {{ number_format($destination['revenue'], 0) }}
                                 </span>
                             </div>
                             <div class="henjo-progress-track">

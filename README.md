@@ -1,6 +1,6 @@
 # Henjo African Safaris
 
-Website for Henjo African Safaris — a safari tour operator based in Uganda offering
+Website for Henjo African Safaris - a safari tour operator based in Uganda offering
 bespoke safaris, gorilla trekking, and tailor-made holidays across Uganda, Kenya,
 Tanzania, and Rwanda.
 
@@ -8,10 +8,10 @@ The project is a two-app monorepo:
 
 | App | Stack | Purpose |
 |---|---|---|
-| [`henjo-backend/`](henjo-backend) | Laravel 13 + Filament 5 | Public REST API and admin panel — the tour catalog (safaris, destinations, bookings, blog) plus the site's own content (settings, nav menus, CMS pages) |
+| [`henjo-backend/`](henjo-backend) | Laravel 13 + Filament 5 | Public REST API and admin panel - the tour catalog (safaris, destinations, bookings, blog) plus the site's own content (settings, nav menus, CMS pages) |
 | [`henjo-frontend/henjosafaris-frontend/`](henjo-frontend/henjosafaris-frontend) | Next.js 16 (App Router) | Public-facing marketing site that consumes the API |
 
-The two apps are deployed and run independently — there is no shared build tooling
+The two apps are deployed and run independently - there is no shared build tooling
 between them, and the frontend talks to the backend purely over HTTP.
 
 ## Getting Started
@@ -54,20 +54,20 @@ The site runs at `http://localhost:3000`.
 
 ### Backend: Laravel API + Filament admin, one app
 
-- **Public JSON API** — `routes/api.php`, all under `/api/v1/...`. Every response is
+- **Public JSON API** - `routes/api.php`, all under `/api/v1/...`. Every response is
   shaped `{ success, data, message?, errors? }`. List endpoints support query-string
   filtering (`search`, `category`, `destination`, `activity`, `country`) and are
   paginated.
-- **Admin panel** — [Filament 5](https://filamentphp.com), mounted at `/admin`.
+- **Admin panel** - [Filament 5](https://filamentphp.com), mounted at `/admin`.
   Resources cover safari packages, destinations, categories, activities,
   accommodations, bookings, customers, payments, inquiries, blog posts, team
-  members, nav menus, and CMS pages — plus a global Settings page (site name/logo,
+  members, nav menus, and CMS pages - plus a global Settings page (site name/logo,
   contact info, social links), a dashboard with grouped stats and quick actions,
   and a Reports page with CSV-exportable analytics.
 - **Models** commonly combine `SoftDeletes`, sluggable slugs, and
   [Spatie Media Library](https://spatie.be/docs/laravel-medialibrary) for image
   uploads.
-- **Auth** — Sanctum for the API guard, `laravel-permission` for admin roles.
+- **Auth** - Sanctum for the API guard, `laravel-permission` for admin roles.
 
 ### Frontend: Next.js App Router
 
@@ -82,7 +82,7 @@ The site runs at `http://localhost:3000`.
   (`app/globals.css`) supporting light/dark mode.
 
 See [`CLAUDE.md`](CLAUDE.md) for a more detailed breakdown of conventions,
-in-progress work, and known rough edges — it's the working reference kept up to
+in-progress work, and known rough edges - it's the working reference kept up to
 date as the codebase evolves.
 
 ## Testing
@@ -97,7 +97,7 @@ cd henjo-frontend/henjosafaris-frontend
 npm run lint
 ```
 
-Frontend test coverage is not yet configured; backend coverage is minimal — treat
+Frontend test coverage is not yet configured; backend coverage is minimal - treat
 the test suite as a starting point rather than a full safety net.
 
 ## License

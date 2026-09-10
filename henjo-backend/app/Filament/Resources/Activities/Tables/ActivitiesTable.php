@@ -31,7 +31,7 @@ class ActivitiesTable
                 TextColumn::make('icon')
                     ->label('Icon')
                     ->html()
-                    ->formatStateUsing(fn (?string $state): string => SafariIcons::preview($state) ?? '—'),
+                    ->formatStateUsing(fn (?string $state): string => SafariIcons::preview($state) ?? '-'),
                 TextColumn::make('name')
                     ->searchable()
                     ->sortable(),

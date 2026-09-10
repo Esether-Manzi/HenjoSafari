@@ -6,14 +6,14 @@
 // ============================================
 
 export interface BookingFormData {
-    // Step 1 — Personal Information
+    // Step 1 - Personal Information
     first_name: string;
     last_name: string;
     email: string;
     phone: string;
     country: string;
 
-    // Step 2 — Trip Details
+    // Step 2 - Trip Details
     package_id?: number | null;
     package_name?: string | null;
     travel_date: string;          // ISO date string: YYYY-MM-DD
