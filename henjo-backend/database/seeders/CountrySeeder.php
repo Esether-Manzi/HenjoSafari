@@ -14,7 +14,6 @@ class CountrySeeder extends Seeder
             ['name' => 'Kenya', 'code' => 'KE'],
             ['name' => 'Uganda', 'code' => 'UG'],
             ['name' => 'Rwanda', 'code' => 'RW'],
-            ['name' => 'South Africa', 'code' => 'ZA'],
         ];
 
         foreach ($countries as $country) {
@@ -23,6 +22,10 @@ class CountrySeeder extends Seeder
                 $country
             );
         }
+
+        // South Africa is no longer an offered destination — remove any
+        // leftover row (and, via cascade, its destinations) on reseed.
+        Country::whereIn('code', ['ZA'])->delete();
 
         $this->command->info('✅ Countries seeded!');
     }
