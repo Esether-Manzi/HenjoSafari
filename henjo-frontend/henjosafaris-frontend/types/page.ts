@@ -10,6 +10,16 @@ export interface PageSection {
     description: string | null;
     icon: string | null;
     sort_order: number;
+    /** Present on sections that link to a full "Read More" article page. */
+    slug?: string | null;
+    /** Full article body for the "Read More" page. */
+    body?: string | null;
+    /** Optional Kiswahili translation of `body`. */
+    body_sw?: string | null;
+    /** Link to an official government/reference website. */
+    source_url?: string | null;
+    /** Button label for `source_url`. */
+    source_label?: string | null;
 }
 
 export interface CmsPage {
@@ -37,6 +47,8 @@ function normalizeSection(section: PageSection): PageSection {
         ...section,
         title: formatHeading(section.title),
         description: section.description ? cleanText(section.description) : section.description,
+        body: section.body ? cleanText(section.body) : section.body,
+        body_sw: section.body_sw ? cleanText(section.body_sw) : section.body_sw,
     };
 }
 

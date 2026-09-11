@@ -59,6 +59,7 @@ class HenjoContentSeeder extends Seeder
                 'email' => 'info@henjosafaris.com',
                 'phone' => '+256779557514',
                 'is_active' => true,
+                'photo' => 'henjo_profile/Henry_Katinda.jpeg',
             ],
             [
                 'name' => 'Claire Robinah',
@@ -67,6 +68,7 @@ class HenjoContentSeeder extends Seeder
                 'email' => 'info@henjosafaris.com',
                 'phone' => '+256779557514',
                 'is_active' => true,
+                'photo' => 'henjo_profile/vehicle_1.jpeg',
             ],
             [
                 'name' => 'Magemeso Faziri',
@@ -75,6 +77,7 @@ class HenjoContentSeeder extends Seeder
                 'email' => 'info@henjosafaris.com',
                 'phone' => '+256779557514',
                 'is_active' => true,
+                'photo' => 'henjo_profile/vehicle_2.jpeg',
             ],
         ];
 
@@ -83,7 +86,20 @@ class HenjoContentSeeder extends Seeder
         TeamMember::whereIn('name', ['Henry Mukasa', 'Joan Nampijja', 'Joan Tusubira'])->delete();
 
         foreach ($team as $member) {
-            TeamMember::updateOrCreate(['name' => $member['name']], $member);
+            $photo = $member['photo'] ?? null;
+            unset($member['photo']);
+
+            $record = TeamMember::updateOrCreate(['name' => $member['name']], $member);
+
+            // Henry's founder portrait and the driver/guide vehicle photos already live on the
+            // "public" disk (henjo_profile/) - attach them once rather than re-uploading on
+            // every seed run, and keep the source files in place for the pages that reference
+            // them directly (e.g. the About page founder section).
+            if ($photo && !$record->hasMedia('photo')) {
+                $record->addMediaFromDisk($photo, 'public')
+                    ->preservingOriginal()
+                    ->toMediaCollection('photo');
+            }
         }
 
         $this->command->info('Henjo Static Pages & Team Members Seeded!');

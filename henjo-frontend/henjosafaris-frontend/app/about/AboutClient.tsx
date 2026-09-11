@@ -1,13 +1,7 @@
-'use client';
-
-import { useState, useEffect, useRef } from 'react';
 import Hero from '@/components/common/Hero';
 import Image from 'next/image';
-import Link from 'next/link';
-import { FaHeart, FaLeaf, FaUsers, FaChevronLeft, FaChevronRight, FaPaw, FaHiking, FaPlaneDeparture, FaMountain, FaLandmark, FaFemale, FaCity, FaHandshake, FaCheck, FaStar, FaQuoteLeft } from 'react-icons/fa';
-import { MOCK_TEAM, getMemberPhoto } from '@/app/our-team/page';
-import { teamApi } from '@/lib/api/teamApi';
-import type { TeamMember } from '@/types/team';
+import { Playfair_Display } from 'next/font/google';
+import { FaHeart, FaLeaf, FaUsers, FaChevronLeft, FaChevronRight, FaPaw, FaHiking, FaPlaneDeparture, FaMountain, FaLandmark, FaFemale, FaCity, FaCheck, FaStar, FaQuoteLeft } from 'react-icons/fa';
 import type { CmsPage } from '@/types/page';
 import type { SiteSettings } from '@/types/settings';
 import { sectionsByGroup, firstInGroup } from '@/types/page';
@@ -16,6 +10,10 @@ import { sectionsByGroup, firstInGroup } from '@/types/page';
 // the media library) and lives under the backend's public storage symlink.
 const BACKEND_ORIGIN = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1').replace(/\/api\/v1\/?$/, '');
 const FOUNDER_PHOTO_URL = `${BACKEND_ORIGIN}/storage/henjo_profile/Henry_Katinda.jpeg`;
+
+// Editorial display face for the founder profile - the rest of the site
+// stays on Inter, so this is scoped to that section only.
+const playfair = Playfair_Display({ subsets: ['latin'], weight: ['600', '700'] });
 
 const SERVICE_ICONS: Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>> = {
     paw: FaPaw,
@@ -33,42 +31,23 @@ interface AboutClientProps {
 }
 
 export default function AboutClient({ page, settings }: AboutClientProps) {
-    const [team, setTeam] = useState<TeamMember[]>([]);
-    const teamScrollRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const fetchTeam = async () => {
-            try {
-                const response = await teamApi.getAll();
-                if (response.success && response.data?.length > 0) {
-                    setTeam(response.data);
-                } else {
-                    setTeam(MOCK_TEAM);
-                }
-            } catch (err) {
-                console.warn('Unable to fetch team in about page, using mock data:', err);
-                setTeam(MOCK_TEAM);
-            }
-        };
-        fetchTeam();
-    }, []);
-
-    // Scrolls by one viewport's worth of cards (however many are visible at
-    // the current breakpoint - 1 on mobile, up to 3 on desktop) rather than
-    // a fixed pixel amount, so the buttons stay in sync with native swipe.
-    const scrollTeamBy = (direction: 1 | -1) => {
-        const el = teamScrollRef.current;
-        if (!el) return;
-        el.scrollBy({ left: direction * el.clientWidth, behavior: 'smooth' });
-    };
-
     const whoWeAreParagraphs = (page?.content || '').split('\n').filter(Boolean);
     const servicesHeading = firstInGroup(page?.sections, 'services-heading');
     const services = sectionsByGroup(page?.sections, 'services');
     const values = sectionsByGroup(page?.sections, 'values');
-    const founderSections = sectionsByGroup(page?.sections, 'founder');
     const commitment = firstInGroup(page?.sections, 'commitment');
     const inclusive = firstInGroup(page?.sections, 'inclusive');
+
+    // Founder magazine profile: the two CMS "founder" entries become the
+    // article's lead (with a drop cap on its first paragraph) and its
+    // closing "philosophy" passage, split around a pull quote.
+    const founderSections = sectionsByGroup(page?.sections, 'founder');
+    const founderLead = founderSections[0] || null;
+    const founderPurpose = founderSections[1] || null;
+    const [leadFirstParagraph, ...leadRestParagraphs] = (founderLead?.description || '').split('\n').filter(Boolean);
+    const dropCap = leadFirstParagraph ? leadFirstParagraph.charAt(0) : '';
+    const leadFirstParagraphRest = leadFirstParagraph ? leadFirstParagraph.slice(1) : '';
+    const purposeParagraphs = (founderPurpose?.description || '').split('\n').filter(Boolean);
 
     const stats = [
         { value: settings?.years_experience || '5+', label: 'Years Experience' },
@@ -182,122 +161,31 @@ export default function AboutClient({ page, settings }: AboutClientProps) {
             </section>
 
             {/* ============================================
-            SECTION 2.5: Team Members Preview Carousel
+            SECTION 2.5: Our Founder - magazine-style profile
             ============================================ */}
-            <section className="py-20" style={{ background: 'var(--bg-primary)', borderBottom: '1px solid var(--border-subtle)' }}>
-                <div className="container mx-auto px-4 max-w-7xl">
-                    <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
-                        <div>
-                            <span className="inline-flex items-center gap-2 bg-[var(--brand-gold-subtle)] text-[var(--brand-gold)] px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
-                                <FaHandshake /> Meet the Experts
+            {founderLead && (
+                <section className="py-20 md:py-28" style={{ background: 'var(--bg-secondary)' }}>
+                    <div className="container mx-auto px-4 max-w-5xl">
+                        {/* Kicker */}
+                        <div className="flex items-center gap-3 mb-4">
+                            <span className="h-px w-10" style={{ background: 'var(--brand-gold)' }} />
+                            <span className="text-xs font-bold tracking-[0.2em] uppercase" style={{ color: 'var(--brand-gold)' }}>
+                                Founder Story
                             </span>
-                            <h2 className="text-3xl md:text-4xl font-bold" style={{ color: 'var(--text-primary)' }}>
-                                Meet Our Team
-                            </h2>
-                            <p className="mt-2 text-lg max-w-2xl" style={{ color: 'var(--text-secondary)' }}>
-                                Discover the experienced guides, planners, and conservationists who bring your African adventures to life.
-                            </p>
                         </div>
-                        {/* Navigation Buttons */}
-                        {team.length > 1 && (
-                            <div className="hidden md:flex gap-3 mt-6 md:mt-0">
-                                <button
-                                    onClick={() => scrollTeamBy(-1)}
-                                    className="p-3 rounded-full border transition duration-300 hover:scale-105 active:scale-95"
-                                    style={{
-                                        borderColor: 'var(--border-primary)',
-                                        background: 'var(--bg-card)',
-                                        color: 'var(--text-primary)'
-                                    }}
-                                    aria-label="Previous team members"
-                                >
-                                    <FaChevronLeft size={16} />
-                                </button>
-                                <button
-                                    onClick={() => scrollTeamBy(1)}
-                                    className="p-3 rounded-full border transition duration-300 hover:scale-105 active:scale-95"
-                                    style={{
-                                        borderColor: 'var(--border-primary)',
-                                        background: 'var(--bg-card)',
-                                        color: 'var(--text-primary)'
-                                    }}
-                                    aria-label="Next team members"
-                                >
-                                    <FaChevronRight size={16} />
-                                </button>
-                            </div>
-                        )}
-                    </div>
 
-                    {/* Carousel Container - a native horizontal scroll-snap
-                        strip rather than a JS-computed transform: on phones
-                        each card is full-width, so swiping snaps one member
-                        at a time; from sm/md up, 2-3 cards show per "page"
-                        and the arrow buttons (desktop-only, touch already
-                        swipes) scroll by exactly one viewport. */}
-                    <div
-                        ref={teamScrollRef}
-                        className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide py-4 -mx-3"
-                        style={{ WebkitOverflowScrolling: 'touch', scrollPaddingLeft: '0.75rem' }}
-                    >
-                        {team.map((member) => {
-                            const photoUrl = getMemberPhoto(member);
-                            return (
-                                <div
-                                    key={member.id}
-                                    className="flex-shrink-0 snap-start px-3 w-full sm:w-1/2 md:w-1/3"
-                                >
-                                    <div
-                                        className="rounded-2xl p-6 transition duration-300 hover:shadow-lg h-full flex flex-col justify-between"
-                                        style={{
-                                            background: 'var(--bg-card)',
-                                            border: '1px solid var(--border-subtle)',
-                                            boxShadow: 'var(--shadow-md)'
-                                        }}
-                                    >
-                                        <div>
-                                            <div className="relative w-28 h-28 mx-auto mb-4 rounded-full overflow-hidden border-2" style={{ borderColor: 'var(--brand-gold)' }}>
-                                                <Image
-                                                    src={photoUrl}
-                                                    alt={member.name}
-                                                    fill
-                                                    className="object-cover"
-                                                />
-                                            </div>
-                                            <h3 className="text-xl font-bold text-center" style={{ color: 'var(--text-primary)' }}>{member.name}</h3>
-                                            <p className="text-sm font-semibold text-center mt-1" style={{ color: 'var(--brand-gold)' }}>{member.position}</p>
-                                            <p className="text-xs text-center mt-3 line-clamp-3 leading-relaxed" style={{ color: 'var(--text-tertiary)' }}>
-                                                {member.bio}
-                                            </p>
-                                        </div>
+                        {/* Headline */}
+                        <h2 className={`${playfair.className} text-4xl md:text-6xl font-bold leading-[1.05] mb-4`} style={{ color: 'var(--text-primary)' }}>
+                            {founderPurpose?.title || founderLead.title}
+                        </h2>
+                        <p className="text-sm font-semibold uppercase tracking-wide mb-12" style={{ color: 'var(--text-tertiary)' }}>
+                            Henry Katinda <span style={{ color: 'var(--brand-gold)' }}>&middot;</span> Founder &amp; Director, Henjo African Safaris
+                        </p>
 
-                                        <div className="mt-6 pt-4 border-t text-center" style={{ borderColor: 'var(--border-subtle)' }}>
-                                            <Link
-                                                href="/our-team"
-                                                className="text-xs font-bold transition hover:text-[var(--brand-gold-hover)]"
-                                                style={{ color: 'var(--brand-gold)' }}
-                                            >
-                                                <span className="inline-flex items-center gap-1.5">View Bio &amp; Profile <FaChevronRight className="text-[0.65rem]" aria-hidden /></span>
-                                            </Link>
-                                        </div>
-                                    </div>
-                                </div>
-                            );
-                        })}
-                    </div>
-                </div>
-            </section>
-
-            {/* ============================================
-            SECTION 2.75: Our Founder
-            ============================================ */}
-            {founderSections.length > 0 && (
-                <section className="py-20" style={{ background: 'var(--bg-secondary)' }}>
-                    <div className="container mx-auto px-4 max-w-7xl">
-                        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
-                            {/* Left: Photo */}
-                            <div className="lg:col-span-2 lg:sticky lg:top-24">
-                                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden" style={{ boxShadow: 'var(--shadow-lg)' }}>
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
+                            {/* Photo */}
+                            <div className="lg:col-span-5">
+                                <div className="lg:sticky lg:top-24 relative aspect-[4/5] rounded-2xl overflow-hidden" style={{ boxShadow: 'var(--shadow-lg)' }}>
                                     <Image
                                         src={FOUNDER_PHOTO_URL}
                                         alt="Henry Katinda, Founder and Director of Henjo African Safaris"
@@ -307,40 +195,47 @@ export default function AboutClient({ page, settings }: AboutClientProps) {
                                 </div>
                             </div>
 
-                            {/* Right: Bio */}
-                            <div className="lg:col-span-3">
-                                <span className="inline-flex items-center gap-2 bg-[var(--brand-gold-subtle)] text-[var(--brand-gold)] px-4 py-1.5 rounded-full text-sm font-semibold mb-4">
-                                    <FaHandshake /> Our Founder
-                                </span>
-
-                                {founderSections.map((section, sIdx) => (
-                                    <div key={section.title} className={sIdx > 0 ? 'mt-8' : ''}>
-                                        <h2 className="text-2xl md:text-3xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-                                            {section.title}
-                                        </h2>
-                                        {(section.description || '').split('\n').filter(Boolean).map((paragraph, i) => (
-                                            <p key={i} className={`leading-relaxed ${i > 0 ? 'mt-4' : ''}`} style={{ color: 'var(--text-secondary)' }}>
-                                                {paragraph}
-                                            </p>
-                                        ))}
-                                    </div>
+                            {/* Article body */}
+                            <div className="lg:col-span-7">
+                                {leadFirstParagraph && (
+                                    <p className="leading-relaxed text-lg" style={{ color: 'var(--text-secondary)' }}>
+                                        <span
+                                            className={`${playfair.className} float-left text-7xl leading-[0.75] font-bold mr-3 mt-1`}
+                                            style={{ color: 'var(--brand-gold)' }}
+                                            aria-hidden="true"
+                                        >
+                                            {dropCap}
+                                        </span>
+                                        {leadFirstParagraphRest}
+                                    </p>
+                                )}
+                                {leadRestParagraphs.map((paragraph, i) => (
+                                    <p key={i} className="leading-relaxed text-lg mt-4" style={{ color: 'var(--text-secondary)' }}>
+                                        {paragraph}
+                                    </p>
                                 ))}
 
-                                <div
-                                    className="mt-8 p-6 rounded-2xl"
-                                    style={{ background: 'var(--bg-card)', borderLeft: '4px solid var(--brand-gold)', boxShadow: 'var(--shadow-sm)' }}
-                                >
-                                    <FaQuoteLeft className="text-2xl mb-3" style={{ color: 'var(--brand-gold-subtle)' }} />
-                                    <p className="italic leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                                {/* Pull quote */}
+                                <blockquote className="my-10 text-center">
+                                    <FaQuoteLeft className="text-2xl mx-auto mb-4" style={{ color: 'var(--brand-gold)' }} aria-hidden />
+                                    <p className={`${playfair.className} text-2xl md:text-3xl italic leading-snug`} style={{ color: 'var(--text-primary)' }}>
                                         &ldquo;Africa is more than a destination. It is a story, a people, a culture, and an experience. My goal is to help every traveler discover that story while ensuring that tourism creates opportunities for the communities we call home.&rdquo;
                                     </p>
-                                    <p className="mt-3 font-semibold" style={{ color: 'var(--text-primary)' }}>Henry Katinda</p>
-                                </div>
+                                    <footer className="mt-4 text-sm font-semibold uppercase tracking-wide" style={{ color: 'var(--brand-gold)' }}>
+                                        Henry Katinda
+                                    </footer>
+                                </blockquote>
 
-                                <p className="mt-8 leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                                {purposeParagraphs.map((paragraph, i) => (
+                                    <p key={i} className={`leading-relaxed text-lg ${i > 0 ? 'mt-4' : ''}`} style={{ color: 'var(--text-secondary)' }}>
+                                        {paragraph}
+                                    </p>
+                                ))}
+
+                                <p className="mt-8 leading-relaxed text-lg" style={{ color: 'var(--text-secondary)' }}>
                                     Henry continues to lead Henjo African Safaris with a commitment to exceptional service, responsible tourism, authentic experiences, and meaningful impact.
                                 </p>
-                                <p className="mt-4 text-lg font-bold" style={{ color: 'var(--brand-gold)' }}>
+                                <p className={`${playfair.className} mt-4 text-xl font-bold`} style={{ color: 'var(--brand-gold)' }}>
                                     Travel Africa. Experience More. Give Back.
                                 </p>
                             </div>

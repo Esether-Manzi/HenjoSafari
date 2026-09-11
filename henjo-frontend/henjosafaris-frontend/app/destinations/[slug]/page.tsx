@@ -60,7 +60,7 @@ export default function DestinationDetailPage() {
             try {
                 setLoading(true);
                 const countryName = destination.country?.name || destination.name;
-                const response = await safariApi.getAll({ country: countryName });
+                const response = await safariApi.getAll({ country: countryName, per_page: 100 });
                 const packageData = (response.data as any)?.data || response.data || [];
                 setTours(packageData);
             } catch (err: any) {

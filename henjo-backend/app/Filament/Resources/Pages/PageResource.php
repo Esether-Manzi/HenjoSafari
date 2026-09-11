@@ -88,15 +88,20 @@ class PageResource extends Resource
             Section::make('Content Sections')
                 ->icon(Heroicon::OutlinedSquares2x2)
                 ->iconColor('purple')
-                ->description('Repeatable icon/title/description cards, e.g. "Why Travel With Us" or "Our Services". Use the same Group name to render several cards together on the frontend.')
+                ->description('Repeatable icon/title/description cards, e.g. "Why Travel With Us" or "Our Services". Use the same Group name to render several cards together on the frontend. For the Travel Information page\'s "articles" group, fill in Slug, Full Article Body, and the Official Government Link too - those cards render as a grid with a "Read More" button to a full article page.')
                 ->schema([
                     Repeater::make('sections')
                         ->hiddenLabel()
                         ->schema([
-                            TextInput::make('group')->required()->maxLength(100)->helperText('e.g. why-travel, features, offers'),
+                            TextInput::make('group')->required()->maxLength(100)->helperText('e.g. why-travel, features, offers, articles'),
                             TextInput::make('icon')->maxLength(100),
                             TextInput::make('title')->required()->maxLength(255),
-                            Textarea::make('description')->rows(3),
+                            TextInput::make('slug')->maxLength(255)->helperText('Only needed for cards that link to a full article, e.g. entry-requirements-kenya. Must be unique within the group.'),
+                            Textarea::make('description')->rows(3)->helperText('Short teaser shown on the card (2-3 sentences).')->columnSpanFull(),
+                            Textarea::make('body')->rows(10)->helperText('Full article text for the "Read More" page. Leave blank lines between paragraphs. Start a line with "## " for a subheading, or "- " for a bullet point.')->columnSpanFull(),
+                            Textarea::make('body_sw')->label('Full Article Body (Kiswahili)')->rows(10)->helperText('Optional Kiswahili translation of the body above, using the same "## " and "- " formatting. Shown when a visitor switches language on the article page.')->columnSpanFull(),
+                            TextInput::make('source_url')->label('Official Government Link')->url()->maxLength(500)->helperText('Link to the official government immigration/visa website, e.g. https://www.etakenya.go.ke'),
+                            TextInput::make('source_label')->label('Government Link Button Text')->maxLength(150)->helperText('e.g. "Visit the Kenya eTA website"'),
                             TextInput::make('sort_order')->numeric()->default(0),
                         ])
                         ->columns(2)
@@ -163,7 +168,10 @@ class PageResource extends Resource
                         ->schema([
                             TextEntry::make('group')->badge()->color('purple'),
                             TextEntry::make('title')->weight('bold'),
+                            TextEntry::make('slug')->placeholder('-')->badge()->color('gray'),
+                            TextEntry::make('source_url')->label('Government Link')->placeholder('-')->url(fn ($state) => $state, true),
                             TextEntry::make('description')->placeholder('-')->columnSpanFull(),
+                            TextEntry::make('body')->label('Full Article Body')->placeholder('-')->columnSpanFull()->prose(),
                         ]),
                 ]),
 

@@ -8,15 +8,13 @@
 // ============================================
 
 import type { Metadata } from 'next';
+import Link from 'next/link';
+import Image from 'next/image';
 import Hero from '@/components/common/Hero';
-import { FaPassport, FaFileAlt, FaGlobeAfrica } from 'react-icons/fa';
+import { FaArrowRight } from 'react-icons/fa';
 import { pagesApi } from '@/lib/api/pagesApi';
 import { sectionsByGroup } from '@/types/page';
-
-const ARTICLE_ICONS: Record<string, React.ComponentType<{ className?: string; style?: React.CSSProperties }>> = {
-    passport: FaPassport,
-    file: FaFileAlt,
-};
+import { COUNTRY_FLAGS, countrySlugFromArticleSlug, getCountryMediaMap } from '@/lib/utils/countryMedia';
 
 async function getPage() {
     try {
@@ -36,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function TravelInformationPage() {
-    const page = await getPage();
+    const [page, countryMedia] = await Promise.all([getPage(), getCountryMediaMap()]);
     const articles = sectionsByGroup(page?.sections, 'articles');
 
     return (
@@ -45,6 +43,8 @@ export default async function TravelInformationPage() {
                 size="small"
                 title={page?.hero_title || 'Travel Information'}
                 subtitle={page?.hero_subtitle || 'Reliable information as you dive into the true essence of Africa'}
+                secondaryCtaText="Contact Us"
+                secondaryCtaLink="/contact"
                 backgroundImage="/images/destinations/uganda.png"
                 overlay={true}
                 showTagline={false}
@@ -57,26 +57,56 @@ export default async function TravelInformationPage() {
                     </p>
                 </div>
 
-                <div className="container mx-auto px-4 max-w-3xl space-y-6">
+                <div className="container mx-auto px-4 max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-6">
                     {articles.map((article) => {
-                        const Icon = (article.icon && ARTICLE_ICONS[article.icon]) || FaGlobeAfrica;
+                        const countrySlug = countrySlugFromArticleSlug(article.slug);
+                        const media = countrySlug ? countryMedia[countrySlug] : null;
+                        const Flag = media?.countryCode ? COUNTRY_FLAGS[media.countryCode] : null;
+
                         return (
                             <div
                                 key={article.title}
-                                className="rounded-2xl p-6 md:p-8"
+                                className="rounded-2xl overflow-hidden flex flex-col"
                                 style={{ background: 'var(--bg-card)', boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-primary)' }}
                             >
-                                <div className="flex items-center gap-3 mb-4">
-                                    <Icon className="text-2xl" style={{ color: 'var(--brand-gold)' }} />
-                                    <h2 className="text-xl md:text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                                {media && (
+                                    <div className="relative h-44 md:h-52">
+                                        <Image
+                                            src={media.image}
+                                            alt={media.name}
+                                            fill
+                                            className="object-cover"
+                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/5 to-transparent" />
+                                        {Flag && (
+                                            <div
+                                                className="absolute top-3 left-3 w-9 h-6 rounded overflow-hidden ring-1 ring-white/70"
+                                                style={{ boxShadow: 'var(--shadow-md)' }}
+                                            >
+                                                <Flag className="w-full h-full" title={media.name} />
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                                <div className="p-6 md:p-8 flex flex-col flex-1">
+                                    <h2 className="text-xl md:text-2xl font-bold mb-3" style={{ color: 'var(--text-primary)' }}>
                                         {article.title}
                                     </h2>
-                                </div>
-                                {(article.description || '').split('\n').filter(Boolean).map((paragraph, i) => (
-                                    <p key={i} className={`leading-relaxed ${i > 0 ? 'mt-4' : ''}`} style={{ color: 'var(--text-secondary)' }}>
-                                        {paragraph}
+                                    <p className="leading-relaxed flex-1" style={{ color: 'var(--text-secondary)' }}>
+                                        {article.description}
                                     </p>
-                                ))}
+                                    {article.slug && (
+                                        <Link
+                                            href={`/travel-information/${article.slug}`}
+                                            className="group inline-flex items-center gap-2 font-semibold text-sm mt-5"
+                                            style={{ color: 'var(--brand-gold)' }}
+                                        >
+                                            Read More
+                                            <FaArrowRight className="text-xs group-hover:translate-x-1 transition-transform duration-300" />
+                                        </Link>
+                                    )}
+                                </div>
                             </div>
                         );
                     })}

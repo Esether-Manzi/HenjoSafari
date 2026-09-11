@@ -483,8 +483,23 @@ body {
   animation-play-state: paused;
 }
 
+/* Same loop, played backwards - content slides left to right instead of
+   right to left. Used where we want the "next card" to visibly slide in
+   from the left (e.g. the Safaris page's per-country rows). */
+.animate-marquee-reverse {
+  animation-name: marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: reverse;
+}
+
+.animate-marquee-reverse:hover {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
+  .animate-marquee,
+  .animate-marquee-reverse {
     animation: none;
   }
 }

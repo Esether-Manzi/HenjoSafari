@@ -677,11 +677,11 @@ export default function Home() {
 
                                 const card = (
                                     <div
-                                        className="group flex flex-col items-center justify-center gap-3 p-5 h-32 rounded-xl text-center transition duration-300 hover:-translate-y-1"
+                                        className="group flex flex-col items-center justify-center gap-3 p-5 h-44 rounded-xl text-center transition duration-300 hover:-translate-y-1"
                                         style={{ background: 'var(--bg-card)', border: '1px solid var(--border-subtle)' }}
                                     >
                                         {logoUrl ? (
-                                            <div className="relative w-full h-12">
+                                            <div className="relative w-full h-20">
                                                 <Image
                                                     src={logoUrl}
                                                     alt={partner.title}
@@ -690,13 +690,16 @@ export default function Home() {
                                                 />
                                             </div>
                                         ) : (
-                                            <span
-                                                className="text-xs font-semibold leading-tight transition-colors duration-300 group-hover:text-[var(--brand-gold)]"
-                                                style={{ color: 'var(--text-tertiary)' }}
-                                            >
-                                                {partner.title}
-                                            </span>
+                                            <div className="w-full h-20 flex items-center justify-center">
+                                                <FaHandshake className="text-3xl" style={{ color: 'var(--brand-gold-subtle)' }} aria-hidden />
+                                            </div>
                                         )}
+                                        <span
+                                            className="text-xs font-semibold leading-tight transition-colors duration-300 group-hover:text-[var(--brand-gold)]"
+                                            style={{ color: 'var(--text-tertiary)' }}
+                                        >
+                                            {partner.title}
+                                        </span>
                                     </div>
                                 );
 

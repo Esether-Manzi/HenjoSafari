@@ -46,6 +46,8 @@ export default async function WomenOnlyToursPage() {
                 size="medium"
                 title={page?.hero_title || 'Women Only Tours'}
                 subtitle={page?.hero_subtitle || 'Safe, empowering travel across Uganda, Kenya & Rwanda'}
+                secondaryCtaText="Get in Touch"
+                secondaryCtaLink="/contact"
                 backgroundImage="/images/destinations/rwanda.png"
                 overlay={true}
                 showTagline={false}
@@ -53,19 +55,9 @@ export default async function WomenOnlyToursPage() {
 
             <section className="py-16 transition-colors duration-300" style={{ background: 'var(--bg-primary)' }}>
                 <div className="container mx-auto px-4 max-w-4xl">
-                    <div
-                        className="rounded-2xl p-8 md:p-12 space-y-6"
-                        style={{ background: 'var(--bg-card)', boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-primary)' }}
-                    >
-                        {(page?.content || '').split('\n').filter(Boolean).map((paragraph, i) => (
-                            <p key={i} className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
-                                {paragraph}
-                            </p>
-                        ))}
-                    </div>
-
-                    {/* Feature icons */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
+                    {/* Feature icons - up front so scanning visitors get the
+                        reassurance points before the longer prose below. */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
                         {features.map((item) => {
                             const Icon = (item.icon && FEATURE_ICONS[item.icon]) || FaShieldAlt;
                             return (
@@ -80,6 +72,17 @@ export default async function WomenOnlyToursPage() {
                                 </div>
                             );
                         })}
+                    </div>
+
+                    <div
+                        className="rounded-2xl p-8 md:p-12 space-y-6"
+                        style={{ background: 'var(--bg-card)', boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-primary)' }}
+                    >
+                        {(page?.content || '').split('\n').filter(Boolean).map((paragraph, i) => (
+                            <p key={i} className="leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                                {paragraph}
+                            </p>
+                        ))}
                     </div>
                 </div>
             </section>

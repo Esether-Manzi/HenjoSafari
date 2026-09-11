@@ -6,8 +6,15 @@ import Image from 'next/image';
 import Hero from '@/components/common/Hero';
 import { safariApi } from '@/lib/api/safariApi';
 import { getImageUrl } from '@/lib/utils/imageHelper';
+import { COUNTRY_FLAGS } from '@/lib/utils/countryMedia';
 import type { SafariPackage } from '@/types/safari';
 import { FaMapMarkerAlt, FaClock, FaSearch, FaFilter, FaTimes, FaPaw, FaMountain, FaCompass, FaExclamationTriangle, FaStar, FaCheck, FaChevronDown, FaArrowRight } from 'react-icons/fa';
+
+// Default (unfiltered) view groups packages into one row per country, in
+// this fixed display order, instead of dumping an unfiltered, country-
+// skewed page of results.
+const ORDERED_COUNTRIES = ['Kenya', 'Tanzania', 'Uganda', 'Rwanda'];
+const COUNTRY_CODES: Record<string, string> = { Kenya: 'KE', Tanzania: 'TZ', Uganda: 'UG', Rwanda: 'RW' };
 
 // Fallback search options if database is empty or API fails
 const FALLBACK_OPTIONS = {
@@ -36,6 +43,10 @@ export default function SafarisPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    // Default (no filters) view: packages grouped by country, Kenya -> Tanzania -> Uganda -> Rwanda
+    const [countryRows, setCountryRows] = useState<{ country: string; packages: SafariPackage[] }[]>([]);
+    const [countryRowsLoading, setCountryRowsLoading] = useState(true);
+
     // Filters Dropdowns Data
     const [options, setOptions] = useState({
         categories: FALLBACK_OPTIONS.categories,
@@ -62,6 +73,8 @@ export default function SafarisPage() {
         };
     });
 
+    const hasActiveFilters = Object.values(filters).some((val) => val !== '');
+
     // Fetch filters drop-down options on mount
     useEffect(() => {
         const fetchFilters = async () => {
@@ -81,8 +94,14 @@ export default function SafarisPage() {
         fetchFilters();
     }, []);
 
-    // Fetch packages whenever filters change
+    // Fetch packages whenever filters change - only needed once the visitor
+    // actually filters/searches; the unfiltered default view renders the
+    // per-country rows below instead (see the countryRows effect).
     useEffect(() => {
+        // Nothing to fetch here - the unfiltered default view renders the
+        // per-country rows instead, and `loading` isn't read in that branch.
+        if (!hasActiveFilters) return;
+
         const fetchPackages = async () => {
             try {
                 setLoading(true);
@@ -94,7 +113,7 @@ export default function SafarisPage() {
                 if (filters.activity) params.activity = filters.activity;
 
                 const response = await safariApi.getAll(params);
-                
+
                 if (response.success) {
                     const packageData = response.data?.data || response.data || [];
                     setPackages(packageData);
@@ -111,7 +130,33 @@ export default function SafarisPage() {
         };
 
         fetchPackages();
-    }, [filters]);
+    }, [filters, hasActiveFilters]);
+
+    // Fetch the default per-country rows once on mount
+    useEffect(() => {
+        const fetchByCountry = async () => {
+            try {
+                setCountryRowsLoading(true);
+                const results = await Promise.all(
+                    ORDERED_COUNTRIES.map((country) => safariApi.getAll({ country, per_page: 20 }))
+                );
+                const rows = ORDERED_COUNTRIES
+                    .map((country, i) => {
+                        const response = results[i];
+                        const list = response.success ? (response.data?.data || response.data || []) : [];
+                        return { country, packages: list as SafariPackage[] };
+                    })
+                    .filter((row) => row.packages.length > 0);
+                setCountryRows(rows);
+            } catch (err) {
+                console.warn('Unable to load per-country packages:', err);
+                setCountryRows([]);
+            } finally {
+                setCountryRowsLoading(false);
+            }
+        };
+        fetchByCountry();
+    }, []);
 
     const handleSelectFilter = (type: string, value: string) => {
         setFilters((prev) => ({
@@ -167,8 +212,6 @@ export default function SafarisPage() {
         const item = list?.find((item: any) => item.slug === value);
         return item ? item.name : value;
     };
-
-    const hasActiveFilters = Object.values(filters).some(val => val !== '');
 
     return (
         <div className="min-h-screen transition-colors duration-300" style={{ background: 'var(--bg-secondary)' }}>
@@ -359,161 +402,233 @@ export default function SafarisPage() {
             {/* Safaris Packages Listing */}
             <div className="py-20 transition-colors duration-300">
                 <div className="container mx-auto px-4">
-                    {loading ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {[1, 2, 3].map((n) => (
-                                <div
-                                    key={n}
-                                    className="rounded-2xl h-[450px] animate-pulse"
-                                    style={{ background: 'var(--bg-tertiary)' }}
-                                />
+                    {hasActiveFilters ? (
+                        loading ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {[1, 2, 3].map((n) => (
+                                    <div
+                                        key={n}
+                                        className="rounded-2xl h-[450px] animate-pulse"
+                                        style={{ background: 'var(--bg-tertiary)' }}
+                                    />
+                                ))}
+                            </div>
+                        ) : error ? (
+                            <div
+                                className="rounded-2xl p-8 text-center max-w-2xl mx-auto border"
+                                style={{
+                                    background: 'var(--bg-card)',
+                                    borderColor: 'var(--brand-maroon)',
+                                }}
+                            >
+                                <p className="font-semibold text-lg flex items-center justify-center gap-2" style={{ color: 'var(--brand-maroon)' }}><FaExclamationTriangle /> Error Loading Safaris</p>
+                                <p className="text-sm mt-2" style={{ color: 'var(--text-secondary)' }}>{error}</p>
+                                <button
+                                    onClick={() => window.location.reload()}
+                                    className="mt-6 font-semibold px-6 py-2 rounded-full transition hover:scale-105"
+                                    style={{
+                                        background: 'var(--brand-gold)',
+                                        color: 'var(--text-on-gold)',
+                                    }}
+                                >
+                                    Try Again
+                                </button>
+                            </div>
+                        ) : packages.length === 0 ? (
+                            <div className="text-center py-20">
+                                <p className="text-xl font-bold" style={{ color: 'var(--text-secondary)' }}>No safari packages found</p>
+                                <p className="text-sm mt-2" style={{ color: 'var(--text-muted)' }}>Try adjusting your filters or keyword query.</p>
+                                <button
+                                    onClick={handleClearFilters}
+                                    className="mt-6 font-semibold px-6 py-2 rounded-full transition hover:scale-105"
+                                    style={{
+                                        background: 'var(--brand-gold)',
+                                        color: 'var(--text-on-gold)',
+                                    }}
+                                >
+                                    Reset Search Filters
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {packages.map((pkg) => (
+                                    <SafariPackageCard key={pkg.id} pkg={pkg} />
+                                ))}
+                            </div>
+                        )
+                    ) : countryRowsLoading ? (
+                        <div className="space-y-16">
+                            {[1, 2, 3, 4].map((n) => (
+                                <div key={n}>
+                                    <div className="h-6 w-32 rounded mb-5 animate-pulse" style={{ background: 'var(--bg-tertiary)' }} />
+                                    <div className="flex gap-6 overflow-hidden">
+                                        {[1, 2, 3].map((m) => (
+                                            <div
+                                                key={m}
+                                                className="rounded-2xl h-[420px] w-80 sm:w-96 flex-shrink-0 animate-pulse"
+                                                style={{ background: 'var(--bg-tertiary)' }}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
                             ))}
                         </div>
-                    ) : error ? (
-                        <div
-                            className="rounded-2xl p-8 text-center max-w-2xl mx-auto border"
-                            style={{
-                                background: 'var(--bg-card)',
-                                borderColor: 'var(--brand-maroon)',
-                            }}
-                        >
-                            <p className="font-semibold text-lg flex items-center justify-center gap-2" style={{ color: 'var(--brand-maroon)' }}><FaExclamationTriangle /> Error Loading Safaris</p>
-                            <p className="text-sm mt-2" style={{ color: 'var(--text-secondary)' }}>{error}</p>
-                            <button 
-                                onClick={() => window.location.reload()}
-                                className="mt-6 font-semibold px-6 py-2 rounded-full transition hover:scale-105"
-                                style={{
-                                    background: 'var(--brand-gold)',
-                                    color: 'var(--text-on-gold)',
-                                }}
-                            >
-                                Try Again
-                            </button>
-                        </div>
-                    ) : packages.length === 0 ? (
+                    ) : countryRows.length === 0 ? (
                         <div className="text-center py-20">
                             <p className="text-xl font-bold" style={{ color: 'var(--text-secondary)' }}>No safari packages found</p>
-                            <p className="text-sm mt-2" style={{ color: 'var(--text-muted)' }}>Try adjusting your filters or keyword query.</p>
-                            <button
-                                onClick={handleClearFilters}
-                                className="mt-6 font-semibold px-6 py-2 rounded-full transition hover:scale-105"
-                                style={{
-                                    background: 'var(--brand-gold)',
-                                    color: 'var(--text-on-gold)',
-                                }}
-                            >
-                                Reset Search Filters
-                            </button>
+                            <p className="text-sm mt-2" style={{ color: 'var(--text-muted)' }}>Please check back soon.</p>
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {packages.map((pkg) => {
-                                const imageUrl = getImageUrl(pkg.media, 'cover');
-                                return (
-                                    <Link 
-                                        key={pkg.id} 
-                                        href={`/safaris/${pkg.slug}`}
-                                        className="group rounded-2xl overflow-hidden transition duration-300 flex flex-col justify-between"
-                                        style={{
-                                            background: 'var(--bg-card)',
-                                            boxShadow: 'var(--shadow-md)',
-                                        }}
-                                    >
-                                        <div>
-                                            <div className="relative h-56 overflow-hidden">
-                                                <Image
-                                                    src={imageUrl}
-                                                    alt={pkg.title}
-                                                    fill
-                                                    className="object-cover group-hover:scale-110 transition duration-500"
-                                                    onError={(e) => {
-                                                        const target = e.target as HTMLImageElement;
-                                                        target.src = '/images/placeholder.png';
-                                                    }}
-                                                />
-                                                {pkg.featured && (
-                                                    <span
-                                                        className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1"
-                                                        style={{
-                                                            background: 'var(--brand-gold)',
-                                                            color: 'var(--text-on-gold)',
-                                                        }}
-                                                    >
-                                                        <FaStar /> Featured
-                                                    </span>
-                                                )}
-                                                {pkg.popular && (
-                                                    <span
-                                                        className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold"
-                                                        style={{
-                                                            background: 'var(--brand-maroon)',
-                                                            color: '#FFFFFF',
-                                                        }}
-                                                    >
-                                                        Popular
-                                                    </span>
-                                                )}
-                                            </div>
-
-                                            <div className="p-6">
-                                                <h3
-                                                    className="text-xl font-bold mb-2 transition line-clamp-1 group-hover:text-[var(--brand-gold)]"
-                                                    style={{ color: 'var(--text-primary)' }}
-                                                >
-                                                    {pkg.title}
-                                                </h3>
-                                                <p className="text-sm mb-4 line-clamp-2" style={{ color: 'var(--text-tertiary)' }}>
-                                                    {pkg.summary}
-                                                </p>
-                                                
-                                                <div className="flex items-center gap-4 text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
-                                                    <span className="flex items-center gap-1">
-                                                        <FaMapMarkerAlt style={{ color: 'var(--brand-gold)' }} />
-                                                        {pkg.destination?.name || 'Tanzania'}
-                                                    </span>
-                                                    <span className="flex items-center gap-1">
-                                                        <FaClock style={{ color: 'var(--brand-gold)' }} />
-                                                        {pkg.duration_days} Days
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="p-6 pt-0">
-                                            <div
-                                                className="flex items-center justify-between pt-4"
-                                                style={{ borderTop: '1px solid var(--border-subtle)' }}
-                                            >
-                                                <div>
-                                                    {Number(pkg.base_price) > 0 ? (
-                                                        <>
-                                                            <span className="text-2xl font-bold" style={{ color: 'var(--brand-green)' }}>
-                                                                {pkg.currency} {pkg.base_price?.toLocaleString()}
-                                                            </span>
-                                                            <span className="text-sm ml-1" style={{ color: 'var(--text-muted)' }}>/ person</span>
-                                                        </>
-                                                    ) : (
-                                                        <span className="text-lg font-bold" style={{ color: 'var(--brand-green)' }}>
-                                                            Contact for Price
-                                                        </span>
-                                                    )}
-                                                </div>
-                                                <span
-                                                    className="font-semibold px-4 py-2 rounded-full text-sm transition"
-                                                    style={{
-                                                        background: 'var(--brand-gold)',
-                                                        color: 'var(--text-on-gold)',
-                                                    }}
-                                                >
-                                                    <span className="inline-flex items-center gap-1.5">View Details <FaArrowRight className="text-xs" aria-hidden /></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </Link>
-                                );
-                            })}
+                        <div className="space-y-16">
+                            {countryRows.map((row) => (
+                                <CountryPackageRow key={row.country} country={row.country} packages={row.packages} />
+                            ))}
                         </div>
                     )}
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// ============================================
+// COMPONENT: Single package card
+// Shared by both the filtered grid and the per-country marquee rows.
+// ============================================
+function SafariPackageCard({ pkg }: { pkg: SafariPackage }) {
+    const imageUrl = getImageUrl(pkg.media, 'cover');
+    return (
+        <Link
+            href={`/safaris/${pkg.slug}`}
+            className="group rounded-2xl overflow-hidden transition duration-300 flex flex-col justify-between"
+            style={{
+                background: 'var(--bg-card)',
+                boxShadow: 'var(--shadow-md)',
+            }}
+        >
+            <div>
+                <div className="relative h-56 overflow-hidden">
+                    <Image
+                        src={imageUrl}
+                        alt={pkg.title}
+                        fill
+                        className="object-cover group-hover:scale-110 transition duration-500"
+                        onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = '/images/placeholder.png';
+                        }}
+                    />
+                    {pkg.featured && (
+                        <span
+                            className="absolute top-4 left-4 px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1"
+                            style={{
+                                background: 'var(--brand-gold)',
+                                color: 'var(--text-on-gold)',
+                            }}
+                        >
+                            <FaStar /> Featured
+                        </span>
+                    )}
+                    {pkg.popular && (
+                        <span
+                            className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-semibold"
+                            style={{
+                                background: 'var(--brand-maroon)',
+                                color: '#FFFFFF',
+                            }}
+                        >
+                            Popular
+                        </span>
+                    )}
+                </div>
+
+                <div className="p-6">
+                    <h3
+                        className="text-xl font-bold mb-2 transition line-clamp-1 group-hover:text-[var(--brand-gold)]"
+                        style={{ color: 'var(--text-primary)' }}
+                    >
+                        {pkg.title}
+                    </h3>
+                    <p className="text-sm mb-4 line-clamp-2" style={{ color: 'var(--text-tertiary)' }}>
+                        {pkg.summary}
+                    </p>
+
+                    <div className="flex items-center gap-4 text-sm mb-4" style={{ color: 'var(--text-muted)' }}>
+                        <span className="flex items-center gap-1">
+                            <FaMapMarkerAlt style={{ color: 'var(--brand-gold)' }} />
+                            {pkg.destination?.name || 'Tanzania'}
+                        </span>
+                        <span className="flex items-center gap-1">
+                            <FaClock style={{ color: 'var(--brand-gold)' }} />
+                            {pkg.duration_days} Days
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div className="p-6 pt-0">
+                <div
+                    className="flex items-center justify-between pt-4"
+                    style={{ borderTop: '1px solid var(--border-subtle)' }}
+                >
+                    <div>
+                        {Number(pkg.base_price) > 0 ? (
+                            <>
+                                <span className="text-2xl font-bold" style={{ color: 'var(--brand-green)' }}>
+                                    {pkg.currency} {pkg.base_price?.toLocaleString()}
+                                </span>
+                                <span className="text-sm ml-1" style={{ color: 'var(--text-muted)' }}>/ person</span>
+                            </>
+                        ) : (
+                            <span className="text-lg font-bold" style={{ color: 'var(--brand-green)' }}>
+                                Contact for Price
+                            </span>
+                        )}
+                    </div>
+                    <span
+                        className="font-semibold px-4 py-2 rounded-full text-sm transition"
+                        style={{
+                            background: 'var(--brand-gold)',
+                            color: 'var(--text-on-gold)',
+                        }}
+                    >
+                        <span className="inline-flex items-center gap-1.5">View Details <FaArrowRight className="text-xs" aria-hidden /></span>
+                    </span>
+                </div>
+            </div>
+        </Link>
+    );
+}
+
+// ============================================
+// COMPONENT: One country's row - a fixed 3-wide viewport that continuously
+// slides left to right through that country's packages (duplicated list,
+// same marquee technique as the homepage's activities/testimonials rows).
+// ============================================
+function CountryPackageRow({ country, packages }: { country: string; packages: SafariPackage[] }) {
+    const Flag = COUNTRY_FLAGS[COUNTRY_CODES[country]];
+
+    return (
+        <div>
+            <div className="flex items-center gap-2 mb-5">
+                {Flag && (
+                    <span className="w-7 h-5 rounded-sm overflow-hidden inline-block flex-shrink-0 ring-1 ring-black/10">
+                        <Flag className="w-full h-full" title={country} />
+                    </span>
+                )}
+                <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>{country}</h3>
+            </div>
+
+            <div className="overflow-hidden">
+                <div
+                    className="flex gap-6 w-max animate-marquee-reverse"
+                    style={{ animationDuration: `${Math.max(packages.length * 8, 24)}s` }}
+                >
+                    {[...packages, ...packages].map((pkg, index) => (
+                        <div key={`${pkg.id}-${index}`} className="w-80 sm:w-96 flex-shrink-0">
+                            <SafariPackageCard pkg={pkg} />
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

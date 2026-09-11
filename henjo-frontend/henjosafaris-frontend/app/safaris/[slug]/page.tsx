@@ -29,6 +29,7 @@ import {
     FaUserFriends,
     FaCalendarAlt,
     FaBed,
+    FaInfoCircle,
 } from 'react-icons/fa';
 import Hero from '@/components/common/Hero';
 import { safariApi } from '@/lib/api/safariApi';
@@ -435,9 +436,10 @@ export default function SafariDetailPage() {
 
             {/* Booking Modal */}
             {showBookingForm && (
-                <BookingModal 
+                <BookingModal
                     packageData={packageData}
                     onClose={() => setShowBookingForm(false)}
+                    paymentUrl={settings?.payment_url}
                 />
             )}
         </div>
@@ -641,7 +643,7 @@ function InclusionsTab({ inclusions, exclusions }: any) {
 // ============================================
 // COMPONENT: Booking Modal
 // ============================================
-function BookingModal({ packageData, onClose }: any) {
+function BookingModal({ packageData, onClose, paymentUrl }: any) {
     const [step, setStep] = useState(1);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -722,13 +724,26 @@ function BookingModal({ packageData, onClose }: any) {
                         <p className="text-xs font-semibold uppercase tracking-widest" style={{ color: 'var(--brand-gold-hover)' }}>Booking Reference</p>
                         <p className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>{bookingRef}</p>
                     </div>
-                    <button
-                        onClick={onClose}
-                        className="w-full font-bold py-3 rounded-full transition"
-                        style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}
-                    >
-                        Close
-                    </button>
+                    <div className="space-y-3">
+                        {paymentUrl && (
+                            <a
+                                href={paymentUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full font-bold py-3 rounded-full transition inline-flex items-center justify-center"
+                                style={{ background: 'var(--brand-green)', color: '#fff' }}
+                            >
+                                Pay Now
+                            </a>
+                        )}
+                        <button
+                            onClick={onClose}
+                            className="w-full font-bold py-3 rounded-full transition"
+                            style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}
+                        >
+                            Close
+                        </button>
+                    </div>
                 </div>
             </div>
         );
@@ -904,7 +919,7 @@ function BookingModal({ packageData, onClose }: any) {
                                 </div>
 
                                 <div className="rounded-lg p-4" style={{ background: 'var(--bg-secondary)' }}>
-                                    <h4 className="font-semibold mb-2">Price Summary</h4>
+                                    <h4 className="font-semibold mb-2">Estimated Price</h4>
                                     <div className="space-y-1 text-sm">
                                         <div className="flex justify-between">
                                             <span>Adults ({adults})</span>
@@ -917,10 +932,25 @@ function BookingModal({ packageData, onClose }: any) {
                                             </div>
                                         )}
                                         <div className="border-t border-gray-200 pt-2 mt-2 font-bold flex justify-between">
-                                            <span>Total</span>
+                                            <span>Estimated Total</span>
                                             <span style={{ color: 'var(--brand-green)' }}>{packageData.currency} {totalPrice.toLocaleString()}</span>
                                         </div>
                                     </div>
+                                    <p className="text-xs mt-3 flex items-start gap-1.5" style={{ color: 'var(--text-muted)' }}>
+                                        <FaInfoCircle className="mt-0.5 flex-shrink-0" />
+                                        This is an estimate, not the final price. We will confirm the exact total in the official quotation we send you.
+                                    </p>
+                                    {paymentUrl && (
+                                        <a
+                                            href={paymentUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="mt-4 w-full font-bold py-2.5 rounded-lg transition inline-flex items-center justify-center"
+                                            style={{ background: 'var(--brand-green)', color: '#fff' }}
+                                        >
+                                            Pay Now
+                                        </a>
+                                    )}
                                 </div>
                             </div>
                         )}

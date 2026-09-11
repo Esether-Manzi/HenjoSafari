@@ -14,6 +14,9 @@ interface HeroProps {
     subtitle?: string;
     ctaText?: string;
     ctaLink?: string;
+    /** Secondary (outline) button. Defaults to "Learn More" -> /about; override per page so it isn't identical everywhere. */
+    secondaryCtaText?: string;
+    secondaryCtaLink?: string;
     size?: 'small' | 'medium' | 'large' | 'full';
     backgroundImage?: string;
     /** When set, plays as a looping muted background video instead of the static image (backgroundImage is used as its poster). */
@@ -29,6 +32,8 @@ export default function Hero({
     subtitle = "Experience unforgettable safaris through the Serengeti, Ngorongoro Crater, and Zanzibar's pristine beaches.",
     ctaText = "Explore Safaris",
     ctaLink = "/safaris",
+    secondaryCtaText = "Learn More",
+    secondaryCtaLink = "/about",
     size = 'large',
     backgroundImage = '/images/hero-bg.jpg',
     backgroundVideo,
@@ -154,10 +159,10 @@ export default function Hero({
                                 <FaArrowRight />
                             </Link>
                             <Link
-                                href="/about"
+                                href={secondaryCtaLink}
                                 className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white font-bold text-sm md:text-base px-6 py-3 rounded-full transition border border-white/30"
                             >
-                                Learn More
+                                {secondaryCtaText}
                             </Link>
                         </div>
 

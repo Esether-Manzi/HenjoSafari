@@ -16,6 +16,7 @@ import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { submitBooking, BookingFormData } from '@/lib/api/bookingApi';
+import { settingsApi } from '@/lib/api/settingsApi';
 import { bookingFormSchema, bookingStep1Schema, bookingStep2Schema, type BookingFormValues } from '@/lib/validation/schemas';
 import Hero from '@/components/common/Hero';
 import {
@@ -39,6 +40,7 @@ import {
     FaLock,
     FaBolt,
     FaPlaneDeparture,
+    FaInfoCircle,
 } from 'react-icons/fa';
 
 // ----------------------------------------------------------
@@ -96,6 +98,7 @@ export default function BookingPage() {
     const [packages, setPackages] = useState<SafariPackageOption[]>([]);
     const [destinationCountries, setDestinationCountries] = useState<DestinationCountryOption[]>([]);
     const [selectedCountryId, setSelectedCountryId] = useState<string>('');
+    const [paymentUrl, setPaymentUrl] = useState<string | null>(null);
 
     const {
         handleSubmit: handleFormSubmit,
@@ -144,7 +147,20 @@ export default function BookingPage() {
                 setDestinationCountries(countries);
             })
             .catch(() => setDestinationCountries([]));
+
+        settingsApi.getSettings()
+            .then((res) => {
+                if (res.success && res.data.payment_url) setPaymentUrl(res.data.payment_url);
+            })
+            .catch(() => {});
     }, []);
+
+    // The package the traveler picked in Step 2, used to estimate a price below
+    const selectedPackage = packages.find((p) => p.id === form.package_id) || null;
+    const hasEstimate = Boolean(selectedPackage && Number(selectedPackage.base_price) > 0);
+    const estimatedTotal = hasEstimate
+        ? Number(selectedPackage!.base_price) * (form.adults + form.children * 0.5)
+        : 0;
 
     // -- Helpers --
     const update = (field: keyof BookingFormValues, value: string | number | null) =>
@@ -322,13 +338,31 @@ export default function BookingPage() {
                             Check your email at <strong>{form.email}</strong>, we'll be in touch soon.
                         </p>
 
-                        <a
-                            href="/safaris"
-                            className="inline-block mt-6 px-8 py-3 rounded-full font-bold transition hover:scale-105"
-                            style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}
-                        >
-                            Browse More Safaris
-                        </a>
+                        <div className="flex flex-wrap items-center justify-center gap-4 mt-6">
+                            {paymentUrl && (
+                                <a
+                                    href={paymentUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-block px-8 py-3 rounded-full font-bold transition hover:scale-105"
+                                    style={{ background: 'var(--brand-green)', color: '#fff' }}
+                                >
+                                    Pay Now
+                                </a>
+                            )}
+                            <a
+                                href="/safaris"
+                                className="inline-block px-8 py-3 rounded-full font-bold transition hover:scale-105"
+                                style={{ background: 'var(--brand-gold)', color: 'var(--text-on-gold)' }}
+                            >
+                                Browse More Safaris
+                            </a>
+                        </div>
+                        {paymentUrl && (
+                            <p className="text-xs mt-4 flex items-center justify-center gap-1.5" style={{ color: 'var(--text-muted)' }}>
+                                <FaInfoCircle /> Only pay once you have agreed on a final quotation with our team.
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>
@@ -347,6 +381,8 @@ export default function BookingPage() {
                 subtitle="Fill in your details and we'll craft the perfect African adventure for you."
                 ctaText="View Packages"
                 ctaLink="/safaris"
+                secondaryCtaText="Contact Us"
+                secondaryCtaLink="/contact"
                 backgroundImage="/images/placeholder.png"
                 overlay={true}
                 showTagline={false}
@@ -692,6 +728,44 @@ export default function BookingPage() {
                                             </div>
                                         </div>
                                     </div>
+
+                                    {/* Estimated Price */}
+                                    {hasEstimate && selectedPackage && (
+                                        <div className="rounded-xl p-5" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)' }}>
+                                            <h4 className="font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>Estimated Price</h4>
+                                            <div className="space-y-1 text-sm" style={{ color: 'var(--text-secondary)' }}>
+                                                <div className="flex justify-between">
+                                                    <span>Adults ({form.adults})</span>
+                                                    <span>{selectedPackage.currency} {(Number(selectedPackage.base_price) * form.adults).toLocaleString()}</span>
+                                                </div>
+                                                {form.children > 0 && (
+                                                    <div className="flex justify-between">
+                                                        <span>Children ({form.children}) - 50%</span>
+                                                        <span>{selectedPackage.currency} {(Number(selectedPackage.base_price) * form.children * 0.5).toLocaleString()}</span>
+                                                    </div>
+                                                )}
+                                                <div className="flex justify-between font-bold pt-2 mt-2" style={{ borderTop: '1px solid var(--border-primary)', color: 'var(--text-primary)' }}>
+                                                    <span>Estimated Total</span>
+                                                    <span style={{ color: 'var(--brand-green)' }}>{selectedPackage.currency} {estimatedTotal.toLocaleString()}</span>
+                                                </div>
+                                            </div>
+                                            <p className="text-xs mt-3 flex items-start gap-1.5" style={{ color: 'var(--text-muted)' }}>
+                                                <FaInfoCircle className="mt-0.5 flex-shrink-0" />
+                                                This is an estimate, not the final price. We will confirm the exact total in the official quotation we send you.
+                                            </p>
+                                            {paymentUrl && (
+                                                <a
+                                                    href={paymentUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="mt-4 w-full font-bold py-2.5 rounded-lg transition inline-flex items-center justify-center hover:scale-[1.02]"
+                                                    style={{ background: 'var(--brand-green)', color: '#fff' }}
+                                                >
+                                                    Pay Now
+                                                </a>
+                                            )}
+                                        </div>
+                                    )}
 
                                     {/* Special Requests */}
                                     <div>

@@ -230,8 +230,210 @@ class PageContentSeeder extends Seeder
             'meta_title' => 'Travel Information | Henjo African Safaris',
             'meta_description' => 'Visa guides, entry requirements, and reliable travel information for your East Africa safari.',
             'sections' => [
-                ['group' => 'articles', 'title' => 'East Africa Tourist Visa Guide', 'description' => "This is a Joint Tourist Visa and it allows the traveler to travel to Uganda, Kenya, and Rwanda ONLY. It can be used multiple times for tourism purposes. The visa prohibits employment and is issued only for tourism purposes. The visa is valid for 90 days and is not renewable upon expiry or upon exit from the block. NB: the issuing country should be your first entry point. Apply online at visas.immigration.go.ug.\nRequirements: copy of the passport (bio-data page) with at least 6 months validity, a recent passport-size photograph, a Yellow Fever vaccination certificate, a return ticket, and a travel itinerary.", 'icon' => 'passport', 'sort_order' => 0],
-                ['group' => 'articles', 'title' => 'Entry Requirements For Uganda', 'description' => "Uganda Tourist Visa - Single Entry. This visa is granted to travelers coming to Uganda for tourism, is a single-entry visa, and can be granted for up to 3 months. Apply online at visas.immigration.go.ug.\nRequirements: passport copy (bio-data page) with at least 6 months validity, a tour plan, travel itinerary/booking, a recent passport-size photograph, and a Yellow Fever vaccination certificate.", 'icon' => 'file', 'sort_order' => 1],
+                [
+                    'group' => 'articles',
+                    'slug' => 'entry-requirements-kenya',
+                    'title' => 'Entry Requirements for Kenya',
+                    'icon' => 'passport',
+                    'sort_order' => 0,
+                    'description' => 'Kenya requires an Electronic Travel Authorization (eTA) for most visitors, but citizens of East African Community countries can enter with a national ID. Here is what travelers from Africa and from other continents need to know before their trip.',
+                    'source_url' => 'https://www.etakenya.go.ke',
+                    'source_label' => 'Visit the Kenya eTA website',
+                    'body' => <<<'EOT'
+                        ## For travelers from African countries
+                        Citizens of the other East African Community (EAC) partner states, Uganda, Tanzania, Rwanda, Burundi, South Sudan, and the Democratic Republic of Congo, can enter Kenya using a valid national ID card. A passport is not required for this group.
+                        Citizens of most other African countries need an Electronic Travel Authorization (eTA) before travel, unless their country has a separate visa exemption agreement with Kenya. Check the official eTA website to see if your country is on the visa-exempt list.
+
+                        ## For travelers from other continents
+                        Visitors from Europe, the Americas, Asia, and Oceania need to apply for an eTA online before they travel to Kenya. The eTA is not a visa on arrival, so it must be approved before you board your flight.
+                        - Apply at least a few days before your travel date
+                        - A valid passport with at least 6 months validity remaining
+                        - A recent passport-size photograph
+                        - A confirmed return or onward flight ticket
+                        - Proof of accommodation or your travel itinerary
+
+                        ## Health requirement
+                        All travelers arriving from, or who have transited through, a country with a risk of yellow fever must carry a valid Yellow Fever vaccination certificate. Kenyan immigration officers can ask to see this certificate at the border.
+
+                        ## Good to know
+                        The East Africa Tourist Visa, a joint visa for Kenya, Uganda, and Rwanda, is also accepted for entry into Kenya. It allows multiple entries between the three countries within 90 days.
+
+                        Visa and entry rules can change without much notice. Always confirm the current requirements for your nationality on the official Kenya eTA website before you travel.
+                        EOT,
+                    'body_sw' => <<<'EOT'
+                        ## Kwa wasafiri kutoka nchi za Afrika
+                        Raia wa nchi nyingine za Jumuiya ya Afrika Mashariki (EAC), yaani Uganda, Tanzania, Rwanda, Burundi, Sudan Kusini, na Jamhuri ya Kidemokrasia ya Kongo, wanaweza kuingia Kenya kwa kutumia kitambulisho cha taifa kilicho halali. Hazihitaji pasipoti kwa kundi hili.
+                        Raia wa nchi nyingine nyingi za Afrika wanahitaji Kibali cha Usafiri cha Kielektroniki (eTA) kabla ya safari, isipokuwa nchi yao ina mkataba tofauti wa msamaha wa visa na Kenya. Angalia tovuti rasmi ya eTA kujua kama nchi yako iko kwenye orodha ya nchi zisizohitaji visa.
+
+                        ## Kwa wasafiri kutoka mabara mengine
+                        Wageni kutoka Ulaya, Amerika, Asia, na Oceania wanahitaji kuomba eTA mtandaoni kabla ya kusafiri kwenda Kenya. eTA si visa ya kupata ukifika uwanjani, hivyo lazima ikubaliwe kabla ya kupanda ndege.
+                        - Omba angalau siku chache kabla ya tarehe ya safari
+                        - Pasipoti halali yenye uhalali wa angalau miezi 6
+                        - Picha mpya ya ukubwa wa pasipoti
+                        - Tiketi ya ndege ya kurudi au kuendelea iliyothibitishwa
+                        - Uthibitisho wa malazi au ratiba ya safari yako
+
+                        ## Sharti la kiafya
+                        Wasafiri wote wanaotoka, au waliopita, katika nchi yenye hatari ya homa ya manjano wanatakiwa kubeba cheti halali cha chanjo ya homa ya manjano. Maafisa wa uhamiaji wa Kenya wanaweza kuomba kuona cheti hiki mpakani.
+
+                        ## Vizuri kujua
+                        Visa ya Pamoja ya Utalii ya Afrika Mashariki, ambayo ni visa moja kwa Kenya, Uganda, na Rwanda, inakubaliwa pia kuingia Kenya. Inaruhusu kuingia mara nyingi kati ya nchi hizo tatu ndani ya siku 90.
+
+                        Sheria za visa na kuingia nchini zinaweza kubadilika wakati wowote. Hakikisha unathibitisha masharti ya sasa kwa uraia wako kwenye tovuti rasmi ya eTA ya Kenya kabla ya kusafiri.
+                        EOT,
+                ],
+                [
+                    'group' => 'articles',
+                    'slug' => 'entry-requirements-uganda',
+                    'title' => 'Entry Requirements for Uganda',
+                    'icon' => 'file',
+                    'sort_order' => 1,
+                    'description' => 'Uganda uses an online eVisa system for most visitors, while East African Community citizens can travel in on a national ID. Here is a simple guide for travelers from Africa and beyond.',
+                    'source_url' => 'https://visas.immigration.go.ug',
+                    'source_label' => 'Visit the Uganda immigration website',
+                    'body' => <<<'EOT'
+                        ## For travelers from African countries
+                        Citizens of the other East African Community (EAC) partner states, Kenya, Tanzania, Rwanda, Burundi, South Sudan, and the Democratic Republic of Congo, can enter Uganda using a valid national ID card, without a visa.
+                        Most other African nationals need to apply for an eVisa online before travel. A small number of countries have visa-free access. Check the official Uganda immigration website for the full list.
+
+                        ## For travelers from other continents
+                        Visitors from Europe, the Americas, Asia, and Oceania need an eVisa to enter Uganda. Apply online before you travel, since a visa on arrival is not guaranteed for every nationality.
+                        - A valid passport with at least 6 months validity remaining
+                        - A recent passport-size photograph
+                        - A Yellow Fever vaccination certificate
+                        - A return ticket and a short travel itinerary
+                        - Proof of sufficient funds for your stay, if requested
+
+                        ## Health requirement
+                        A Yellow Fever vaccination certificate is mandatory for all travelers entering Uganda, regardless of nationality or where you are traveling from.
+
+                        ## Good to know
+                        Uganda also takes part in the East Africa Tourist Visa together with Kenya and Rwanda. This single visa is valid for 90 days and allows multiple entries between the three countries, but the country where you first apply must be your first point of entry.
+
+                        Visa and entry rules can change without much notice. Always confirm the current requirements for your nationality on the official Uganda immigration website before you travel.
+                        EOT,
+                    'body_sw' => <<<'EOT'
+                        ## Kwa wasafiri kutoka nchi za Afrika
+                        Raia wa nchi nyingine za Jumuiya ya Afrika Mashariki (EAC), yaani Kenya, Tanzania, Rwanda, Burundi, Sudan Kusini, na Jamhuri ya Kidemokrasia ya Kongo, wanaweza kuingia Uganda kwa kitambulisho cha taifa kilicho halali, bila visa.
+                        Raia wengi wa Afrika wanahitaji kuomba eVisa mtandaoni kabla ya safari. Nchi chache zina ruhusa ya kuingia bila visa. Angalia tovuti rasmi ya uhamiaji wa Uganda kwa orodha kamili.
+
+                        ## Kwa wasafiri kutoka mabara mengine
+                        Wageni kutoka Ulaya, Amerika, Asia, na Oceania wanahitaji eVisa kuingia Uganda. Omba mtandaoni kabla ya kusafiri, kwa sababu visa ya kupata ukifika uwanjani haihakikishwi kwa kila uraia.
+                        - Pasipoti halali yenye uhalali wa angalau miezi 6
+                        - Picha mpya ya ukubwa wa pasipoti
+                        - Cheti cha chanjo ya homa ya manjano
+                        - Tiketi ya kurudi na ratiba fupi ya safari
+                        - Uthibitisho wa fedha za kutosha kwa kukaa kwako, ikihitajika
+
+                        ## Sharti la kiafya
+                        Cheti cha chanjo ya homa ya manjano ni lazima kwa wasafiri wote wanaoingia Uganda, bila kujali uraia au walikotoka.
+
+                        ## Vizuri kujua
+                        Uganda pia inashiriki katika Visa ya Pamoja ya Utalii ya Afrika Mashariki pamoja na Kenya na Rwanda. Visa hii moja ina uhalali wa siku 90 na inaruhusu kuingia mara nyingi kati ya nchi hizo tatu, lakini nchi uliyoomba kwanza lazima iwe sehemu yako ya kwanza ya kuingia.
+
+                        Sheria za visa na kuingia nchini zinaweza kubadilika wakati wowote. Hakikisha unathibitisha masharti ya sasa kwa uraia wako kwenye tovuti rasmi ya uhamiaji wa Uganda kabla ya kusafiri.
+                        EOT,
+                ],
+                [
+                    'group' => 'articles',
+                    'slug' => 'entry-requirements-tanzania',
+                    'title' => 'Entry Requirements for Tanzania',
+                    'icon' => 'stamp',
+                    'sort_order' => 2,
+                    'description' => 'Tanzania offers an online eVisa and visa on arrival for many nationalities, and East African Community citizens enjoy simplified entry. Here is what to expect.',
+                    'source_url' => 'https://www.immigration.go.tz',
+                    'source_label' => 'Visit the Tanzania immigration website',
+                    'body' => <<<'EOT'
+                        ## For travelers from African countries
+                        Citizens of the other East African Community (EAC) partner states, Kenya, Uganda, Rwanda, Burundi, South Sudan, and the Democratic Republic of Congo, can enter Tanzania with a valid national ID card at most border points.
+                        Other African nationals can usually get a visa on arrival or apply for an eVisa before travel. Applying online in advance is recommended, since it saves time at the border.
+
+                        ## For travelers from other continents
+                        Visitors from Europe, the Americas, Asia, and Oceania can apply for an eVisa online before travel, or get a visa on arrival at major entry points. Applying online first is faster and more reliable.
+                        - A valid passport with at least 6 months validity remaining
+                        - A recent passport-size photograph
+                        - A Yellow Fever vaccination certificate, if arriving from an at-risk country
+                        - A return ticket and a short travel itinerary
+                        - Proof of the visa fee payment, paid in US dollars where required
+
+                        ## Health requirement
+                        Travelers arriving from, or who have transited through, a country with a risk of yellow fever must carry a valid Yellow Fever vaccination certificate.
+
+                        ## Good to know
+                        Tanzania is not part of the joint East Africa Tourist Visa used by Kenya, Uganda, and Rwanda, so it needs a separate visa or eVisa even if you already hold that joint visa.
+
+                        Visa and entry rules can change without much notice. Always confirm the current requirements for your nationality on the official Tanzania immigration website before you travel.
+                        EOT,
+                    'body_sw' => <<<'EOT'
+                        ## Kwa wasafiri kutoka nchi za Afrika
+                        Raia wa nchi nyingine za Jumuiya ya Afrika Mashariki (EAC), yaani Kenya, Uganda, Rwanda, Burundi, Sudan Kusini, na Jamhuri ya Kidemokrasia ya Kongo, wanaweza kuingia Tanzania kwa kitambulisho cha taifa kilicho halali katika sehemu nyingi za mipakani.
+                        Raia wengine wa Afrika kwa kawaida wanaweza kupata visa ukifika mpakani au kuomba eVisa kabla ya safari. Inashauriwa kuomba mtandaoni mapema kwa sababu inaokoa muda mpakani.
+
+                        ## Kwa wasafiri kutoka mabara mengine
+                        Wageni kutoka Ulaya, Amerika, Asia, na Oceania wanaweza kuomba eVisa mtandaoni kabla ya safari, au kupata visa ukifika kwenye vituo vikuu vya kuingia. Kuomba mtandaoni kwanza ni haraka na ni njia ya uhakika zaidi.
+                        - Pasipoti halali yenye uhalali wa angalau miezi 6
+                        - Picha mpya ya ukubwa wa pasipoti
+                        - Cheti cha chanjo ya homa ya manjano, kama unatoka nchi yenye hatari
+                        - Tiketi ya kurudi na ratiba fupi ya safari
+                        - Uthibitisho wa malipo ya ada ya visa, kwa dola za Marekani inapohitajika
+
+                        ## Sharti la kiafya
+                        Wasafiri wanaotoka, au waliopita, katika nchi yenye hatari ya homa ya manjano wanatakiwa kubeba cheti halali cha chanjo ya homa ya manjano.
+
+                        ## Vizuri kujua
+                        Tanzania haishiriki katika Visa ya Pamoja ya Utalii ya Afrika Mashariki inayotumiwa na Kenya, Uganda, na Rwanda, hivyo inahitaji visa au eVisa tofauti hata kama tayari una visa hiyo ya pamoja.
+
+                        Sheria za visa na kuingia nchini zinaweza kubadilika wakati wowote. Hakikisha unathibitisha masharti ya sasa kwa uraia wako kwenye tovuti rasmi ya uhamiaji wa Tanzania kabla ya kusafiri.
+                        EOT,
+                ],
+                [
+                    'group' => 'articles',
+                    'slug' => 'entry-requirements-rwanda',
+                    'title' => 'Entry Requirements for Rwanda',
+                    'icon' => 'globe',
+                    'sort_order' => 3,
+                    'description' => 'Rwanda offers visa-free entry to African Union citizens and a visa on arrival for almost every other nationality, making it the most open of the four countries for travelers. Here is what applies to you.',
+                    'source_url' => 'https://www.migration.gov.rw',
+                    'source_label' => 'Visit the Rwanda immigration website',
+                    'body' => <<<'EOT'
+                        ## For travelers from African countries
+                        Rwanda offers visa-free entry to citizens of all African Union member states. You do not need to apply for a visa in advance. On arrival, you will receive an entry permit at the border or airport.
+
+                        ## For travelers from other continents
+                        Rwanda offers a visa on arrival to citizens of every country in the world. You can also apply online in advance through the Irembo portal to save time at the airport.
+                        - A valid passport with at least 6 months validity remaining
+                        - A recent passport-size photograph, if applying online
+                        - A return ticket and a short travel itinerary
+                        - The visa fee, payable online or on arrival
+
+                        ## Health requirement
+                        Travelers arriving from, or who have transited through, a country with a risk of yellow fever must carry a valid Yellow Fever vaccination certificate.
+
+                        ## Good to know
+                        Rwanda also takes part in the East Africa Tourist Visa together with Kenya and Uganda. This single visa is valid for 90 days and allows multiple entries between the three countries.
+
+                        Visa and entry rules can change without much notice. Always confirm the current requirements for your nationality on the official Rwanda immigration website before you travel.
+                        EOT,
+                    'body_sw' => <<<'EOT'
+                        ## Kwa wasafiri kutoka nchi za Afrika
+                        Rwanda inatoa ruhusa ya kuingia bila visa kwa raia wa nchi zote wanachama wa Umoja wa Afrika. Hauhitaji kuomba visa mapema. Ukifika, utapewa kibali cha kuingia mpakani au uwanjani.
+
+                        ## Kwa wasafiri kutoka mabara mengine
+                        Rwanda inatoa visa ya kupata ukifika kwa raia wa kila nchi duniani. Unaweza pia kuomba mtandaoni mapema kupitia mfumo wa Irembo ili kuokoa muda uwanjani.
+                        - Pasipoti halali yenye uhalali wa angalau miezi 6
+                        - Picha mpya ya ukubwa wa pasipoti, kama unaomba mtandaoni
+                        - Tiketi ya kurudi na ratiba fupi ya safari
+                        - Ada ya visa, inayolipwa mtandaoni au ukifika
+
+                        ## Sharti la kiafya
+                        Wasafiri wanaotoka, au waliopita, katika nchi yenye hatari ya homa ya manjano wanatakiwa kubeba cheti halali cha chanjo ya homa ya manjano.
+
+                        ## Vizuri kujua
+                        Rwanda pia inashiriki katika Visa ya Pamoja ya Utalii ya Afrika Mashariki pamoja na Kenya na Uganda. Visa hii moja ina uhalali wa siku 90 na inaruhusu kuingia mara nyingi kati ya nchi hizo tatu.
+
+                        Sheria za visa na kuingia nchini zinaweza kubadilika wakati wowote. Hakikisha unathibitisha masharti ya sasa kwa uraia wako kwenye tovuti rasmi ya uhamiaji wa Rwanda kabla ya kusafiri.
+                        EOT,
+                ],
             ],
             'is_active' => true,
         ]);

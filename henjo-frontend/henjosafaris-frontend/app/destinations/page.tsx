@@ -91,6 +91,8 @@ export default async function DestinationsPage() {
                 subtitle="Explore the best of East Africa - from the savannas of Kenya to the misty gorilla forests of Uganda and Rwanda"
                 ctaText="View All Safaris"
                 ctaLink="/safaris"
+                secondaryCtaText="Plan My Trip"
+                secondaryCtaLink="/booking"
                 backgroundImage="/images/destinations-hero.jpg"
                 overlay={true}
                 showTagline={true}
